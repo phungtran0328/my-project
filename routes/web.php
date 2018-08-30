@@ -15,20 +15,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('index',[
-    'as'=>'home',
-    'uses'=>'HomeController@getIndex'
-]);
+//Route::get('index',[
+//    'as'=>'home',
+//    'uses'=>'HomeController@getIndex'
+//]);
 
-Route::get('login',[
-    'as'=>'login',
-    'uses'=>'LoginController@showLoginForm'
-]);
-
-Route::post('login',[
-    'as'=>'login',
-    'uses'=>'LoginController@login'
-]);
+//Route::get('login',[
+//    'as'=>'login',
+//    'uses'=>'LoginController@showLoginForm'
+//]);
+//
+//Route::post('login',[
+//    'as'=>'login',
+//    'uses'=>'LoginController@login'
+//]);
 
 //Route::get('dang-xuat',[
 //    'as'=>'dang-xuat',
@@ -37,18 +37,32 @@ Route::post('login',[
 
 Auth::routes();
 
+Route::group(['middleware' => ['web']], function () {
+    //Login Routes...
+    Route::get('/login','LoginController@showLoginForm');
+    Route::post('/login','LoginController@login');
+    Route::get('/logout','LoginController@logout');
+
+    // Registration Routes...
+//    Route::get('admin/register', 'AdminAuth\AuthController@showRegistrationForm');
+//    Route::post('admin/register', 'AdminAuth\AuthController@register');
+//
+    Route::get('/index', 'HomeController@getIndex');
+
+});
+
 Route::group(['prefix' => 'admin'], function () {
     //Login Routes...
     //Tiền tố admin
     Route::get('/login','Admin\LoginController@showLoginForm');
     Route::post('/login','Admin\LoginController@login');
-//    Route::get('/admin/logout','Admin\AuthController@logout');
+    Route::get('/logout','Admin\LoginController@logout');
 
     // Registration Routes...
 //    Route::get('admin/register', 'Admin\AuthController@showRegistrationForm');
 //    Route::post('admin/register', 'Admin\AuthController@register');
 
-    Route::get('/', 'Admin\LoginController@index');
+    Route::get('/', 'Admin\HomeController@index');
 
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

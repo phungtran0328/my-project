@@ -12,11 +12,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel </title>
+    <link rel="shortcut icon" type="image/x-icon" href="book.ico" />
+    <title>BookStore</title>
     <base href="{{asset('')}}">
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" href="source/assets/dest/css/font-awesome.min.css">
     <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
@@ -38,9 +40,10 @@
 
 
 <!-- include js files -->
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="source/assets/dest/js/jquery.js"></script>
 <script src="source/assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="source/assets/dest/vendors/bxslider/jquery.bxslider.min.js"></script>
 <script src="source/assets/dest/vendors/colorbox/jquery.colorbox-min.js"></script>
 <script src="source/assets/dest/vendors/animo/Animo.js"></script>

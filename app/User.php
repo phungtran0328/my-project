@@ -21,7 +21,7 @@ class User extends Authenticatable
     ];*/
 
     protected $fillable = [
-        'NV_TEN', 'NV_GIOITINH', 'NV_NGAYSINH', 'NV_DIACHI', 'NV_SDT', 'NV_TENDANGNHAP', 'KH_MATKHAU',
+        'NV_TEN', 'NV_GIOITINH', 'NV_NGAYSINH', 'NV_DIACHI', 'NV_SDT', 'NV_TENDANGNHAP', 'NV_MATKHAU',
     ];
 
     /**

@@ -53,8 +53,8 @@ class LoginController extends Controller
         }
     }
 
-    public function index(){
-        return view('admin.home');
+    public function logout(){
+        Auth::logout();
+        return redirect('/admin/login');
     }
-
 }
