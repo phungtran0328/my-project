@@ -29,7 +29,7 @@ class Customer extends Authenticatable
     ];*/
 
     protected $fillable = [
-        'KH_TEN', 'KH_GIOITINH', 'KH_NGAYSINH', 'KH_DIACHI', 'KH_SDT', 'KH_EMAIL', 'KH_MATKHAU',
+        'KH_MA','KH_TEN', 'KH_GIOITINH', 'KH_NGAYSINH', 'KH_DIACHI', 'KH_SDT', 'KH_EMAIL', 'KH_MATKHAU',
     ];
 
     /**

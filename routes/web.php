@@ -44,8 +44,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/logout','LoginController@logout');
 
     // Registration Routes...
-//    Route::get('admin/register', 'AdminAuth\AuthController@showRegistrationForm');
-//    Route::post('admin/register', 'AdminAuth\AuthController@register');
+    Route::get('/register', 'RegisterController@showRegisterForm');
+    Route::post('/register', 'RegisterController@create');
 //
     Route::get('/index', 'HomeController@getIndex');
 

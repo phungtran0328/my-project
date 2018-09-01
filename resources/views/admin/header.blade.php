@@ -20,7 +20,7 @@
                     @if (Auth::check())
 
                         <li><a href=""><i class="fa fa-user"></i>{{Auth::user()->NV_TEN}}</a></li>
-                        <li><a href="{{url('/admin/logout')}}">Đăng xuất</a></li>
+                        <li><a href="{{url('/admin/logout')}}"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
                     @endif
                 </ul>
             </div>
@@ -50,7 +50,13 @@
                 <div class="visible-xs clearfix"></div>
                 <nav class="main-menu">
                     <ul class="l-inline ov">
-                        @if(Auth::check())
+                        @if(Auth::check() && Auth::user()->LTK_MA == 1)
+                            <li><a href="#">QL sách</a></li>
+                            <li><a href="">QL đơn hàng</a></li>
+                            <li><a href="">QL hóa đơn</a></li>
+                            <li><a href="#">QL nhập sách</a></li>
+
+                        @elseif (Auth::check() && Auth::user()->LTK_MA ==2)
                             <li><a href="#">QL sách</a></li>
                             <li><a href="">QL đơn hàng</a></li>
                             <li><a href="">QL hóa đơn</a></li>
@@ -58,12 +64,12 @@
                             <li><a href="">QL khách hàng</a></li>
                             <li><a href="">Báo cáo - thống kê</a></li>
                         @else
-                            <li><a onclick="return false;">QL sách</a></li>
+                            {{--<li><a onclick="return false;">QL sách</a></li>
                             <li><a onclick="return false;">QL đơn hàng</a></li>
                             <li><a onclick="return false;">QL hóa đơn</a></li>
                             <li><a onclick="return false;">QL nhập sách</a></li>
                             <li><a onclick="return false;">QL khách hàng</a></li>
-                            <li><a onclick="return false;">Báo cáo - thống kê</a></li>
+                            <li><a onclick="return false;">Báo cáo - thống kê</a></li>--}}
                         @endif
 
                     </ul>

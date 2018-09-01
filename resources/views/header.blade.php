@@ -20,12 +20,10 @@
                 <ul class="top-details menu-beta l-inline">
                     @if (Auth::guard('customer')->check())
                         <li><a href=""><i class="fa fa-user"></i>{{Auth::guard('customer')->user()->KH_TEN}}</a></li>
-                        <li><a href="{{url('/logout')}}">Đăng xuất</a></li>
+                        <li><a href="{{url('/logout')}}"><i class="fas fa-sign-out"></i>Đăng xuất</a></li>
                     @else
-                    {{--<li><a href="#"><i class="fa fa-user"></i>Tài khoản</a></li>--}}
 
-                    <li><a href="#">Đăng kí</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa fa-user" aria-hidden="true"></i>Tài khoản</a></li>
                     @include('page.login_popup')
                     @endif
                 </ul>

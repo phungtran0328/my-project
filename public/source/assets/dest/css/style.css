@@ -2725,7 +2725,7 @@ z-index:1
 }
 
 .woocommerce-tabs ul.tabs li {
-border:1px solid #e1e1e1;
+border:1px solid #0000F0;
 display:inline-block;
 position:relative;
 z-index:0;
@@ -2737,7 +2737,8 @@ border:1px solid #f6f6f6
 .woocommerce-tabs ul.tabs li a {
 display:inline-block;
 text-decoration:none;
-padding:15px 35px
+padding:15px 35px;
+text-align: center;
 }
 
 .woocommerce-tabs ul.tabs li.active {
@@ -2747,6 +2748,7 @@ border-bottom:1px solid #fff
 }
 
 .woocommerce-tabs .panel {
+width: 350px;
 margin:0 0 2em;
 padding:30px 30px 20px;
 border:1px solid #f6f6f6;
@@ -3043,35 +3045,35 @@ background-position:right
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.visa,#payment div.payment_box .wc-credit-card-form-card-expiry.visa,#payment div.payment_box .wc-credit-card-form-card-cvc.visa {
-background-image:url(../images/icons/credit-cards/visa.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.mastercard,#payment div.payment_box .wc-credit-card-form-card-expiry.mastercard,#payment div.payment_box .wc-credit-card-form-card-cvc.mastercard {
-background-image:url(../images/icons/credit-cards/mastercard.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.laser,#payment div.payment_box .wc-credit-card-form-card-expiry.laser,#payment div.payment_box .wc-credit-card-form-card-cvc.laser {
-background-image:url(../images/icons/credit-cards/laser.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.dinersclub,#payment div.payment_box .wc-credit-card-form-card-expiry.dinersclub,#payment div.payment_box .wc-credit-card-form-card-cvc.dinersclub {
-background-image:url(../images/icons/credit-cards/diners.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.maestro,#payment div.payment_box .wc-credit-card-form-card-expiry.maestro,#payment div.payment_box .wc-credit-card-form-card-cvc.maestro {
-background-image:url(../images/icons/credit-cards/maestro.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.jcb,#payment div.payment_box .wc-credit-card-form-card-expiry.jcb,#payment div.payment_box .wc-credit-card-form-card-cvc.jcb {
-background-image:url(../images/icons/credit-cards/jcb.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.amex,#payment div.payment_box .wc-credit-card-form-card-expiry.amex,#payment div.payment_box .wc-credit-card-form-card-cvc.amex {
-background-image:url(../images/icons/credit-cards/amex.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box .wc-credit-card-form-card-number.discover,#payment div.payment_box .wc-credit-card-form-card-expiry.discover,#payment div.payment_box .wc-credit-card-form-card-cvc.discover {
-background-image:url(../images/icons/credit-cards/discover.png)
+background-image:url(../images)
 }
 
 #payment div.payment_box span.help {
@@ -4711,7 +4713,7 @@ html{overflow-x:hidden;}
 .auto-width-left ul li a{padding:0px;}
 .auto-width-right{width:41%;}
 .auto-width-right ul li a{padding:0px 4px;}
-.pull-left.auto-width:{width:auto!important;}
+.pull-left.auto-width{width:auto!important;}
 .beta-comp from{width:70%!important;}
 a#logo img{max-width:45%!important;}
 .beta-rotator canvas{width:98%!important;}
