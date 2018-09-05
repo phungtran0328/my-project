@@ -10,6 +10,6 @@ class KindOfAccount extends Model
     protected $primaryKey = 'LTK_MA';
 
     public function user(){
-        return $this->hasMany('App\User','LTK_MA','LTK_MA');
+        return $this->belongsToMany('App\User','phanquyen','LTK_MA','NV_MA');
     }
 }

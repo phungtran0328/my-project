@@ -19,46 +19,44 @@ class RegisterController extends Controller
      */
     public function showRegisterForm()
     {
-        return view('page.login_popup');
+        return view('page.register');
     }
 
     public function create(Request $req){
         $this->validate($req,
             [
-                'name' => 'required|string',
+                'username' => 'required|string',
                 'email' => 'required|email|unique:khachhang,KH_EMAIL',
                 //unique: table, column_name
                 'password' => 'required|string|min:6|max:32',
-                'tel' => 'required|digits_between:10,12',
+                'phone' => 'required|digits_between:10,12',
                 'birthday' => 'required|before:today',
                 'address' => 'required|string',
-                'password-confirm' => 'required|same:password',
+
             ],
             [
-                'name.required' => 'Vui lòng nhập họ tên',
+                'username.required' => 'Vui lòng nhập họ tên',
                 'email.required'=>'Vui lòng nhập email! ',
                 'email.unique'=>'Email đã có người sử dụng! ',
                 'password.required'=>'Vui lòng nhập mật khẩu! ',
                 'password.min'=>'Mật khẩu phải có ít nhất 6 ký tự! ',
                 'password.max'=>'Mật khẩu dài tối đa 32 ký tự! ',
                 'address.required' => 'Vui lòng nhập địa chỉ',
-                'password-confirm.required'=>'Vui lòng nhập lại mật khẩu! ',
-                'password-confirm.same'=>'Mật khẩu không trùng khớp! ',
-                'tel.required'=>'Vui lòng nhập số điện thoại! ',
-                'tel.digits_between'=>'Nhập số từ 10 đến 12 số! ',
+                'phone.required'=>'Vui lòng nhập số điện thoại! ',
+                'phone.digits_between'=>'Nhập số từ 10 đến 12 số! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
                 'birthday.before'=>'Ngày sinh không được lớn hơn ngày hôm nay'
             ]
         );
         $customer=new Customer();
-        $customer->KH_TEN=$req->name;
+        $customer->KH_TEN=$req->username;
         $customer->KH_GIOITINH=$req->gender;
-        $customer->KH_SDT=$req->tel;
+        $customer->KH_SDT=$req->phone;
         $customer->KH_DIACHI=$req->address;
         $customer->KH_NGAYSINH=$req->birthday;
         $customer->KH_EMAIL=$req->email;
-        $customer->KH_MATKHAU=$req->password;
+        $customer->KH_MATKHAU=Hash::make($req->password);
         $customer->save();
-        return redirect()->back()->with('thongbao','Tạo tài khoản thành công');
+        return redirect()->back()->with('message','Tạo tài khoản thành công');
     }
 }

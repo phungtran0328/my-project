@@ -30,15 +30,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'NV_MATKHAU', 'remember_token',
     ];
+
+    public function getAuthPassword()
+    {
+        //bắt buộc phải có vì tên trường không phải là 'password'
+        return $this->NV_MATKHAU;
+    }
 
     public function invoice_in(){
         return $this->hasMany('App\InvoiceIn','NV_MA','NV_MA');
     }
 
     public function kind_of_account(){
-        return $this->belongsTo('App\KindOfAccount','LTK_MA','NV_MA');
+        return $this->belongsToMany('App\KindOfAccount','phanquyen','NV_MA','LTK_MA');
     }
 
     public function invoice(){

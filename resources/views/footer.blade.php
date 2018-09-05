@@ -58,12 +58,12 @@
 </div> <!-- #footer -->
 <div class="copyright">
     <div class="container">
-        <p class="pull-left">Privacy policy. (&copy;) 2014</p>
+        <p class="pull-left">Privacy policy. (&copy;) 2018</p>
         <p class="pull-right pay-options">
-            <a href="#"><img src="source/assets/dest/images/pay/master.jpg" alt="" /></a>
-            <a href="#"><img src="source/assets/dest/images/pay/pay.jpg" alt="" /></a>
-            <a href="#"><img src="source/assets/dest/images/pay/visa.jpg" alt="" /></a>
-            <a href="#"><img src="source/assets/dest/images/pay/paypal.jpg" alt="" /></a>
+            <img src="images/MasterCard.png" width="35" height="21" alt="" />
+            <img src="images/Paypal.png" width="35" height="21" alt="" />
+            <img src="images/Visa.png" width="35" height="21" alt="" />
+            {{--<a href="#"><img src="images/money.png" width="35" height="21" alt="" /></a>--}}
         </p>
         <div class="clearfix"></div>
     </div> <!-- .container -->

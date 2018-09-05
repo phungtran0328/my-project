@@ -16,7 +16,7 @@
             -->
             <div class="pull-right">
                 <div class="beta-breadcrumb">
-                    <a href="{{route('home')}}">Trang chủ</a> / <span>Đăng nhập</span>
+                    <a href="{{url('/index')}}">Trang chủ</a> / <span>Đăng nhập</span>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -26,52 +26,62 @@
     <div class="container">
         <div id="content">
             <div class="row">
-                <div class="col-md-10" id="divUserAdd" >
+                <div class="col-md-2"></div>
+                <div class="col-md-7" id="divUserAdd" >
                     <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">Đăng nhập</h3>
                         </div>
                         <div class="panel-body">
 
-                            <form class="form-horizontal" action="{{route('login')}}" method="POST">
+                            <form class="form-horizontal" action="{{url('/login')}}" method="POST">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        @foreach ($errors->all() as $error)
+                                            {{ $error }}
+                                        @endforeach
+                                    </div>
+                                @endif
                                 @if(Session::has('message'))
                                     <div class="alert alert-danger">
                                         {{Session::get('message')}}
                                     </div>
                                 @endif
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label required" for="txtUsername">Tên đăng nhập (*)</label>
-                                    <div class="col-md-4">
-                                        <input type="text" class="form-control"
-                                               name="username" placeholder="Nhập username">
+                                    <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
+                                    <div class="col-md-7">
+                                        <input type="email" class="form-control "
+                                               name="email" placeholder="Nhập email">
                                     </div>
-                                    <div class="col-md-5">
 
-                                    </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
-                                    <div class="col-md-4">
-                                        <input type="password" class="form-control" id="txtPass" name="password" placeholder="Nhập password">
+                                    <div class="col-md-7">
+                                        <input type="password" class="form-control" id="txtPass" name="password" placeholder="Mật khẩu từ 6 đến 32 ký tự">
                                     </div>
-                                    <div class="col-md-5">
-                                    </div>
+
                                 </div>
 
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
-                                    <div class="col-md-2">
-                                        <button type="submit" name="btnDangNhap" id="btnDangNhap" class="btn btn-primary btn-block">Đăng nhập</button>
+                                    <div class="col-md-7">
+                                        <button type="submit" name="login" id="login" class="btn btn-primary btn-block">Đăng nhập</button>
 
                                     </div>
-                                    <div class="col-md-2">
 
-                                        <a href="" class="btn btn-success btn-block">Đăng ký</a>
-                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label"></label>
+                                    <div class="col-md-7">
+                                        <a type="submit" name="register" href="{{url('/register')}}" class="btn btn-primary btn-block">Tạo tài khoản</a>
 
+                                    </div>
+
+                                </div>
                             </form>
                         </div>
                     </div>

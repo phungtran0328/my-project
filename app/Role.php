@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class InvoiceDetails extends Model
+class Role extends Model
 {
-    protected $table = 'hd_chitiet';
+    protected $table = 'phanquyen';
     protected $primaryKey = [
-        'S_MA', 'HD_MA',
+        'LTK_MA', 'NV_MA',
     ];
-
     public $timestamps = false;
 }

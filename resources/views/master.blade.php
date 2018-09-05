@@ -18,7 +18,7 @@
     <link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/login.css">
+    {{--<link rel="stylesheet" type="text/css" href="css/login.css">--}}
     <link rel="stylesheet" href="source/assets/dest/css/font-awesome.min.css">
     <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
@@ -40,10 +40,11 @@
 
 
 <!-- include js files -->
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="source/assets/dest/js/jquery.js"></script>
 <script src="source/assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+<script language="JavaScript" type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="source/assets/dest/vendors/bxslider/jquery.bxslider.min.js"></script>
 <script src="source/assets/dest/vendors/colorbox/jquery.colorbox-min.js"></script>
 <script src="source/assets/dest/vendors/animo/Animo.js"></script>
@@ -53,8 +54,10 @@
 <script src="source/assets/dest/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
 <script src="source/assets/dest/js/waypoints.min.js"></script>
 <script src="source/assets/dest/js/wow.min.js"></script>
+
 <!--customjs-->
 <script src="source/assets/dest/js/custom2.js"></script>
+
 <script>
     $(document).ready(function($) {
         $(window).scroll(function(){
@@ -66,6 +69,7 @@
         )
     })
 </script>
+
 </body>
 </html>
 

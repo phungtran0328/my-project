@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Customer;
 use Session;
-use Hash;
+use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
 {
@@ -24,7 +24,7 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('page.login_popup');
+        return view('page.login');
     }
 
     /**
@@ -41,19 +41,36 @@ class LoginController extends Controller
     {
         $this->validate($req,
             [
-                'user'=>'required',
-                'pass'=>'required',
+                'email'=>'required|email',
+                'password'=>'required',
 
             ],
             [
-                'user.required'=>'Vui lòng nhập tài khoản',
-                'pass.required'=>'Vui lòng nhập mật khẩu'
+                'email.required'=>'Vui lòng nhập email',
+                'password.required'=>'Vui lòng nhập mật khẩu'
             ]
         );
 
-        $auth = Customer::where('KH_EMAIL', '=', $req->user)->where('KH_MATKHAU', '=', $req->pass)->first();
-        if($auth){
-            Auth::guard('customer')->login($auth);
+//        $credentials = array('KH_EMAIL' => $req->email, 'KH_MATKHAU' => $req->password);
+
+//        dd($credentials);
+//        dd(Hash::make($req->password));
+//        die();
+
+        $email = $req['email'];
+        $password = $req['password'];
+//        $user = Customer::where('KH_EMAIL', $email)->first();
+//        if($user){
+//            if(Hash::check($password, $user->KH_MATKHAU)){
+        //check hash pass
+//                return "yep";
+//            }
+//            return "nope";
+//        }
+
+        if(Auth::guard('customer')->attempt(['KH_EMAIL' => $email, 'password' => $password])){
+            //'password' bắt buộc phải là password vì nó đã được xác định sẵn
+            //Nhưng vẫn có thể chỉnh sửa ở file model function getAuthPassword
             return redirect('/index');
         }
         else

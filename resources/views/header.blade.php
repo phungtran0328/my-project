@@ -20,11 +20,19 @@
                 <ul class="top-details menu-beta l-inline">
                     @if (Auth::guard('customer')->check())
                         <li><a href=""><i class="fa fa-user"></i>{{Auth::guard('customer')->user()->KH_TEN}}</a></li>
-                        <li><a href="{{url('/logout')}}"><i class="fas fa-sign-out"></i>Đăng xuất</a></li>
+                        <li><a href="{{url('/logout')}}">
+                                {{ csrf_field() }}
+                                <i class="fa fa-sign-out"></i>Đăng xuất</a></li>
                     @else
 
-                    <li><a href="#" data-toggle="modal" data-target="#login-modal"><i class="fa fa fa-user" aria-hidden="true"></i>Tài khoản</a></li>
-                    @include('page.login_popup')
+                    <li>
+                        {{--<a href="#" data-toggle="modal" data-target="#login-modal" id="open">--}}
+                            {{--<i class="fa fa fa-user" aria-hidden="true"></i>Tài khoản</a>--}}
+                        <a href="{{url('/login')}}"><i class="fa fa-sign-in"></i>Đăng nhập</a>
+
+                    </li>
+                    <li><a href="{{url('/register')}}"><i class="fa fa-user"></i>Tạo tài khoản</a></li>
+                    {{--@include('page.login_popup')--}}
                     @endif
                 </ul>
             </div>

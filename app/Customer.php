@@ -38,8 +38,14 @@ class Customer extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'KH_MATKHAU', 'remember_token',
     ];
+
+    public function getAuthPassword()
+    {
+        //bắt buộc phải có vì tên trường không phải là 'password'
+        return $this->KH_MATKHAU;
+    }
 
     public function order(){
         return $this->hasMany('App\Order','KH_MA','KH_MA');
