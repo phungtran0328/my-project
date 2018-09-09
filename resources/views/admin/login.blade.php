@@ -22,7 +22,7 @@
                         <form class="form-horizontal" action="{{ url ('/admin/login') }}" method="POST">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             @if(Session::has('message'))
-                                <div class="alert alert-danger">
+                                <div class="alert alert-danger" style="text-align: center; font-size: medium">
                                     {{Session::get('message')}}
                                 </div>
                             @endif
@@ -30,27 +30,38 @@
                                 <label class="col-md-3 control-label required" for="txtUsername">Tên đăng nhập</label>
                                 <div class="col-md-7">
                                     <input type="text" class="form-control"
-                                           name="username" placeholder="Nhập username">
+                                           name="username" placeholder="Nhập username" value="{{old('username')}}">
                                 </div>
                                 <div class="col-md-2"></div>
+                            </div>
+                            <div class="form-group {{$errors->has('username') ? '' : 'hide'}}">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-7">
+                                    <strong style="color: red">{{$errors->first('username')}}</strong>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu</label>
                                 <div class="col-md-7">
-                                    <input type="password" class="form-control" id="txtPass" name="password" placeholder="Nhập password">
+                                    <input type="password" class="form-control" id="txtPass" name="password"
+                                           placeholder="Nhập password" value="{{old('password')}}">
                                 </div>
                                 <div class="col-md-2">
                                 </div>
                             </div>
-                            {{--<div class="form-group">--}}
-                            {{--<label class="col-md-3 control-label"></label>--}}
-                            {{--<div class="col-md-4">--}}
+                            <div class="form-group {{$errors->has('password') ? '' : 'hide'}}">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-7">
+                                    <strong style="color: red">{{$errors->first('password')}}</strong>
+                                </div>
+                            </div>
+                            {{--<div class="form-group">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-7">
+                                    <label><input type="checkbox" name="Remember" value="Remember" checked> Remember me</label>
 
-                            {{--<input type="checkbox" name="Remember" value="Remember">--}}
-                            {{--<label>Remember me</label>--}}
-                            {{--</div>--}}
-
-                            {{--</div>--}}
+                                </div>
+                            </div>--}}
 
                             <div class="form-group">
                                 <label class="col-md-3 control-label"></label>

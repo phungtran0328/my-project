@@ -36,35 +36,40 @@
 
                             <form class="form-horizontal" action="{{url('/login')}}" method="POST">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                @if (count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        @foreach ($errors->all() as $error)
-                                            {{ $error }}
-                                        @endforeach
-                                    </div>
-                                @endif
+
                                 @if(Session::has('message'))
                                     <div class="alert alert-danger">
                                         {{Session::get('message')}}
                                     </div>
                                 @endif
-                                <div class="form-group">
+                                <div class="form-group ">
                                     <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
                                     <div class="col-md-7">
-                                        <input type="email" class="form-control "
-                                               name="email" placeholder="Nhập email">
+                                        <input type="text" class="form-control "
+                                               name="email" placeholder="Nhập email" value="{{old('email')}}">
                                     </div>
 
                                 </div>
-
+                                <div class="form-group {{ $errors->has('email') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('email') }}</strong>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
                                     <div class="col-md-7">
-                                        <input type="password" class="form-control" id="txtPass" name="password" placeholder="Mật khẩu từ 6 đến 32 ký tự">
+                                        <input type="password" class="form-control" id="txtPass" name="password"
+                                               placeholder="Mật khẩu từ 6 đến 32 ký tự" value="{{old('password')}}">
                                     </div>
 
                                 </div>
-
+                                <div class="form-group {{ $errors->has('password') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('password') }}</strong>
+                                    </div>
+                                </div>
 
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>

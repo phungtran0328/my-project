@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Customer;
+use App\KindOfBook;
+use App\Slider;
 
 class HomeController extends Controller
 {
@@ -16,6 +17,8 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getIndex(){
-        return view('page.home');
+        $categories = KindOfBook::all();
+        $sliders = Slider::all();
+        return view('page.home', compact('categories', 'sliders'));
     }
 }

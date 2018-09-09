@@ -8,53 +8,70 @@
 ?>
 @extends('master')
 @section('content')
-<div class="fullwidthbanner-container">
-    <div class="fullwidthbanner">
-        <div class="bannercontainer" >
-            <div class="banner" >
-                <ul>
-                    <!-- THE FIRST SLIDE -->
-                    <li data-transition="boxfade" data-slotamount="20" class="active-revslide" style="width: 100%; height: 100%; overflow: hidden; z-index: 18; visibility: hidden; opacity: 0;">
-                        <div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
-                            <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="source/assets/dest/images/thumbs/1.jpg" data-src="source/assets/dest/images/thumbs/1.jpg" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('source/assets/dest/images/thumbs/1.jpg'); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;">
-                            </div>
-                        </div>
-
-                    </li>
-                    <li data-transition="boxfade" data-slotamount="20" class="active-revslide" style="width: 100%; height: 100%; overflow: hidden; z-index: 18; visibility: hidden; opacity: 0;">
-                        <div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
-                            <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="source/assets/dest/images/thumbs/1.jpg" data-src="source/assets/dest/images/thumbs/1.jpg" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('source/assets/dest/images/thumbs/1.jpg'); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;">
-                            </div>
-                        </div>
-
-                    <li data-transition="boxfade" data-slotamount="20" class="active-revslide" style="width: 100%; height: 100%; overflow: hidden; z-index: 18; visibility: hidden; opacity: 0;">
-                        <div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
-                            <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="source/assets/dest/images/thumbs/1.jpg" data-src="source/assets/dest/images/thumbs/1.jpg" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('source/assets/dest/images/thumbs/1.jpg'); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;">
-                            </div>
-                        </div>
-
-                    </li>
-
-                    <li data-transition="boxfade" data-slotamount="20" class="active-revslide current-sr-slide-visible" style="width: 100%; height: 100%; overflow: hidden; visibility: inherit; opacity: 1; z-index: 20;">
-                        <div class="slotholder" style="width:100%;height:100%;" data-duration="undefined" data-zoomstart="undefined" data-zoomend="undefined" data-rotationstart="undefined" data-rotationend="undefined" data-ease="undefined" data-bgpositionend="undefined" data-bgposition="undefined" data-kenburns="undefined" data-easeme="undefined" data-bgfit="undefined" data-bgfitend="undefined" data-owidth="undefined" data-oheight="undefined">
-                            <div class="tp-bgimg defaultimg" data-lazyload="undefined" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat" data-lazydone="undefined" src="source/assets/dest/images/thumbs/1.jpg" data-src="source/assets/dest/images/thumbs/1.jpg" style="background-color: rgba(0, 0, 0, 0); background-repeat: no-repeat; background-image: url('source/assets/dest/images/thumbs/1.jpg'); background-size: cover; background-position: center center; width: 100%; height: 100%; opacity: 1; visibility: inherit;">
-                            </div>
-                        </div>
-
-                    </li>
-                </ul>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="list-group">
+                @foreach($categories as $category)
+                <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: medium; color: black;"
+                   onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a>
+                @endforeach
             </div>
         </div>
+        <div class="col-sm-8">
 
-        <div class="tp-bannertimer"></div>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
+                <!-- Indicators -->
+                <?php $total=count($sliders); ?>
+                <ol class="carousel-indicators">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    @for($i=1; $i<$total;$i++)
+                    <li data-target="#myCarousel" data-slide-to="{{$i}}"></li>
+
+                    @endfor
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+
+                    <div class="item active">
+                        <img src="images/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                        <div class="carousel-caption">
+                            <h3>Sell $</h3>
+                            <p>Money Money.</p>
+                        </div>
+                    </div>
+                    @for($i=1;$i<$total;$i++)
+                    <div class="item">
+                        <img src="images/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                        <div class="carousel-caption">
+                            <h3>More Sell $</h3>
+                            <p>Lorem ipsum...</p>
+                        </div>
+                    </div>
+                    @endfor
+                </div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+
+        </div>
     </div>
+    <hr>
 </div>
-<!--slider-->
-</div>
-<div class="container">
+
+<div class="container text-left">
     <div id="content" class="space-top-none">
         <div class="main-content">
-            <div class="space60">&nbsp;</div>
+            {{--<div class="space60">&nbsp;</div>--}}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="beta-products-list">
@@ -314,5 +331,16 @@
         </div> <!-- .main-content -->
     </div> <!-- #content -->
 
+</div> <!-- .container -->
 @endsection
 
+<script>
+    function tagActive(x) {
+        x.style.background='#0277b8';
+        x.style.color='#fff';
+    }
+    function tagDisable(x) {
+        x.style.background='white';
+        x.style.color='black';
+    }
+</script>

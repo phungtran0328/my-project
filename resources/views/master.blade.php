@@ -26,15 +26,29 @@
     <link rel="stylesheet" title="style" href="source/assets/dest/css/style.css">
     <link rel="stylesheet" href="source/assets/dest/css/animate.css">
     <link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
+    <style>
+        /* Add a gray background color and some padding to the footer */
+        .carousel-inner img {
+            width: 100%; /* Set width to 100% */
+            min-height: 200px;
+        }
+
+        /* Hide the carousel text when the screen is less than 600 pixels wide */
+        @media (max-width: 600px) {
+            .carousel-caption {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
 
     @include('header')
-<div class="rev-slider">
+
 
     @yield('content')
 
-</div> <!-- .container -->
+
 
     @include('footer')
 

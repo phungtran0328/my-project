@@ -32,16 +32,6 @@
 
                             <form class="form-horizontal" action="{{url('/register')}}" method="POST">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                @if (count($errors) > 0)
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                               <li>{{ $error }} </li>
-                                            @endforeach
-                                        </ul>
-
-                                    </div>
-                                @endif
                                 @if(Session::has('message'))
                                     <div class="alert alert-success">
                                         {{Session::get('message')}}
@@ -51,34 +41,58 @@
                                     <label class="col-md-3 control-label required">Họ tên (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
-                                               name="username" placeholder="Nhập họ tên">
+                                               name="username" placeholder="Nhập họ tên" value="{{old('username')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('username') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('username') }}</strong>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required">Địa chỉ (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
-                                               name="address" placeholder="Nhập địa chỉ">
+                                               name="address" placeholder="Nhập địa chỉ" value="{{old('address')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('address') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('address') }}</strong>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required">Số điện thoại (*)</label>
                                     <div class="col-md-7">
                                         <input type="tel" class="form-control "
-                                               name="phone" placeholder="Nhập số điện thoại">
+                                               name="phone" placeholder="Nhập số điện thoại" value="{{old('phone')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('phone') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('phone') }}</strong>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required">Ngày sinh (*)</label>
                                     <div class="col-md-7">
                                         <input type="date" class="form-control "
-                                               name="birthday" placeholder="Chọn ngày sinh">
+                                               name="birthday" placeholder="Chọn ngày sinh" value="{{old('birthday')}}">
+                                    </div>
+                                </div>
+                                <div class="form-group {{ $errors->has('birthday') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('birthday') }}</strong>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required">Giới tính (*)</label>
                                     <div class="col-md-2">
-                                        <label><input type="radio" name="gender" value="Nam" style="width: 20px">Nam</label>
+                                        <label><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
 
                                     </div>
                                     <div class="col-md-3">
@@ -88,19 +102,30 @@
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
                                     <div class="col-md-7">
-                                        <input type="email" class="form-control "
-                                               name="email" placeholder="Nhập email">
+                                        <input type="text" class="form-control "
+                                               name="email" placeholder="Nhập email" value="{{old('email')}}">
                                     </div>
 
                                 </div>
-
+                                <div class="form-group {{ $errors->has('email') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('email') }}</strong>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
                                     <div class="col-md-7">
-                                        <input type="password" class="form-control" id="txtPass" name="password" placeholder="Mật khẩu từ 6 đến 32 ký tự">
+                                        <input type="password" class="form-control" id="txtPass" name="password"
+                                               placeholder="Mật khẩu từ 6 đến 32 ký tự" value="{{old('password')}}">
                                     </div>
                                 </div>
-
+                                <div class="form-group {{ $errors->has('password') ? ' has-error' : 'hide' }}">
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-7">
+                                        <strong style="color: red">{{$errors->first('password') }}</strong>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-7">

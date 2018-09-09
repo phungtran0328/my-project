@@ -814,9 +814,9 @@ padding:12px
 margin-bottom:10px
 }
 
-input[type="checkbox"] {
-display:none
-}
+/*input[type="checkbox"] {*/
+/*display:none*/
+/*}*/
 
 input[type="checkbox"]+label {
 position:relative;

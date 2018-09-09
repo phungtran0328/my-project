@@ -35,17 +35,18 @@ class RegisterController extends Controller
 
             ],
             [
-                'username.required' => 'Vui lòng nhập họ tên',
-                'email.required'=>'Vui lòng nhập email! ',
-                'email.unique'=>'Email đã có người sử dụng! ',
-                'password.required'=>'Vui lòng nhập mật khẩu! ',
-                'password.min'=>'Mật khẩu phải có ít nhất 6 ký tự! ',
-                'password.max'=>'Mật khẩu dài tối đa 32 ký tự! ',
-                'address.required' => 'Vui lòng nhập địa chỉ',
-                'phone.required'=>'Vui lòng nhập số điện thoại! ',
-                'phone.digits_between'=>'Nhập số từ 10 đến 12 số! ',
+                'username.required' => 'Vui lòng nhập họ tên !',
+                'email.required'=>'Vui lòng nhập email ! ',
+                'email.email'=>'Địa chỉ mail không hợp lệ !',
+                'email.unique'=>'Email đã có người sử dụng ! ',
+                'password.required'=>'Vui lòng nhập mật khẩu ! ',
+                'password.min'=>'Mật khẩu phải có ít nhất 6 ký tự ! ',
+                'password.max'=>'Mật khẩu dài tối đa 32 ký tự ! ',
+                'address.required' => 'Vui lòng nhập địa chỉ !',
+                'phone.required'=>'Vui lòng nhập số điện thoại ! ',
+                'phone.digits_between'=>'Vui lòng nhập từ 10 đến 12 số ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
-                'birthday.before'=>'Ngày sinh không được lớn hơn ngày hôm nay'
+                'birthday.before'=>'Ngày sinh không được lớn hơn hoặc bằng ngày hôm nay !'
             ]
         );
         $customer=new Customer();

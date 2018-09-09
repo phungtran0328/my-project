@@ -9,7 +9,11 @@ class KindOfBook extends Model
     protected $table = 'loaisach';
     protected $primaryKey = 'LS_MA';
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function book(){
-        return $this->hasMany('App\Book','LS_MA','LS_MA');
+        return $this->hasMany(Book::class, 'LS_MA');
     }
+    //c1: tên model của function cần, c2: khóa ngoại, c3: khóa chính
 }

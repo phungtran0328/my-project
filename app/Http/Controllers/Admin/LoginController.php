@@ -37,8 +37,8 @@ class LoginController extends Controller
                 'password'=>'required'
             ],
             [
-                'username.required'=>'Vui lòng nhập tài khoản',
-                'password.required'=>'Vui lòng nhập mật khẩu'
+                'username.required'=>'Vui lòng nhập tài khoản !',
+                'password.required'=>'Vui lòng nhập mật khẩu !'
             ]
         );
 

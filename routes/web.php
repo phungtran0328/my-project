@@ -20,6 +20,8 @@ Route::get('/', function () {
 //    'uses'=>'HomeController@getIndex'
 //]);
 
+Route::get('/category/{id}','CategoryController@category');
+
 //Route::get('login',[
 //    'as'=>'login',
 //    'uses'=>'LoginController@showLoginForm'
