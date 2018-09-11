@@ -50,7 +50,7 @@
                 <div class="visible-xs clearfix"></div>
                 <nav class="main-menu">
                     <ul class="l-inline ov">
-                        @if(Auth::check() && Auth::user()->LTK_MA == 1)
+                        @if(Auth::check() && Auth::user())
                             <li><a href="#">QL sách</a></li>
                             <li><a href="">QL đơn hàng</a></li>
                             <li><a href="">QL hóa đơn</a></li>

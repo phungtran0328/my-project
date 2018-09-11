@@ -12,57 +12,60 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="list-group">
+                <a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>
                 @foreach($categories as $category)
-                <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: medium; color: black;"
+                <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: 15px; color: black; border: none"
                    onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a>
                 @endforeach
             </div>
         </div>
         <div class="col-sm-8">
+            <div class="list-group">
+                <a class="list-group-item" style="border: none">Daily Deals</a>
 
-            <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
-                <!-- Indicators -->
-                <?php $total=count($sliders); ?>
-                <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    @for($i=1; $i<$total;$i++)
-                    <li data-target="#myCarousel" data-slide-to="{{$i}}"></li>
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
+                    <!-- Indicators -->
+                    <?php $total=count($sliders); ?>
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        @for($i=1; $i<$total;$i++)
+                            <li data-target="#myCarousel" data-slide-to="{{$i}}"></li>
 
-                    @endfor
-                </ol>
+                        @endfor
+                    </ol>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner" role="listbox">
 
-                    <div class="item active">
-                        <img src="images/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
-                        <div class="carousel-caption">
-                            <h3>Sell $</h3>
-                            <p>Money Money.</p>
+                        <div class="item active">
+                            <img src="images/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                            <div class="carousel-caption">
+                                <h3>Sell $</h3>
+                                <p>Money Money.</p>
+                            </div>
                         </div>
+                        @for($i=1;$i<$total;$i++)
+                            <div class="item">
+                                <img src="images/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                                <div class="carousel-caption">
+                                    <h3>More Sell $</h3>
+                                    <p>Lorem ipsum...</p>
+                                </div>
+                            </div>
+                        @endfor
                     </div>
-                    @for($i=1;$i<$total;$i++)
-                    <div class="item">
-                        <img src="images/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
-                        <div class="carousel-caption">
-                            <h3>More Sell $</h3>
-                            <p>Lorem ipsum...</p>
-                        </div>
-                    </div>
-                    @endfor
+
+                    <!-- Left and right controls -->
+                    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
             </div>
-
         </div>
     </div>
     <hr>
@@ -94,7 +97,7 @@
                                         </p>
                                     </div>
                                     <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                        <a class="add-to-cart pull-left" href=""><i class="fa fa-shopping-cart"></i></a>
                                         <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
                                         <div class="clearfix"></div>
                                     </div>

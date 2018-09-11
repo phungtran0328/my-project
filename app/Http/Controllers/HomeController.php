@@ -19,6 +19,7 @@ class HomeController extends Controller
     public function getIndex(){
         $categories = KindOfBook::all();
         $sliders = Slider::all();
+
         return view('page.home', compact('categories', 'sliders'));
     }
 }
