@@ -57,6 +57,7 @@
 <script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="source/assets/dest/js/jquery.js"></script>
+
 <script src="source/assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="source/assets/dest/vendors/bxslider/jquery.bxslider.min.js"></script>
@@ -81,7 +82,16 @@
                 $(".header-bottom").removeClass('fixNav')
             }}
         )
-    })
+    });
+    $(document).ready(function($){
+        $("#myDrop").mouseenter(function(){
+            $(".dropdown-menu").show()
+        });
+        $(".dropdown-menu").mouseleave(function(){
+            $(".dropdown-menu").hide()
+        })
+    });
+
 </script>
 
 </body>

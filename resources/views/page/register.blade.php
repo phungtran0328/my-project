@@ -37,58 +37,42 @@
                                         {{Session::get('message')}}
                                     </div>
                                 @endif
-                                <div class="form-group">
+                                <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required">Họ tên (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
                                                name="username" placeholder="Nhập họ tên" value="{{old('username')}}">
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('username') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('username') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group">
+
+                                <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required">Địa chỉ (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
                                                name="address" placeholder="Nhập địa chỉ" value="{{old('address')}}">
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('address') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('address') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group">
+
+                                <div class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required">Số điện thoại (*)</label>
-                                    <div class="col-md-7">
+                                    <div class="col-md-4">
                                         <input type="tel" class="form-control "
                                                name="phone" placeholder="Nhập số điện thoại" value="{{old('phone')}}">
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('phone') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('phone') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group">
+
+                                <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required">Ngày sinh (*)</label>
-                                    <div class="col-md-7">
+                                    <div class="col-md-4">
                                         <input type="date" class="form-control "
                                                name="birthday" placeholder="Chọn ngày sinh" value="{{old('birthday')}}">
-                                    </div>
-                                </div>
-                                <div class="form-group {{ $errors->has('birthday') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('birthday') }}</strong>
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-md-3 control-label required">Giới tính (*)</label>
                                     <div class="col-md-2">
@@ -99,31 +83,28 @@
                                         <label><input type="radio" name="gender" value="Nữ" style="width: 20px">Nữ</label>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
                                                name="email" placeholder="Nhập email" value="{{old('email')}}">
+                                        <strong style="color: red">{{$errors->first('email') }}</strong>
                                     </div>
 
                                 </div>
-                                <div class="form-group {{ $errors->has('email') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
-                                        <strong style="color: red">{{$errors->first('email') }}</strong>
-                                    </div>
-                                </div>
-                                <div class="form-group">
+                                <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
                                     <div class="col-md-7">
                                         <input type="password" class="form-control" id="txtPass" name="password"
-                                               placeholder="Mật khẩu từ 6 đến 32 ký tự" value="{{old('password')}}">
+                                               placeholder="Mật khẩu từ 6 đến 32 ký tự">
+                                        <strong style="color: red">{{$errors->first('password') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group {{ $errors->has('password') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label required" for="PasswordConfirm">Xác nhận mật khẩu (*)</label>
                                     <div class="col-md-7">
-                                        <strong style="color: red">{{$errors->first('password') }}</strong>
+                                        <input type="password" class="form-control" id="PassConfirm" name="password_confirmation"
+                                               placeholder="Xác nhận lại mật khẩu">
                                     </div>
                                 </div>
                                 <div class="form-group">

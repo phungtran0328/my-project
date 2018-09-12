@@ -25,13 +25,15 @@ class RegisterController extends Controller
     public function create(Request $req){
         $this->validate($req,
             [
-                'username' => 'required|string',
+                'username' => 'required',
                 'email' => 'required|email|unique:khachhang,KH_EMAIL',
                 //unique: table, column_name
-                'password' => 'required|string|min:6|max:32',
-                'phone' => 'required|digits_between:10,12',
-                'birthday' => 'required|before:today',
-                'address' => 'required|string',
+                'password' => 'required|min:6|max:32|confirmed',
+                'phone' => 'required|regex:/^(\+84)[0-9]{8}$/',
+                //regex: (đầu số +84)[dãy số từ 0-9]{gồm 8 số từ 0-9}
+                'birthday' => 'required|before:2006-01-01',
+                //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
+                'address' => 'required',
 
             ],
             [
@@ -42,11 +44,12 @@ class RegisterController extends Controller
                 'password.required'=>'Vui lòng nhập mật khẩu ! ',
                 'password.min'=>'Mật khẩu phải có ít nhất 6 ký tự ! ',
                 'password.max'=>'Mật khẩu dài tối đa 32 ký tự ! ',
+                'password.confirmed'=>'Xác nhận mật khẩu không đúng. Vui lòng nhập lại !',
                 'address.required' => 'Vui lòng nhập địa chỉ !',
                 'phone.required'=>'Vui lòng nhập số điện thoại ! ',
-                'phone.digits_between'=>'Vui lòng nhập từ 10 đến 12 số ! ',
+                'phone.regex'=>'Số điện thoại mã +84 gồm 10 số ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
-                'birthday.before'=>'Ngày sinh không được lớn hơn hoặc bằng ngày hôm nay !'
+                'birthday.before'=>'Phải lớn hơn 12 tuổi !'
             ]
         );
         $customer=new Customer();

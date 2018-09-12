@@ -337,13 +337,3 @@
 </div> <!-- .container -->
 @endsection
 
-<script>
-    function tagActive(x) {
-        x.style.background='#0277b8';
-        x.style.color='#fff';
-    }
-    function tagDisable(x) {
-        x.style.background='white';
-        x.style.color='black';
-    }
-</script>

@@ -105,6 +105,44 @@
 
         </div> <!-- .container -->
     </div> <!-- .header-body -->
-
 </div> <!-- #header -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="dropdown">
+                <a href="#" id="myDrop" class="dropdown-toggle btn btn-block"
+                   style="font-size: medium; text-align: center; background: gray; color: white; "
+                   data-toggle="dropdown">Danh mục sách</a>
+                <ul class="dropdown-menu" style="width: 360px;" role="menu" aria-labelledby="drop3">
+                    @foreach($categories as $category)
+                        <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="" style="font-size: 17px; color: black; border: none"
+                           onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a></li>
+                    @endforeach
+                </ul>
+
+                {{--<a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>--}}
+
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="list-group">
+                <a class="list-group-item" style="border: none">Daily Deals</a>
+            </div>
+        </div>
+    </div>
+    <hr>
+</div>
+<script>
+
+
+    function tagActive(x) {
+        x.style.background='#0277b8';
+        x.style.color='#fff';
+    }
+    function tagDisable(x) {
+        x.style.background='white';
+        x.style.color='black';
+    }
+</script>
+
 
