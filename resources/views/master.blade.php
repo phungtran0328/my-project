@@ -23,7 +23,8 @@
     <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/responsive.css">
-    <link rel="stylesheet" title="style" href="source/assets/dest/css/style.css">
+    <link rel="stylesheet" type="text/css" href="source/assets/dest/css/style.css?version=51">
+    {{--?version=51 dùng làm mới lại css khi có chỉnh sửa trong file css --}}
     <link rel="stylesheet" href="source/assets/dest/css/animate.css">
     <link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
     <style>
@@ -39,6 +40,7 @@
                 display: none;
             }
         }
+
     </style>
 </head>
 <body>
@@ -77,19 +79,19 @@
     $(document).ready(function($) {
         $(window).scroll(function(){
             if($(this).scrollTop()>150){
-                $(".header-bottom").addClass('fixNav')
+                $(".header-bottom").addClass('fixNav');
             }else{
-                $(".header-bottom").removeClass('fixNav')
+                $(".header-bottom").removeClass('fixNav');
             }}
         )
     });
     $(document).ready(function($){
         $("#myDrop").mouseenter(function(){
-            $(".dropdown-menu").show()
+            $("#menuDrop").show();
         });
-        $(".dropdown-menu").mouseleave(function(){
-            $(".dropdown-menu").hide()
-        })
+        $("#menuDrop").mouseleave(function(){
+            $("#menuDrop").hide();
+        });
     });
 
 </script>

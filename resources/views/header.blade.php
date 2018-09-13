@@ -16,24 +16,33 @@
                 </ul>
             </div>
             <div class="pull-right auto-width-right">
-                <ul class="top-details menu-beta l-inline">
-                    @if (Auth::guard('customer')->check())
-                        <li><a href=""><i class="fa fa-user"></i>{{Auth::guard('customer')->user()->KH_TEN}}</a></li>
-                        <li><a href="{{url('/logout')}}">
-                                {{ csrf_field() }}
-                                <i class="fa fa-sign-out"></i>Đăng xuất</a></li>
-                    @else
+                @if (Auth::guard('customer')->check())
+                    <div class="dropdown">
+                        <a href="#" id="loginDrop" class="dropdown-toggle btn btn-block" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>{{Auth::guard('customer')->user()->KH_TEN}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dropEdit">
+                            <li>
+                                <a tabindex="-1"
+                                   href="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}">
+                                    <i class="fa fa-info"></i>Thông tin tài khoản</a>
+                            </li>
 
+                            <li><a href="{{url('/logout')}}" tabindex="-1">
+                                    <i class="fa fa-sign-out"></i>Đăng xuất</a></li>
+                        </ul>
+
+                    </div>
+                @else
+                <ul class="top-details menu-beta l-inline">
                     <li>
                         {{--<a href="#" data-toggle="modal" data-target="#login-modal" id="open">--}}
                             {{--<i class="fa fa fa-user" aria-hidden="true"></i>Tài khoản</a>--}}
                         <a href="{{url('/login')}}"><i class="fa fa-sign-in"></i>Đăng nhập</a>
-
                     </li>
                     <li><a href="{{url('/register')}}"><i class="fa fa-user"></i>Tạo tài khoản</a></li>
                     {{--@include('page.login_popup')--}}
-                    @endif
                 </ul>
+                @endif
             </div>
             <div class="clearfix"></div>
         </div> <!-- .container -->
@@ -113,15 +122,13 @@
                 <a href="#" id="myDrop" class="dropdown-toggle btn btn-block"
                    style="font-size: medium; text-align: center; background: gray; color: white; "
                    data-toggle="dropdown">Danh mục sách</a>
-                <ul class="dropdown-menu" style="width: 360px;" role="menu" aria-labelledby="drop3">
+                <ul class="dropdown-menu" id="menuDrop" style="width: 360px;" role="menu" aria-labelledby="drop3">
                     @foreach($categories as $category)
                         <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="" style="font-size: 17px; color: black; border: none"
                            onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a></li>
                     @endforeach
                 </ul>
-
                 {{--<a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>--}}
-
             </div>
         </div>
         <div class="col-sm-8">

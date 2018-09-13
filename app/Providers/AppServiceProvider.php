@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //khai báo biến $catagories được sử dụng ở header, vì header có ở mọi trang nên không gọi ở controller
         view()->composer('header',function ($view){
             $categories = KindOfBook::all();
             $view->with('categories',$categories);

@@ -51,6 +51,10 @@ Route::group(['middleware' => ['web']], function () {
 //
     Route::get('/index', 'HomeController@getIndex');
 
+    Route::get('/edit/{id}','EditController@showEditForm');
+    Route::post('/edit/{id}','EditController@edit');
+    Route::get('/change-password/{id}','EditController@showChangePass');
+    Route::post('/change-password/{id}','EditController@changePass');
 });
 
 Route::group(['prefix' => 'admin'], function () {
