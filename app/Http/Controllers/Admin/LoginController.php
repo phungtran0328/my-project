@@ -19,7 +19,7 @@ use Exception;
 
 class LoginController extends Controller
 {
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/admin/index';
 
     public function showLoginForm()
     {
@@ -45,7 +45,7 @@ class LoginController extends Controller
         $auth = User::where('NV_TENDANGNHAP', '=', $req->username)->where('NV_MATKHAU', '=', $req->password)->first();
         if($auth){
             Auth::login($auth);
-            return redirect('/admin');
+            return redirect('/admin/index');
         }
         else
         {

@@ -68,7 +68,9 @@ Route::group(['prefix' => 'admin'], function () {
 //    Route::get('admin/register', 'Admin\AuthController@showRegistrationForm');
 //    Route::post('admin/register', 'Admin\AuthController@register');
 
-    Route::get('/', 'Admin\HomeController@index');
+    Route::get('/index', 'Admin\HomeController@index');
 
+    Route::get('/profile/{id}','Admin\UpdateController@showUpdateForm');
+    Route::post('/profile/{id}','Admin\UpdateController@updateProfile');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

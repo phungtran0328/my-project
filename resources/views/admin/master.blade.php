@@ -7,63 +7,73 @@
  */
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link rel="shortcut icon" type="image/x-icon" href="book.ico" />
-    <title>BookStore </title>
+    <title>Bookstore</title>
     <base href="{{asset('')}}">
-    <link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="source/assets/dest/css/font-awesome.min.css">
-    <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
-    <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
-    <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/responsive.css">
-    <link rel="stylesheet" title="style" href="source/assets/dest/css/style.css">
-    <link rel="stylesheet" href="source/assets/dest/css/animate.css">
-    <link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
+    {{--đường dẫn từ public--}}
+    <!-- Bootstrap Core CSS -->
+    <link href="admin/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="admin/assets/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="admin/assets/dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="admin/assets/vendor/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="admin/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <!--<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>-->
+    {{--<![endif]-->--}}
+
 </head>
+
 <body>
 
-@include('admin/header')
+<div id="wrapper">
 
-<div class="rev-slider">
+    <!-- Navigation -->
+    @include('admin/header')
+
     @yield('content')
-</div> <!-- .container -->
 
-@include('./footer')
+</div>
+<!-- /#wrapper -->
 
+<!-- jQuery -->
+<script src="admin/assets/vendor/jquery/jquery.min.js"></script>
 
-<!-- include js files -->
-@yield('extra-js')
-<script src="source/assets/dest/js/jquery.js"></script>
-<script src="source/assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-<script src="source/assets/dest/vendors/bxslider/jquery.bxslider.min.js"></script>
-<script src="source/assets/dest/vendors/colorbox/jquery.colorbox-min.js"></script>
-<script src="source/assets/dest/vendors/animo/Animo.js"></script>
-<script src="source/assets/dest/vendors/dug/dug.js"></script>
-<script src="source/assets/dest/js/scripts.min.js"></script>
-<script src="source/assets/dest/rs-plugin/js/jquery.themepunch.tools.min.js"></script>
-<script src="source/assets/dest/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script src="source/assets/dest/js/waypoints.min.js"></script>
-<script src="source/assets/dest/js/wow.min.js"></script>
-<!--customjs-->
-<script src="source/assets/dest/js/custom2.js"></script>
-<script>
-    $(document).ready(function($) {
-        $(window).scroll(function(){
-            if($(this).scrollTop()>150){
-                $(".header-bottom").addClass('fixNav')
-            }else{
-                $(".header-bottom").removeClass('fixNav')
-            }}
-        )
-    })
-</script>
+<!-- Bootstrap Core JavaScript -->
+<script src="admin/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="admin/assets/vendor/metisMenu/metisMenu.min.js"></script>
+
+<!-- Morris Charts JavaScript -->
+<script src="admin/assets/vendor/raphael/raphael.min.js"></script>
+<script src="admin/assets/vendor/morrisjs/morris.min.js"></script>
+<script src="admin/assets/data/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="admin/assets/dist/js/sb-admin-2.js"></script>
 
 </body>
+
 </html>
