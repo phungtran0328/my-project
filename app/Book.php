@@ -19,7 +19,7 @@ class Book extends Model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function cover_type(){
-        return $this->belongsTo('App\CoverType','LB_MA','S_MA');
+        return $this->belongsTo('App\CoverType','LB_MA');
     }
 
     /**
@@ -30,26 +30,34 @@ class Book extends Model
     }
 
     public function image(){
-        return $this->hasMany('App\Image','S_MA','S_MA');
+        return $this->hasMany('App\Image','S_MA');
     }
 
     public function publisher(){
-        return $this->belongsTo('App\Publisher','NXB_MA','S_MA');
+        return $this->belongsTo('App\Publisher','NXB_MA');
     }
 
     public function promotion(){
-        return $this->belongsTo('App\Promotion','KM_MA','S_MA');
+        return $this->belongsTo('App\Promotion','KM_MA');
     }
 
     public function order(){
-        return $this->belongsToMany('App\Order','','S_MA','DH_MA');
+        return $this->belongsToMany('App\Order','dh_chitiet','S_MA','DH_MA')->withPivot('DHCT_SOLUONG','DHCT_GIA');
     }
-
+    //Mặc định quan hệ n-n chỉ thêm khóa chính nên cần withPivot để thêm các cột khác
     public function invoice(){
-        return $this->belongsToMany('App\Invoice','','S_MA','HD_MA');
+        return $this->belongsToMany('App\Invoice','hd_chitiet','S_MA','HD_MA')->withPivot('HDCT_SOLUONG','HDCT_GIA');
     }
 
     public function invoice_in(){
-        return $this->belongsToMany('App\InvoiceIn','','S_MA','PN_MA');
+        return $this->belongsToMany('App\InvoiceIn','pn_chitiet','S_MA','PN_MA')->withPivot('PNCT_SOLUONG','PNCT_GIA');
+    }
+
+    public function author(){
+        return $this->belongsToMany('App\Author','tg_vietsach','S_MA','TG_MA');
+    }
+
+    public function translator(){
+        return $this->belongsToMany('App\Author','dichsach', 'S_MA', 'TG_MA')->withPivot('DICHGIA');
     }
 }

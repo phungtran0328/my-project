@@ -10,6 +10,6 @@ class CoverType extends Model
     protected $primaryKey = 'LB_MA';
 
     public function book(){
-        return $this->hasMany('App\Book','LB_MA','LB_MA');
+        return $this->hasMany('App\Book','LB_MA');
     }
 }

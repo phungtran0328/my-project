@@ -10,6 +10,6 @@ class Image extends Model
     protected $primaryKey = 'HA_MA';
 
     public function book(){
-        return $this->belongsTo('App\Book','S_MA','HA_MA');
+        return $this->belongsTo('App\Book','S_MA');
     }
 }

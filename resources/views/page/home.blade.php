@@ -12,7 +12,7 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="list-group">
-                <a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>
+                {{--<a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>--}}
                 @foreach($categories as $category)
                 <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: 15px; color: black; border: none"
                    onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a>
@@ -21,7 +21,7 @@
         </div>
         <div class="col-sm-8">
             <div class="list-group">
-                <a class="list-group-item" style="border: none">Daily Deals</a>
+                {{--<a class="list-group-item" style="border: none">Daily Deals</a>--}}
 
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
                     <!-- Indicators -->
@@ -78,88 +78,39 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="beta-products-list">
-                        <h4>New Products</h4>
+                        <h4>Sách mới</h4>
                         <div class="beta-products-details">
-                            <p class="pull-left">438 styles found</p>
+                            <p class="pull-left">Có {{count($books)}} sách mới</p>
                             <div class="clearfix"></div>
                         </div>
 
                         <div class="row">
+                            @foreach($books as $book)
                             <div class="col-sm-3">
                                 <div class="single-item">
                                     <div class="single-item-header">
-                                        <a href="product.html"><img src="source/assets/dest/images/products/1.jpg" alt=""></a>
+                                        <?php
+//                                        $id_book = $book->S_MA;
+                                        $temp = \App\Book::where('S_MA', $book->S_MA)->first();
+                                        $images = $temp->image()->first();
+                                        ?>
+                                        <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$images->HA_URL1}}" alt=""></a>
                                     </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
+                                    <div class="single-item-body text-center">
+                                        <p class="single-item-title" style="font-size: 20px">{{$book->S_TEN}}</p>
+                                        <h5 class="single-item-price" style="font-size: 15px">
+                                            <span>{{number_format($book->S_GIA)}} đ</span>
+                                        </h5>
                                     </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href=""><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+                                    <div class="clearfix"></div>
+                                    <div class="single-item-caption text-center">
+                                        <a class="btn btn-primary" href=""><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
+                                        {{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}
                                         <div class="clearfix"></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
-                                <div class="single-item">
-                                    <div class="ribbon-wrapper"><div class="ribbon sale">Sale</div></div>
-
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="source/assets/dest/images/products/2.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span class="flash-del">$34.55</span>
-                                            <span class="flash-sale">$33.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="single-item">
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="source/assets/dest/images/products/3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="single-item">
-                                    <div class="single-item-header">
-                                        <a href="product.html"><img src="source/assets/dest/images/products/3.jpg" alt=""></a>
-                                    </div>
-                                    <div class="single-item-body">
-                                        <p class="single-item-title">Sample Woman Top</p>
-                                        <p class="single-item-price">
-                                            <span>$34.55</span>
-                                        </p>
-                                    </div>
-                                    <div class="single-item-caption">
-                                        <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div> <!-- .beta-products-list -->
 

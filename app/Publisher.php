@@ -10,6 +10,6 @@ class Publisher extends Model
     protected $primaryKey = 'NXB_MA';
 
     public function book(){
-        return $this->hasMany('App\Book','NXB_MA','NXB_MA');
+        return $this->hasMany('App\Book','NXB_MA');
     }
 }

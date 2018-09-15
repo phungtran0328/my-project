@@ -21,21 +21,8 @@ Route::get('/', function () {
 //]);
 
 Route::get('/category/{id}','CategoryController@category');
+Route::get('/detail/{id}','DetailController@getDetail');
 
-//Route::get('login',[
-//    'as'=>'login',
-//    'uses'=>'LoginController@showLoginForm'
-//]);
-//
-//Route::post('login',[
-//    'as'=>'login',
-//    'uses'=>'LoginController@login'
-//]);
-
-//Route::get('dang-xuat',[
-//    'as'=>'dang-xuat',
-//    'uses'=>'khController@postDangxuat'
-//]);
 
 Auth::routes();
 
