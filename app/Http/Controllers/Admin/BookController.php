@@ -34,6 +34,7 @@ class BookController extends Controller
         $kindOfBook=KindOfBook::where('LS_MA', $id)->first();
         return view('admin.book.update_kob', compact('kindOfBook'));
     }
+
     public function updateKindOfBook(Request $request, $id){
         $this->validate($request,[
             'name' => 'required',
