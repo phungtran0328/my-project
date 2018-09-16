@@ -55,9 +55,21 @@ Route::group(['prefix' => 'admin'], function () {
 //    Route::get('admin/register', 'Admin\AuthController@showRegistrationForm');
 //    Route::post('admin/register', 'Admin\AuthController@register');
 
+    //home
     Route::get('/index', 'Admin\HomeController@index');
 
+    //chỉnh sửa profile nhân viên
     Route::get('/profile/{id}','Admin\UpdateController@showUpdateForm');
     Route::post('/profile/{id}','Admin\UpdateController@updateProfile');
+
+    //thêm, hiển thị danh sách loại sách
+    Route::get('/kind-of-book','Admin\BookController@showKind_of_book');
+    Route::post('/kind-of-book','Admin\BookController@kind_of_book');
+
+    //chỉnh sửa loại sách
+    Route::get('/kind-of-book/update/{id}','Admin\BookController@showUpdate');
+    Route::post('/kind-of-book/update/{id}','Admin\BookController@updateKindOfBook');
+
+    Route::get('/kind-of-book/delete/{id}','Admin\BookController@deleteKindOfBook');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });
