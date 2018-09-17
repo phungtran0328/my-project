@@ -63,13 +63,21 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/profile/{id}','Admin\UpdateController@updateProfile');
 
     //thêm, hiển thị danh sách loại sách
-    Route::get('/kind-of-book','Admin\BookController@showKind_of_book');
-    Route::post('/kind-of-book','Admin\BookController@kind_of_book');
+    Route::get('/kind-of-book','Admin\KindOfBookController@showKind_of_book');
+    Route::post('/kind-of-book','Admin\KindOfBookController@kind_of_book');
 
     //chỉnh sửa loại sách
-    Route::get('/kind-of-book/update/{id}','Admin\BookController@showUpdate');
-    Route::post('/kind-of-book/update/{id}','Admin\BookController@updateKindOfBook');
+    Route::get('/kind-of-book/update/{id}','Admin\KindOfBookController@showUpdate');
+    Route::post('/kind-of-book/update/{id}','Admin\KindOfBookController@updateKindOfBook');
+    //xóa loại sách
+    Route::get('/kind-of-book/delete/{id}','Admin\KindOfBookController@deleteKindOfBook');
 
-    Route::get('/kind-of-book/delete/{id}','Admin\BookController@deleteKindOfBook');
+    //route dạng resource [index, create, store, show{$id}, edit{$id}, update{$id}, destroy{$id}]
+    Route::resource('cover-type','Admin\CoverTypeController')->only(['index','create','store','show','update']);
+
+    //promotion
+    Route::resource('promotion','Admin\PromotionController')->except(['edit','destroy']);
+
+    Route::get('promotion/delete/{id}','Admin\PromotionController@delete');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

@@ -89,8 +89,8 @@
                                 <td>{{$kind_of_book[$i]->LS_TEN}}</td>
                                 <td>{{$kind_of_book[$i]->LS_MOTA}}</td>
                                 <td class="text-center">
-                                    <a href="{{url('/admin/kind-of-book/update',$kind_of_book[$i]->LS_MA)}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    | <a href="{{url('/admin/kind-of-book/delete',$kind_of_book[$i]->LS_MA)}}"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <a class="btn btn-default" href="{{url('/admin/kind-of-book/update',$kind_of_book[$i]->LS_MA)}}"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a class="btn btn-default" href="{{url('/admin/kind-of-book/delete',$kind_of_book[$i]->LS_MA)}}"><span class="glyphicon glyphicon-remove"></span></a>
                                 </td>
                             </tr>
                             @endfor
@@ -103,26 +103,3 @@
     </div>
 </div>
 @endsection
-<script>
-    function editKindOfBook() {
-        /*var html= "";
-        html+= "<form action='' method=''>";
-        html+= "<input type='hidden' name='_token' value='"+""+"'>";
-        html += "<fieldset>";
-        html += "<div class='form-group'>";
-        html += "<input type='text' class='form-control' value='' name='name'>";
-        html += "</div>";
-        html += "<div class='form-group'>";
-        html += "<input type='text' class='form-control' value='' name='description'>";
-        html += "</div>";
-        html += "<div class='form-group'>";
-        html += "<button class='btn btn-primary'>Cập nhật</button>";
-        html += "</div>";
-        html += "</fieldset>";
-        html+= "</form>";
-        document.getElementById("myEdit").innerHTML=html;*/
-    }
-    function removeKindOfBook() {
-
-    }
-</script>

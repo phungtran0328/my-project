@@ -6,7 +6,7 @@ use App\KindOfBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class BookController extends Controller
+class KindOfBookController extends Controller
 {
     public function showKind_of_book(){
         $kind_of_book=KindOfBook::all();

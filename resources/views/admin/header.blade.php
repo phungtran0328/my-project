@@ -263,7 +263,13 @@
                             <a href="{{url('/admin/kind-of-book')}}">Thể loại</a>
                         </li>
                         <li>
-                            <a href="">Bìa</a>
+                            <a href="{{url('/admin/cover-type')}}">Bìa</a>
+                        </li>
+                        <li>
+                            <a href="{{url('/admin/promotion')}}">Khuyến mãi</a>
+                        </li>
+                        <li>
+                            <a href="">Hình ảnh</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
