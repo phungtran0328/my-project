@@ -77,7 +77,16 @@ Route::group(['prefix' => 'admin'], function () {
 
     //promotion
     Route::resource('promotion','Admin\PromotionController')->except(['edit','destroy']);
-
+    //promotion delete
     Route::get('promotion/delete/{id}','Admin\PromotionController@delete');
+
+    //publisher
+    Route::resource('publisher','Admin\PublisherController')->except(['edit','destroy']);
+    Route::get('publisher/delete/{id}','Admin\PublisherController@delete');
+
+    Route::resource('author','Admin\AuthorController')->except(['edit','destroy']);
+    Route::get('author/delete/{id}','Admin\AuthorController@delete');
+
+    Route::resource('book','Admin\BookController')->only('index','create','store');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

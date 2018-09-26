@@ -74,6 +74,13 @@
 <!-- Custom Theme JavaScript -->
 <script src="admin/assets/dist/js/sb-admin-2.js"></script>
 
+<script>
+/*    $(document).ready(function() {
+        $('#myListBook').DataTable( {
+            "scrollX": true
+        } );
+    } );*/
+</script>
 </body>
 
 </html>

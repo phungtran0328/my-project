@@ -251,13 +251,13 @@
                     <a href="#"><i class="fa fa-book fa-fw"></i> Quản lý sách<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="">Sách</a>
+                            <a href="{{url('/admin/book')}}">Sách</a>
                         </li>
                         <li>
-                            <a href="">Tác giả</a>
+                            <a href="{{url('/admin/author')}}">Tác giả</a>
                         </li>
                         <li>
-                            <a href="">Nhà xuất bản</a>
+                            <a href="{{url('/admin/publisher')}}">Nhà xuất bản</a>
                         </li>
                         <li>
                             <a href="{{url('/admin/kind-of-book')}}">Thể loại</a>
