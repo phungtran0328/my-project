@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Book;
+use App\CoverType;
+use App\KindOfBook;
+use App\Promotion;
+use App\Publisher;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,7 +30,14 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('admin.book.create_book');
+        $publishers = Publisher::all();
+        $promotions = Promotion::all();
+        $coverTypes = CoverType::all();
+        $kindOfBooks = KindOfBook::all();
+//        $publisher_name=$publishers->pluck('NXB_TEN')->all();
+//        $publisher_id=$publishers->pluck('NXB_MA')->all();
+        //dd($publisher_id);
+        return view('admin.book.create_book', compact('publishers','promotions','coverTypes','kindOfBooks'));
     }
 
     /**
@@ -37,7 +48,40 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            'price'=>'required',
+            'publish_date'=>'required',
+            'inventory_num'=>'required',
+            'publisher'=>'required',
+            'coverType'=>'required',
+            'kindOfBook'=>'required',
+        ],
+            [
+                'name.required'=>'Vui lòng nhập tên sách !',
+                'price.required'=>'Vui lòng nhập giá sách !',
+                'publish_date.required'=>'Vui lòng nhập ngày xuất bản !',
+                'inventory_num.required'=>'Vui lòng nhập số lượng tồn !',
+                'publisher.required'=>'Vui lòng chọn nhà xuất bản !',
+                'coverType.required'=>'Vui lòng chọn loại bìa !',
+                'kindOfBook.required'=>'Vui lòng chọn loại sách !',
+            ]);
+
+        $book = new Book();
+        $book->KM_MA=$request->promotion;
+        $book->NXB_MA=$request->publisher;
+        $book->LS_MA=$request->kindOfBook;
+        $book->LB_MA=$request->coverType;
+        $book->S_TEN=$request->name;
+        $book->S_SLTON=$request->inventory_num;
+        $book->S_KICHTHUOC=$request->size;
+        $book->S_SOTRANG=$request->page_num;
+        $book->S_NGAYXB=$request->publish_date;
+        $book->S_TAIBAN=$request->republish;
+        $book->S_GIOITHIEU=$request->description;
+        $book->S_GIA=$request->price;
+        $book->save();
+        return redirect('/admin/book')->with('messAddBook','Thêm sách thành công !');
     }
 
     /**

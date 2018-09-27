@@ -94,7 +94,7 @@
                                         $temp = \App\Book::where('S_MA', $book->S_MA)->first();
                                         $images = $temp->image()->first();
                                         ?>
-                                        <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$images->HA_URL1}}" alt=""></a>
+                                        <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$images->HA_URL}}" alt=""></a>
                                     </div>
                                     <div class="single-item-body text-center">
                                         <p class="single-item-title" style="font-size: 20px">{{$book->S_TEN}}</p>

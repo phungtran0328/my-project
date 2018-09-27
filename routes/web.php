@@ -88,5 +88,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('author/delete/{id}','Admin\AuthorController@delete');
 
     Route::resource('book','Admin\BookController')->only('index','create','store');
+    Route::resource('book/image','Admin\ImageController')->only('create','store');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

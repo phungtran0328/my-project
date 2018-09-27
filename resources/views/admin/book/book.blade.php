@@ -21,15 +21,36 @@
                         <h5>Quản lý sách</h5>
                     </div>
                     <div class="panel-body">
-                        <a href="{{url('/admin/book/create')}}" class="btn btn-primary" style="width: 100px;"> + </a>
-
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="{{url('/admin/book/create')}}" class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-plus"> Sách</span>
+                                </a>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="{{url('admin/book/image/create')}}" class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-pencil"> Hình ảnh</span>
+                                </a>
+                            </div>
+                            <div class="col-md-2">
+                                <a href="" class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-pencil"> Tác giả</span>
+                                </a>
+                            </div>
+                        </div>
                         <hr>
-                        {{--@if(Session::has('messageAdd'))
+                        @if(Session::has('messAddBook'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
+                                {{Session::get('messAddBook')}}
                             </div>
-                        @endif--}}
+                        @endif
+                        @if(Session::has('messAddImage'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messAddImage')}}
+                            </div>
+                        @endif
                         {{--@if(Session::has('messageUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -81,7 +102,15 @@
                                         {{--increment not reset in second page--}}
                                         <td>{{$index + $books->firstItem()}}</td>
                                         <td>{{$book->S_TEN}}</td>
-                                        <td>{{$authors[0]->TG_TEN}}</td>
+                                        @if(is_null($authors))
+                                            <td>Chưa có thông tin tác giả</td>
+                                        @else
+                                            <td>
+                                                @foreach($authors as $author)
+                                                    {{$author->TG_TEN}} <br>
+                                                @endforeach
+                                            </td>
+                                        @endif
                                         <td>{{$book->S_SLTON}}</td>
                                         <td>{{$book->S_KICHTHUOC}}</td>
                                         <td>{{$book->S_SOTRANG}}</td>
@@ -91,14 +120,18 @@
                                         <td >{{$book->S_GIOITHIEU}}</td>
                                         <td>{{$book->S_GIA}}</td>
                                         @if(isset($promotion))
-                                        <td>{{$promotion->KM_GIAM}}</td>
-                                            @else
+                                            <td>{{$promotion->KM_GIAM}}</td>
+                                        @else
                                             <td></td>
                                         @endif
                                         <td>{{$publisher->NXB_TEN}}</td>
                                         <td>{{$cover_type->LB_TEN}}</td>
                                         <td>{{$kind_of_book->LS_TEN}}</td>
-                                        <td></td>
+                                        @if(isset($image))
+                                            <td><img src="images/{{$image->HA_URL}}" width="50px" height="50px"></td>
+                                        @else
+                                            <td>Chưa có hình ảnh</td>
+                                        @endif
                                         <td class="text-center">
                                             <a class="btn btn-default" href="">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>

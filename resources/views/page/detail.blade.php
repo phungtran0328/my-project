@@ -50,11 +50,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="float-left" id="myImg" style="margin-bottom: 10px">
-                                <img src="images/{{$images[0]->HA_URL1}}" class="img-rounded zoom" alt="" width="350px" height="300px">
+                                <img src="images/{{$images[0]->HA_URL}}" class="img-rounded zoom" alt="" width="350px" height="300px">
                             </div>
                             @foreach($images as $image)
                                 <a id="myImgSmall" class="btn-default">
-                                    <img src="images/{{$image->HA_URL1}}" width="70px" height="70px" onclick="clickImg(this)">
+                                    <img src="images/{{$image->HA_URL}}" width="70px" height="70px" onclick="clickImg(this)">
                                 </a>
                             @endforeach
 
@@ -75,9 +75,11 @@
                                 <div class="col-md-8">
                                     <form class="form-inline ">
                                         <p style="margin-bottom: 10px">Số lượng:</p>
-                                        <span class="btn btn-default btn-group"> - </span>
+                                        <button class="btn btn-default btn-group" style="width: 40px"><span> - </span></button>
                                         <input type="text" class="btn-group" style="width: 45px" value="1">
-                                        <span class="btn btn-default btn-group"> + </span>
+                                        <button class="btn btn-default btn-group" style="width: 40px">
+                                            <span> + </span>
+                                        </button>
                                         <button class="btn btn-primary" style="margin-left: 50px">
                                             <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
                                     </form>
@@ -149,7 +151,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <p style="margin-bottom: 10px"><b>{{$book->S_TEN}}</b></p>
-                    <p>{{$book->S_GIOITHIEU}}</p>
+                    <p style="text-align: j">{{$book->S_GIOITHIEU}}</p>
                 </div>
             </div>
         </div>
