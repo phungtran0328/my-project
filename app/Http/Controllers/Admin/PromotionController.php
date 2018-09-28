@@ -16,7 +16,7 @@ class PromotionController extends Controller
     public function index()
     {
         $promotions = Promotion::all();
-        return view('admin.book.promotion', compact('promotions'));
+        return view('admin.book.promotion.promotion', compact('promotions'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        return view('admin.book.promotion');
+        return view('admin.book.promotion.promotion');
     }
 
     /**
@@ -70,7 +70,7 @@ class PromotionController extends Controller
     public function show($id)
     {
         $promotion=Promotion::where('KM_MA',$id)->first();
-        return view('admin.book.update_promotion', compact('promotion'));
+        return view('admin.book.promotion.update_promotion', compact('promotion'));
     }
 
     /**

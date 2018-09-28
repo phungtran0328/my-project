@@ -29,12 +29,12 @@
                             </div>
                             <div class="col-md-2">
                                 <a href="{{url('admin/book/image/create')}}" class="btn btn-primary btn-block">
-                                    <span class="glyphicon glyphicon-pencil"> Hình ảnh</span>
+                                    <span class="glyphicon glyphicon-plus"> Hình ảnh</span>
                                 </a>
                             </div>
                             <div class="col-md-2">
-                                <a href="" class="btn btn-primary btn-block">
-                                    <span class="glyphicon glyphicon-pencil"> Tác giả</span>
+                                <a href="{{url('admin/book/author/create')}}" class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-plus"> Tác giả</span>
                                 </a>
                             </div>
                         </div>
@@ -49,6 +49,18 @@
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('messAddImage')}}
+                            </div>
+                        @endif
+                        @if(Session::has('messBookAuthor'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messBookAuthor')}}
+                            </div>
+                        @endif
+                        @if(Session::has('messBookTranslator'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messBookTranslator')}}
                             </div>
                         @endif
                         {{--@if(Session::has('messageUpdate'))
@@ -102,12 +114,14 @@
                                         {{--increment not reset in second page--}}
                                         <td>{{$index + $books->firstItem()}}</td>
                                         <td>{{$book->S_TEN}}</td>
-                                        @if(is_null($authors))
-                                            <td>Chưa có thông tin tác giả</td>
-                                        @else
+                                        @if(isset($authors) or isset($translators))
                                             <td>
                                                 @foreach($authors as $author)
-                                                    {{$author->TG_TEN}} <br>
+                                                    {{$author->TG_TEN}} <br><br>
+                                                @endforeach
+                                                @foreach($translators as $translator)
+                                                    {{$translator->TG_TEN}} <br><br>
+                                                    {{$translator->pivot->DICHGIA}} (Người dịch)
                                                 @endforeach
                                             </td>
                                         @endif

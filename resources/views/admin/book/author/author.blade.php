@@ -5,12 +5,12 @@
  * Date: 09/16/2018
  * Time: 1:20 PM
  */?>
-@extends('admin/master')
+@extends('admin.master')
 @section('content')
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Nhà xuất bản</h1>
+                <h1 class="page-header">Tác giả</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -18,10 +18,10 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Danh sách nhà xuất bản</h5>
+                        <h5>Danh sách tác giả</h5>
                     </div>
                     <div class="panel-body">
-                        <a href="{{url('/admin/publisher/create')}}" class="btn btn-primary" style="width: 100px;"> + </a>
+                        <a href="{{url('/admin/author/create')}}" class="btn btn-primary" style="width: 100px;"> + </a>
 
                         <hr>
                         @if(Session::has('messageAdd'))
@@ -48,28 +48,30 @@
                                 <tr>
                                     <th style="width: 5%">STT</th>
                                     <th>Tên</th>
+                                    <th>Mô tả</th>
                                     <th>Ghi chú</th>
                                     <th style="width: 15%">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($publishers as $index=>$publisher)
+                                @foreach($authors as $index=>$author)
                                     <tr>
                                         {{--increment not reset in second page--}}
-                                        <td>{{$index + $publishers->firstItem()}}</td>
-                                        <td>{{$publisher->NXB_TEN}}</td>
-                                        <td>{{$publisher->NXB_GHICHU}}</td>
+                                        <td>{{$index + $authors->firstItem()}}</td>
+                                        <td>{{$author->TG_TEN}}</td>
+                                        <td>{{$author->TG_MOTA}}</td>
+                                        <td>{{$author->TG_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/publisher',$publisher->NXB_MA)}}">
+                                            <a class="btn btn-default" href="{{url('admin/author',$author->TG_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/publisher/delete',$publisher->NXB_MA)}}">
+                                            <a class="btn btn-default" href="{{url('admin/author/delete',$author->TG_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$publishers->render()}}
+                            {{$authors->render()}}
                         </div>
                     </div>
                 </div>

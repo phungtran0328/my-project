@@ -16,7 +16,7 @@ class PublisherController extends Controller
     public function index()
     {
         $publishers=Publisher::paginate(10);
-        return view('admin.book.publisher',compact('publishers'));
+        return view('admin.book.publisher.publisher',compact('publishers'));
     }
 
     /**
@@ -26,7 +26,7 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        return view('admin.book.create_publisher');
+        return view('admin.book.publisher.create_publisher');
     }
 
     /**
@@ -58,7 +58,7 @@ class PublisherController extends Controller
     public function show($id)
     {
         $publisher=Publisher::where('NXB_MA',$id)->first();
-        return view('admin.book.update_publisher', compact('publisher'));
+        return view('admin.book.publisher.update_publisher', compact('publisher'));
     }
 
     /**

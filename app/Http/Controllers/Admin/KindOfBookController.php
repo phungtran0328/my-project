@@ -10,7 +10,7 @@ class KindOfBookController extends Controller
 {
     public function showKind_of_book(){
         $kind_of_book=KindOfBook::all();
-        return view('admin.book.kind_of_book', compact('kind_of_book'));
+        return view('admin.book.kind_of_book.kind_of_book', compact('kind_of_book'));
     }
 
     public function kind_of_book(Request $request){
@@ -32,7 +32,7 @@ class KindOfBookController extends Controller
 
     public function showUpdate($id){
         $kindOfBook=KindOfBook::where('LS_MA', $id)->first();
-        return view('admin.book.update_kob', compact('kindOfBook'));
+        return view('admin.book.kind_of_book.update_kob', compact('kindOfBook'));
     }
 
     public function updateKindOfBook(Request $request, $id){

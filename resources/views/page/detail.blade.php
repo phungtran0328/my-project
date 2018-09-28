@@ -49,20 +49,36 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <div class="float-left" id="myImg" style="margin-bottom: 10px">
-                                <img src="images/{{$images[0]->HA_URL}}" class="img-rounded zoom" alt="" width="350px" height="300px">
-                            </div>
-                            @foreach($images as $image)
-                                <a id="myImgSmall" class="btn-default">
-                                    <img src="images/{{$image->HA_URL}}" width="70px" height="70px" onclick="clickImg(this)">
-                                </a>
-                            @endforeach
-
+                            @if(!empty($images[0]))
+                                <div class="float-left" id="myImg" style="margin-bottom: 10px">
+                                    <img src="images/{{$images[0]->HA_URL}}" class="img-rounded zoom" alt="" width="350px" height="300px">
+                                </div>
+                                @foreach($images as $image)
+                                    <a id="myImgSmall" class="btn-default">
+                                        <img src="images/{{$image->HA_URL}}" width="70px" height="70px" onclick="clickImg(this)">
+                                    </a>
+                                @endforeach
+                            @else
+                                <div class="float-left" id="myImg" style="margin-bottom: 10px">
+                                    <img src="images/sorry-image-not-available.jpg" class="img-rounded zoom" alt="" width="350px" height="300px">
+                                </div>
+                            @endif
                         </div>
                         <div class="col-md-8">
                             <div>
                                 <h3>{{$book->S_TEN}}</h3>
-                                <p style="margin-bottom: 10px; margin-top: 10px;">Tác giả: {{$author[0]->TG_TEN}}</p>
+                                @if(isset($authors) or isset($translators))
+                                    <p style="margin-bottom: 10px; margin-top: 10px;">Tác giả:
+                                        @foreach($authors as $author)
+                                            {{$author->TG_TEN}} <br>
+                                        @endforeach
+                                        @foreach($translators as $translator)
+                                            {{$translator->TG_TEN}} <br>
+                                        @endforeach
+                                    </p>
+                                @else
+                                    <p style="margin-bottom: 10px; margin-top: 10px;">Chưa cập nhật tác giả</p>
+                                @endif
                             </div>
                             <hr>
                             <div>
@@ -108,10 +124,18 @@
                                 <td>{{$publisher->NXB_TEN}}</td>
                             </tr>
                             @endif
-                            @if(isset($author[0]))
+                            @if(isset($authors) or isset($translators))
                             <tr>
                                 <th scope="row">Tác giả</th>
-                                <td>{{$author[0]->TG_TEN}}</td>
+                                <td>
+                                    @foreach($authors as $author)
+                                        {{$author->TG_TEN}} <br>
+                                    @endforeach
+                                    @foreach($translators as $translator)
+                                        {{$translator->TG_TEN}} <br><br>
+                                        {{$translator->pivot->DICHGIA}} (Người dịch)
+                                    @endforeach
+                                </td>
                             </tr>
                             @endif
                             @if(isset($book->S_NGAYXB))
@@ -151,7 +175,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <p style="margin-bottom: 10px"><b>{{$book->S_TEN}}</b></p>
-                    <p style="text-align: j">{{$book->S_GIOITHIEU}}</p>
+                    <p style="text-align: justify">{{$book->S_GIOITHIEU}}</p>
                 </div>
             </div>
         </div>

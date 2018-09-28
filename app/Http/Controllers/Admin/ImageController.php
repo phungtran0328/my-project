@@ -81,6 +81,7 @@ class ImageController extends Controller
             $image_add->HA_URL=$book_image[$i]['HA_URL'];
             $image_add->save();
         }
+        //$images = implode('|', $image); lưu mảng vào 1 trường duy nhất cách nhau dấu |
         //Image::insert($book_image); bị lỗi updated_at nên không xài được
         return redirect('admin/book')->with('messAddImage','Cập nhật hình ảnh thành công !');
     }

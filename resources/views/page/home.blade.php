@@ -92,12 +92,16 @@
                                         <?php
 //                                        $id_book = $book->S_MA;
                                         $temp = \App\Book::where('S_MA', $book->S_MA)->first();
-                                        $images = $temp->image()->first();
+                                        $image = $temp->image()->first();
                                         ?>
-                                        <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$images->HA_URL}}" alt=""></a>
+                                        @if(isset($image))
+                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt=""></a>
+                                            @else
+                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/sorry-image-not-available.jpg" alt=""></a>
+                                        @endif
                                     </div>
                                     <div class="single-item-body text-center">
-                                        <p class="single-item-title" style="font-size: 20px">{{$book->S_TEN}}</p>
+                                        <p class="single-item-title" style="font-size: 16px">{{$book->S_TEN}}</p>
                                         <h5 class="single-item-price" style="font-size: 15px">
                                             <span>{{number_format($book->S_GIA)}} đ</span>
                                         </h5>

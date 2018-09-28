@@ -6,7 +6,7 @@
  * Time: 1:19 PM
  */
 ?>
-@extends('admin/master')
+@extends('admin.master')
 @section('content')
 <div id="page-wrapper">
     <div class="row">

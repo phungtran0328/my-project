@@ -16,7 +16,7 @@ class CoverTypeController extends Controller
     public function index()
     {
         $cover_type = CoverType::all();
-        return view('admin.book.cover_type', compact('cover_type'));
+        return view('admin.book.cover_type.cover_type', compact('cover_type'));
     }
 
     /**
@@ -26,7 +26,7 @@ class CoverTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.book.cover_type');
+        return view('admin.book.cover_type.cover_type');
     }
 
     /**
@@ -58,7 +58,7 @@ class CoverTypeController extends Controller
     public function show($id)
     {
         $cover=CoverType::where('LB_MA', $id)->first();
-        return view('admin.book.update_cover', compact('cover'));
+        return view('admin.book.cover_type.update_cover', compact('cover'));
     }
 
     /**

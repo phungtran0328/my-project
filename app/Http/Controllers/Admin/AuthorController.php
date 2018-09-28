@@ -16,7 +16,7 @@ class AuthorController extends Controller
     public function index()
     {
         $authors=Author::paginate(10);
-        return view('admin.book.author',compact('authors'));
+        return view('admin.book.author.author',compact('authors'));
     }
 
     /**
@@ -26,7 +26,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        return view('admin.book.create_author');
+        return view('admin.book.author.create_author');
     }
 
     /**
@@ -59,7 +59,7 @@ class AuthorController extends Controller
     public function show($id)
     {
         $author=Author::where('TG_MA',$id)->first();
-        return view('admin.book.update_author',compact('author'));
+        return view('admin.book.author.update_author',compact('author'));
     }
 
     /**

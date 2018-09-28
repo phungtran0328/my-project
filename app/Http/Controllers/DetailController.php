@@ -13,13 +13,15 @@ class DetailController extends Controller
 //        dd($id);
         $publisher = $book->publisher()->first();
 //        dd($publisher);
-        $author = $book->author()->get();
+        $authors = $book->author()->get();
+        $translators=$book->translator()->get();
 //        dd($author);
         $cover_type = $book->cover_type()->first();
 //        dd($cover_type);
         $kind_of_book = $book->kind_of_book()->first();
         $images = $book->image()->get();
 
-        return view('page.detail', compact('book','publisher','author','cover_type','kind_of_book','images'));
+        return view('page.detail', compact('book','publisher','authors',
+            'cover_type','kind_of_book','images','translators'));
     }
 }
