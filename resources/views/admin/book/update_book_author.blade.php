@@ -47,8 +47,9 @@
                                                 <?php
                                                 $temp=\App\Book::where('S_MA', $book->S_MA)->first();
                                                 $book_author=$temp->author()->first();
+                                                $book_translator=$temp->translator()->first();
                                                 ?>
-                                                @if(empty($book_author))
+                                                @if(empty($book_author) and empty($book_translator))
                                                     <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
                                                 @endif
                                             @endforeach
@@ -92,8 +93,9 @@
                                                 <?php
                                                 $temp=\App\Book::where('S_MA', $book->S_MA)->first();
                                                 $book_author=$temp->author()->first();
+                                                $book_translator=$temp->translator()->first();
                                                 ?>
-                                                @if(empty($book_author))
+                                                @if(empty($book_author) and empty($book_translator))
                                                     <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
                                                 @endif
                                             @endforeach

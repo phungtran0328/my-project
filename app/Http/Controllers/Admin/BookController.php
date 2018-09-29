@@ -92,7 +92,16 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book=Book::where('S_MA',$id)->first();
+        $publisher = $book->publisher()->first();
+        $authors = $book->author()->get();
+        $translators = $book->translator()->get();
+        $promotion = $book->promotion()->first();
+        $kind_of_book = $book->kind_of_book()->first();
+        $cover_type = $book->cover_type()->first();
+        $images = $book->image()->get();
+        return view('admin.book.book_detail',compact('book','publisher','authors','translators','promotion',
+            'kind_of_book','cover_type','images'));
     }
 
     /**
@@ -103,7 +112,16 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book=Book::where('S_MA',$id)->first();
+        $publishers = $book->publisher()->get();
+//        $authors = $book->author()->get();
+//        $translators = $book->translator()->get();
+        $promotions = $book->promotion()->get();
+        $kindOfBooks = $book->kind_of_book()->get();
+        $coverTypes = $book->cover_type()->get();
+//        $images = $book->image()->get();
+        return view('admin.book.update_book',compact('book','publishers','promotions',
+            'kindOfBooks','coverTypes'));
     }
 
     /**

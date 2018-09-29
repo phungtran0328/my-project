@@ -158,7 +158,7 @@ class BookAuthorController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
