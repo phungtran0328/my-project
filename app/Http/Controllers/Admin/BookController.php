@@ -113,15 +113,15 @@ class BookController extends Controller
     public function edit($id)
     {
         $book=Book::where('S_MA',$id)->first();
-        $publishers = $book->publisher()->get();
+//        $publisher=$book->publisher()->first();
+//        $publishers = Publisher::all();
 //        $authors = $book->author()->get();
 //        $translators = $book->translator()->get();
-        $promotions = $book->promotion()->get();
-        $kindOfBooks = $book->kind_of_book()->get();
-        $coverTypes = $book->cover_type()->get();
+//        $promotions = Promotion::all();
+//        $kindOfBooks = KindOfBook::all();
+//        $coverTypes = CoverType::all();
 //        $images = $book->image()->get();
-        return view('admin.book.update_book',compact('book','publishers','promotions',
-            'kindOfBooks','coverTypes'));
+        return view('admin.book.update_book',compact('book'));
     }
 
     /**
@@ -133,7 +133,44 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+            'name'=>'required',
+            'publisher'=>'required',
+            'kindOfBook'=>'required',
+            'coverType'=>'required',
+            'price'=>'required',
+            'publish_date'=>'before:today',
+            'inventory_num'=>'required'
+        ],[
+            'name.required'=>'Vui lòng nhập tên sách !',
+            'publisher.required'=>'Vui lòng chọn nhà xuất bản !',
+            'kindOfBook.required'=>'Vui lòng chọn loại sách !',
+            'coverType.required'=>'Vui lòng chọn loại bìa !',
+            'price.required'=>'Vui lòng nhập giá !',
+            'publish_date.before'=>'Ngày xuất bản không lớn hơn hôm nay !',
+            'inventory_num.required'=>'Vui lòng nhập số lượng tồn !'
+        ]);
+
+        $book=Book::where('S_MA',$id)->first();
+        $book->S_TEN=$request->name;
+        $book->NXB_MA=$request->publisher;
+        $book->LS_MA=$request->kindOfBook;
+        $book->LB_MA=$request->coverType;
+        $book->S_GIA=$request->price;
+        $book->KM_MA=$request->promotion;
+        $book->S_NGAYXB=$request->publish_date;
+        $book->S_TAIBAN=$request->republish;
+        $book->S_KICHTHUOC=$request->size;
+        $book->S_SOTRANG=$request->page_num;
+        $book->S_SLTON=$request->inventory_num;
+        $book->S_GIOITHIEU=$request->description;
+
+        if ($book->save()){
+            return redirect('admin/book')->with('messUpdateBook','Cập nhật thành công !');
+        }
+        else {
+            return redirect()->back()->with('messUpdateBookError','Cập nhật không thành công !');
+        }
     }
 
     /**

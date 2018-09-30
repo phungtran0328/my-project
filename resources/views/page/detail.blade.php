@@ -175,7 +175,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <p style="margin-bottom: 10px"><b>{{$book->S_TEN}}</b></p>
-                    <p style="text-align: justify">{{$book->S_GIOITHIEU}}</p>
+                    <textarea style="text-align: justify; border:none">{{$book->S_GIOITHIEU}}</textarea>
                 </div>
             </div>
         </div>

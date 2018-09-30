@@ -30,7 +30,7 @@ class BookAuthorController extends Controller
     {
         $authors=Author::all();
         $books = Book::all();
-        return view('admin.book.update_book_author',compact('authors','books'));
+        return view('admin.book.create_book_author',compact('authors','books'));
     }
 
     /**
@@ -95,6 +95,9 @@ class BookAuthorController extends Controller
     }
 
     public function storeTrans(Request $request){
+
+        //Trường hợp lưu vào bảng dichsach
+
         $this->validate($request,[
             'book'=>'required',
             'author'=>'required',

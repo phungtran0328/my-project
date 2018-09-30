@@ -27,7 +27,7 @@ class ImageController extends Controller
     public function create()
     {
         $books = Book::all();
-        return view('admin.book.create_image', compact('books'));
+        return view('admin.book.create_book_image', compact('books'));
     }
 
     /**
@@ -94,7 +94,9 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::where('S_MA',$id)->first();
+        $images=$book->image()->get();
+        return view('admin.book.update_book_image', compact('book','images'));
     }
 
     /**
@@ -117,7 +119,53 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $images = array();
+        if ($files=$request->file('images')){
+            foreach ($files as $file){
+                // get name file upload
+                $name=$file->getClientOriginalName();
+                //save image to public_path
+                $destinationPath = public_path('images');
+//                dd($destinationPath);
+                $file->move($destinationPath,$name);
+                $images[]=$name;
+            }
+        }
+
+        $book_image = array();
+        if (!empty($images)){
+            for ($i=0;$i<count($images);$i++){
+                // lưu tạm vào mảng book_image
+                $book_image[]=[
+                    'S_MA'=>$request->id,
+                    'HA_URL'=>$images[$i]
+                ];
+            }
+        }
+        //dd($book_image);
+        if (!empty($book_image)){
+            $image_add= Image::where('S_MA',$id)->get();
+//            dd($image_add);
+            if ($image_add != NULL){
+                for ($i=0;$i<count($book_image);$i++){
+                    $image_add->S_MA=$book_image[$i]['S_MA'];
+                    $image_add->HA_URL=$book_image[$i]['HA_URL'];
+                    $image_add->save();
+                }
+            }
+            else {
+                for ($i=0;$i<count($book_image);$i++){
+                    //lưu từng phần tử của book_image vào database
+                    $image_add=new Image();
+                    $image_add->S_MA=$book_image[$i]['S_MA'];
+                    $image_add->HA_URL=$book_image[$i]['HA_URL'];
+                    $image_add->save();
+                }
+            }
+        }
+        //$images = implode('|', $image); lưu mảng vào 1 trường duy nhất cách nhau dấu |
+        //Image::insert($book_image); bị lỗi updated_at nên không xài được
+        return redirect('admin/book')->with('messAddImage','Cập nhật hình ảnh thành công !');
     }
 
     /**

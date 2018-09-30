@@ -63,12 +63,12 @@
                                 {{Session::get('messBookTranslator')}}
                             </div>
                         @endif
-                        {{--@if(Session::has('messageUpdate'))
+                        @if(Session::has('messUpdateBook'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageUpdate')}}
+                                {{Session::get('messUpdateBook')}}
                             </div>
-                        @endif--}}
+                        @endif
                         {{--@if(Session::has('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

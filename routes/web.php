@@ -87,10 +87,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('author','Admin\AuthorController')->except(['edit','destroy']);
     Route::get('author/delete/{id}','Admin\AuthorController@delete');
 
-    Route::resource('book','Admin\BookController')->only('index','create','store','show');
+    //book show, update
+    Route::resource('book','Admin\BookController')->only('index','create','store','show','update');
     Route::get('book/edit/{id}','Admin\BookController@edit');
-    Route::resource('book/image','Admin\ImageController')->only('create','store');
+
+    //book image
+    Route::resource('book/image','Admin\ImageController')->only('create','store','show','update');
+
+    //book author and translator
     Route::resource('book/author','Admin\BookAuthorController')->only('create','store');
     Route::post('book/author/translator','Admin\BookAuthorController@storeTrans');
+
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

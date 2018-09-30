@@ -22,11 +22,31 @@
                         <h5>Cập nhật sách</h5>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-success btn-block" style="width: 150px" href="{{url('/admin/book')}}">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                        </a>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <a class="btn btn-success btn-block" href="{{url('/admin/book')}}">
+                                    <span class="glyphicon glyphicon-arrow-left"></span>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a class="btn btn-success btn-block" href="{{url('/admin/book')}}">
+                                    <span class="glyphicon glyphicon-pencil">  Tác giả</span>
+                                </a>
+                            </div>
+                            <div class="col-md-3">
+                                <a class="btn btn-success btn-block" href="{{url('/admin/book/image',$book->S_MA)}}">
+                                    <span class="glyphicon glyphicon-pencil">  Hình ảnh</span>
+                                </a>
+                            </div>
+                        </div>
                         <br>
-                        <form action="{{url('/admin/book')}}" method="post">
+                        @if(Session::has('messUpdateBookError'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messUpdateBookError')}}
+                            </div>
+                        @endif
+                        <form action="{{url('/admin/book',$book->S_MA)}}" method="post">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             @method('PATCH')
                             <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}" >
@@ -38,6 +58,11 @@
                                 <label class="control-label">Nhà xuất bản</label>
                                 <select class="form-control" style="width: 400px" name="publisher">
                                     <option value="">---Chọn nhà xuất bản---</option>
+                                    <?php
+                                        $temp=$book->publisher()->first();
+                                        $publishers=\App\Publisher::where('NXB_MA','!=',$temp->NXB_MA)->get();
+                                    ?>
+                                    <option value="{{$temp->NXB_MA}}" selected>{{$temp->NXB_TEN}}</option>
                                     @foreach($publishers as $publisher)
                                         <option value="{{$publisher->NXB_MA}}">{{$publisher->NXB_TEN}}</option>
                                     @endforeach
@@ -51,6 +76,11 @@
                                         <label class="control-label">Loại sách</label>
                                         <select class="form-control" name="kindOfBook">
                                             <option value="">---Chọn loại sách---</option>
+                                            <?php
+                                                $temp=$book->kind_of_book()->first();
+                                                $kindOfBooks=\App\KindOfBook::where('LS_MA','!=',$temp->LS_MA)->get();
+                                            ?>
+                                            <option value="{{$temp->LS_MA}}" selected>{{$temp->LS_TEN}}</option>
                                             @foreach($kindOfBooks as $kindOfBook)
                                                 <option value="{{$kindOfBook->LS_MA}}">{{$kindOfBook->LS_TEN}}</option>
                                             @endforeach
@@ -63,6 +93,11 @@
                                         <label class="control-label">Loại bìa</label>
                                         <select class="form-control" name="coverType">
                                             <option value="">---Chọn loại bìa---</option>
+                                            <?php
+                                            $temp=$book->cover_type()->first();
+                                            $coverTypes=\App\CoverType::where('LB_MA','!=',$temp->LB_MA)->get();
+                                            ?>
+                                            <option value="{{$temp->LB_MA}}" selected>{{$temp->LB_TEN}}</option>
                                             @foreach($coverTypes as $coverType)
                                                 <option value="{{$coverType->LB_MA}}">{{$coverType->LB_TEN}}</option>
                                             @endforeach
@@ -84,6 +119,16 @@
                                         <label class="control-label">Giá khuyến mãi</label>
                                         <select class="form-control" name="promotion">
                                             <option value="">---Chọn giá khuyến mãi---</option>
+                                            <?php
+                                            $temp=$book->promotion()->first();
+                                            if (isset($temp)){
+                                                $promotions=\App\Promotion::where('KM_MA','!=',$temp->KM_MA)->get();
+                                            }
+                                            else $promotions=App\Promotion::all();
+                                            ?>
+                                            @if(isset($temp))
+                                                <option value="{{$temp->KM_MA}}" selected>{{$temp->KM_GIAM}}</option>
+                                            @endif
                                             @foreach($promotions as $promotion)
                                                 <option value="{{$promotion->KM_MA}}">{{$promotion->KM_GIAM}}</option>
                                             @endforeach
@@ -119,7 +164,7 @@
                             </div>
                             <div class="form-group" >
                                 <label class="control-label">Giới thiệu sách</label>
-                                <textarea rows="10" class="form-control" value="{{$book->S_GIOITHIEU}}" name="description"></textarea>
+                                <textarea class="form-control" name="description" rows="10">{{$book->S_GIOITHIEU}}</textarea>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
