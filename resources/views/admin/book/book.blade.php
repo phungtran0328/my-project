@@ -82,6 +82,7 @@
                                     <th>STT</th>
                                     <th>Tên</th>
                                     <th>Tác giả</th>
+                                    <th>Người dịch</th>
                                     <th>SL Tồn</th>
                                     <th>Giá</th>
                                     <th>Nhà xuất bản</th>
@@ -109,10 +110,14 @@
                                                 @endforeach
                                                 @foreach($translators as $translator)
                                                     {{$translator->TG_TEN}} <br><br>
-                                                    {{$translator->pivot->DICHGIA}} (Người dịch)
                                                 @endforeach
                                             </td>
                                         @endif
+                                        @if(isset($translators[0]))
+                                            <td>{{$translators[0]->pivot->DICHGIA}}</td>
+                                            @else
+                                            <td>Không có</td>
+                                            @endif
                                         <td>{{$book->S_SLTON}}</td>
                                         <td>{{$book->S_GIA}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>

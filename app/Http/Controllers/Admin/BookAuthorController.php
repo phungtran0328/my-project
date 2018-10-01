@@ -51,22 +51,12 @@ class BookAuthorController extends Controller
             'author.required'=>'Vui lòng chọn tác giả !',
         ]);
 
-        $books=array();
-        $authors=array();
-        //lưu giá trị multi sách vào $books[]
-        if ($book_ids=$request->book){
-            foreach ($book_ids as $book_id){
-                $books[]=$book_id;
-            }
-        }
-        //lưu giá trị multi tác giả vào $authors[]
-        if ($author_ids=$request->author){
-            foreach ($author_ids as $author_id){
-                $authors[]=$author_id;
-            }
-        }
         $data=array();
-        if (count($books)>=1){
+        $books=$request->input('book'); //lưu mảng giá trị chọn book
+        $authors=$request->input('author'); //lưu mảng giá trị chọn author
+//        $books=implode('',$books);
+//        $authors=implode(',',$authors);
+        if (count($books)>=1 and count($authors)==1){
             //Trường hợp chọn sách >= 1 và tác giả = 1
             for($i=0;$i<count($books);$i++){
                 $data[]=[
@@ -75,17 +65,17 @@ class BookAuthorController extends Controller
                 ];
             }
         }
-        else {
-            if (count($authors)>=1){
-                //Trường hợp chọn tác giả >= 1 và sách = 1
-                for($i=0;$i<count($authors);$i++){
-                    $data[]=[
-                        'TG_MA'=>$authors[$i],
-                        'S_MA'=>$books[0]
-                    ];
-                }
+        if (count($authors)>=1 and count($books)==1){
+            //Trường hợp chọn tác giả >= 1 và sách = 1
+            for($i=0;$i<count($authors);$i++){
+                $data[]=[
+                    'TG_MA'=>$authors[$i],
+                    'S_MA'=>$books[0]
+                ];
             }
         }
+//        dd($data);
+//        ['S_MA'=>$books,'TG_MA'=>$authors]
         if (WriteBook::insert($data)){
             return redirect('admin/book')->with('messBookAuthor','Cập nhật tác giả cho sách thành công !');
         }
@@ -108,41 +98,27 @@ class BookAuthorController extends Controller
             'translator.required'=>'Vui lòng nhập tên người dịch !'
         ]);
 
-        $books=array();
-        $authors=array();
-        //lưu giá trị multi sách vào $books[]
-        if ($book_ids=$request->book){
-            foreach ($book_ids as $book_id){
-                $books[]=$book_id;
-            }
-        }
-        //lưu giá trị multi tác giả vào $authors[]
-        if ($author_ids=$request->author){
-            foreach ($author_ids as $author_id){
-                $authors[]=$author_id;
-            }
-        }
+        $books=$request->input('book'); //lấy giá trị book lưu vào mảng
+        $authors=$request->input('author'); //lấy giá trị author lưu vào mảng
         $data=array();
-        if (count($books)>=1){
+        if (count($books)>=1 and count($authors)==1){
             //Trường hợp chọn sách >= 1 và tác giả = 1
             for($i=0;$i<count($books);$i++){
                 $data[]=[
                     'S_MA'=>$books[$i],
                     'TG_MA'=>$authors[0],
-                    'DICHGIA'=>$request->translator
+                    'DICHGIA'=>$request->input('translator')
                 ];
             }
         }
-        else {
-            if (count($authors)>=1){
-                //Trường hợp chọn tác giả >= 1 và sách = 1
-                for($i=0;$i<count($authors);$i++){
-                    $data[]=[
-                        'TG_MA'=>$authors[$i],
-                        'S_MA'=>$books[0],
-                        'DICHGIA'=>$request->translator
-                    ];
-                }
+        if (count($authors)>=1 and count($books)==1){
+            //Trường hợp chọn tác giả >= 1 và sách = 1
+            for($i=0;$i<count($authors);$i++){
+                $data[]=[
+                    'TG_MA'=>$authors[$i],
+                    'S_MA'=>$books[0],
+                    'DICHGIA'=>$request->input('translator')
+                ];
             }
         }
         if (Translator::insert($data)){

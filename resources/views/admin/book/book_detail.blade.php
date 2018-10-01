@@ -38,13 +38,20 @@
                                     @if(isset($authors) or isset($translators))
                                         <td>
                                             @foreach($authors as $author)
-                                                {{$author->TG_TEN}} <br><br>
+                                                {{$author->TG_TEN}} <br>
                                             @endforeach
                                             @foreach($translators as $translator)
-                                                {{$translator->TG_TEN}} <br><br>
-                                                {{$translator->pivot->DICHGIA}} (Người dịch)
+                                                {{$translator->TG_TEN}} <br>
                                             @endforeach
                                         </td>
+                                    @endif
+                                </tr>
+                                <tr>
+                                    <th>Người dịch</th>
+                                    @if(isset($translators[0]))
+                                        <td>{{$translators[0]->pivot->DICHGIA}}</td>
+                                        @else
+                                        <td>Không có</td>
                                     @endif
                                 </tr>
                                 <tr>

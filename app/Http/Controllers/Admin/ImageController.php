@@ -144,16 +144,28 @@ class ImageController extends Controller
         }
         //dd($book_image);
         if (!empty($book_image)){
-            $image_add= Image::where('S_MA',$id)->get();
-//            dd($image_add);
-            if ($image_add != NULL){
+            //lấy collect image của 1 sách
+            $image= Image::where('S_MA',$id)->get();
+
+            //Nếu tổng số collect image của 1 sách trong csdl bằng với tổng số image khi cập nhật
+            //thì update
+            if (count($image)==count($images)){
                 for ($i=0;$i<count($book_image);$i++){
-                    $image_add->S_MA=$book_image[$i]['S_MA'];
-                    $image_add->HA_URL=$book_image[$i]['HA_URL'];
-                    $image_add->save();
+                    //update không cần hàm save()
+                    Image::where('S_MA',$book_image[$i]['S_MA'])
+                        ->update([
+                            'S_MA'=>$book_image[$i]['S_MA'],
+                            'HA_URL'=>$book_image[$i]['HA_URL']
+                        ]);
                 }
             }
-            else {
+            //Ngược lại nếu không bằng thì xóa image của sách trước đó
+            //Rồi thêm mới lại
+            else{
+                for ($i=0;$i<count($image);$i++){
+                    //xóa hết record với điều kiện mã bằng $book_image[0]['S_MA']
+                    Image::where('S_MA',$book_image[0]['S_MA'])->delete();
+                }
                 for ($i=0;$i<count($book_image);$i++){
                     //lưu từng phần tử của book_image vào database
                     $image_add=new Image();
@@ -163,7 +175,8 @@ class ImageController extends Controller
                 }
             }
         }
-        //$images = implode('|', $image); lưu mảng vào 1 trường duy nhất cách nhau dấu |
+        //$images = implode('|', $images); lưu mảng vào 1 trường duy nhất cách nhau dấu |
+        //implode('separated',array)
         //Image::insert($book_image); bị lỗi updated_at nên không xài được
         return redirect('admin/book')->with('messAddImage','Cập nhật hình ảnh thành công !');
     }
