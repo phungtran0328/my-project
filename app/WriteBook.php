@@ -10,5 +10,6 @@ class WriteBook extends Model
     protected $primaryKey = [
         'TG_MA', 'S_MA',
     ];
+    public $incrementing=false;
     public $timestamps = false;
 }

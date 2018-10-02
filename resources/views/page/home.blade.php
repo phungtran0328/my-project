@@ -95,26 +95,28 @@
                                         $image = $temp->image()->first();
                                         ?>
                                         @if(isset($image))
-                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt=""></a>
+                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px" width="270px"></a>
                                             @else
                                                 <a href="{{url('/detail',$book->S_MA)}}"><img src="images/sorry-image-not-available.jpg" alt=""></a>
                                         @endif
                                     </div>
                                     <div class="single-item-body text-center">
                                         <p class="single-item-title" style="font-size: 16px">{{$book->S_TEN}}</p>
-                                        <h5 class="single-item-price" style="font-size: 15px">
+                                        <p class="single-item-price" style="font-size: 15px">
                                             <span>{{number_format($book->S_GIA)}} đ</span>
-                                        </h5>
+                                        </p>
                                     </div>
+                                    <br>
                                     <div class="clearfix"></div>
                                     <div class="single-item-caption text-center">
                                         <a class="btn btn-primary" href=""><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
                                         {{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}
-                                        <div class="clearfix"></div>
-                                    </div>
+
+                                    </div><br>
                                 </div>
                             </div>
                             @endforeach
+
                         </div>
                     </div> <!-- .beta-products-list -->
 

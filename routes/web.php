@@ -95,8 +95,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('book/image','Admin\ImageController')->only('create','store','show','update');
 
     //book author and translator
-    Route::resource('book/author','Admin\BookAuthorController')->only('create','store');
+    Route::resource('book/author','Admin\BookAuthorController')->only('create','store','show','update');
     Route::post('book/author/translator','Admin\BookAuthorController@storeTrans');
-
+    Route::post('book/author/translator/{id}','Admin\BookAuthorController@updateTrans');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

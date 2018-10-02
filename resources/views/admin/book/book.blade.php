@@ -69,6 +69,24 @@
                                 {{Session::get('messUpdateBook')}}
                             </div>
                         @endif
+                        @if(Session::has('messUpdateImage'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messUpdateImage')}}
+                            </div>
+                        @endif
+                        @if(Session::has('messUpdateAuthor'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messUpdateAuthor')}}
+                            </div>
+                        @endif
+                        @if(Session::has('messUpdateTranslator'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messUpdateTranslator')}}
+                            </div>
+                        @endif
                         {{--@if(Session::has('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

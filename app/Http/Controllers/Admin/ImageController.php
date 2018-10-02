@@ -152,7 +152,7 @@ class ImageController extends Controller
             if (count($image)==count($images)){
                 for ($i=0;$i<count($book_image);$i++){
                     //update không cần hàm save()
-                    Image::where('S_MA',$book_image[$i]['S_MA'])
+                    Image::where('S_MA',$id)
                         ->update([
                             'S_MA'=>$book_image[$i]['S_MA'],
                             'HA_URL'=>$book_image[$i]['HA_URL']
@@ -164,7 +164,7 @@ class ImageController extends Controller
             else{
                 for ($i=0;$i<count($image);$i++){
                     //xóa hết record với điều kiện mã bằng $book_image[0]['S_MA']
-                    Image::where('S_MA',$book_image[0]['S_MA'])->delete();
+                    Image::where('S_MA',$id)->delete();
                 }
                 for ($i=0;$i<count($book_image);$i++){
                     //lưu từng phần tử của book_image vào database
@@ -177,8 +177,8 @@ class ImageController extends Controller
         }
         //$images = implode('|', $images); lưu mảng vào 1 trường duy nhất cách nhau dấu |
         //implode('separated',array)
-        //Image::insert($book_image); bị lỗi updated_at nên không xài được
-        return redirect('admin/book')->with('messAddImage','Cập nhật hình ảnh thành công !');
+
+        return redirect('admin/book')->with('messUpdateImage','Cập nhật hình ảnh thành công !');
     }
 
     /**

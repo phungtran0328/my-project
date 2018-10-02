@@ -29,7 +29,7 @@
                                 </a>
                             </div>
                             <div class="col-md-3">
-                                <a class="btn btn-success btn-block" href="{{url('/admin/book')}}">
+                                <a class="btn btn-success btn-block" href="{{url('/admin/book/author',$book->S_MA)}}">
                                     <span class="glyphicon glyphicon-pencil">  Tác giả</span>
                                 </a>
                             </div>

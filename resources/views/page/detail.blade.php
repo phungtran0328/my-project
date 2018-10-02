@@ -126,17 +126,22 @@
                             @endif
                             @if(isset($authors) or isset($translators))
                             <tr>
-                                <th scope="row">Tác giả</th>
+                                <th>Tác giả</th>
                                 <td>
                                     @foreach($authors as $author)
                                         {{$author->TG_TEN}} <br>
                                     @endforeach
                                     @foreach($translators as $translator)
-                                        {{$translator->TG_TEN}} <br><br>
-                                        {{$translator->pivot->DICHGIA}} (Người dịch)
+                                        {{$translator->TG_TEN}} <br>
                                     @endforeach
                                 </td>
                             </tr>
+                            @if(isset($translators[0]->pivot->DICHGIA))
+                                <tr>
+                                    <th>Người dịch</th>
+                                    <td>{{$translators[0]->pivot->DICHGIA}}</td>
+                                </tr>
+                            @endif
                             @endif
                             @if(isset($book->S_NGAYXB))
                             <tr>

@@ -68,7 +68,9 @@
                                 </tr>
                                 <tr>
                                     <th>Ngày XB</th>
-                                    <td>{{$book->S_NGAYXB }}</td>
+                                    <td><?php $date=date_create($book->S_NGAYXB); ?>
+                                        {{date_format($date,"d/m/Y") }}
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>Tái bản</th>
