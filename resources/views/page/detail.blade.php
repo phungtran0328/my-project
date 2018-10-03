@@ -82,9 +82,14 @@
                             </div>
                             <hr>
                             <div>
-                                <p style="margin-bottom: 20px;">
-                                    <strong style="color: #9f191f; font-size: 18px;">{{number_format($book->S_GIA)}} đ</strong>
-                                </p>
+                                <div style="margin-bottom: 20px;">
+                                    @if(isset($promotion))
+                                        <span class="flash-del" style="font-size: 18px">{{number_format($book->S_GIA)}} đ</span>
+                                        <span class="flash-sale" style="font-size: 18px">{{number_format($sale)}} đ</span>
+                                    @else
+                                        <span style="color: #9f191f; font-size: 18px;">{{number_format($book->S_GIA)}} đ</span>
+                                    @endif
+                                </div>
                             </div>
                             <hr>
                             <div class="row">
@@ -146,7 +151,8 @@
                             @if(isset($book->S_NGAYXB))
                             <tr>
                                 <th>Ngày xuất bản</th>
-                                <td>{{$book->S_NGAYXB}}</td>
+                                <td><?php $date=date_create($book->S_NGAYXB); ?>
+                                    {{date_format($date,"m/Y") }}</td>
                             </tr>
                             @endif
                             @if(isset($cover_type))

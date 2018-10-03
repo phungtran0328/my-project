@@ -105,7 +105,7 @@
                                     <th>Giá</th>
                                     <th>Nhà xuất bản</th>
                                     <th>Hình ảnh</th>
-                                    <th>Hành động</th>
+                                    <th style="width: 15%">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>

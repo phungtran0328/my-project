@@ -20,8 +20,11 @@ class DetailController extends Controller
 //        dd($cover_type);
         $kind_of_book = $book->kind_of_book()->first();
         $images = $book->image()->get();
-
+        $promotion=$book->promotion()->first();
+        if (isset($promotion)){
+            $sale= ($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
+        }
         return view('page.detail', compact('book','publisher','authors',
-            'cover_type','kind_of_book','images','translators'));
+            'cover_type','kind_of_book','images','translators','promotion','sale'));
     }
 }

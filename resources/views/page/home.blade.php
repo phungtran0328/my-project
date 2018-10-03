@@ -93,6 +93,10 @@
 //                                        $id_book = $book->S_MA;
                                         $temp = \App\Book::where('S_MA', $book->S_MA)->first();
                                         $image = $temp->image()->first();
+                                        $promotion =$temp->promotion()->first();
+                                        if (isset($promotion)){
+                                            $sale=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
+                                        }
                                         ?>
                                         @if(isset($image))
                                                 <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px" width="270px"></a>
@@ -103,7 +107,12 @@
                                     <div class="single-item-body text-center">
                                         <p class="single-item-title" style="font-size: 16px">{{$book->S_TEN}}</p>
                                         <p class="single-item-price" style="font-size: 15px">
-                                            <span>{{number_format($book->S_GIA)}} đ</span>
+                                            @if(isset($promotion))
+                                                <span class="flash-del">{{number_format($book->S_GIA)}} đ</span>
+                                                <span class="flash-sale">{{number_format($sale)}} đ</span>
+                                            @else
+                                                <span>{{number_format($book->S_GIA)}} đ</span>
+                                            @endif
                                         </p>
                                     </div>
                                     <br>

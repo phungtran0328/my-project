@@ -56,23 +56,47 @@ class BookAuthorController extends Controller
         $authors=$request->input('author'); //lưu mảng giá trị chọn author
 //        $books=implode('',$books);
 //        $authors=implode(',',$authors);
-        if (count($books)>=1 and count($authors)==1){
-            //Trường hợp chọn sách >= 1 và tác giả = 1
-            for($i=0;$i<count($books);$i++){
-                $data[]=[
-                    'S_MA'=>$books[$i],
-                    'TG_MA'=>$authors[0]
-                ];
+//        if (count($books)>=1 and count($authors)==1){
+//            //Trường hợp chọn sách >= 1 và tác giả = 1
+//            for($i=0;$i<count($books);$i++){
+//                $data[]=[
+//                    'S_MA'=>$books[$i],
+//                    'TG_MA'=>$authors[0]
+//                ];
+//            }
+//        }
+//        if (count($authors)>=1 and count($books)==1){
+//            //Trường hợp chọn tác giả >= 1 và sách = 1
+//            for($i=0;$i<count($authors);$i++){
+//                $data[]=[
+//                    'TG_MA'=>$authors[$i],
+//                    'S_MA'=>$books[0]
+//                ];
+//            }
+//        }
+        if (count($authors)<>count($books)){
+            if (count($authors)>count($books)){
+                for($i=0;$i<count($authors);$i++){
+                    $data[]=[
+                        'TG_MA'=>$authors[$i],
+                        'S_MA'=>$books[0]
+                    ];
+                }
+            }
+            else{
+                for($i=0;$i<count($books);$i++){
+                    $data[]=[
+                        'S_MA'=>$books[$i],
+                        'TG_MA'=>$authors[0]
+                    ];
+                }
             }
         }
-        if (count($authors)>=1 and count($books)==1){
-            //Trường hợp chọn tác giả >= 1 và sách = 1
-            for($i=0;$i<count($authors);$i++){
-                $data[]=[
-                    'TG_MA'=>$authors[$i],
-                    'S_MA'=>$books[0]
-                ];
-            }
+        else{
+            $data[]=[
+                'S_MA'=>$books[0],
+                'TG_MA'=>$authors[0]
+            ];
         }
 //        dd($data);
 //        ['S_MA'=>$books,'TG_MA'=>$authors]
@@ -101,25 +125,53 @@ class BookAuthorController extends Controller
         $books=$request->input('book'); //lấy giá trị book lưu vào mảng
         $authors=$request->input('author'); //lấy giá trị author lưu vào mảng
         $data=array();
-        if (count($books)>=1 and count($authors)==1){
-            //Trường hợp chọn sách >= 1 và tác giả = 1
-            for($i=0;$i<count($books);$i++){
-                $data[]=[
-                    'S_MA'=>$books[$i],
-                    'TG_MA'=>$authors[0],
-                    'DICHGIA'=>$request->input('translator')
-                ];
-            }
-        }
-        if (count($authors)>=1 and count($books)==1){
-            //Trường hợp chọn tác giả >= 1 và sách = 1
-            for($i=0;$i<count($authors);$i++){
+        //Bị lỗi trường hợp = 1
+//        if (count($books)>=1 and count($authors)==1){
+//            //Trường hợp chọn sách >= 1 và tác giả = 1
+//            for($i=0;$i<count($books);$i++){
+//                $data[]=[
+//                    'S_MA'=>$books[$i],
+//                    'TG_MA'=>$authors[0],
+//                    'DICHGIA'=>$request->input('translator')
+//                ];
+//            }
+//        }
+//        if (count($authors)>=1 and count($books)==1){
+//            //Trường hợp chọn tác giả >= 1 và sách = 1
+//            for($i=0;$i<count($authors);$i++){
+//                $data[]=[
+//                    'TG_MA'=>$authors[$i],
+//                    'S_MA'=>$books[0],
+//                    'DICHGIA'=>$request->input('translator')
+//                ];
+//            }
+//        }
+        if (count($authors)<>count($books)){
+            if (count($authors)>count($books)){
+                for($i=0;$i<count($authors);$i++){
                 $data[]=[
                     'TG_MA'=>$authors[$i],
                     'S_MA'=>$books[0],
                     'DICHGIA'=>$request->input('translator')
-                ];
+                    ];
+                }
             }
+            else {
+                for($i=0;$i<count($books);$i++){
+                $data[]=[
+                    'S_MA'=>$books[$i],
+                    'TG_MA'=>$authors[0],
+                    'DICHGIA'=>$request->input('translator')
+                    ];
+                }
+            }
+        }
+        else{
+            $data[]=[
+                'S_MA'=>$books[0],
+                'TG_MA'=>$authors[0],
+                'DICHGIA'=>$request->input('translator')
+            ];
         }
         if (Translator::insert($data)){
             return redirect('admin/book')->with('messBookTranslator','Cập nhật tác giả và người dịch cho sách thành công !');

@@ -142,21 +142,21 @@ class ImageController extends Controller
                 ];
             }
         }
-        //dd($book_image);
+//        dd($book_image);
+
         if (!empty($book_image)){
             //lấy collect image của 1 sách
             $image= Image::where('S_MA',$id)->get();
-
+//            dd(count($image));
+//            dd(count($book_image)==count($image) ? 'abc' : 'cbadadada');
             //Nếu tổng số collect image của 1 sách trong csdl bằng với tổng số image khi cập nhật
             //thì update
-            if (count($image)==count($images)){
-                for ($i=0;$i<count($book_image);$i++){
+            if (count($image)==count($book_image)){
+                for ($i=0;$i<count($image);$i++){
                     //update không cần hàm save()
-                    Image::where('S_MA',$id)
-                        ->update([
-                            'S_MA'=>$book_image[$i]['S_MA'],
-                            'HA_URL'=>$book_image[$i]['HA_URL']
-                        ]);
+                    //find bắt buộc phải thêm fillable trong model
+                    //update phần tử thứ i
+                    $image[$i]->update(['HA_URL'=>$book_image[$i]['HA_URL']]);
                 }
             }
             //Ngược lại nếu không bằng thì xóa image của sách trước đó
@@ -166,6 +166,7 @@ class ImageController extends Controller
                     //xóa hết record với điều kiện mã bằng $book_image[0]['S_MA']
                     Image::where('S_MA',$id)->delete();
                 }
+                //đã xóa $image nên phải count($book_image)
                 for ($i=0;$i<count($book_image);$i++){
                     //lưu từng phần tử của book_image vào database
                     $image_add=new Image();
