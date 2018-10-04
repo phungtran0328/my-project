@@ -99,7 +99,7 @@
                                         }
                                         ?>
                                         @if(isset($image))
-                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px" width="270px"></a>
+                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px"  class="thumbnail"></a>
                                             @else
                                                 <a href="{{url('/detail',$book->S_MA)}}"><img src="images/sorry-image-not-available.jpg" alt=""></a>
                                         @endif
@@ -118,10 +118,14 @@
                                     <br>
                                     <div class="clearfix"></div>
                                     <div class="single-item-caption text-center">
-                                        <a class="btn btn-primary" href=""><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
+                                        @if($book->S_SLTON>0)
+                                        <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
                                         {{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}
-
-                                    </div><br>
+                                            @else
+                                            <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
+                                        @endif
+                                    </div>
+                                    <br>
                                 </div>
                             </div>
                             @endforeach
