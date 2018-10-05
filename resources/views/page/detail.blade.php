@@ -41,7 +41,6 @@
         <li class="active">{{$book->S_TEN}}</li>
     </ul>
 </div>
-
 <div class="container">
     <div class="row">
         <div class="col-md-12">
