@@ -8,17 +8,12 @@
 ?>
 @extends('master')
 @section('content')
-    <div class="inner-header">
-        <div class="container">
-            <div class="pull-right">
-                <div class="beta-breadcrumb">
-                    <a href="{{url('/index')}}">Trang chủ</a> / <span>Tạo tài khoản</span>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li class="active">Tạo tài khoản</li>
+        </ul>
     </div>
-
     <div class="container">
         <div id="content">
             <div class="row">
@@ -62,6 +57,7 @@
                                                name="phone" placeholder="Nhập số điện thoại" value="{{old('phone')}}">
                                         <strong style="color: red">{{$errors->first('phone') }}</strong>
                                     </div>
+                                    <label class="control-label"></label>
                                 </div>
 
                                 <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
@@ -74,7 +70,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label class="col-md-3 control-label required">Giới tính (*)</label>
+                                    <label class="col-md-3 control-label required">Giới tính</label>
                                     <div class="col-md-2">
                                         <label><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
 

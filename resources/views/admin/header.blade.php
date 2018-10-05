@@ -268,9 +268,6 @@
                         <li>
                             <a href="{{url('/admin/promotion')}}">Khuyến mãi</a>
                         </li>
-                        <li>
-                            <a href="">Hình ảnh</a>
-                        </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>

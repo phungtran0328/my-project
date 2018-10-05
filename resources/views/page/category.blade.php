@@ -9,7 +9,12 @@
 
 @extends('master')
 @section('content')
-
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li class="active">Chưa xử lí</li>
+        </ul>
+    </div>
     <div class="container">
         <div id="content" class="space-top-none">
             <div class="main-content">

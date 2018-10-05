@@ -8,6 +8,14 @@
 ?>
 @extends('master')
 @section('content')
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li><a href="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}">Thông tin tài khoản</a></li>
+            <li class="active">Đổi mật khẩu</li>
+
+        </ul>
+    </div>
 <div class="container">
     <div class="row">
         <div class="col-md-3">

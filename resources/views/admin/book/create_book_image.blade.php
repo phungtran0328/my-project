@@ -33,7 +33,13 @@
                                 <select class="form-control" name="book">
                                     <option value="">---Chọn sách--</option>
                                     @foreach($books as $book)
-                                        <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
+                                        <?php
+                                            $temp=\App\Book::where('S_MA', $book->S_MA)->first();
+                                            $book_image=$temp->image()->first();
+                                        ?>
+                                        @if(empty($book_image))
+                                            <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
+                                        @endif
                                     @endforeach
                                 </select>
                                 <strong style="color: red">{{$errors->first('book')}}</strong>

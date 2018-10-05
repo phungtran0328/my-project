@@ -8,19 +8,11 @@
 ?>
 @extends('master')
 @section('content')
-    <div class="inner-header">
-        <div class="container">
-            <!--  <div class="pull-left">
-                  <h6 class="inner-title">Đăng nhập</h6>
-              </div>
-            -->
-            <div class="pull-right">
-                <div class="beta-breadcrumb">
-                    <a href="{{url('/index')}}">Trang chủ</a> / <span>Đăng nhập</span>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li class="active">Đăng nhập</li>
+        </ul>
     </div>
 
     <div class="container">

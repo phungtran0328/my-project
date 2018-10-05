@@ -141,25 +141,25 @@
 </div>--}}
 
 <div id="header">
-    <div class="header-bottom">
+    {{--<div class="header-bottom">
         <div class="">
             <img src="images/slider 4.jpg" height="150px" width="100%" >
         </div>
-    </div>
+    </div>--}}
     <div class="myNav">
         <nav class="navbar-default">
             <div class=" container">
                 <div class="row">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="{{url('/index')}}">Bookstore</a>
+                        <a class="navbar-brand" style="width: 400px" href="{{url('/index')}}">Bookstore</a>
                     </div>
 
-                    <ul class="nav navbar-nav">
+                    {{--<ul class="nav navbar-nav">
                         <li class=""><a href="#">Home</a></li>
                         <li><a href="#">Page 1</a></li>
                         <li><a href="#">Page 2</a></li>
 
-                    </ul>
+                    </ul>--}}
                     <form class="navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 400px">
                         <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 380px"/>
                         <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
@@ -220,31 +220,32 @@
                     </ul>
 
                 </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="dropdown">
-                            <a href="#" id="myDrop" class="dropdown-toggle btn btn-block"
-                               style="font-size: medium; text-align: left; "
-                               data-toggle="dropdown">Danh mục sách</a>
-                            <ul class="dropdown-menu" id="menuDrop" style="width: 360px;" role="menu" aria-labelledby="drop3">
-                                @foreach($categories as $category)
-                                    <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="" style="font-size: 17px; color: black; border: none"
-                                           onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a></li>
-                                @endforeach
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <a class="list-group-item" style="border: none">Daily Deals</a>
-                    </div>
-
-                </div>
             </div>
-
         </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="dropdown">
+                        <a href="#" id="myDrop" class="dropdown-toggle list-group-item"
+                           style="font-size: medium; text-align: center; background-color: gray; color: white"
+                           data-toggle="dropdown">Danh mục sách</a>
+                        <ul class="dropdown-menu" id="menuDrop" style="width: 360px;" role="menu" aria-labelledby="drop3">
+                            @foreach($categories as $category)
+                                <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="" style="font-size: 17px; color: black; border: none"
+                                       onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a></li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <a class="list-group-item" style="border: none">Daily Deals</a>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
+<br>
 
 
 <script>
