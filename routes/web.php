@@ -90,13 +90,24 @@ Route::group(['prefix' => 'admin'], function () {
     //book show, update
     Route::resource('book','Admin\BookController')->only('index','create','store','show','update');
     Route::get('book/edit/{id}','Admin\BookController@edit');
+    Route::get('book/delete/{id}','Admin\BookController@delete');
+//    Route::get('book/search','Admin\BookController@getSearch');
 
     //book image
     Route::resource('book/image','Admin\ImageController')->only('create','store','show','update');
 
     //book author and translator
     Route::resource('book/author','Admin\BookAuthorController')->only('create','store','show','update');
+
     Route::post('book/author/translator','Admin\BookAuthorController@storeTrans');
     Route::post('book/author/translator/{id}','Admin\BookAuthorController@updateTrans');
+
+    //release company
+    Route::get('company','Admin\ReleaseCompanyController@index');
+    Route::get('company/create','Admin\ReleaseCompanyController@create');
+    Route::post('company/create','Admin\ReleaseCompanyController@store');
+    Route::get('company/update/{id}','Admin\ReleaseCompanyController@show');
+    Route::post('company/update/{id}','Admin\ReleaseCompanyController@update');
+    Route::get('company/delete/{id}','Admin\ReleaseCompanyController@delete');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

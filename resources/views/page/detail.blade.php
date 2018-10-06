@@ -84,7 +84,7 @@
                                 <div style="margin-bottom: 20px;">
                                     @if(isset($promotion))
                                         <span class="flash-del" style="font-size: 18px">{{number_format($book->S_GIA)}} đ</span>
-                                        <span class="flash-sale" style="font-size: 18px">{{number_format($sale)}} đ</span>
+                                        <span class="flash-sale" style="font-size: 18px">{{number_format($saleoff)}} đ</span>
                                     @else
                                         <span style="color: #9f191f; font-size: 18px;">{{number_format($book->S_GIA)}} đ</span>
                                     @endif
@@ -249,10 +249,10 @@
                                         <a href="{{url('/detail',$value['id'])}}">
                                             <div class="">
                                                 <div class=" text-center">
-                                                    <img class=""  src="images/{{$value['image']}}"><br>
+                                                    <img class=""  src="images/{{$value['image']}}" width="120px" height="130px"><br>
                                                     <p class="single-item-title" style="font-size: 14px">{{$value['name']}}</p>
                                                     <p class="single-item-price" style="font-size: 13px">
-                                                        @if(isset($promotion))
+                                                        @if(isset($value['sale']))
                                                             <span class="flash-del">{{number_format($value['price'])}} đ</span>
                                                             <span class="flash-sale">{{number_format($value['sale'])}} đ</span>
                                                         @else

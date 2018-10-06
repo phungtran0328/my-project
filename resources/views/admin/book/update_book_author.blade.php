@@ -36,7 +36,7 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Cập nhật hình ảnh cho sách</h5>
+                        <h5>Cập nhật tác giả cho sách</h5>
                     </div>
                     <div class="panel-body">
                         <a class="btn btn-success btn-block" style="width: 150px" href="{{url('/admin/book/edit',$book->S_MA)}}">

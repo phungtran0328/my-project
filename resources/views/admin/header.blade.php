@@ -294,7 +294,7 @@
                             <a href="#">Quản lý nhập <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
-                                    <a href="#">Công ty phát hành</a>
+                                    <a href="{{url('admin/company')}}">Công ty phát hành</a>
                                 </li>
                                 <li>
                                     <a href="#">Hóa đơn nhập</a>

@@ -37,6 +37,16 @@
                                     <span class="glyphicon glyphicon-plus"> Tác giả</span>
                                 </a>
                             </div>
+                            <div class="col-md-6">
+                                <form role="search" class="input-group" action="{{url('admin/book/search')}}" method="get">
+                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default-sm" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
                         </div>
                         <hr>
                         @if(Session::has('messAddBook'))
@@ -87,12 +97,12 @@
                                 {{Session::get('messUpdateTranslator')}}
                             </div>
                         @endif
-                        {{--@if(Session::has('messageRemove'))
+                        @if(Session::has('messDelete'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemove')}}
+                                {{Session::get('messDelete')}}
                             </div>
-                        @endif--}}
+                        @endif
                         <div class="table-responsive ">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead >
@@ -149,7 +159,7 @@
                                                 <span class="glyphicon glyphicon-check"></span></a>
                                             <a class="btn btn-default" href="{{url('/admin/book/edit',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="">
+                                            <a class="btn btn-default" href="{{url('admin/book/delete',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>

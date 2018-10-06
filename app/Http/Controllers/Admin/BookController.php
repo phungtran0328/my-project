@@ -19,7 +19,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books=Book::paginate(10);
+        $books=Book::orderBy('S_MA','desc')->paginate(10);
+        //sắp xếp S_MA giảm dần lấy 10 record trên 1 trang
         return view('admin.book.book', compact('books'));
     }
 
@@ -182,5 +183,18 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        Book::where('S_MA',$id)->delete();
+        return redirect()->back()->with('messDelete','Xóa sách thành công !');
+    }
+
+    public function getSearch(Request $request){
+        $book_search=Book::where('S_TEN', 'LIKE', '%'.$request->input('search').'%')->get();
+//            ->orderBy('S_TEN','asc')
+//            ->paginate(10);
+//        dd($books);
+        return view('admin.book.search_book')->with('book_search',$book_search);
     }
 }

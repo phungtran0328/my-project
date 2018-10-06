@@ -22,9 +22,9 @@ class DetailController extends Controller
         $images = $book->image()->get();
         $promotion=$book->promotion()->first();
         if (isset($promotion)){
-            $sale= ($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
+            $saleoff= ($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
         }
         return view('page.detail', compact('book','publisher','authors',
-            'cover_type','kind_of_book','images','translators','promotion','sale'));
+            'cover_type','kind_of_book','images','translators','promotion','saleoff'));
     }
 }
