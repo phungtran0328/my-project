@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Book;
 use App\InvoiceIn;
+use App\InvoiceInDetails;
 use App\ReleaseCompany;
 use App\User;
 use Illuminate\Http\Request;
@@ -44,5 +45,35 @@ class InvoiceInController extends Controller
         $invoice=InvoiceIn::orderBy('PN_MA','desc')->first();
         $books=Book::all();
         return view('admin.manage.invoice_in.create_detail',compact('invoice','books'));
+    }
+
+    public function storeDetail(Request $request, $id){
+        $this->validate($request,[
+            'book'=>'required',
+            'price'=>'required',
+            'qty'=>'required'
+        ],[
+            'book.required'=>'Vui lòng chọn sách !',
+            'price.required'=>'Vui lòng nhập giá !',
+            'qty.required'=>'Vui lòng nhập số lượng !'
+        ]);
+        $book=$request->input('book');
+        $price=$request->input('price');
+        $qty=$request->input('qty');
+        $data=array();
+        $total=0;
+        for($i=0;$i<count($book);$i++){
+            $data[$i]=[
+                'PN_MA'=>$id,
+                'S_MA'=>$book[$i],
+                'PNCT_SOLUONG'=>$qty[$i],
+                'PNCT_GIA'=>$price[$i]
+            ];
+            $total+=($data[$i]['PNCT_SOLUONG'])*($data[$i]['PNCT_GIA']);
+        }
+//        dd($total);
+        InvoiceInDetails::insert($data);
+        InvoiceIn::where('PN_MA',$id)->update(['PN_TONGTIEN'=>$total]);
+        return redirect('admin/invoice-in')->with('messAddDetail','Thêm hóa đơn chi tiết thành công !');
     }
 }

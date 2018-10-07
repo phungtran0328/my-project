@@ -25,13 +25,13 @@
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
                         <hr>
-                        {{--@if(Session::has('messageAdd'))
+                        @if(Session::has('messAddDetail'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
+                                {{Session::get('messAddDetail')}}
                             </div>
                         @endif
-                        @if(Session::has('messageUpdate'))
+                        {{--@if(Session::has('messageUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('messageUpdate')}}
@@ -62,7 +62,6 @@
                                         $temp=\App\InvoiceIn::where('PN_MA',$invoice->PN_MA)->first();
                                         $company=$temp->release_company()->first();
                                         $user=$temp->user()->first();
-                                        $book=$temp->book()->get();
                                     ?>
                                     <tr>
                                         {{--increment not reset in second page--}}
@@ -71,7 +70,7 @@
                                         <td>{{$company->CTPH_TEN}}</td>
                                         <?php $date=date_create($invoice->PN_NGAYNHAP); ?>
                                         <td>{{date_format($date,"d/m/Y")}}</td>
-                                        <td>{{$invoice->PN_TONGTIEN}}</td>
+                                        <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
                                         <td>{{$invoice->PN_GHICHU}}</td>
                                         <td class="text-center">
                                             <a class="btn btn-default" href="">

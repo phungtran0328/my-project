@@ -127,5 +127,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('invoice-in/create','Admin\InvoiceInController@create');
     Route::post('invoice-in/create','Admin\InvoiceInController@store');
     Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail');
+    Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

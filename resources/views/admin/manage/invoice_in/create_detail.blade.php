@@ -15,7 +15,7 @@
             <!-- /.col-lg-12 -->
         </div>
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-10">
                 <a class="btn btn-success" style="width: 200px" href="{{url('/admin/invoice-in')}}">
                     <span class="glyphicon glyphicon-arrow-left"></span></a><br><br>
                 <div class="panel panel-default">
@@ -23,32 +23,38 @@
                         <h5>Thêm mới hóa đơn nhập</h5>
                     </div>
                     <div class="panel-body">
-                        <button class="btn btn-success btn-block" onclick="addBook()">Thêm sách mới</button>
-                        <button class="btn btn-info btn-block" onclick="CloneForm()">Thêm hóa đơn chi tiết</button><br>
-                        <form action="{{url('/admin/invoice-in/create-detail')}}" method="post" >
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button class="btn btn-success btn-block" onclick="addBook()">Thêm sách mới</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-info btn-block" onclick="CloneForm()">Thêm hóa đơn chi tiết</button><br>
+                            </div>
+                        </div>
+                        <form action="{{url('/admin/invoice-in/create-detail',$invoice->PN_MA)}}" method="post" >
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <div class="form-group">
+                            <div class="form-group" style="width: 200px">
                                 <label class="control-label">Mã HĐ</label>
-                                <input type="text" class="form-control" value="{{$invoice->PN_MA}}" readonly>
+                                <input type="text" class="form-control" name="id" value="{{$invoice->PN_MA}}" readonly>
                             </div>
                             <div id="myForm">
-                                <div class="form-group {{$errors->has('book') ? 'has-error' : ''}}">
-                                    <label class="control-label">Sách</label>
-                                    <select class="form-control" name="book[]">
-                                        <option value="">---Chọn sách---</option>
-                                        @foreach($books as $book)
-                                            <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
-                                        @endforeach
-                                    </select>
-                                    <strong style="color: red">{{$errors->first('book')}}</strong>
-                                </div>
                                 <div class="row">
-                                    <div class="col-md-6 form-group {{$errors->has('qty') ? 'has-error' : ''}}" >
+                                    <div class="col-md-6 form-group {{$errors->has('book') ? 'has-error' : ''}}">
+                                        <label class="control-label">Sách</label>
+                                        <select class="form-control" name="book[]">
+                                            <option value="">---Chọn sách---</option>
+                                            @foreach($books as $book)
+                                                <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
+                                            @endforeach
+                                        </select>
+                                        <strong style="color: red">{{$errors->first('book')}}</strong>
+                                    </div>
+                                    <div class="col-md-3 form-group {{$errors->has('qty') ? 'has-error' : ''}}" >
                                         <label class="control-label">Số lượng</label>
                                         <input type="number" min="1" class="form-control" name="qty[]">
                                         <strong style="color: red">{{$errors->first('qty')}}</strong>
                                     </div>
-                                    <div class="col-md-6 form-group {{$errors->has('price') ? 'has-error' : ''}}" >
+                                    <div class="col-md-3 form-group {{$errors->has('price') ? 'has-error' : ''}}" >
                                         <label class="control-label">Giá</label>
                                         <input type="number" min="0" step=".01" class="form-control" name="price[]" >
                                         <strong style="color: red">{{$errors->first('price')}}</strong>
@@ -57,10 +63,9 @@
                             </div>
                             <div id="showInvoice"></div>
                             <div class="form-group">
-                                <button class="btn btn-primary btn-block">Thêm</button>
+                                <button class="btn btn-primary" style="width: 200px">Thêm</button>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
