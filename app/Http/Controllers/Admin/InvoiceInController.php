@@ -71,7 +71,7 @@ class InvoiceInController extends Controller
             ];
             $total+=($data[$i]['PNCT_SOLUONG'])*($data[$i]['PNCT_GIA']);
         }
-//        dd($total);
+
         InvoiceInDetails::insert($data);
         InvoiceIn::where('PN_MA',$id)->update(['PN_TONGTIEN'=>$total]);
         return redirect('admin/invoice-in')->with('messAddDetail','Thêm hóa đơn chi tiết thành công !');
