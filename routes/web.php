@@ -109,5 +109,23 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('company/update/{id}','Admin\ReleaseCompanyController@show');
     Route::post('company/update/{id}','Admin\ReleaseCompanyController@update');
     Route::get('company/delete/{id}','Admin\ReleaseCompanyController@delete');
+
+    //user (employee)
+    Route::get('user','Admin\UserController@index');
+    Route::get('user/create','Admin\UserController@create');
+    Route::post('user/create','Admin\UserController@store');
+    Route::get('user/update/{id}','Admin\UserController@show');
+    Route::post('user/update/{id}','Admin\UserController@update');
+    Route::get('user/delete/{id}','Admin\UserController@delete');
+
+    //customer
+    Route::get('customer','Admin\CustomerController@index');
+    Route::get('customer/delete/{id}','Admin\CustomerController@delete');
+
+    //invoice-in
+    Route::get('invoice-in','Admin\InvoiceInController@index');
+    Route::get('invoice-in/create','Admin\InvoiceInController@create');
+    Route::post('invoice-in/create','Admin\InvoiceInController@store');
+    Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

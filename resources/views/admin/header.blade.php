@@ -273,14 +273,17 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-edit fa-fw"></i> Quản lý nhập - xuất<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-edit fa-fw"></i> Quản lý <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{url('admin/customer')}}">Khách hàng </a>
+                        </li>
+                        <li>
+                            <a href="{{url('admin/user')}}">Nhân viên </a>
+                        </li>
                         <li>
                             <a href="#">Quản lý xuất <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="#">Khách hàng</a>
-                                </li>
                                 <li>
                                     <a href="#">Đơn hàng</a>
                                 </li>
@@ -297,7 +300,7 @@
                                     <a href="{{url('admin/company')}}">Công ty phát hành</a>
                                 </li>
                                 <li>
-                                    <a href="#">Hóa đơn nhập</a>
+                                    <a href="{{url('admin/invoice-in')}}">Hóa đơn nhập</a>
                                 </li>
                             </ul>
                             <!-- /.nav-third-level -->

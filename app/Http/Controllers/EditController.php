@@ -15,10 +15,10 @@ class EditController extends Controller
     public function edit(Request $request){
         $this->validate($request,[
             'username'=>'required',
-            'phone'=>'required|regex:/^(\84)[0-9]{8}$/',
+            'phone'=>'required|regex:/^(\84)[0-9]{9}$/',
+            //điện thoại gồm mã 84 và 9 số
             'birthday' => 'required|before:2006-01-01',
             'address' => 'required',
-
         ],
         [
             'username.required' => 'Vui lòng nhập họ tên !',
@@ -27,7 +27,6 @@ class EditController extends Controller
             'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
             'birthday.required'=>'Vui lòng điền ngày sinh !',
             'birthday.before'=>'Phải lớn hơn 12 tuổi !',
-
         ]);
 
         $customer= Auth::guard('customer')->user();
@@ -69,7 +68,8 @@ class EditController extends Controller
         //Lấy mã hash mật khẩu khách hàng trong database
 
         if(Hash::check($curr_pw,$hashed)==true){
-            //Kiểm tra mật khẩu cũ nhập vào và mã hash mật khẩu trong database, Hash::check($input, $hashed)
+            //Kiểm tra mật khẩu cũ nhập vào (chuỗi) và mã hash (hàm băm) mật khẩu trong database
+            //Hash::check($input, $hashed)
             //Hash::check()==true => mật khẩu cũ đúng, lưu mật khẩu mới vào database
             $customer->KH_MATKHAU=Hash::make($pw);
             $customer->save();

@@ -27,7 +27,7 @@ class RegisterController extends Controller
             [
                 'username' => 'required',
                 'email' => 'required|email|unique:khachhang,KH_EMAIL',
-                //unique: table, column_name
+                //unique: table,column_name
                 'password' => 'required|min:6|max:32|confirmed',
                 'phone' => 'required|regex:/^(\84)[0-9]{9}$/',
                 //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
