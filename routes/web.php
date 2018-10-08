@@ -115,12 +115,17 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('user/create','Admin\UserController@create');
     Route::post('user/create','Admin\UserController@store');
     Route::get('user/update/{id}','Admin\UserController@show');
+    //user update profile
     Route::post('user/update/{id}','Admin\UserController@update');
+    //user update role
+    Route::post('user/update/role/{id}','Admin\UserController@updateRole');
     Route::get('user/delete/{id}','Admin\UserController@delete');
     //role
     Route::get('role','Admin\RoleController@index');
     Route::get('role/create','Admin\RoleController@create');
     Route::post('role/create','Admin\RoleController@store');
+    Route::get('role/update/{id}','Admin\RoleController@show');
+    Route::post('role/update/{id}','Admin\RoleController@update');
     //customer
     Route::get('customer','Admin\CustomerController@index');
     Route::get('customer/delete/{id}','Admin\CustomerController@delete');

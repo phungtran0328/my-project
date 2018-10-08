@@ -37,6 +37,12 @@
                                 {{Session::get('messageUpdate')}}
                             </div>
                         @endif
+                        @if(Session::has('messUpdateRole'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messUpdateRole')}}
+                            </div>
+                        @endif
                         @if(Session::has('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -47,7 +53,7 @@
                             <table class="table table-striped table-bordered table-hover" style="width: 1500px">
                                 <thead>
                                 <tr>
-                                    <th style="width: 3%">STT</th>
+                                    <th style="width: 8%">Hành động</th>
                                     <th style="width: 10%">Tên</th>
                                     <th style="width: 6%">Giới tính</th>
                                     <th style="width: 4%">Ngày sinh</th>
@@ -55,27 +61,34 @@
                                     <th style="width: 4%">SĐT</th>
                                     <th>Username</th>
                                     <th>Password</th>
-                                    <th style="width: 8%">Hành động</th>
+                                    <th style="width: 7%">Quyền</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $index=>$user)
                                     <tr>
-                                        {{--increment not reset in second page--}}
-                                        <td>{{$index + $users->firstItem()}}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-default" href="{{url('admin/user/update',$user->NV_MA)}}">
+                                                <span class="glyphicon glyphicon-pencil"></span></a>
+                                            <a class="btn btn-default" href="">
+                                                <span class="glyphicon glyphicon-remove"></span></a>
+                                        </td>
                                         <td>{{$user->NV_TEN}}</td>
                                         <td>{{$user->NV_GIOITINH}}</td>
-                                        <?php $date=date_create($user->NV_NGAYSINH); ?>
+                                        <?php
+                                            $date=date_create($user->NV_NGAYSINH);
+                                            $temp=\App\User::where('NV_MA',$user->NV_MA)->first();
+                                            $roles=$temp->roles()->get();
+                                        ?>
                                         <td>{{date_format($date,"d/m/Y")}}</td>
                                         <td>{{$user->NV_DIACHI}}</td>
                                         <td>{{$user->NV_SDT}}</td>
                                         <td>{{$user->NV_TENDANGNHAP}}</td>
                                         <td>{{\Illuminate\Support\Facades\Hash::make($user->NV_MATKHAU)}}</td>
-                                        <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/user/update',$user->NV_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/user/delete',$user->NV_MA)}}">
-                                                <span class="glyphicon glyphicon-remove"></span></a>
+                                        <td>
+                                            @foreach($roles as $role)
+                                                {{$role->Q_MA}}
+                                            @endforeach
                                         </td>
                                     </tr>
                                 @endforeach

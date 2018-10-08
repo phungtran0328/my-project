@@ -23,23 +23,38 @@
                             <h5>Cập nhật thông tin quyền</h5>
                         </div>
                         <div class="panel-body">
-                            <form action="{{url('admin/user/update',$user->NV_MA)}}" method="POST">
+                            <form action="{{url('admin/role/update',$role->Q_MA)}}" method="POST">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                 <div class="row">
                                     <div class="col-md-8 form-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                         <label class="control-label">Tên quyền (*)</label>
                                         <input type="text" class="form-control"
-                                               name="name" value="{{$user->NV_TEN}}">
+                                               name="name" value="{{$role->Q_TEN}}">
                                         <strong style="color: red">{{$errors->first('name') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group {{ $errors->has('roles') ? ' has-error' : '' }}">
-                                    <label class="control-label">Danh sách quyền (*)</label>
-                                    <select name="roles[]" multiple>
-                                        <option value="">---Chọn quyền---</option>
-                                        <option>
-                                    </select>
-                                    <strong style="color: red">{{$errors->first('address') }}</strong>
+                                <div class="row">
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label">Create (*)</label>
+                                        <select class="form-control" name="create">
+                                            <option value="true" selected> True</option>
+                                            <option value="false"> False</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label">Update (*)</label>
+                                        <select class="form-control" name="update">
+                                            <option value="true" selected> True</option>
+                                            <option value="false"> False</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label">Delete (*)</label>
+                                        <select class="form-control" name="delete">
+                                            <option value="true" selected> True</option>
+                                            <option value="false"> False</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <br>
                                 <div class="form-group">

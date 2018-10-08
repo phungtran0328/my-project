@@ -32,49 +32,48 @@ class RoleController extends Controller
         $book=$request->input('book');
         $invoice=$request->input('invoice');
         $invoiceIn=$request->input('invoice-in');*/
-        $data=array();
         switch ($roles){
             case 1:
-                $data[]=[
+                $data=array(
                     'order.create'=>true,
                     'order.update'=>true,
                     'order.delete'=>true
-                ];
+                );
                 break;
             case 2:
-                $data[]=[
+                $data=array(
                     'employee.create'=>true,
                     'employee.update'=>true,
                     'employee.delete'=>true
-                ];
+                );
                 break;
             case 3:
-                $data[]=[
+                $data=array(
                     'customer.create'=>true,
                     'customer.update'=>true,
                     'customer.delete'=>true
-                ];
+                );
                 break;
             case 4:
-                $data[]=[
+                $data=array(
                     'invoice-in.create'=>true,
                     'invoice-in.update'=>true,
                     'invoice-in.delete'=>true
-                ];
+                );
                 break;
             case 5:
-                $data[]=[
+                $data=array(
                     'invoice.create'=>true,
                     'invoice.update'=>true,
                     'invoice.delete'=>true
-                ];
+                );
                 break;
             case 6:
-                $data[]=[
+                $data=array(
                     'book.create'=>true,
                     'book.update'=>true,
                     'book.delete'=>true
-                ];
+                );
                 break;
         }
 
@@ -86,8 +85,26 @@ class RoleController extends Controller
     }
 
     public function show($id){
-        $result=Role::where('Q_MA',$id)->first();
-        $roles=Role::whereNotIn('Q_MA',$result)->get();
-        return view('admin.manage.user.update_role', compact('roles','result'));
+        $role=Role::where('Q_MA',$id)->first();
+        $results=array();
+        $results[]=$role->Q_QUYEN;
+        return view('admin.manage.user.update_role', compact('role','results'));
+    }
+
+    public function update(Request $request, $id){
+        $create=$request->input('create');
+        $update=$request->input('update');
+        $delete=$request->input('delete');
+        $role=Role::where('Q_MA',$id)->first();
+
+        $results=$role->Q_QUYEN;
+//        dd($results);
+        $key=array_keys($results); //lấy key name
+        $results[$key[0]]=$create; //thay đổi giá trị name [0]
+        $results[$key[1]]=$update;
+        $results[$key[2]]=$delete;
+        $role->Q_QUYEN=$results; //cập nhật lại
+        $role->save();
+        return redirect('admin/role')->with('messUpdate','Cập nhật thành công !');
     }
 }

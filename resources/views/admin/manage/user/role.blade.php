@@ -31,13 +31,13 @@
                                 {{Session::get('messAdd')}}
                             </div>
                         @endif
-                        {{--@if(Session::has('messageUpdate'))
+                        @if(Session::has('messUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageUpdate')}}
+                                {{Session::get('messUpdate')}}
                             </div>
                         @endif
-                        @if(Session::has('messageRemove'))
+                        {{--@if(Session::has('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('messageRemove')}}
@@ -73,7 +73,7 @@
                                             @endforeach
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="">
+                                            <a class="btn btn-default" href="{{url('admin/role/update',$role->Q_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
                                             <a class="btn btn-default" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>

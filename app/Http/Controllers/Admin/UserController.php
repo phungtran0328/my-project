@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Role;
 use App\User;
+use App\User_Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -63,7 +64,13 @@ class UserController extends Controller
 
     public function show($id){
         $user=User::where('NV_MA',$id)->first();
-        return view('admin.manage.user.update', compact('user'));
+        $roles=$user->roles()->get();
+        $results=array();
+        foreach ($roles as $role){
+            $results[]= $role->Q_MA;
+        }
+        $roles_user=Role::whereNotIn('Q_MA',$results)->get();
+        return view('admin.manage.user.update', compact('user','roles','roles_user'));
     }
 
     public function update(Request $request, $id){
@@ -94,6 +101,32 @@ class UserController extends Controller
         $user->NV_SDT=$request->input('phone');
         $user->save();
         return redirect('admin/user')->with('messageUpdate','Cập nhật thành công !');
+    }
+
+    public function updateRole(Request $request, $id){
+        $user=User::where('NV_MA',$id)->first();
+        $roles=$user->roles()->get();
+//        dd(count($roles));
+        $role=$request->input('roles');
+        $data=array();
+        for ($i=0;$i<count($role);$i++){
+            $data[]=[
+                'NV_MA'=>$id,
+                'Q_MA'=>$role[$i]
+            ];
+        }
+//        dd($data);
+        if (count($roles)==0){
+            User_Role::insert($data);
+        }
+        else{
+            for($i=0;$i<count($roles);$i++){
+                User_Role::where('NV_MA',$id)->delete();
+            }
+            User_Role::insert($data);
+        }
+
+        return redirect('admin/user')->with('messUpdateRole','Cập nhật quyền cho nhân viên thành công !');
     }
 
     public function delete($id){
