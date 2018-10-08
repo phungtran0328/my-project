@@ -157,8 +157,10 @@
                                         <td class="text-center">
                                             <a class="btn btn-default" href="{{url('/admin/book',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-check"></span></a>
+                                            @can('book.update')
                                             <a class="btn btn-default" href="{{url('/admin/book/edit',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
+                                            @endcan
                                             <a class="btn btn-default" href="{{url('admin/book/delete',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>

@@ -89,7 +89,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //book show, update
     Route::resource('book','Admin\BookController')->only('index','create','store','show','update');
-    Route::get('book/edit/{id}','Admin\BookController@edit');
+    Route::get('book/edit/{id}','Admin\BookController@edit')->middleware('can:book.update');
     Route::get('book/delete/{id}','Admin\BookController@delete');
 //    Route::get('book/search','Admin\BookController@getSearch');
 
@@ -117,15 +117,20 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('user/update/{id}','Admin\UserController@show');
     Route::post('user/update/{id}','Admin\UserController@update');
     Route::get('user/delete/{id}','Admin\UserController@delete');
-
+    //role
+    Route::get('role','Admin\RoleController@index');
+    Route::get('role/create','Admin\RoleController@create');
+    Route::post('role/create','Admin\RoleController@store');
     //customer
     Route::get('customer','Admin\CustomerController@index');
     Route::get('customer/delete/{id}','Admin\CustomerController@delete');
 
     //invoice-in
     Route::get('invoice-in','Admin\InvoiceInController@index');
-    Route::get('invoice-in/create','Admin\InvoiceInController@create');
-    Route::post('invoice-in/create','Admin\InvoiceInController@store');
+
+    Route::get('invoice-in/create','Admin\InvoiceInController@create')->middleware('can:invoice-in.create');
+    Route::post('invoice-in/create','Admin\InvoiceInController@store')->middleware('can:invoice-in.create');
+
     Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail');
     Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');

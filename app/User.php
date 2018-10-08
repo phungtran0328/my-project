@@ -43,8 +43,8 @@ class User extends Authenticatable
         return $this->hasMany('App\InvoiceIn','NV_MA','NV_MA');
     }
 
-    public function kind_of_account(){
-        return $this->belongsToMany('App\KindOfAccount','phanquyen','NV_MA','LTK_MA');
+    public function roles(){
+        return $this->belongsToMany('App\Role','phanquyen','NV_MA','Q_MA');
     }
     //column 1: tên bảng kết nối, c2: bảng được sinh ra do n-n
     //c3: khóa chính của model (User), c4: khóa chính của function đang định nghĩa (kind_of_account)
@@ -55,5 +55,27 @@ class User extends Authenticatable
 
     public function order(){
         return $this->hasMany('App\Order','NV_MA','NV_MA');
+    }
+
+    /**
+     * Checks if User has access to $permissions.
+     */
+    public function hasAccess(array $permissions) : bool
+    {
+        // check if the permission is available in any role
+        foreach ($this->roles as $role) {
+            if($role->hasAccess($permissions)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if the user belongs to role.
+     */
+    public function inRole(string $roleSlug)
+    {
+        return $this->roles()->where('Q_TEN', $roleSlug)->count() == 1;
     }
 }

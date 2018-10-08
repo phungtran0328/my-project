@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Policies\BookPolicy;
+use App\Policies\InvoiceInPolicy;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -25,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::resource('invoice-in',InvoiceInPolicy::class);
+        Gate::resource('book',BookPolicy::class);
     }
 }
