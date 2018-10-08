@@ -33,6 +33,7 @@
                                         <strong style="color: red">{{$errors->first('name') }}</strong>
                                     </div>
                                 </div>
+
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Create (*)</label>
