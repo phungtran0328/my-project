@@ -22,7 +22,8 @@ Route::get('/', function () {
 
 Route::get('/category/{id}','CategoryController@category');
 Route::get('/detail/{id}','DetailController@getDetail');
-
+Route::get('/cart','CartController@index');
+Route::post('/cart','CartController@store');
 
 Auth::routes();
 

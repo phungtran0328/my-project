@@ -93,16 +93,24 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <form class="form-inline ">
+                                    <form class="form-inline " action="{{url('/cart')}}" method="post">
                                         <p style="margin-bottom: 10px">Số lượng:</p>
                                         @if($book->S_SLTON>0)
-                                        <button class="btn btn-default btn-group" style="width: 40px">
+                                        {{--<button class="btn btn-default btn-group" style="width: 40px">
                                             <span> - </span>
-                                        </button>
+                                        </button>--}}
                                         <input type="text" class="btn-group" style="width: 45px" value="1" id="quality">
-                                        <button class="btn btn-default btn-group" style="width: 40px">
+                                        {{--<button class="btn btn-default btn-group" style="width: 40px">
                                             <span> + </span>
-                                        </button>
+                                        </button>--}}
+                                        <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <input type="hidden" name="id" value="{{ $book->S_MA }}">
+                                            <input type="hidden" name="name" value="{{ $book->S_TEN}}">
+                                            @if(isset($promotion))
+                                                <input value="{{$saleoff}}" type="hidden" name="price">
+                                            @else
+                                                <input value="{{$book->S_GIA}}" type="hidden" name="price">
+                                            @endif
                                         <button class="btn btn-primary" style="margin-left: 50px">
                                             <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
                                         @else
