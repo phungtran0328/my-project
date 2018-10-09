@@ -92,6 +92,7 @@ class RoleController extends Controller
     }
 
     public function update(Request $request, $id){
+        $name=$request->input('name');
         $create=$request->input('create');
         $update=$request->input('update');
         $delete=$request->input('delete');
@@ -103,6 +104,7 @@ class RoleController extends Controller
         $results[$key[0]]=$create; //thay đổi giá trị name [0]
         $results[$key[1]]=$update;
         $results[$key[2]]=$delete;
+        $role->Q_TEN=$name;
         $role->Q_QUYEN=$results; //cập nhật lại
         $role->save();
         return redirect('admin/role')->with('messUpdate','Cập nhật thành công !');

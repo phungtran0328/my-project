@@ -21,10 +21,12 @@
                         <h5>Danh sách nhân viên</h5>
                     </div>
                     <div class="panel-body">
+                        @can('user.create')
                         <a href="{{url('admin/user/create')}}" class="btn btn-primary" style="width: 150px;">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
-                        <hr>
+                            <hr>
+                        @endcan
                         @if(Session::has('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -53,7 +55,9 @@
                             <table class="table table-striped table-bordered table-hover" style="width: 1500px">
                                 <thead>
                                 <tr>
-                                    <th style="width: 8%">Hành động</th>
+                                    @can('user.update')
+                                    <th style="width: 8%" colspan="2">Hành động</th>
+                                    @endcan
                                     <th style="width: 10%">Tên</th>
                                     <th style="width: 6%">Giới tính</th>
                                     <th style="width: 4%">Ngày sinh</th>
@@ -67,12 +71,18 @@
                                 <tbody>
                                 @foreach($users as $index=>$user)
                                     <tr>
-                                        <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/user/update',$user->NV_MA)}}">
+                                        @can('user.update')
+                                            <td class="text-center" colspan="1">
+                                                <a class="btn btn-default" href="{{url('admin/user/update',$user->NV_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="">
-                                                <span class="glyphicon glyphicon-remove"></span></a>
-                                        </td>
+                                            </td>
+                                        @endcan
+                                        @can('user.delete')
+                                            <td class="text-center" colspan="1">
+                                                <a class="btn btn-default" href="">
+                                                    <span class="glyphicon glyphicon-remove"></span></a>
+                                            </td>
+                                        @endcan
                                         <td>{{$user->NV_TEN}}</td>
                                         <td>{{$user->NV_GIOITINH}}</td>
                                         <?php

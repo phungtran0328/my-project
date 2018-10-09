@@ -11,12 +11,20 @@ class AuthorController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $authors=Author::paginate(10);
-        return view('admin.book.author.author',compact('authors'));
+        $search=$request->input('search');
+        if (isset($search)){
+            $authors=Author::where('TG_TEN','like','%'.$search.'%')
+                ->orderBy('TG_MA','desc')->paginate(10);
+        }
+        else{
+            $authors=Author::paginate(10);
+        }
+        return view('admin.book.author.author',compact('authors','search'));
     }
 
     /**
@@ -58,6 +66,10 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
+
+    }
+
+    public function getUpdate($id){
         $author=Author::where('TG_MA',$id)->first();
         return view('admin.book.author.update_author',compact('author'));
     }
@@ -110,5 +122,10 @@ class AuthorController extends Controller
     {
         Author::where('TG_MA',$id)->delete();
         return redirect('admin/author')->with('messageRemove','Xóa thành công !');
+    }
+
+    public function getSearch(Request $request){
+        $authors=Author::where('TG_TEN','LIKE','%'.$request->input('search').'%')->get();
+        return view('admin.book.author.search', compact('authors'));
     }
 }

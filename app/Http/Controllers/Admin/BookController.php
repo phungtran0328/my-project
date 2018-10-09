@@ -15,13 +15,21 @@ class BookController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books=Book::orderBy('S_MA','desc')->paginate(10);
+        $search=$request->input('search');
+        if (isset($search)){
+            $books=Book::where('S_TEN','like','%'.$search.'%')
+                ->orderBy('S_MA','desc')->paginate(10);
+        }
+        else{
+            $books=Book::orderBy('S_MA','desc')->paginate(10);
+        }
         //sắp xếp S_MA giảm dần lấy 10 record trên 1 trang
-        return view('admin.book.book', compact('books'));
+        return view('admin.book.book', compact('books','search'));
     }
 
     /**
@@ -93,7 +101,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        $book=Book::where('S_MA',$id)->first();
+        /*$book=Book::where('S_MA',$id)->first();
         $publisher = $book->publisher()->first();
         $authors = $book->author()->get();
         $translators = $book->translator()->get();
@@ -101,8 +109,12 @@ class BookController extends Controller
         $kind_of_book = $book->kind_of_book()->first();
         $cover_type = $book->cover_type()->first();
         $images = $book->image()->get();
-        return view('admin.book.book_detail',compact('book','publisher','authors','translators','promotion',
-            'kind_of_book','cover_type','images'));
+        return view('admin.book.book_detail',compact('book'));*/
+    }
+
+    public function detail($id){
+        $book=Book::where('S_MA',$id)->first();
+        return view('admin.book.book_detail',compact('book'));
     }
 
     /**
@@ -190,11 +202,4 @@ class BookController extends Controller
         return redirect()->back()->with('messDelete','Xóa sách thành công !');
     }
 
-    public function getSearch(Request $request){
-        $book_search=Book::where('S_TEN', 'LIKE', '%'.$request->input('search').'%')->get();
-//            ->orderBy('S_TEN','asc')
-//            ->paginate(10);
-//        dd($books);
-        return view('admin.book.search_book')->with('book_search',$book_search);
-    }
 }

@@ -21,8 +21,34 @@
                         <h5>Danh sách tác giả</h5>
                     </div>
                     <div class="panel-body">
-                        <a href="{{url('/admin/author/create')}}" class="btn btn-primary" style="width: 100px;"> + </a>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="{{url('/admin/author/create')}}" class="btn btn-primary btn-block">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </a>
+                            </div>
+                            @if(isset($search))
+                                <div class="col-md-4"></div>
+                                <div class="col-md-2">
+                                    <a href="{{url('/admin/author')}}" class="btn btn-primary btn-block">
+                                        <span class="glyphicon glyphicon-arrow-left"> Trở lại</span>
+                                    </a>
+                                </div>
+                                @else
+                                <div class="col-md-6"></div>
+                            @endif
+                            <div class="col-md-4">
+                                <form role="search" class="input-group" action="{{url('admin/author')}}" method="get">
+                                    <input type="text" class="form-control" name="search" placeholder="Tìm tác giả theo tên" value="{{$search}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default-sm" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
 
+                        </div>
                         <hr>
                         @if(Session::has('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
@@ -42,7 +68,7 @@
                                 {{Session::get('messageRemove')}}
                             </div>
                         @endif
-                        <div class="table-responsive ">
+                        <div class="table-responsive " id="mySearch">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
@@ -62,7 +88,7 @@
                                         <td>{{$author->TG_MOTA}}</td>
                                         <td>{{$author->TG_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/author',$author->TG_MA)}}">
+                                            <a class="btn btn-default" href="{{url('admin/author/update',$author->TG_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
                                             <a class="btn btn-default" href="{{url('admin/author/delete',$author->TG_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>

@@ -4,7 +4,16 @@
  * User: PHUNGTRAN
  * Date: 09/29/2018
  * Time: 8:40 AM
- */?>
+ */
+
+$publisher = $book->publisher()->first();
+$authors = $book->author()->get();
+$translators = $book->translator()->get();
+$promotion = $book->promotion()->first();
+$kind_of_book = $book->kind_of_book()->first();
+$cover_type = $book->cover_type()->first();
+$images = $book->image()->get();
+?>
 @extends('admin/master')
 @section('content')
     <div id="page-wrapper">

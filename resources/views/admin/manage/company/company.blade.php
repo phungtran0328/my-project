@@ -21,9 +21,11 @@
                         <h5>Danh sách công ty phát hành</h5>
                     </div>
                     <div class="panel-body">
+                        @can('invoice-in.create')
                         <a href="{{url('admin/company/create')}}" class="btn btn-primary" style="width: 150px;">
                             <span class="glyphicon glyphicon-plus"></span>
                         </a>
+                        @endcan
                         <hr>
                         @if(Session::has('messageAdd'))
                             <div class="alert alert-success alert-dismissable">

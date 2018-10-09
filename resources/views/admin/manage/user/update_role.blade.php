@@ -33,27 +33,48 @@
                                         <strong style="color: red">{{$errors->first('name') }}</strong>
                                     </div>
                                 </div>
-
+                                <?php
+                                    $results=$role->Q_QUYEN;
+                                    $key=array_keys($results);
+                                    $create=$results[$key[0]];
+                                    $update=$results[$key[1]];
+                                    $delete=$results[$key[2]];
+                                ?>
                                 <div class="row">
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Create (*)</label>
                                         <select class="form-control" name="create">
-                                            <option value="true" selected> True</option>
-                                            <option value="false"> False</option>
+                                            @if($create=="true")
+                                                <option value="true" selected> True</option>
+                                                <option value="false"> False</option>
+                                                @else
+                                                <option value="true" > True</option>
+                                                <option value="false" selected> False</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Update (*)</label>
                                         <select class="form-control" name="update">
-                                            <option value="true" selected> True</option>
-                                            <option value="false"> False</option>
+                                            @if($update=="true")
+                                                <option value="true" selected> True</option>
+                                                <option value="false"> False</option>
+                                            @else
+                                                <option value="true" > True</option>
+                                                <option value="false" selected> False</option>
+                                            @endif
                                         </select>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Delete (*)</label>
                                         <select class="form-control" name="delete">
-                                            <option value="true" selected> True</option>
-                                            <option value="false"> False</option>
+                                            @if($delete=="true")
+                                                <option value="true" selected> True</option>
+                                                <option value="false"> False</option>
+                                            @else
+                                                <option value="true" > True</option>
+                                                <option value="false" selected> False</option>
+                                            @endif
                                         </select>
                                     </div>
                                 </div>

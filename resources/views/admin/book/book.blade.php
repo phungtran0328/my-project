@@ -37,9 +37,9 @@
                                     <span class="glyphicon glyphicon-plus"> Tác giả</span>
                                 </a>
                             </div>
-                            <div class="col-md-6">
-                                <form role="search" class="input-group" action="{{url('admin/book/search')}}" method="get">
-                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên">
+                            <div class="col-md-4">
+                                <form role="search" class="input-group" action="{{url('admin/book')}}" method="get">
+                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default-sm" type="submit">
                                             <i class="fa fa-search"></i>
@@ -47,6 +47,13 @@
                                     </span>
                                 </form>
                             </div>
+                            @if(isset($search))
+                                <div class="col-md-2">
+                                    <a href="{{url('/admin/book')}}" class="btn btn-primary btn-block">
+                                        <span class="glyphicon glyphicon-arrow-left"> Trở lại</span>
+                                    </a>
+                                </div>
+                            @endif
                         </div>
                         <hr>
                         @if(Session::has('messAddBook'))
@@ -109,9 +116,9 @@
                                 <tr>
                                     <th>STT</th>
                                     <th>Tên</th>
-                                    <th>Tác giả</th>
+                                    <th style="width: 15%">Tác giả</th>
                                     <th>Người dịch</th>
-                                    <th>SL Tồn</th>
+                                    <th>SLT</th>
                                     <th>Giá</th>
                                     <th>Nhà xuất bản</th>
                                     <th>Hình ảnh</th>
@@ -155,14 +162,16 @@
                                             <td>Chưa có hình ảnh</td>
                                         @endif
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('/admin/book',$book->S_MA)}}">
+                                            <a class="btn btn-default" href="{{url('/admin/book/detail',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-check"></span></a>
                                             @can('book.update')
                                             <a class="btn btn-default" href="{{url('/admin/book/edit',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
                                             @endcan
+                                            @can('book.delete')
                                             <a class="btn btn-default" href="{{url('admin/book/delete',$book->S_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

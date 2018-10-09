@@ -84,14 +84,19 @@ Route::group(['prefix' => 'admin'], function () {
     Route::resource('publisher','Admin\PublisherController')->except(['edit','destroy']);
     Route::get('publisher/delete/{id}','Admin\PublisherController@delete');
 
-    Route::resource('author','Admin\AuthorController')->except(['edit','destroy']);
+    Route::resource('author','Admin\AuthorController')->except(['show','edit','destroy']);
+    Route::get('author/update/{id}','Admin\AuthorController@getUpdate');
     Route::get('author/delete/{id}','Admin\AuthorController@delete');
 
     //book show, update
-    Route::resource('book','Admin\BookController')->only('index','create','store','show','update');
+    Route::resource('book','Admin\BookController')->only('index');
+    Route::get('book/detail/{id}','Admin\BookController@detail');
+    Route::get('book/create','Admin\BookController@create')->middleware('can:book.create');
+    Route::post('book','Admin\BookController@store')->middleware('can:book.create');
     Route::get('book/edit/{id}','Admin\BookController@edit')->middleware('can:book.update');
-    Route::get('book/delete/{id}','Admin\BookController@delete');
-//    Route::get('book/search','Admin\BookController@getSearch');
+    Route::patch('book/{id}','Admin\BookController@update')->middleware('can:book.update');
+    Route::get('book/delete/{id}','Admin\BookController@delete')->middleware('can:book.delete');
+
 
     //book image
     Route::resource('book/image','Admin\ImageController')->only('create','store','show','update');
@@ -104,7 +109,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //release company
     Route::get('company','Admin\ReleaseCompanyController@index');
-    Route::get('company/create','Admin\ReleaseCompanyController@create');
+    Route::get('company/create','Admin\ReleaseCompanyController@create')->middleware('can:invoice-in.create');
     Route::post('company/create','Admin\ReleaseCompanyController@store');
     Route::get('company/update/{id}','Admin\ReleaseCompanyController@show');
     Route::post('company/update/{id}','Admin\ReleaseCompanyController@update');
@@ -112,14 +117,14 @@ Route::group(['prefix' => 'admin'], function () {
 
     //user (employee)
     Route::get('user','Admin\UserController@index');
-    Route::get('user/create','Admin\UserController@create');
-    Route::post('user/create','Admin\UserController@store');
-    Route::get('user/update/{id}','Admin\UserController@show');
+    Route::get('user/create','Admin\UserController@create')->middleware('can:user.create');
+    Route::post('user/create','Admin\UserController@store')->middleware('can:user.create');
+    Route::get('user/update/{id}','Admin\UserController@show')->middleware('can:user.update');
     //user update profile
-    Route::post('user/update/{id}','Admin\UserController@update');
+    Route::post('user/update/{id}','Admin\UserController@update')->middleware('can:user.update');
     //user update role
     Route::post('user/update/role/{id}','Admin\UserController@updateRole');
-    Route::get('user/delete/{id}','Admin\UserController@delete');
+    Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
     //role
     Route::get('role','Admin\RoleController@index');
     Route::get('role/create','Admin\RoleController@create');
