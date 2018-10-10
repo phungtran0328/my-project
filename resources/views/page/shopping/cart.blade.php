@@ -8,109 +8,164 @@
 @extends('master')
 @section('content')
     <div class="container">
-        <h3>Giỏ hàng của bạn</h3>
-        <hr>
-        @if (session()->has('success_message'))
-            <div class="alert alert-success">
-                {{ session()->get('success_message') }}
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <h4>GIỎ HÀNG ({{Cart::instance()->count(false)}})</h4>
+                <br>
+                @if(Session::has('messAdd'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('messAdd')}}
+                    </div>
+                @endif
+                @if(Session::has('messRemove'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('messRemove')}}
+                    </div>
+                @endif
+                @if(Session::has('messEmpty'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('messEmpty')}}
+                    </div>
+                @endif
+                <div class="table-responsive ">
+                    @if (sizeof(Cart::content()) > 0)
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="width: 10%">Hình ảnh</th>
+                                <th >Tên sách</th>
+                                <th >Số lượng</th>
+                                <th>Giá</th>
+                                <th>Giá đã giảm</th>
+                                <th>Thành tiền</th>
+                                <th>Xóa</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php $sum=0; ?>
+                            @foreach (Cart::content() as $item)
+                                <tr>
+                                    <td colspan="1">
+                                        <a href="{{ url('detail', [$item->id]) }}">
+                                            <?php
+                                                $temp=\App\Book::where('S_MA',[$item->id])->first();
+                                                $image=$temp->image()->first();
+                                                $promotion=$temp->promotion()->first();
+                                                $total=0;
+                                                if (isset($promotion)){
+                                                    $sale = ($item->model->S_GIA)-($item->model->S_GIA)*($promotion->KM_GIAM);
+                                                    $percent = ($promotion->KM_GIAM)*100;
+                                                }
+                                                else{
+                                                    $sale = $item->model->S_GIA;
+                                                    $percent=0;
+                                                }
+                                                $total+=($sale*$item->qty);
+                                                $sum+=$total;
+                                            ?>
+                                            <img src="images/{{$image->HA_URL}}" width="100" height="100" >
+                                        </a>
+                                    </td>
+                                    <td colspan="1">
+                                        <a href="{{ url('detail', [$item->id]) }}">{{ $item->model->S_TEN }}</a>
+                                    </td>
+                                    <td style="width: 15%">
+                                        <form class="input-group" action="{{url('/cart/update',$item->rowId)}}" method="post">
+                                            {!! csrf_field() !!}
+                                            <input value="{{$item->qty}}" class="form-control" type="number" min="1" id="qty-num" name="qty">
+                                            <input type="hidden" name="id" value="{{$item->rowId}}">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default-sm">Cập nhật</button>
+                                            </span>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        {{ number_format($item->model->S_GIA) }} đ
+                                    </td>
+                                    <td>
+                                        {{number_format($sale)}} đ <br><br>
+                                        @if($percent<>0)
+                                            <p style="background: orange; width: 50px; color: white">-{{$percent}}%</p>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        {{number_format($total)}} đ
+                                    </td>
+                                    <td>
+                                        <form action="{{ url('/cart/delete', [$item->rowId]) }}" method="post" class="side-by-side">
+                                            {!! csrf_field() !!}
+                                            <button class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            {{--Cart::instance('default')->tax(); Cart:total() -> tính luôn cả tax() vào nên không dùng --}}
+                            <tr>
+                                <td colspan="5">
+                                    <a href="{{url('/index')}}" class="btn btn-primary" >Tiếp tục mua sách</a>
+                                </td>
+                                <td style="text-align: right" colspan="2">
+                                    <form action="{{url('/cart/empty')}}" method="post">
+                                        {!! csrf_field() !!}
+                                        {{--<input type="hidden" name="_method" value="DELETE">--}}
+                                        <input type="submit" class="btn btn-danger" value="Xóa giỏ hàng">
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <div class="col-md-7">
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-bordered" style="border: none; width: 100%">
+                                    <tr>
+                                        <th style="font-size: 18px; text-align: left;" colspan="50%">TỔNG CHƯA GIẢM</th>
+                                        <td style="font-size: 15px; text-align: right" >{{ Cart::instance('default')->subtotal() }} đ</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-size: 18px;  text-align: left" colspan="50%">TỔNG CỘNG</th>
+                                        <td style="font-size: 18px; text-align: right; color: red">{{number_format($sum)}} đ</td>
+                                    </tr>
+                                </table>
+                                <a href="" class="btn btn-success btn-block">Tiến hành thanh toán</a>
+                            </div>
+                        </div>
+                    @else
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="{{url('/index')}}" class="btn btn-primary">Tiếp tục mua sách</a>
+                            </div>
+                            <div class="col-md-10 text-center">
+                                <h3>Không có quyển sách nào trong giỏ hàng!</h3><br/>
+
+                            </div>
+
+                        </div>
+                    @endif
+                </div>
             </div>
-        @endif
-
-        @if (session()->has('error_message'))
-            <div class="alert alert-danger">
-                {{ session()->get('error_message') }}
-            </div>
-        @endif
-        @if (sizeof(Cart::content()) > 0)
-            <table class="table">
-                <thead>
-                <tr>
-                    <th class="table-image"></th>
-                    <th >Tên sách</th>
-                    <th >Số lượng</th>
-                    <th>Giá</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach (Cart::content() as $item)
-                    <tr>
-                        <td class="table-image">
-                            <a href="{{ url('detail', [$item->id]) }}">
-                                <img src="" width="70" height="100"  >
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ url('detail', [$item->id]) }}">{{ $item->model->S_TEN }}</a>
-                        </td>
-                        <td >
-                            <form method="POST" action="" >
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="submit" class="submit" name="quantity" value="  +  ">
-                                <input type="hidden" name="id" value="}">
-
-                            </form>
-                            <form>
-                                <input type="tel" value="{{$item->qty}}">
-                            </form>
-
-
-                            <form method="post" action="">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <input type="submit" class="submit" name="quantity" value="  -  ">
-                                <input type="hidden" name="id" value="">
-                            </form>
-                        </td>
-                        <td>
-                            {{ $item->subtotal() }} VND
-                        </td>
-                        <td>
-                            <form action="{{ url('cart', [$item->rowId]) }}" method="POST" class="side-by-side">
-                                {!! csrf_field() !!}
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="submit" class="btn btn-danger btn-sm" value="Xóa">
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                <tr>
-                    <td class="table-image"></td>
-                    <td></td>
-                    <td class="small-caps table-bg" style="text-align: right">Tổng tiền</td>
-                    <td>{{ Cart::instance('default')->subtotal() }} VND</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="table-image"></td>
-                    <td></td>
-                    <td class="small-caps table-bg" style="text-align: right">Thuế</td>
-                    <td>{{ Cart::instance('default')->tax() }} VND</td>
-                    <td></td>
-                </tr>
-                <tr class="border-bottom">
-                    <td class="table-image"></td>
-                    <td style="padding: 40px;"></td>
-                    <td class="small-caps table-bg" style="text-align: right">Thành tiền</td>
-                    <td class="table-bg">{{ Cart::total() }} VND</td>
-                    <td class="column-spacer"></td>
-                </tr>
-                </tbody>
-            </table>
-
-            <a href="{{url('/index')}}" class="btn btn-primary">Tiếp tục mua sách</a> &nbsp;
-            <a href="" class="btn btn-success">Tiến hành thanh toán</a>
-
-            <div style="float:right">
-                <form action="" method="POST">
-                    {!! csrf_field() !!}
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input type="submit" class="btn btn-danger" value="Xóa giỏ hàng">
-                </form>
-            </div>
-        @else
-            <h3>Không có quyển sách nào trong giỏ hàng!</h3><br/>
-            <a href="{{url('/index')}}" class="btn btn-primary">Tiếp tục mua sách</a>
-        @endif
+        </div>
         <div class="clearfix"></div>
+        <hr>
     </div> <!-- end container -->
 @endsection
+<script>
+    /*function updateQty() {
+        var id = $("#qty-num").attr('data-id');
+        var qty= $("#qty-num").val();
+//        var decrement = parseInt($(inputQtyNum).val()) - 1;
+
+        $.ajax({
+            type: "post",
+            url: '' + '/' + id,
+            data:{
+                'qty': qty
+            }
+        })
+    }*/
+</script>

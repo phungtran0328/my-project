@@ -24,9 +24,11 @@ Route::get('/category/{id}','CategoryController@category');
 Route::get('/detail/{id}','DetailController@getDetail');
 Route::get('/cart','CartController@index');
 Route::post('/cart','CartController@store');
+Route::post('/cart/update/{id}','CartController@update');
+Route::post('cart/delete/{id}','CartController@destroy');
+Route::post('/cart/empty', 'CartController@emptyCart');
 
 Auth::routes();
-
 Route::group(['middleware' => ['web']], function () {
     //Login Routes...
     Route::get('/login','LoginController@showLoginForm');
