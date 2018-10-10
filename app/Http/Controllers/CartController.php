@@ -25,6 +25,7 @@ class CartController extends Controller
         return redirect('cart')->with('messAdd','Sách đã được thêm vào giỏ hàng!');
     }
 
+
     /*public function increment($id)
     {
         $item = Cart::instance('default')->get($id);
