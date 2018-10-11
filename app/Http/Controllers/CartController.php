@@ -18,11 +18,11 @@ class CartController extends Controller
             return $key->id == $request->id;
         });
         if (!$duplicates->isEmpty()) {
-            return redirect('cart')->with('message','Sách đã có trong giỏ hàng!');
+            return redirect()->back()->with('message','Sách đã có trong giỏ hàng!');
         }
         Cart::add($request->id, $request->name, $request->qty, $request->price)->associate('App\Book');
 
-        return redirect('cart')->with('messAdd','Sách đã được thêm vào giỏ hàng!');
+        return redirect()->back()->with('messAdd','Sách đã được thêm vào giỏ hàng!');
     }
 
 

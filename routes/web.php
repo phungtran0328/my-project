@@ -27,6 +27,12 @@ Route::post('/cart','CartController@store');
 Route::post('/cart/update/{id}','CartController@update');
 Route::post('cart/delete/{id}','CartController@destroy');
 Route::post('/cart/empty', 'CartController@emptyCart');
+Route::get('/checkout','CheckoutController@index');
+Route::post('/checkout/check','CheckoutController@checkAuth');
+Route::post('/checkout/register','CheckoutController@registerAuth');
+
+Route::post('/checkout','CheckoutController@checkout');
+
 
 Auth::routes();
 Route::group(['middleware' => ['web']], function () {

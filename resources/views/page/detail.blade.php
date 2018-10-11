@@ -44,6 +44,18 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            @if(Session::has('messAdd'))
+                <div class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{Session::get('messAdd')}}
+                </div>
+            @endif
+                @if(Session::has('message'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{Session::get('message')}}
+                    </div>
+                @endif
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
@@ -82,11 +94,11 @@
                             <hr>
                             <div>
                                 <div style="margin-bottom: 20px;">
-                                    @if(isset($promotion))
+                                    @if($saleoff <> $book->S_GIA)
                                         <span class="flash-del" style="font-size: 18px">{{number_format($book->S_GIA)}} đ</span>
                                         <span class="flash-sale" style="font-size: 18px">{{number_format($saleoff)}} đ</span>
                                     @else
-                                        <span style="color: #9f191f; font-size: 18px;">{{number_format($book->S_GIA)}} đ</span>
+                                        <span style="color: #9f191f; font-size: 18px;">{{number_format($saleoff)}} đ</span>
                                     @endif
                                 </div>
                             </div>
@@ -99,7 +111,7 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <input type="hidden" name="id" value="{{ $book->S_MA }}">
                                             <input type="hidden" name="name" value="{{ $book->S_TEN}}">
-                                            <input value="{{$book->S_GIA}}" type="hidden" name="price">
+                                            <input value="{{$saleoff}}" type="hidden" name="price">
                                         {{--<button class="btn btn-default btn-group" style="width: 40px">
                                             <span> - </span>
                                         </button>--}}
@@ -229,14 +241,26 @@
                                         //Lấy tên image đưa vào mảng results
                                         $image=$temp_book->image()->first();
                                         $promotion=$temp_book->promotion()->first();
+                                        $date=strtotime(date('Y-m-d'));
                                         if (isset($promotion)){
-                                            $results[]=[
-                                                'id'=>$item->S_MA,
-                                                'name'=>$item->S_TEN,
-                                                'price'=>$item->S_GIA,
-                                                'image'=>$image->HA_URL,
-                                                'sale'=>($item->S_GIA)-($item->S_GIA)*($promotion->KM_GIAM)
-                                            ];
+                                            $start=strtotime($promotion->KM_APDUNG);
+                                            $end=strtotime($promotion->KM_HANDUNG);
+                                            if (($start<$date) and ($date<$end)){
+                                                $results[]=[
+                                                    'id'=>$item->S_MA,
+                                                    'name'=>$item->S_TEN,
+                                                    'price'=>$item->S_GIA,
+                                                    'image'=>$image->HA_URL,
+                                                    'sale'=>($item->S_GIA)-($item->S_GIA)*($promotion->KM_GIAM)
+                                                ];
+                                            }else{
+                                                $results[]=[
+                                                    'id'=>$item->S_MA,
+                                                    'name'=>$item->S_TEN,
+                                                    'price'=>$item->S_GIA,
+                                                    'image'=>$image->HA_URL,
+                                                ];
+                                            }
                                         }else{
                                             $results[]=[
                                                 'id'=>$item->S_MA,

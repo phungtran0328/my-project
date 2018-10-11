@@ -94,36 +94,47 @@
                                         $temp = \App\Book::where('S_MA', $book->S_MA)->first();
                                         $image = $temp->image()->first();
                                         $promotion =$temp->promotion()->first();
+                                        $date=strtotime(date('Y-m-d'));
                                         if (isset($promotion)){
-                                            $sale=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
+                                            $start=strtotime($promotion->KM_APDUNG);
+                                            $end=strtotime($promotion->KM_HANDUNG);
+                                            if (($start<$date)and($end>$date)){
+                                                $sale=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
+                                                //trường hợp có khuyến mãi và đang trong thời gian có hiệu lực
+                                            }else{
+                                                $sale=$book->S_GIA;
+                                                //Có khuyến mãi nhưng chưa tới thời gian
+                                            }
+                                        }else{
+                                            $sale=$book->S_GIA;
                                         }
                                         ?>
                                         @if(isset($image))
-                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px"  class="thumbnail"></a>
+                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px" ></a>
                                             @else
                                                 <a href="{{url('/detail',$book->S_MA)}}"><img src="images/sorry-image-not-available.jpg" alt=""></a>
                                         @endif
                                     </div>
                                     <div class="single-item-body text-center">
-                                        <p class="single-item-title" style="font-size: 16px">{{$book->S_TEN}}</p>
+                                        <a href="{{url('/detail',$book->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$book->S_TEN}}</a>
                                         <p class="single-item-price" style="font-size: 15px">
-                                            @if(isset($promotion))
+                                            @if($sale<$book->S_GIA)
                                                 <span class="flash-del">{{number_format($book->S_GIA)}} đ</span>
                                                 <span class="flash-sale">{{number_format($sale)}} đ</span>
                                             @else
-                                                <span>{{number_format($book->S_GIA)}} đ</span>
+                                                <span>{{number_format($sale)}} đ</span>
                                             @endif
                                         </p>
                                     </div>
                                     <br>
                                     <div class="clearfix"></div>
                                     <div class="single-item-caption text-center">
-                                        @if($book->S_SLTON>0)
+                                        {{--@if($book->S_SLTON>0)
                                         <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                        {{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}
+                                        --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
                                             @else
                                             <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                        @endif
+                                        @endif--}}
                                     </div>
                                     <br>
                                 </div>

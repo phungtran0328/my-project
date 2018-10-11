@@ -13,12 +13,7 @@
                 <br>
                 <h4>GIỎ HÀNG ({{Cart::instance()->count(false)}})</h4>
                 <br>
-                @if(Session::has('messAdd'))
-                    <div class="alert alert-success alert-dismissable">
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{Session::get('messAdd')}}
-                    </div>
-                @endif
+
                 @if(Session::has('messRemove'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -56,16 +51,15 @@
                                                 $image=$temp->image()->first();
                                                 $promotion=$temp->promotion()->first();
                                                 $total=0;
-                                                if (isset($promotion)){
-                                                    $sale = ($item->model->S_GIA)-($item->model->S_GIA)*($promotion->KM_GIAM);
+                                                if ($item->price <> $item->model->S_GIA){
                                                     $percent = ($promotion->KM_GIAM)*100;
                                                 }
                                                 else{
-                                                    $sale = $item->model->S_GIA;
                                                     $percent=0;
                                                 }
-                                                $total+=($sale*$item->qty);
+                                                $total+=($item->model->S_GIA*$item->qty);
                                                 $sum+=$total;
+                                                //tổng giá chưa giảm (bởi vì thêm giá khuyến mãi vào cho $item->price)
                                             ?>
                                             <img src="images/{{$image->HA_URL}}" width="100" height="100" >
                                         </a>
@@ -87,13 +81,13 @@
                                         {{ number_format($item->model->S_GIA) }} đ
                                     </td>
                                     <td>
-                                        {{number_format($sale)}} đ <br><br>
+                                        {{number_format($item->price)}} đ <br><br>
                                         @if($percent<>0)
                                             <p style="background: orange; width: 50px; color: white">-{{$percent}}%</p>
                                         @endif
                                     </td>
                                     <td>
-                                        {{number_format($total)}} đ
+                                        {{number_format($item->price*$item->qty)}} đ
                                     </td>
                                     <td>
                                         <form action="{{ url('/cart/delete', [$item->rowId]) }}" method="post" class="side-by-side">
@@ -125,14 +119,14 @@
                                 <table class="table table-bordered" style="border: none; width: 100%">
                                     <tr>
                                         <th style="font-size: 18px; text-align: left;" colspan="50%">TỔNG CHƯA GIẢM</th>
-                                        <td style="font-size: 15px; text-align: right" >{{ Cart::instance('default')->subtotal() }} đ</td>
+                                        <td style="font-size: 15px; text-align: right" >{{ number_format($sum) }} đ</td>
                                     </tr>
                                     <tr>
                                         <th style="font-size: 18px;  text-align: left" colspan="50%">TỔNG CỘNG</th>
-                                        <td style="font-size: 18px; text-align: right; color: red">{{number_format($sum)}} đ</td>
+                                        <td style="font-size: 18px; text-align: right; color: red">{{ Cart::instance('default')->subtotal()}} đ</td>
                                     </tr>
                                 </table>
-                                <a href="" class="btn btn-success btn-block">Tiến hành thanh toán</a>
+                                <a href="{{url('/checkout')}}" class="btn btn-success btn-block">Tiến hành thanh toán</a>
                             </div>
                         </div>
                     @else

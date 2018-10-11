@@ -25,7 +25,6 @@
                             <h3 class="panel-title">Đăng nhập</h3>
                         </div>
                         <div class="panel-body">
-
                             <form class="form-horizontal" action="{{url('/login')}}" method="POST">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
 
@@ -34,58 +33,39 @@
                                         {{Session::get('message')}}
                                     </div>
                                 @endif
-                                <div class="form-group ">
+                                <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
                                     <div class="col-md-7">
                                         <input type="text" class="form-control "
                                                name="email" placeholder="Nhập email" value="{{old('email')}}">
-                                    </div>
-
-                                </div>
-                                <div class="form-group {{ $errors->has('email') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('email') }}</strong>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                                     <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
                                     <div class="col-md-7">
                                         <input type="password" class="form-control" id="txtPass" name="password"
                                                placeholder="Mật khẩu từ 6 đến 32 ký tự" value="{{old('password')}}">
-                                    </div>
-
-                                </div>
-                                <div class="form-group {{ $errors->has('password') ? ' has-error' : 'hide' }}">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-7">
                                         <strong style="color: red">{{$errors->first('password') }}</strong>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-7">
                                         <button type="submit" name="login" id="login" class="btn btn-primary btn-block">Đăng nhập</button>
-
                                     </div>
-
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-7">
                                         <a type="submit" name="register" href="{{url('/register')}}" class="btn btn-primary btn-block">Tạo tài khoản</a>
-
                                     </div>
-
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div> <!-- #content -->
     </div> <!-- .container -->
 @endsection
