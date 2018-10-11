@@ -45,6 +45,12 @@
 </style>
 @section('content')
     <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li class="active">Thanh toán</li>
+        </ul>
+    </div>
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -55,6 +61,13 @@
                                 {{Session::get('messCheck')}}
                             </div>
                         @endif
+                            @if(Session::has('message'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{Session::get('message')}}
+                                </div>
+                            @endif
+
                         {{--<div class="stepwizard">
                             <div class="stepwizard-row setup-panel">
                                 <div class="stepwizard-step col-xs-4">
@@ -93,12 +106,6 @@
                                         <br><br>
                                         <form class="form-horizontal" action="{{url('/checkout/check')}}" method="POST">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-
-                                            @if(Session::has('message'))
-                                                <div class="alert alert-danger">
-                                                    {{Session::get('message')}}
-                                                </div>
-                                            @endif
                                             <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                                 <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
                                                 <div class="col-md-7">
@@ -172,9 +179,18 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                <label class="col-md-3 control-label required" >Hình thức thanh toán (*)</label>
+                                                <div class="col-md-7">
+                                                    <label><input type="radio" name="checkout" value="Thanh toán bằng tiền mặt khi nhận hàng"
+                                                                  checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>
+                                                    <label><input type="radio" name="checkout" value="Thanh toán qua thẻ nội địa">
+                                                        Thanh toán qua thẻ nội địa</label><br>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="col-md-3 control-label"></label>
                                                 <div class="col-md-7">
-                                                    <button type="submit" name="register" class="btn btn-primary btn-block">Tiếp tục</button>
+                                                    <button type="submit" name="register" class="btn btn-primary btn-block">Đặt hàng</button>
                                                 </div>
                                             </div>
                                         </form>

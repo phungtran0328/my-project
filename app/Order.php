@@ -18,6 +18,6 @@ class Order extends Model
     }
 
     public function book(){
-        return $this->belongsToMany('App\Book','','DH_MA','S_MA');
+        return $this->belongsToMany('App\Book','dh_chitiet','DH_MA','S_MA')->withPivot('DHCT_SOLUONG','DHCT_GIA');
     }
 }

@@ -64,8 +64,8 @@ class InvoiceInController extends Controller
         $total=0;
         for($i=0;$i<count($book);$i++){
             $data[$i]=[
-                'PN_MA'=>$id,
                 'S_MA'=>$book[$i],
+                'PN_MA'=>$id,
                 'PNCT_SOLUONG'=>$qty[$i],
                 'PNCT_GIA'=>$price[$i]
             ];
@@ -73,7 +73,16 @@ class InvoiceInController extends Controller
         }
 
         InvoiceInDetails::insert($data);
+
         InvoiceIn::where('PN_MA',$id)->update(['PN_TONGTIEN'=>$total]);
+        $invoice=InvoiceIn::where('PN_MA',$id)->first();
+        $update=$invoice->book()->get();
+//        dd($update);
+        //Cộng số lượng nhập vào số lượng tồn
+        foreach ($update as $key=>$value){
+            $value->S_SLTON=$value->S_SLTON+$value->pivot->PNCT_SOLUONG;
+            $value->save();
+        }
         return redirect('admin/invoice-in')->with('messAddDetail','Thêm hóa đơn chi tiết thành công !');
     }
 }

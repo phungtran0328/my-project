@@ -18,6 +18,6 @@ class Invoice extends Model
     }
 
     public function book(){
-        return $this->belongsToMany('App\Book','','DH_MA','S_MA');
+        return $this->belongsToMany('App\Book','hd_chitiet','HD_MA','S_MA')->withPivot('HDCT_SOLUONG','HDCT_GIA');
     }
 }
