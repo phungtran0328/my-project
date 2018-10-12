@@ -103,6 +103,7 @@
                                                placeholder="Xác nhận lại mật khẩu">
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     <label class="col-md-3 control-label"></label>
                                     <div class="col-md-7">
