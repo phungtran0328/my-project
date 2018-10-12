@@ -10,11 +10,11 @@ class Invoice extends Model
     protected $primaryKey = 'HD_MA';
 
     public function customer(){
-        return $this->belongsTo('App\Customer','KH_MA','HD_MA');
+        return $this->belongsTo('App\Customer','KH_MA');
     }
 
     public function user(){
-        return $this->belongsTo('App\User','NV_MA','HD_MA');
+        return $this->belongsTo('App\User','NV_MA');
     }
 
     public function book(){

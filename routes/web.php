@@ -22,6 +22,8 @@ Route::get('/', function () {
 
 Route::get('/category/{id}','CategoryController@category');
 Route::get('/detail/{id}','DetailController@getDetail');
+
+//shopping cart
 Route::get('/cart','CartController@index');
 Route::post('/cart','CartController@store');
 Route::post('/cart/update/{id}','CartController@update');
@@ -30,7 +32,6 @@ Route::post('/cart/empty', 'CartController@emptyCart');
 Route::get('/checkout','CheckoutController@index');
 Route::post('/checkout/check','CheckoutController@checkAuth');
 Route::post('/checkout/register','CheckoutController@registerAuth');
-
 Route::post('/checkout','CheckoutController@checkout');
 
 
@@ -44,13 +45,17 @@ Route::group(['middleware' => ['web']], function () {
     // Registration Routes...
     Route::get('/register', 'RegisterController@showRegisterForm');
     Route::post('/register', 'RegisterController@create');
-//
+
+    //home
     Route::get('/index', 'HomeController@getIndex');
 
+    //information customer
     Route::get('/edit/{id}','EditController@showEditForm');
     Route::post('/edit/{id}','EditController@edit');
     Route::get('/change-password/{id}','EditController@showChangePass');
     Route::post('/change-password/{id}','EditController@changePass');
+    Route::get('/order/{id}','EditController@showOrder');
+
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -146,11 +151,16 @@ Route::group(['prefix' => 'admin'], function () {
 
     //invoice-in
     Route::get('invoice-in','Admin\InvoiceInController@index');
-
     Route::get('invoice-in/create','Admin\InvoiceInController@create')->middleware('can:invoice-in.create');
     Route::post('invoice-in/create','Admin\InvoiceInController@store')->middleware('can:invoice-in.create');
-
     Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail');
     Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail');
+
+    //order
+    Route::get('order','Admin\OrderController@index');
+    //Lập hóa đơn
+    Route::get('order/invoice/{id}','Admin\InvoiceController@invoice')->middleware('can:order.update');
+    //Xác nhận giao hàng thành công
+    Route::get('order/complete/{id}','Admin\OrderController@complete')->middleware('can:order.update');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

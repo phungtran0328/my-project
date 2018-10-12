@@ -288,7 +288,7 @@
                             <a href="#">Quản lý xuất <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
-                                    <a href="#">Đơn hàng</a>
+                                    <a href="{{url('admin/order')}}">Đơn hàng</a>
                                 </li>
                                 <li>
                                     <a href="#">Hóa đơn xuất</a>

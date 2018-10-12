@@ -92,7 +92,7 @@ class CheckoutController extends Controller
         $order->DH_DCGIAOHANG=$customer->KH_DIACHI;
         $order->DH_NGAYDAT=date('Y-m-d H:i:s');
         $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
-        $order->DH_TTDONHANG='Đang xử lí';
+        $order->DH_TTDONHANG=0;
         $order->DH_GHICHU=$request['checkout'];
         $order->save();
         //Chuẩn bị dữ liệu để thêm vào DH_CHITIET
@@ -133,7 +133,7 @@ class CheckoutController extends Controller
         $order->DH_DCGIAOHANG=$user->KH_DIACHI;
         $order->DH_NGAYDAT=date('Y-m-d H:i:s');
         $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
-        $order->DH_TTDONHANG='Đang xử lí';
+        $order->DH_TTDONHANG=0;
         $order->DH_GHICHU=$request['checkout'];
         $order->save();
 

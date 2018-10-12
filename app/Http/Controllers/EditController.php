@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class EditController extends Controller
 {
     public function showEditForm(){
-        return view('page.edit');
+        return view('page.customer.edit');
     }
     public function edit(Request $request){
         $this->validate($request,[
@@ -40,7 +41,7 @@ class EditController extends Controller
     }
 
     public function showChangePass(){
-        return view('page.changePass');
+        return view('page.customer.changePass');
     }
 
     public function changePass(Request $request){
@@ -79,5 +80,10 @@ class EditController extends Controller
             //Hash::check() == false => mật khẩu cũ sai, thông báo lỗi
             return redirect()->back()->with('pass_error','Mật khẩu cũ không đúng !');
         }
+    }
+
+    public function showOrder($id){
+        $orders=Order::where('KH_MA',$id)->get();
+        return view('page.customer.order',compact('orders'));
     }
 }

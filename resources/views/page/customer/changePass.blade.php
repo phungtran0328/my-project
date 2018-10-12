@@ -26,7 +26,7 @@
                         Đổi mật khẩu</a>
                 </li>
                 <li>
-                    <a href=""><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
+                    <a href="{{url('/order',Auth::guard('customer')->user()->KH_MA)}}"><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
                         Xem đơn hàng</a>
                 </li>
             </ul>

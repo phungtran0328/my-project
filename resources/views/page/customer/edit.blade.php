@@ -24,7 +24,7 @@
                         Đổi mật khẩu</a>
                 </li>
                 <li>
-                    <a href=""><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
+                    <a href="{{url('/order',Auth::guard('customer')->user()->KH_MA)}}"><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
                         Xem đơn hàng</a>
                 </li>
             </ul>
@@ -94,7 +94,7 @@
 
                                 <label class="col-md-3 control-label required" for="address">Địa chỉ</label>
                                 <div class="col-md-7">
-                                    <input type="text" class="form-control" id="address" name="address" value="{{Auth::guard('customer')->user()->KH_DIACHI}}">
+                                    <input type="text" class="form-control" id="address" name="address" value="{{Auth::guard('customer')->user()->full_address}}">
                                     <strong style="color: red">{{$errors->first('address') }}</strong>
                                 </div>
                             </div>

@@ -41,11 +41,21 @@ class Customer extends Authenticatable
         'KH_MATKHAU', 'remember_token',
     ];
 
+    protected $appends = ['full_address']; //Được trường mới 'full_address'
+
     public function getAuthPassword()
     {
         //bắt buộc phải có vì tên trường không phải là 'password'
         return $this->KH_MATKHAU;
     }
+
+    /**
+     * @return string
+     */
+    public function getFullAddressAttribute(){
+        return $this->attributes['KH_DIACHI'] . $this->attributes['KH_DIACHI2'];
+    }
+    //Nối chuỗi địa chỉ với địa chỉ 2 (thành phố - để dành xét phí vận chuyển)
 
     public function order(){
         return $this->hasMany('App\Order','KH_MA','KH_MA');
