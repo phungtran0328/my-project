@@ -291,7 +291,7 @@
                                     <a href="{{url('admin/order')}}">Đơn hàng</a>
                                 </li>
                                 <li>
-                                    <a href="#">Hóa đơn xuất</a>
+                                    <a href="{{url('admin/invoice')}}">Hóa đơn xuất</a>
                                 </li>
                             </ul>
                             <!-- /.nav-third-level -->

@@ -245,7 +245,7 @@
                                         if (isset($promotion)){
                                             $start=strtotime($promotion->KM_APDUNG);
                                             $end=strtotime($promotion->KM_HANDUNG);
-                                            if (($start<$date) and ($date<$end)){
+                                            if (($start<=$date) and ($date<=$end)){
                                                 $results[]=[
                                                     'id'=>$item->S_MA,
                                                     'name'=>$item->S_TEN,

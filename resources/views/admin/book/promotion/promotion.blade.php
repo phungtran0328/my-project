@@ -29,6 +29,12 @@
                                     {{Session::get('message')}}
                                 </div>
                             @endif
+                            @if(Session::has('messDate'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{Session::get('messDate')}}
+                                </div>
+                            @endif
                             <fieldset>
                                 <div class="form-group {{$errors->has('promotion') ? 'has-error' : ''}}">
                                     <label class="control-label">Giảm giá</label>

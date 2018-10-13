@@ -98,7 +98,7 @@
                                         if (isset($promotion)){
                                             $start=strtotime($promotion->KM_APDUNG);
                                             $end=strtotime($promotion->KM_HANDUNG);
-                                            if (($start<$date)and($end>$date)){
+                                            if (($start<=$date)and($end>=$date)){
                                                 $sale=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
                                                 //trường hợp có khuyến mãi và đang trong thời gian có hiệu lực
                                             }else{
@@ -110,7 +110,7 @@
                                         }
                                         ?>
                                         @if(isset($image))
-                                                <a href="{{url('/detail',$book->S_MA)}}"><img src="images/{{$image->HA_URL}}" alt="" height="270px" ></a>
+                                                <a href="{{url('/detail',$book->S_MA)}}" style="" class="text-center"><img src="images/{{$image->HA_URL}}" alt="" height="270px"></a>
                                             @else
                                                 <a href="{{url('/detail',$book->S_MA)}}"><img src="images/sorry-image-not-available.jpg" alt=""></a>
                                         @endif

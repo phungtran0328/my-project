@@ -25,7 +25,7 @@ class DetailController extends Controller
         if (isset($promotion)){
             $start=strtotime($promotion->KM_APDUNG);
             $end=strtotime($promotion->KM_HANDUNG);
-            if (($start<$date)and($end>$date)){
+            if (($start<=$date)and($end>=$date)){
                 $saleoff=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
                 //trường hợp có khuyến mãi và đang trong thời gian có hiệu lực
             }else{

@@ -22,6 +22,12 @@
                     <h5>Chỉnh sửa khuyến mãi</h5>
                 </div>
                 <div class="panel-body">
+                    @if(Session::has('messDate'))
+                        <div class="alert alert-danger alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{Session::get('messDate')}}
+                        </div>
+                    @endif
                     <form class="" action="{{url('/admin/promotion', $promotion->KM_MA)}}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         @method('PATCH')

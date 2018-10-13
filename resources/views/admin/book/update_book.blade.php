@@ -127,10 +127,10 @@
                                             else $promotions=App\Promotion::all();
                                             ?>
                                             @if(isset($temp))
-                                                <option value="{{$temp->KM_MA}}" selected>{{$temp->KM_GIAM}}</option>
+                                                <option value="{{$temp->KM_MA}}" selected>{{$temp->KM_GIAM}} - {{$temp->KM_CHITIET}}</option>
                                             @endif
                                             @foreach($promotions as $promotion)
-                                                <option value="{{$promotion->KM_MA}}">{{$promotion->KM_GIAM}}</option>
+                                                <option value="{{$promotion->KM_MA}}">{{$promotion->KM_GIAM}} - {{$promotion->KM_CHITIET}}</option>
                                             @endforeach
                                         </select>
                                     </div>

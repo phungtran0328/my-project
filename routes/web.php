@@ -162,5 +162,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('order/invoice/{id}','Admin\InvoiceController@invoice')->middleware('can:order.update');
     //Xác nhận giao hàng thành công
     Route::get('order/complete/{id}','Admin\OrderController@complete')->middleware('can:order.update');
+    //hiển thị danh sách hóa đơn
+    Route::get('invoice','Admin\InvoiceController@index');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
 });

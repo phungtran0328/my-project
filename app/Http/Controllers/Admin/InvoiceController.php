@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
+    public function index(){
+        $invoices=Invoice::orderBy('HD_MA','desc')->paginate(5);
+        return view('admin.manage.invoice.invoice', compact('invoices'));
+    }
+
     public function invoice($id){
         $order=Order::where('DH_MA',$id)->first();
         $user=Auth::user()->NV_MA;

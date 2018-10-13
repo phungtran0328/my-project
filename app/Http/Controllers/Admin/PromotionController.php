@@ -39,20 +39,25 @@ class PromotionController extends Controller
     {
         $this->validate($request,[
             'promotion'=>'required',
-            'start' =>'required|date',
+            'start' =>'required',
             //chưa bắt được after: end
-            'end'=>'required|date|after: start',
+            'end'=>'required',
         ],[
             'promotion.required'=>'Vui lòng chọn giảm giá !',
             'start.required'=>'Vui lòng chọn ngày bắt đầu áp dụng !',
             'end.required'=>'Vui lòng chọn ngày hết hạn !',
-            'end.after'=>'Ngày hết hạn phải sau ngày bắt đầu !',
         ]);
+        $start=strtotime($request->input('start'));
+        $end=strtotime($request->input('end'));
+        if ($start>=$end){
+            return redirect()->back()
+                ->with('messDate','Thời gian áp dụng không được lớn hơn hoặc bằng thời gian kết thúc');
+        }
 
         $promotion=new Promotion();
         $promotion->KM_GIAM=$request->promotion;
-        $promotion->KM_APDUNG=$request->start;
-        $promotion->KM_HANDUNG=$request->end;
+        $promotion->KM_APDUNG=$start;
+        $promotion->KM_HANDUNG=$end;
         $promotion->KM_CHITIET=$request->description;
         $promotion->save();
         return redirect()->back()->with([
@@ -95,20 +100,25 @@ class PromotionController extends Controller
     {
         $this->validate($request,[
             'promotion'=>'required',
-            'start' =>'required|date',
-            //chưa bắt được after: end
-            'end'=>'required|date|after: start',
+            'start' =>'required',
+            'end'=>'required',
         ],[
             'promotion.required'=>'Vui lòng chọn giảm giá !',
             'start.required'=>'Vui lòng chọn ngày bắt đầu áp dụng !',
             'end.required'=>'Vui lòng chọn ngày hết hạn !',
-            'end.after'=>'Ngày hết hạn phải sau ngày bắt đầu !',
         ]);
+
+        $start=strtotime($request->input('start'));
+        $end=strtotime($request->input('end'));
+        if ($start>=$end){
+            return redirect()->back()
+                ->with('messDate','Thời gian áp dụng không được lớn hơn hoặc bằng thời gian kết thúc');
+        }
 
         $promotion=Promotion::where('KM_MA',$id)->first();
         $promotion->KM_GIAM=$request->promotion;
-        $promotion->KM_APDUNG=$request->start;
-        $promotion->KM_HANDUNG=$request->end;
+        $promotion->KM_APDUNG=$start;
+        $promotion->KM_HANDUNG=$end;
         $promotion->KM_CHITIET=$request->description;
         $promotion->save();
         return redirect('/admin/promotion')->with('messageUpdate','Cập nhật thành công !');
