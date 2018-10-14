@@ -26,6 +26,7 @@
                                 <span class="glyphicon glyphicon-plus"></span>
                             </a>
                         @endcan--}}
+
                         <form class="input-group" action="{{url('admin/invoice')}}" method="get" style="width: 350px;">
                            <input class="form-control" name="search">
                             <span class="input-group-btn">
