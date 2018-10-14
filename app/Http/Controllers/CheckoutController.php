@@ -14,7 +14,11 @@ use League\Flysystem\Exception;
 class CheckoutController extends Controller
 {
     public function index(){
-        return view('page.shopping.checkout');
+        $city=new Customer();
+        $cities=$city->getCity();
+        $keys=array_keys($cities);
+        $values=array_values($cities);
+        return view('page.shopping.checkout', compact('keys','values'));
     }
 
     /**
@@ -64,6 +68,7 @@ class CheckoutController extends Controller
                 'birthday' => 'required|before:2006-01-01',
                 //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
                 'address' => 'required',
+                'city'=>'required'
             ],
             [
                 'username.required' => 'Vui lòng nhập họ tên !',
@@ -71,6 +76,7 @@ class CheckoutController extends Controller
                 'email.email'=>'Địa chỉ mail không hợp lệ !',
                 'email.unique'=>'Email đã có người sử dụng ! ',
                 'address.required' => 'Vui lòng nhập địa chỉ !',
+                'city.required'=>'Vui lòng chọn tỉnh/thành phố !',
                 'phone.required'=>'Vui lòng nhập số điện thoại ! ',
                 'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
@@ -83,6 +89,7 @@ class CheckoutController extends Controller
         $customer->KH_TEN=$request['username'];
         $customer->KH_SDT=$request['phone'];
         $customer->KH_DIACHI=$request['address'];
+        $customer->KH_DIACHI2=$request['city'];
         $customer->KH_NGAYSINH=$request['birthday'];
         $customer->KH_EMAIL=$request['email'];
         $customer->save();

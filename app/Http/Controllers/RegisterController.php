@@ -19,7 +19,13 @@ class RegisterController extends Controller
      */
     public function showRegisterForm()
     {
-        return view('page.register');
+        $city=new Customer();
+        $cities=$city->getCity();
+//        sort($cities);
+        $keys=array_keys($cities);
+        $values=array_values($cities);
+//        dd($keys[0]);
+        return view('page.register', compact('keys','values'));
     }
 
     public function create(Request $req){
@@ -29,8 +35,11 @@ class RegisterController extends Controller
                 'email' => 'required|email|unique:khachhang,KH_EMAIL',
                 //unique: table,column_name
                 'password' => 'required|min:6|max:32|confirmed',
-                'phone' => 'required|regex:/^(\84)[0-9]{9}$/',
-                //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
+                'phone' => 'required|regex:/(0)[0-9]{9}$/',
+                //  /^(\0)[0-9]{9}$/ kiểu 1
+                // /(01)[0-9]{9}/ kiểu 2
+                // /(0)[0-9]{9}$/ kiểu 3
+                //regex: (đầu số 84 [0])[dãy số từ 0-9]{gồm 9 số từ 0-9}
                 'birthday' => 'required|before:2006-01-01',
                 //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
                 'address' => 'required',
@@ -47,7 +56,7 @@ class RegisterController extends Controller
                 'password.confirmed'=>'Xác nhận mật khẩu không đúng. Vui lòng nhập lại !',
                 'address.required' => 'Vui lòng nhập địa chỉ !',
                 'phone.required'=>'Vui lòng nhập số điện thoại ! ',
-                'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
+                'phone.regex'=>'Số điện thoại không hợp lệ ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
                 'birthday.before'=>'Phải lớn hơn 12 tuổi !'
             ]
@@ -57,6 +66,7 @@ class RegisterController extends Controller
         $customer->KH_GIOITINH=$req->gender;
         $customer->KH_SDT=$req->phone;
         $customer->KH_DIACHI=$req->address;
+        $customer->KH_DIACHI2=$req->city;
         $customer->KH_NGAYSINH=$req->birthday;
         $customer->KH_EMAIL=$req->email;
         $customer->KH_MATKHAU=Hash::make($req->password);

@@ -4,9 +4,10 @@
  * User: PHUNGTRAN
  * Date: 10/11/2018
  * Time: 9:34 AM
- */?>
+ */
+?>
 @extends('master')
-<style>
+{{--<style>
  /*   .stepwizard-step p {
         margin-top: 0px;
         color:#666;
@@ -42,7 +43,7 @@
         text-align: center;
         position: relative;
     }*/
-</style>
+</style>--}}
 @section('content')
     <div class="container">
         <ul class="breadcrumb">
@@ -136,7 +137,7 @@
                                         <form class="form-horizontal" action="{{url('/checkout/register')}}" method="POST">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required">Họ tên (*)</label>
+                                                <label class="col-md-2 control-label required">Họ tên (*)</label>
                                                 <div class="col-md-7">
                                                     <input type="text" class="form-control "
                                                            name="username" placeholder="Nhập họ tên" value="{{old('username')}}">
@@ -145,16 +146,24 @@
                                             </div>
 
                                             <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required">Địa chỉ (*)</label>
-                                                <div class="col-md-7">
+                                                <label class="col-md-2 control-label required">Địa chỉ (*)</label>
+                                                <div class="col-md-6">
                                                     <input type="text" class="form-control "
                                                            name="address" placeholder="Nhập địa chỉ" value="{{old('address')}}">
                                                     <strong style="color: red">{{$errors->first('address') }}</strong>
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <select name="city" class="form-control">
+                                                        <option>---Chọn tỉnh/thành phố---</option>
+                                                        @for($i=0;$i<count($keys);$i++)
+                                                            <option value="{{$keys[$i]}}">{{$values[$i]}}</option>
+                                                        @endfor
+                                                    </select>
+                                                </div>
                                             </div>
 
                                             <div class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required">Số điện thoại (*)</label>
+                                                <label class="col-md-2 control-label required">Số ĐT (*)</label>
                                                 <div class="col-md-4">
                                                     <input type="tel" class="form-control "
                                                            name="phone" placeholder="Nhập số điện thoại" value="{{old('phone')}}">
@@ -164,7 +173,7 @@
                                             </div>
 
                                             <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required">Ngày sinh (*)</label>
+                                                <label class="col-md-2 control-label required">Ngày sinh (*)</label>
                                                 <div class="col-md-4">
                                                     <input type="date" class="form-control "
                                                            name="birthday" placeholder="Chọn ngày sinh" value="{{old('birthday')}}">
@@ -172,7 +181,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required" >Email (*)</label>
+                                                <label class="col-md-2 control-label required" >Email (*)</label>
                                                 <div class="col-md-7">
                                                     <input type="text" class="form-control "
                                                            name="email" placeholder="Nhập email" value="{{old('email')}}">
@@ -180,7 +189,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="col-md-3 control-label required" >Hình thức thanh toán (*)</label>
+                                                <label class="col-md-2 control-label required" >HTTT (*)</label>
                                                 <div class="col-md-7">
                                                     <label><input type="radio" name="checkout" value="Thanh toán bằng tiền mặt khi nhận hàng"
                                                                   checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>

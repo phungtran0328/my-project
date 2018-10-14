@@ -35,77 +35,94 @@
                     <h3 class="panel-title">Thông tin tài khoản</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}" method="post">
+                    <form action="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         @if(Session::has('message'))
-                            <div class="alert alert-success">
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('message')}}
                             </div>
                         @endif
                         @if(Auth::guard('customer')->check())
-                            <div class="form-group">
-                                <label class="col-md-3 control-label required" for="email">Email</label>
-                                <div class="col-md-5">
-                                    <input type="email" class="form-control "
-                                           name="email" value="{{Auth::guard('customer')->user()->KH_EMAIL}}" readonly="">
-                                </div>
+                            <div class="col-md-8 form-group">
+                                <label class=" control-label " >Email</label>
+                                <input type="email" class="form-control "
+                                       name="email" value="{{Auth::guard('customer')->user()->KH_EMAIL}}" readonly="">
                             </div>
 
-                            <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label required" for="username">Họ tên</label>
-                                <div class="col-md-5">
-                                    <input type="text" class="form-control" id="username" name="username" value="{{Auth::guard('customer')->user()->KH_TEN}}">
-                                    <strong style="color: red">{{$errors->first('username') }}</strong>
-                                </div>
-                            </div>
-
-                            <div class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label required" for="phone">Số điện thoại</label>
-                                <div class="col-md-3">
-                                    <input type="tel" class="form-control" id="phone" name="phone" value="{{Auth::guard('customer')->user()->KH_SDT}}">
-                                    <strong style="color: red">{{$errors->first('phone') }}</strong>
-                                </div>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-3 control-label required" for="gender">Giới tính</label>
-                                @if(Auth::guard('customer')->user()->KH_GIOITINH=='Nam')
-                                    <div class="col-md-3">
-                                        <label><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
-                                        <label><input type="radio" name="gender" value="Nữ" style="width: 20px">Nữ</label>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 form-group {{ $errors->has('username') ? ' has-error' : '' }}">
+                                        <label class="control-label required" for="username">Họ tên</label>
+                                        <input type="text" class="form-control" id="username" name="username" value="{{Auth::guard('customer')->user()->KH_TEN}}">
+                                        <strong style="color: red">{{$errors->first('username') }}</strong>
                                     </div>
-                                @else
-                                    <div class="col-md-3">
-                                        <label><input type="radio" name="gender" value="Nam" style="width: 20px">Nam</label>
-                                        <label><input type="radio" name="gender" value="Nữ" style="width: 20px" checked>Nữ</label>
+                                    <div class="col-md-6">
+                                        <label class="control-label" style="text-align: left">Giới tính</label>
+                                        @if(Auth::guard('customer')->user()->KH_GIOITINH=='Nam')
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                                <label class="col-md-4"><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
+                                                <label class="col-md-4"><input type="radio" name="gender" value="Nữ" style="width: 20px">Nữ</label>
+                                            </div>
+                                        @else
+                                            <div class="row">
+                                                <div class="col-md-3"></div>
+                                                <label class="col-md-4"><input type="radio" name="gender" value="Nam" style="width: 20px">Nam</label>
+                                                <label class="col-md-4"><input type="radio" name="gender" value="Nữ" style="width: 20px" checked>Nữ</label>
+                                            </div>
+                                        @endif
                                     </div>
-                                @endif
-                            </div>
-
-                            <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                <label class="col-md-3 control-label required" for="birthday">Ngày sinh</label>
-                                <div class="col-md-3">
-                                    <input type="date" class="form-control" id="birthday" name="birthday" value="{{Auth::guard('customer')->user()->KH_NGAYSINH}}">
-                                    <strong style="color: red">{{$errors->first('birthday') }}</strong>
                                 </div>
                             </div>
-                            <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
 
-                                <label class="col-md-3 control-label required" for="address">Địa chỉ</label>
-                                <div class="col-md-7">
-                                    <input type="text" class="form-control" id="address" name="address" value="{{Auth::guard('customer')->user()->full_address}}">
-                                    <strong style="color: red">{{$errors->first('address') }}</strong>
+
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6 form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                        <label class="control-label">Số điện thoại</label>
+                                        <input type="tel" class="form-control" name="phone" value="{{Auth::guard('customer')->user()->KH_SDT}}">
+                                        <strong style="color: red">{{$errors->first('phone') }}</strong>
+                                    </div>
+                                    <div class="col-md-6 form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                        <label class="control-label required">Ngày sinh</label>
+                                        <input type="date" class="form-control" name="birthday" value="{{Auth::guard('customer')->user()->KH_NGAYSINH}}">
+                                        <strong style="color: red">{{$errors->first('birthday') }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8 form-group">
+                                <div class="row">
+
+                                </div>
+                            </div>
+                            <div class="col-md-12 ">
+                                <div class="row">
+                                    <div class="col-md-8 form-group {{ $errors->has('address') ? ' has-error' : '' }}">
+                                        <label class="control-label required" for="address">Địa chỉ</label>
+                                        <input type="text" class="form-control" name="address" value="{{Auth::guard('customer')->user()->KH_DIACHI}}">
+                                        <strong style="color: red">{{$errors->first('address') }}</strong>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="control-label">Tỉnh/Thành phố</label>
+                                        <select name="city" class="form-control">
+                                            @for($i=0;$i<count($keys);$i++)
+                                                @if(Auth::guard('customer')->user()->KH_DIACHI2==$keys[$i])
+                                                    <option value="{{$keys[$i]}}" selected>{{$values[$i]}}</option>
+                                                @else
+                                                    <option value="{{$keys[$i]}}">{{$values[$i]}}</option>
+                                                @endif
+                                            @endfor
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
                         @endif
 
                         <div class="form-group">
-                            <div class="col-md-3">
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-primary btn-block">Cập nhật</button>
+                            <div class="text-center">
+                                <button class="btn btn-primary" style="width: 300px">Cập nhật</button>
                             </div>
                         </div>
                     </form>

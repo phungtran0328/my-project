@@ -11,13 +11,18 @@ use Illuminate\Support\Facades\Hash;
 class EditController extends Controller
 {
     public function showEditForm(){
-        return view('page.customer.edit');
+        $city=new Customer();
+        $cities=$city->getCity();
+//        sort($cities);
+        $keys=array_keys($cities);
+        $values=array_values($cities);
+        return view('page.customer.edit', compact('keys','values'));
     }
     public function edit(Request $request){
         $this->validate($request,[
             'username'=>'required',
-            'phone'=>'required|regex:/^(\84)[0-9]{9}$/',
-            //điện thoại gồm mã 84 và 9 số
+            'phone'=>'required|regex:/(0)[0-9]{9}$/',
+            //điện thoại gồm mã 84 (0) và 9 số
             'birthday' => 'required|before:2006-01-01',
             'address' => 'required',
         ],
@@ -25,7 +30,7 @@ class EditController extends Controller
             'username.required' => 'Vui lòng nhập họ tên !',
             'address.required' => 'Vui lòng nhập địa chỉ !',
             'phone.required'=>'Vui lòng nhập số điện thoại ! ',
-            'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
+            'phone.regex'=>'Số điện thoại không hợp lệ ! ',
             'birthday.required'=>'Vui lòng điền ngày sinh !',
             'birthday.before'=>'Phải lớn hơn 12 tuổi !',
         ]);
@@ -35,6 +40,7 @@ class EditController extends Controller
         $customer->KH_GIOITINH=$request->gender;
         $customer->KH_SDT=$request->phone;
         $customer->KH_DIACHI=$request->address;
+        $customer->KH_DIACHI2=$request->city;
         $customer->KH_NGAYSINH=$request->birthday;
         $customer->save();
         return redirect()->back()->with('message','Cập nhật thông tin thành công !');

@@ -64,4 +64,23 @@ class Customer extends Authenticatable
     public function invoice(){
         return $this->hasMany('App\Invoice','KH_MA','KH_MA');
     }
+
+    public function getCity(){
+        $cities=array(
+            'AG'=>' An Giang', 'BR_VT'=>' Bà Rịa - Vũng Tàu', 'BG'=>' Bắc Giang', 'BK'=>' Bắc Kạn', 'BL'=>' Bạc Liêu',
+            'BN'=>' Bắc Ninh','BT'=>' Bến Tre', 'BĐ'=>' Bình Định', 'BD'=>' Bình Dương', 'BP'=>' Bình Phước',
+            'BThuan'=>' Bình Thuận', 'CM'=>' Cà Mau','CB'=>' Cao Bằng', 'ĐL'=>' Đắk Lắk', 'ĐN'=>' Đắk Nông',
+            'ĐB'=>' Điện Biên', 'ĐNai'=>' Đồng Nai', 'ĐT'=>' Đồng Tháp', 'GL'=>' Gia Lai', 'HG'=>' Hà Giang',
+            'HN'=>' Hà Nam', 'HT'=>' Hà Tĩnh', 'HD'=>' Hải Dương', 'HGiang'=>' Hậu Giang','HB'=>' Hòa Bình',
+            'HY'=>' Hưng Yên', 'KH'=>' Khánh Hòa', 'KG'=>' Kiên Giang', 'KT'=>' Kon Tum', 'LC'=>' Lai Châu',
+            'LĐ'=>' Lâm Đồng', 'LS'=>' Lạng Sơn', 'LCai'=>' Lào Cai', 'LA'=>' Long An', 'NĐ'=>' Nam Định',
+            'NA'=>' Nghệ An', 'NB'=>' Ninh Bình', 'NT'=>' Ninh Thuận', 'PT'=>' Phú Thọ', 'QB'=>' Quảng Bình',
+            'QN'=>' Quảng Nam', 'QNgai'=>' Quảng Ngãi', 'QNinh'=>' Quảng Ninh', 'QT'=>' Quảng Trị',
+            'ST'=>' Sóc Trăng', 'SL'=>' Sơn La', 'TN'=>' Tây Ninh', 'TB'=>' Thái Bình', 'TNguyen'=>' Thái Nguyên',
+            'TH'=>' Thanh Hóa', 'TTH'=>' Thừa Thiên Huế', 'TV'=>' Trà Vinh', 'TG'=>' Tiền Giang',
+            'TQ'=>' Tuyên Quang', 'VL'=>' Vĩnh Long', 'VP'=>' Vĩnh Phúc', 'YB'=>' Yên Bái', 'PY'=>' Phú Yên',
+            'CT'=>' Cần Thơ', 'ĐNang'=>' Đà Nẵng', 'HP'=>' Hải Phòng', 'HNoi'=>' Hà Nội', 'HCM'=>' TP Hồ Chí Minh'
+        );
+        return $cities;
+    }
 }
