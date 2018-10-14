@@ -64,9 +64,10 @@
                                 <tr>
                                     <th style="width: 7%">Mã ĐH</th>
                                     <th style="width: 14%">KH</th>
-                                    <th style="width: 15%">NV</th>
+                                    <th style="width: 5%">NV</th>
                                     <th style="width: 8%">Ngày đặt</th>
                                     <th style="width: 8%">Tồng tiền</th>
+                                    <th style="width: 8%">Phí VC</th>
                                     <th>TTĐH</th>
                                     <th style="width: 20%">HTTT</th>
                                     <th style="width: 10%">Hành động</th>
@@ -78,6 +79,16 @@
                                     <?php
                                     $temp=\App\Order::where('DH_MA',$order->DH_MA)->first();
                                     $customer=$temp->customer()->first();
+                                    if (isset($customer->KH_DIACHI2)){
+                                        if ($customer->KH_DIACHI2=='CT'){
+                                            $ship=0;
+                                        }
+                                        else{
+                                            $ship=number_format(18000);
+                                        }
+                                    }else{
+                                        $ship='null';
+                                    }
                                     $user=$temp->user()->first();
                                     ?>
                                     <tr>
@@ -85,13 +96,14 @@
                                         <td>#{{$order->DH_MA}}</td>
                                         <td>{{$customer->KH_TEN}}</td>
                                         @if(isset($user))
-                                            <td>{{$user->NV_TEN}}</td>
+                                            <td>{{$user->NV_MA}}</td>
                                         @else
                                             <td></td>
                                         @endif
                                         <?php $date=date_create($order->DH_NGAYDAT); ?>
                                         <td>{{date_format($date,"d/m/Y")}}</td>
                                         <td>{{number_format($order->DH_TONGTIEN)}}</td>
+                                        <td>{{$ship}}</td>
                                         <td>
                                             <?php
                                                 switch ($order->DH_TTDONHANG){

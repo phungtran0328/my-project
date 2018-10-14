@@ -63,7 +63,7 @@ class CheckoutController extends Controller
                 'username' => 'required',
                 'email' => 'required|email|unique:khachhang,KH_EMAIL',
                 //unique: table,column_name
-                'phone' => 'required|regex:/^(\84)[0-9]{9}$/',
+                'phone' => 'required|regex:/(0)[0-9]{9}$/',
                 //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
                 'birthday' => 'required|before:2006-01-01',
                 //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
@@ -78,7 +78,7 @@ class CheckoutController extends Controller
                 'address.required' => 'Vui lòng nhập địa chỉ !',
                 'city.required'=>'Vui lòng chọn tỉnh/thành phố !',
                 'phone.required'=>'Vui lòng nhập số điện thoại ! ',
-                'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
+                'phone.regex'=>'Số điện thoại không hợp lệ ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
                 'birthday.before'=>'Phải lớn hơn 12 tuổi !'
             ]
@@ -94,11 +94,18 @@ class CheckoutController extends Controller
         $customer->KH_EMAIL=$request['email'];
         $customer->save();
         //Thêm đơn hàng
+        if ($customer->KH_DIACHI2=='CT'){
+            $total=str_replace(',','',Cart::subtotal());
+        }
+        else{
+            $total=str_replace(',','',Cart::subtotal())+18000;
+        }
+
         $order=new Order();
         $order->KH_MA=$customer->KH_MA;
         $order->DH_DCGIAOHANG=$customer->KH_DIACHI;
         $order->DH_NGAYDAT=date('Y-m-d H:i:s');
-        $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
+        $order->DH_TONGTIEN=$total;
         $order->DH_TTDONHANG=0;
         $order->DH_GHICHU=$request['checkout'];
         $order->save();
@@ -134,12 +141,17 @@ class CheckoutController extends Controller
     public function checkout(Request $request){
         $carts=Cart::content();
         $user=Auth::guard('customer')->user();
+        $city=$user->KH_DIACHI2;
 
         $order=new Order();
         $order->KH_MA=$user->KH_MA;
         $order->DH_DCGIAOHANG=$user->KH_DIACHI;
         $order->DH_NGAYDAT=date('Y-m-d H:i:s');
-        $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
+        if ($city=='CT'){
+            $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
+        }else{
+            $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal())+18000;
+        }
         $order->DH_TTDONHANG=0;
         $order->DH_GHICHU=$request['checkout'];
         $order->save();

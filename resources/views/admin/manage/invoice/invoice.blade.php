@@ -60,9 +60,10 @@
                                     <th style="width: 10%">Mã HĐ
                                     </th>
                                     <th style="width: 14%">KH</th>
-                                    <th style="width: 15%">NV</th>
+                                    <th style="width: 5%">NV</th>
                                     <th style="width: 8%">Ngày lập</th>
                                     <th style="width: 8%">Tồng tiền</th>
+                                    <th style="width: 8%">Phí VC</th>
                                     <th class="text-center" colspan="3">Sách | SL | Giá</th>
                                     <th style="width: 6%">Hủy</th>
                                 </tr>
@@ -72,6 +73,16 @@
                                     <?php
                                     $temp=\App\Invoice::where('HD_MA',$invoice->HD_MA)->first();
                                     $customer=$temp->customer()->first();
+                                    if (isset($customer->KH_DIACHI2)){
+                                        if ($customer->KH_DIACHI2=='CT'){
+                                            $ship=0;
+                                        }
+                                        else{
+                                            $ship=number_format(18000);
+                                        }
+                                    }else{
+                                        $ship='null';
+                                    }
                                     $user=$temp->user()->first();
                                     $books=$temp->book()->get();
 
@@ -79,10 +90,11 @@
                                     <tr>
                                         <td>#{{$invoice->HD_MA}}</td>
                                         <td>{{$customer->KH_TEN}}</td>
-                                        <td>{{$user->NV_TEN}}</td>
+                                        <td>{{$user->NV_MA}}</td>
                                         <?php $date=date_create($invoice->HD_NGAYLAP); ?>
                                         <td>{{date_format($date,"d/m/Y")}}</td>
                                         <td>{{number_format($invoice->HD_TONGTIEN)}}</td>
+                                        <td>{{$ship}}</td>
                                         <td colspan="3">
                                             <table class="table table-bordered">
                                                 @foreach($books as $book)

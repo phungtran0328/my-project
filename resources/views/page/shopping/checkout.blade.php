@@ -153,15 +153,14 @@
                                                     <strong style="color: red">{{$errors->first('address') }}</strong>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select name="city" class="form-control">
-                                                        <option>---Chọn tỉnh/thành phố---</option>
+                                                    <select name="city" class="form-control" onchange="shipping(this);">
+                                                        <option value="">---Chọn tỉnh/thành phố---</option>
                                                         @for($i=0;$i<count($keys);$i++)
                                                             <option value="{{$keys[$i]}}">{{$values[$i]}}</option>
                                                         @endfor
                                                     </select>
                                                 </div>
                                             </div>
-
                                             <div class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
                                                 <label class="col-md-2 control-label required">Số ĐT (*)</label>
                                                 <div class="col-md-4">
@@ -171,7 +170,6 @@
                                                 </div>
                                                 <label class="control-label"></label>
                                             </div>
-
                                             <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
                                                 <label class="col-md-2 control-label required">Ngày sinh (*)</label>
                                                 <div class="col-md-4">
@@ -216,7 +214,7 @@
                             <p style="font-size: 20px"><b>2. Địa chỉ giao hàng</b></p><br>
                             <div >
                                 <p style="margin-bottom: 15px">Họ tên: <b>{{\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_TEN}}</b></p>
-                                <p style="margin-bottom: 15px">Địa chỉ: {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI}}</p>
+                                <p style="margin-bottom: 15px">Địa chỉ: {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->full_address}}</p>
                                 <p style="margin-bottom: 15px">Điện thoại: {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_SDT}}</p>
                             </div>
                         </div>
@@ -264,23 +262,64 @@
                                     <th>Tạm tính</th>
                                     <td style="text-align: right">{{Cart::subtotal()}} đ</td>
                                 </tr>
+                                    <tr>
+                                        <th>Phí vận chuyển</th>
+                                        @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
+                                            <td id="ship" style="text-align: right"></td>
+                                        @else
+                                            @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
+                                                <td style="text-align: right">0 đ</td>
+                                            @else
+                                                <td style="text-align: right">
+                                                    {{number_format(18000)}} đ
+                                                </td>
+                                            @endif
+                                        @endif
+
+                                    </tr>
                             @endif
                         </table>
                         <div class="row">
                             <div class="col-md-7" style="text-align: left; font-size: 15px; margin-bottom: 15px">
                                 <p>Thành tiền:</p>
                             </div>
-                            <div class="col-md-5" style="text-align: center; color: red; font-size: 18px">
-                                {{Cart::subtotal()}} đ
+                            <div class="col-md-5" style="text-align: right; color: red; font-size: 18px">
+                                @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
+                                    <div id="myTotal">
+                                        {{Cart::subtotal()}} đ
+                                    </div>
+                                @else
+                                    @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
+                                        <div>{{Cart::subtotal()}} đ</div>
+                                        @else
+                                        <div>
+                                            <?php $total=str_replace(',','',Cart::subtotal())+18000; ?>
+                                            {{number_format($total)}} đ
+                                        </div>
+                                    @endif
+                                @endif
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function shipping(x) {
+            var value=x.value;
+            var ship ='';
+            if (value!='CT'){
+                var ship ='<?php echo str_replace(',','',Cart::subtotal())+18000 ?>';
+                var num = 18000;
+                document.getElementById('ship').innerHTML=num.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")+ ' đ';
+                document.getElementById('myTotal').innerHTML=ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ' đ';
+            }
+            else {
+                var ship ='<?php echo Cart::subtotal(); ?>';
+                document.getElementById('ship').innerHTML=0 + ' đ';
+                document.getElementById('myTotal').innerHTML=ship + ' đ';
+            }
+        }
+    </script>
 @endsection
-<script>
-
-</script>

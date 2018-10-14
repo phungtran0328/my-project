@@ -53,7 +53,16 @@ class Customer extends Authenticatable
      * @return string
      */
     public function getFullAddressAttribute(){
-        return $this->attributes['KH_DIACHI'] . $this->attributes['KH_DIACHI2'];
+        $city = new Customer();
+        $cities=$city->getCity();
+        $keys=array_keys($cities);
+        $values=array_values($cities);
+        for ($i=0;$i<count($cities);$i++){
+            if ($this->attributes['KH_DIACHI2']==$keys[$i]){
+                $name=$values[$i];
+            }
+        }
+        return $this->attributes['KH_DIACHI'] . $name;
     }
     //Nối chuỗi địa chỉ với địa chỉ 2 (thành phố - để dành xét phí vận chuyển)
 
