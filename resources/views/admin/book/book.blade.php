@@ -68,18 +68,6 @@
                                 {{Session::get('messAddImage')}}
                             </div>
                         @endif
-                        @if(Session::has('messBookAuthor'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messBookAuthor')}}
-                            </div>
-                        @endif
-                        @if(Session::has('messBookTranslator'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messBookTranslator')}}
-                            </div>
-                        @endif
                         @if(Session::has('messUpdateBook'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -117,9 +105,10 @@
                                     <th>STT</th>
                                     <th>Tên</th>
                                     <th style="width: 15%">Tác giả</th>
-                                    <th>Người dịch</th>
+                                    <th style="width: 10%">Người dịch</th>
                                     <th>SLT</th>
                                     <th>Giá</th>
+                                    <th>V</th>
                                     <th>Nhà xuất bản</th>
                                     <th>Hình ảnh</th>
                                     <th style="width: 15%">Hành động</th>
@@ -155,6 +144,7 @@
                                             @endif
                                         <td>{{$book->S_SLTON}}</td>
                                         <td>{{$book->S_GIA}}</td>
+                                        <td>{{$book->S_LUOTXEM}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>
                                         @if(isset($image))
                                             <td><img src="images/{{$image->HA_URL}}" width="50px" height="50px"></td>

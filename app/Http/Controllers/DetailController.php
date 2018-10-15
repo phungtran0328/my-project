@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Book;
+use App\Events\ViewBookHandler;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 
 class DetailController extends Controller
 {
     public function getDetail($id){
 
         $book = Book::where('S_MA', $id)->first();
+//        Event::fire(new ViewBookHandler($book));
+        Event::fire('book.view',$book);
 //        dd($id);
         $publisher = $book->publisher()->first();
 //        dd($publisher);

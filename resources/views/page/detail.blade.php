@@ -56,6 +56,7 @@
                         {{Session::get('message')}}
                     </div>
                 @endif
+
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">

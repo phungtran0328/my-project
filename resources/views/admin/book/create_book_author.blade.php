@@ -37,19 +37,38 @@
                                         {{Session::get('messErrorAuthor')}}
                                     </div>
                                 @endif
+                                @if(Session::has('messErrorTranslator'))
+                                    <div class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{Session::get('messErrorTranslator')}}
+                                    </div>
+                                @endif
+                                @if(Session::has('messBookAuthor'))
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{Session::get('messBookAuthor')}}
+                                    </div>
+                                @endif
+
+                                @if(Session::has('messBookTranslator'))
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{Session::get('messBookTranslator')}}
+                                    </div>
+                                @endif
                                 <div class="row">
                                     <div class="col-md-6 form-group {{$errors->has('book') ? 'has-error' : ''}}">
                                         <label class="control-label">Sách</label>
                                         {{-- name=book[] => array() --}}
-                                        <select class="form-control" multiple name="book[]" style="height: 400px">
+                                        <select class="form-control" name="book">
                                             <option value="" disabled selected>---Chọn sách--</option>
                                             @foreach($books as $book)
                                                 <?php
                                                 $temp=\App\Book::where('S_MA', $book->S_MA)->first();
-                                                $book_author=$temp->author()->first();
-                                                $book_translator=$temp->translator()->first();
+                                                $temps_author=$temp->author()->first();
+                                                $temps_trans=$temp->translator()->first();
                                                 ?>
-                                                @if(empty($book_author) and empty($book_translator))
+                                                @if(empty($temps_author) and empty($temps_trans))
                                                     <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
                                                 @endif
                                             @endforeach
@@ -58,7 +77,7 @@
                                     </div>
                                     <div class="col-md-6 form-group {{$errors->has('author') ? 'has-error' : ''}}">
                                         <label class="control-label">Tác giả</label>
-                                        <select class="form-control" multiple name="author[]" style="height: 400px">
+                                        <select class="form-control" multiple name="author[]" style="height: 200px">
                                             <option value="" disabled selected>---Chọn tác giả--</option>
                                             @foreach($authors as $author)
                                                 <option value="{{$author->TG_MA}}">{{$author->TG_TEN}}</option>
@@ -84,40 +103,40 @@
                                     </div>
                                 @endif
                                 <div class="row">
-                                    <div class="col-md-6 form-group {{$errors->has('book') ? 'has-error' : ''}}">
-                                        <label class="control-label">Sách</label>
-                                        {{-- name=book[] => array() --}}
-                                        <select class="form-control" multiple name="book[]" style="height: 400px">
-                                            <option value="" disabled selected>---Chọn sách--</option>
-                                            @foreach($books as $book)
-                                                <?php
-                                                $temp=\App\Book::where('S_MA', $book->S_MA)->first();
-                                                $book_author=$temp->author()->first();
-                                                $book_translator=$temp->translator()->first();
-                                                ?>
-                                                @if(empty($book_author) and empty($book_translator))
-                                                    <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                        <strong style="color: red">{{$errors->first('book')}}</strong>
+                                    <div class="col-md-6 ">
+                                        <div class="form-group {{$errors->has('book') ? 'has-error' : ''}}">
+                                            <label class="control-label">Sách</label>
+
+                                            <select class="form-control" name="book">
+                                                <option value="" disabled selected>---Chọn sách--</option>
+                                                @foreach($books as $book)
+                                                    <?php
+                                                    $temp=\App\Book::where('S_MA', $book->S_MA)->first();
+                                                    $temps_author=$temp->author()->first();
+                                                    $temps_trans=$temp->translator()->first();
+                                                    ?>
+                                                    @if(empty($temps_author) and empty($temps_trans))
+                                                        <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                            <strong style="color: red">{{$errors->first('book')}}</strong>
+                                        </div>
+                                        <div class="form-group {{$errors->has('translator') ? 'has-error' : ''}}">
+                                            <label class="control-label">Người dịch</label>
+                                            <input class="form-control" placeholder="Người dịch" name="translator">
+                                            <strong style="color: red">{{$errors->first('translator')}}</strong>
+                                        </div>
                                     </div>
                                     <div class="col-md-6 form-group {{$errors->has('author') ? 'has-error' : ''}}">
                                         <label class="control-label">Tác giả</label>
-                                        <select class="form-control" multiple name="author[]" style="height: 400px">
+                                        <select class="form-control" multiple name="author[]" style="height: 200px">
                                             <option value="" disabled selected>---Chọn tác giả--</option>
                                             @foreach($authors as $author)
                                                 <option value="{{$author->TG_MA}}">{{$author->TG_TEN}}</option>
                                             @endforeach
                                         </select>
                                         <strong style="color: red">{{$errors->first('author')}}</strong>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-7 form-group {{$errors->has('translator') ? 'has-error' : ''}}">
-                                        <label class="control-label">Người dịch</label>
-                                        <input class="form-control" placeholder="Người dịch" name="translator">
-                                        <strong style="color: red">{{$errors->first('translator')}}</strong>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -132,18 +151,18 @@
             </div>
         </div>
     </div>
-@endsection
-<script>
-    function myFunction() {
-        var check=document.getElementById('myCheck');
-        var author=document.getElementById('authorList');
-        var translator=document.getElementById('translatorList');
-        if (check.checked==true){
-            author.style.display='none';
-            translator.style.display='block';
-        }else {
-            author.style.display='block';
-            translator.style.display='none';
+    <script>
+        function myFunction() {
+            var check=document.getElementById('myCheck');
+            var author=document.getElementById('authorList');
+            var translator=document.getElementById('translatorList');
+            if (check.checked==true){
+                author.style.display='none';
+                translator.style.display='block';
+            }else {
+                author.style.display='block';
+                translator.style.display='none';
+            }
         }
-    }
-</script>
+    </script>
+@endsection

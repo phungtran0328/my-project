@@ -7,6 +7,8 @@ use App\CoverType;
 use App\KindOfBook;
 use App\Promotion;
 use App\Publisher;
+use App\Translator;
+use App\WriteBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -86,6 +88,7 @@ class BookController extends Controller
         $book->S_KICHTHUOC=$request->size;
         $book->S_SOTRANG=$request->page_num;
         $book->S_NGAYXB=$request->publish_date;
+        $book->S_LUOTXEM=0;
         $book->S_TAIBAN=$request->republish;
         $book->S_GIOITHIEU=$request->description;
         $book->S_GIA=$request->price;
@@ -198,7 +201,16 @@ class BookController extends Controller
     }
 
     public function delete($id){
-        Book::where('S_MA',$id)->delete();
+        $books=Book::where('S_MA',$id)->first();
+        $authors=$books->author()->get();
+        $trans=$books->translator()->get();
+        if (isset($authors)){
+            WriteBook::where('S_MA',$id)->delete();
+        }
+        if (isset($trans)){
+            Translator::where('S_MA',$id)->delete();
+        }
+        $books->delete();
         return redirect()->back()->with('messDelete','Xóa sách thành công !');
     }
 

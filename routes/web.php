@@ -21,7 +21,10 @@ Route::get('/', function () {
 //]);
 
 Route::get('/category/{id}','CategoryController@category');
-Route::get('/detail/{id}','DetailController@getDetail');
+Route::group(['middleware' => 'filter'], function() {
+    Route::get('/detail/{id}','DetailController@getDetail');
+});
+
 
 //shopping cart
 Route::get('/cart','CartController@index');

@@ -26,7 +26,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        //
+        //do không sử dụng listen nên đăng kí event tại đây.
+        Event::listen('book.view','App\Events\ViewBookHandler');
     }
 }
