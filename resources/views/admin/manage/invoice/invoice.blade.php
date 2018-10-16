@@ -93,7 +93,7 @@
                                         <td>{{$customer->KH_TEN}}</td>
                                         <td>{{$user->NV_MA}}</td>
                                         <?php $date=date_create($invoice->HD_NGAYLAP); ?>
-                                        <td>{{date_format($date,"d/m/Y")}}</td>
+                                        <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
                                         <td>{{number_format($invoice->HD_TONGTIEN)}}</td>
                                         <td>{{$ship}}</td>
                                         <td colspan="3">

@@ -71,21 +71,21 @@
             </div>
         </div>
     </div>
-@endsection
-<script>
-    function addBook() {
-        window.open("{{url('/admin/book/create')}}");
-    }
-    function CloneForm() {
-       /* var formCount = document.forms.length;
-        var oForm = document.forms[formName];
-        var clone = oForm.cloneNode(true);
-        clone.name += "_" + formCount;
-//        document.body.appendChild(clone);
-        document.getElementById('showInvoice').appendChild(clone);*/
-        var html = document.getElementById('myForm');
-        var cln = html.cloneNode(true);
-        document.getElementById('showInvoice').appendChild(cln);
-    }
+    <script>
+        function addBook() {
+            window.open("{{url('/admin/book/create')}}");
+        }
+        function CloneForm() {
+            /* var formCount = document.forms.length;
+             var oForm = document.forms[formName];
+             var clone = oForm.cloneNode(true);
+             clone.name += "_" + formCount;
+             //        document.body.appendChild(clone);
+             document.getElementById('showInvoice').appendChild(clone);*/
+            var html = document.getElementById('myForm');
+            var cln = html.cloneNode(true);
+            document.getElementById('showInvoice').appendChild(cln);
+        }
 
-</script>
+    </script>
+@endsection

@@ -84,22 +84,23 @@
             </div>
         </div>
     </div>
-@endsection
-<script type="text/javascript">
+    <script type="text/javascript">
 
-//    window.onload = function() {
-//        document.getElementById("asd").style.display = "none";
-//    };
+        //    window.onload = function() {
+        //        document.getElementById("asd").style.display = "none";
+        //    };
 
-    function asd(a) {
-        if (a == 1) {
-            document.getElementById("asd").style.display = "block";
-            document.getElementById("myHide").style.display = "block";
-            document.getElementById("myAdd").style.display="none";
-        } else {
-            document.getElementById("asd").style.display = "none";
-            document.getElementById("myHide").style.display = "none";
-            document.getElementById("myAdd").style.display="block";
+        function asd(a) {
+            if (a == 1) {
+                document.getElementById("asd").style.display = "block";
+                document.getElementById("myHide").style.display = "block";
+                document.getElementById("myAdd").style.display="none";
+            } else {
+                document.getElementById("asd").style.display = "none";
+                document.getElementById("myHide").style.display = "none";
+                document.getElementById("myAdd").style.display="block";
+            }
         }
-    }
-</script>
+    </script>
+@endsection
+

@@ -50,12 +50,12 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 7%">Mã HĐ</th>
-                                    <th style="width: 15%">NV</th>
-                                    <th style="width: 20%">CTPH</th>
-                                    <th style="width: 10%">Ngày nhập</th>
+                                    <th style="width: 5%">NV</th>
+                                    <th style="width: 15%">CTPH</th>
+                                    <th style="width: 15%">Ngày nhập</th>
+                                    <th>Sách</th>
                                     <th>Tồng tiền</th>
-                                    <th style="width: 10%">Ghi chú</th>
-                                    <th style="width: 15%">Hành động</th>
+                                    <th style="width: 12%">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -64,16 +64,27 @@
                                         $temp=\App\InvoiceIn::where('PN_MA',$invoice->PN_MA)->first();
                                         $company=$temp->release_company()->first();
                                         $user=$temp->user()->first();
+                                        $books=$temp->book()->get();
                                     ?>
                                     <tr>
                                         {{--increment not reset in second page--}}
                                         <td>{{$invoice->PN_MA}}</td>
-                                        <td>{{$user->NV_TEN}}</td>
+                                        <td>{{$user->NV_MA}}</td>
                                         <td>{{$company->CTPH_TEN}}</td>
                                         <?php $date=date_create($invoice->PN_NGAYNHAP); ?>
-                                        <td>{{date_format($date,"d/m/Y")}}</td>
+                                        <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
+                                        <td>
+                                            <table class="table table-bordered">
+                                                @foreach($books as $book)
+                                                    <tr>
+                                                        <td style="width: 60%">{{$book->S_TEN}}</td>
+                                                        <td>{{$book->pivot->PNCT_SOLUONG}}</td>
+                                                        <td>{{number_format($book->pivot->PNCT_GIA)}}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </table>
+                                        </td>
                                         <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
-                                        <td>{{$invoice->PN_GHICHU}}</td>
                                         <td class="text-center">
                                             <a class="btn btn-default" href="">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>

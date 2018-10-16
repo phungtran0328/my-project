@@ -43,7 +43,7 @@
                             </div>
                             <div class="form-group {{$errors->has('date-in') ? 'has-error' : ''}}" style="width: 200px">
                                 <label class="control-label">Ngày nhập</label>
-                                <input type="date" class="form-control" name="date-in">
+                                <input type="datetime" class="form-control" name="date-in" value="{{date("Y-m-d H:i:s")}}">
                                 <strong style="color: red">{{$errors->first('date-in')}}</strong>
                             </div>
                             <div class="form-group">
