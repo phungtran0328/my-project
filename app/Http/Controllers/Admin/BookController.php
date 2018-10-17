@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Book;
 use App\CoverType;
+use App\Image;
 use App\KindOfBook;
 use App\Promotion;
 use App\Publisher;
@@ -61,18 +62,14 @@ class BookController extends Controller
     {
         $this->validate($request,[
             'name'=>'required',
-            'price'=>'required',
             'publish_date'=>'required',
-            'inventory_num'=>'required',
             'publisher'=>'required',
             'coverType'=>'required',
             'kindOfBook'=>'required',
         ],
             [
                 'name.required'=>'Vui lòng nhập tên sách !',
-                'price.required'=>'Vui lòng nhập giá sách !',
                 'publish_date.required'=>'Vui lòng nhập ngày xuất bản !',
-                'inventory_num.required'=>'Vui lòng nhập số lượng tồn !',
                 'publisher.required'=>'Vui lòng chọn nhà xuất bản !',
                 'coverType.required'=>'Vui lòng chọn loại bìa !',
                 'kindOfBook.required'=>'Vui lòng chọn loại sách !',
@@ -84,14 +81,14 @@ class BookController extends Controller
         $book->LS_MA=$request->kindOfBook;
         $book->LB_MA=$request->coverType;
         $book->S_TEN=$request->name;
-        $book->S_SLTON=$request->inventory_num;
+        $book->S_SLTON=0;
         $book->S_KICHTHUOC=$request->size;
         $book->S_SOTRANG=$request->page_num;
         $book->S_NGAYXB=$request->publish_date;
         $book->S_LUOTXEM=0;
         $book->S_TAIBAN=$request->republish;
         $book->S_GIOITHIEU=$request->description;
-        $book->S_GIA=$request->price;
+        $book->S_GIA=0;
         $book->save();
         return redirect('/admin/book')->with('messAddBook','Thêm sách thành công !');
     }
@@ -154,17 +151,13 @@ class BookController extends Controller
             'publisher'=>'required',
             'kindOfBook'=>'required',
             'coverType'=>'required',
-            'price'=>'required',
             'publish_date'=>'before:today',
-            'inventory_num'=>'required'
         ],[
             'name.required'=>'Vui lòng nhập tên sách !',
             'publisher.required'=>'Vui lòng chọn nhà xuất bản !',
             'kindOfBook.required'=>'Vui lòng chọn loại sách !',
             'coverType.required'=>'Vui lòng chọn loại bìa !',
-            'price.required'=>'Vui lòng nhập giá !',
             'publish_date.before'=>'Ngày xuất bản không lớn hơn hôm nay !',
-            'inventory_num.required'=>'Vui lòng nhập số lượng tồn !'
         ]);
 
         $book=Book::where('S_MA',$id)->first();
@@ -172,17 +165,15 @@ class BookController extends Controller
         $book->NXB_MA=$request->publisher;
         $book->LS_MA=$request->kindOfBook;
         $book->LB_MA=$request->coverType;
-        $book->S_GIA=$request->price;
         $book->KM_MA=$request->promotion;
         $book->S_NGAYXB=$request->publish_date;
         $book->S_TAIBAN=$request->republish;
         $book->S_KICHTHUOC=$request->size;
         $book->S_SOTRANG=$request->page_num;
-        $book->S_SLTON=$request->inventory_num;
         $book->S_GIOITHIEU=$request->description;
 
         if ($book->save()){
-            return redirect('admin/book')->with('messUpdateBook','Cập nhật thành công !');
+            return redirect('admin/book')->with('messUpdateBook','Đã cập nhật sách: "'.$book->S_TEN.'" !');
         }
         else {
             return redirect()->back()->with('messUpdateBookError','Cập nhật không thành công !');
@@ -204,11 +195,15 @@ class BookController extends Controller
         $books=Book::where('S_MA',$id)->first();
         $authors=$books->author()->get();
         $trans=$books->translator()->get();
+        $image=$books->image()->get();
         if (isset($authors)){
             WriteBook::where('S_MA',$id)->delete();
         }
         if (isset($trans)){
             Translator::where('S_MA',$id)->delete();
+        }
+        if (isset($image)){
+            Image::where('S_MA',$id)->delete();
         }
         $books->delete();
         return redirect()->back()->with('messDelete','Xóa sách thành công !');

@@ -102,7 +102,7 @@
                             <table class="table table-striped table-bordered table-hover">
                                 <thead >
                                 <tr>
-                                    <th>STT</th>
+                                    <th></th>
                                     <th>Tên</th>
                                     <th style="width: 15%">Tác giả</th>
                                     <th style="width: 10%">Người dịch</th>
@@ -143,7 +143,7 @@
                                             <td>Không có</td>
                                             @endif
                                         <td>{{$book->S_SLTON}}</td>
-                                        <td>{{$book->S_GIA}}</td>
+                                        <td>{{number_format($book->S_GIA)}}</td>
                                         <td>{{$book->S_LUOTXEM}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>
                                         @if(isset($image))

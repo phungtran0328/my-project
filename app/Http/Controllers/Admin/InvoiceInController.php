@@ -13,7 +13,7 @@ use App\Http\Controllers\Controller;
 class InvoiceInController extends Controller
 {
     public function index(){
-        $invoices=InvoiceIn::orderBy('PN_MA','desc')->paginate(10);
+        $invoices=InvoiceIn::orderBy('PN_MA','desc')->paginate(5);
         return view('admin.manage.invoice_in.invoice_in',compact('invoices'));
     }
 
@@ -78,9 +78,24 @@ class InvoiceInController extends Controller
         $invoice=InvoiceIn::where('PN_MA',$id)->first();
         $update=$invoice->book()->get();
 //        dd($update);
-        //Cộng số lượng nhập vào số lượng tồn
+        //sl tồn += sl nhập ---cộng dồn sl
+        //Giá = (sl tồn/tổng số)*(giá cũ*sl tồn)+(sl nhập/tổng sổ)*(giá mới*sl nhập)
         foreach ($update as $key=>$value){
-            $value->S_SLTON=$value->S_SLTON+$value->pivot->PNCT_SOLUONG;
+            $qty_front=$value->S_SLTON; //Lấy số lượng còn tồn lại
+            $price_front=$value->S_GIA; //Lấy giá của số lượng tồn (đã *1.4)
+            $qty_back=$value->pivot->PNCT_SOLUONG; //Lấy số lượng nhập
+            $price_back=$value->pivot->PNCT_GIA; //Lấy giá nhập (chưa *1.4)
+
+            $qty_total=$qty_front+$qty_back; //Lấy tổng số lượng (nhập + đã có)
+
+            $round_front=round($qty_front/$qty_total,2); //Lấy phần trăm sl tồn/tống số lượng
+            $price_total_front=$round_front*$price_front;  // (sl tồn/tổng số)*giá
+            $price_total_back=(1-$round_front)*$price_back*1.4; // (sl nhập/tổng số)*giá nhập*1.4
+            $price_total_sum= $price_total_back+$price_total_front;
+
+
+            $value->S_SLTON = $qty_total;
+            $value->S_GIA = $price_total_sum;
             $value->save();
         }
         return redirect('admin/invoice-in')->with('messAddDetail','Thêm hóa đơn chi tiết thành công !');
