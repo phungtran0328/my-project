@@ -79,7 +79,6 @@ for($j=0;$j<count($book_item);$j++){
         ->orderBy('HDCT_SOLUONG','desc')->take(4)->get();
 
 }*/
-
 ?>
 @extends('master')
 @section('content')
