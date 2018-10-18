@@ -101,7 +101,7 @@
                                             <td></td>
                                         @endif
                                         <?php $date=date_create($order->DH_NGAYDAT); ?>
-                                        <td>{{date_format($date,"d/m/Y")}}</td>
+                                        <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
                                         <td>{{number_format($order->DH_TONGTIEN)}}</td>
                                         <td>{{$ship}}</td>
                                         <td>

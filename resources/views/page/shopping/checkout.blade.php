@@ -250,8 +250,8 @@
                                 <a href="{{url('/cart')}}" class="btn btn-default">Sửa</a>
                             </div>
                         </div>
-                        <table class="table">
-                            @if (sizeof(Cart::content()) > 0)
+                        @if (sizeof(Cart::content()) > 0)
+                            <table class="table">
                                 @foreach(Cart::content() as $item)
                                     <tr>
                                         <th>{{$item->qty}} x {{$item->name}}</th>
@@ -262,44 +262,43 @@
                                     <th>Tạm tính</th>
                                     <td style="text-align: right">{{Cart::subtotal()}} đ</td>
                                 </tr>
-                                    <tr>
-                                        <th>Phí vận chuyển</th>
-                                        @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
-                                            <td id="ship" style="text-align: right"></td>
+                                <tr>
+                                    <th>Phí vận chuyển</th>
+                                    @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
+                                        <td id="ship" style="text-align: right"></td>
+                                    @else
+                                        @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
+                                            <td style="text-align: right">0 đ</td>
                                         @else
-                                            @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
-                                                <td style="text-align: right">0 đ</td>
-                                            @else
-                                                <td style="text-align: right">
-                                                    {{number_format(18000)}} đ
-                                                </td>
-                                            @endif
+                                            <td style="text-align: right">
+                                                {{number_format(18000)}} đ
+                                            </td>
                                         @endif
-
-                                    </tr>
-                            @endif
-                        </table>
-                        <div class="row">
-                            <div class="col-md-7" style="text-align: left; font-size: 15px; margin-bottom: 15px">
-                                <p>Thành tiền:</p>
-                            </div>
-                            <div class="col-md-5" style="text-align: right; color: red; font-size: 18px">
-                                @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
-                                    <div id="myTotal">
-                                        {{Cart::subtotal()}} đ
-                                    </div>
-                                @else
-                                    @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
-                                        <div>{{Cart::subtotal()}} đ</div>
-                                        @else
-                                        <div>
-                                            <?php $total=str_replace(',','',Cart::subtotal())+18000; ?>
-                                            {{number_format($total)}} đ
-                                        </div>
                                     @endif
-                                @endif
+                                </tr>
+                            </table>
+                            <div class="row">
+                                <div class="col-md-7" style="text-align: left; font-size: 15px; margin-bottom: 15px">
+                                    <p>Thành tiền:</p>
+                                </div>
+                                <div class="col-md-5" style="text-align: right; color: red; font-size: 18px">
+                                    @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
+                                        <div id="myTotal">
+                                            {{Cart::subtotal()}} đ
+                                        </div>
+                                    @else
+                                        @if(\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_DIACHI2=='CT')
+                                            <div>{{Cart::subtotal()}} đ</div>
+                                        @else
+                                            <div>
+                                                <?php $total=str_replace(',','',Cart::subtotal())+18000; ?>
+                                                {{number_format($total)}} đ
+                                            </div>
+                                        @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

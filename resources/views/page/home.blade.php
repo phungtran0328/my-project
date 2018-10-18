@@ -74,11 +74,6 @@ for($j=0;$j<count($book_item);$j++){
     }
 }
 
-/*foreach ($books as $book){
-    $id=\App\InvoiceDetails::where('S_MA',$book->S_MA)->count()->groupBy('S_MA')
-        ->orderBy('HDCT_SOLUONG','desc')->take(4)->get();
-
-}*/
 ?>
 @extends('master')
 @section('content')
@@ -214,7 +209,7 @@ for($j=0;$j<count($book_item);$j++){
                     <div class="space50">&nbsp;</div>
 
                     <div class="beta-products-list">
-                        <h4>Sách mới</h4>
+                        <h4>Sách mới (dựa vào ngày nhập)</h4>
                         <div class="beta-products-details">
                             {{--<p class="pull-left">Sách mới</p>--}}
                             <div class="clearfix"></div>
@@ -254,7 +249,7 @@ for($j=0;$j<count($book_item);$j++){
                     <div class="space50">&nbsp;</div>
 
                     <div class="beta-products-list">
-                        <h4>Sách nổi bật</h4>
+                        <h4>Sách nổi bật (dựa vào lượt xem)</h4>
                         <div class="beta-products-details">
                             <?php
                                 $views=\App\Book::where('S_SLTON','<>',0)->orderBy('S_LUOTXEM','desc')
@@ -325,6 +320,78 @@ for($j=0;$j<count($book_item);$j++){
                             @endforeach
                         </div>
                     </div>
+
+                    <div class="space50">&nbsp;</div>
+
+                    <div class="beta-products-list">
+                        <h4>Sách bán chạy (dựa vào hóa đơn)</h4>
+                        <div class="beta-products-details">
+                            {{--<p class="pull-left">Có {{$count}} sách</p>--}}
+                            <div class="clearfix"></div>
+                        </div>
+
+                        <div class="row">
+                            @foreach($invoices as $invoice)
+                                <?php
+                                $invoice_temp=\App\Book::where('S_MA',$invoice->S_MA)->first();
+                                $image_seller=$invoice_temp->image()->first();
+                                $promotions_seller = $invoice_temp->promotion()->first();
+                                if (isset($promotions_seller)){
+                                    $start=strtotime($promotions_seller->KM_APDUNG);
+                                    $end=strtotime($promotions_seller->KM_HANDUNG);
+                                    if (($start<=$date)and($end>=$date)){
+                                        $sales_seller=($invoice_temp->S_GIA)-($invoice_temp->S_GIA)*($promotions_seller->KM_GIAM);
+                                        //Có khuyến mãi và đang trong thời gian có hiệu lực
+                                    }else{
+                                        $sales_seller=$invoice_temp->S_GIA;
+                                        //Có khuyến mãi nhưng chưa tới thời gian
+                                    }
+                                }else{
+                                    $sales_seller=$invoice_temp->S_GIA; //Không có khuyến mãi
+                                }
+                                ?>
+                                @if($invoice_temp->S_SLTON>0)
+                                    <div class="col-sm-3">
+                                        <div class="single-item">
+                                            <div class="single-item-header">
+                                                @if(isset($image_seller))
+                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" style="" class="text-center">
+                                                        <img src="images/{{$image_seller->HA_URL}}" alt="" height="270px">
+                                                    </a>
+                                                @else
+                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}">
+                                                        <img src="images/sorry-image-not-available.jpg" alt="" height="270px">
+                                                    </a>
+                                                @endif
+                                            </div>
+                                            <div class="single-item-body text-center">
+                                                <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$invoice_temp->S_TEN}}</a>
+                                                <p class="single-item-price" style="font-size: 15px">
+                                                    @if($sales_seller<$invoice_temp->S_GIA)
+                                                        <span class="flash-del">{{number_format($invoice_temp->S_GIA)}} đ</span>
+                                                        <span class="flash-sale">{{number_format($sales_seller)}} đ</span>
+                                                    @else
+                                                        <span>{{number_format($sales_seller)}} đ</span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <br>
+                                            <div class="clearfix"></div>
+                                            <div class="single-item-caption text-center">
+                                                {{--@if($book->S_SLTON>0)
+                                                <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
+                                                --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
+                                                    @else
+                                                    <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
+                                                @endif--}}
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    </div> <!-- .beta-products-list -->
 
                     <div class="space50">&nbsp;</div>
                 </div>
