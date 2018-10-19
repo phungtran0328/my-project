@@ -15,8 +15,9 @@ class CategoryController extends Controller
      */
     public function category($id){
         $categories = KindOfBook::all();
-        $category_book = Book::where('LS_MA',$id)->get();
-
-        return view('page.category', compact('categories','category_book'));
+        $category = $categories->where('LS_MA',$id)->first();
+        $category_book = $category->book()->get();
+//        dd($category);
+        return view('page.category', compact('category','category_book'));
     }
 }

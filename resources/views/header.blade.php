@@ -13,12 +13,12 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="navbar-header">
-                            <a class="navbar-brand" style="width: 400px" href="{{url('/index')}}">Bookstore</a>
+                            <a class="navbar-brand" style="" href="{{url('/index')}}">Bookstore</a>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <form class="navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 380px">
-                            <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 360px"/>
+                        <form class="col-md-4 navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 100%">
+                            <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 100%"/>
                             <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
                         </form>
                     </div>
