@@ -46,12 +46,22 @@ for ($i=0;$i<count($category_book);$i++){
 
                 <div class="row">
                     <div class="col-sm-3">
-                        <ul class="aside-menu">
-                           {{-- @foreach ($danhmuc as $item)
-                                <li><a href="{{route('danh-muc-sach',$item->LS_MA)}}">{{$item->LS_TEN}}</a></li>
-                            @endforeach--}}
+                        <div class="aside-menu">
+                            <div style="font-size: 15px; font-weight: bold">
+                                TÁC GIẢ
+                            </div>
+                            <div>
+                                <ul>
 
-                        </ul>
+                                </ul>
+                            </div>
+                        </div>
+                        {{--<ul class="aside-menu">
+                           --}}{{-- @foreach ($danhmuc as $item)
+                                <li><a href="{{route('danh-muc-sach',$item->LS_MA)}}">{{$item->LS_TEN}}</a></li>
+                            @endforeach--}}{{--
+
+                        </ul>--}}
                     </div>
                     <div class="col-sm-9">
                         <div class="beta-products-list">
@@ -69,11 +79,11 @@ for ($i=0;$i<count($category_book);$i++){
                                                 <div class="single-item-header">
                                                     @if(isset($images[$i]))
                                                         <a href="{{url('/detail',$category_book[$i]->S_MA)}}" class="text-center">
-                                                            <img src="images/{{$images[$i]->HA_URL}}" alt="" style="width: 100%; height: 100%">
+                                                            <img src="images/{{$images[$i]->HA_URL}}" alt="" style="width: 100%;" height="190px">
                                                         </a>
                                                     @else
                                                         <a href="{{url('/detail',$category_book[$i]->S_MA)}}">
-                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="270px">
+                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="150px">
                                                         </a>
                                                     @endif
                                                 </div>

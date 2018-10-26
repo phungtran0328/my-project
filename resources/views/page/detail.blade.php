@@ -150,9 +150,15 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="table-responsive ">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-bordered table-hover">
                             <colgroup style="width: 25%; "></colgroup>
                             <tbody>
+                            @if(isset($company))
+                                <tr>
+                                    <th>Công ty phát hành</th>
+                                    <td>{{$company->CTPH_TEN}}</td>
+                                </tr>
+                            @endif
                             @if(isset($publisher))
                             <tr>
                                 <th>Nhà xuất bản</th>
