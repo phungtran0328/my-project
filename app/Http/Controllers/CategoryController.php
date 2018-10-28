@@ -23,13 +23,12 @@ class CategoryController extends Controller
             $temp_authors[]= $book->author()->get();
             $translator[] = $book->translator()->get();
         }
-        /*for ($i=0;$i<count($temp_authors);$i++){
+        for ($i=0;$i<count($temp_authors);$i++){
             if ($temp_authors[$i]!==null){
-                $authors = $temp_authors[$i];
+                $authors []= $temp_authors[$i];
             }
-
         }
-        dd($authors);*/
+//        dd($authors);
 
 
 //        dd($category);

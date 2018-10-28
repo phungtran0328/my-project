@@ -10,48 +10,39 @@ class KindOfBookController extends Controller
 {
     public function showKind_of_book(){
         $kind_of_book=KindOfBook::all();
-        return view('admin.book.kind_of_book.kind_of_book', compact('kind_of_book'));
+        $kob_sort=KindOfBook::orderBy('LS_MA','desc')->paginate(10);
+        return view('admin.book.kind_of_book.kind_of_book', compact('kind_of_book','kob_sort'));
     }
 
     public function kind_of_book(Request $request){
-        $this->validate($request,[
-           'name' => 'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên loại sách !',
-        ]);
-
         $kind_of_book = new KindOfBook();
-        $kind_of_book->LS_TEN=$request->name;
-        $kind_of_book->LS_MOTA=$request->description;
+        $kind_of_book->LS_TEN=$request->name_create;
+        $kind_of_book->LS_CHIETKHAU=$request->input('discount_create');
+        $kind_of_book->LS_MOTA=$request->description_create;
         $kind_of_book->save();
         return redirect()->back()->with([
-            'message'=>'Thêm loại sách mới thành công !',
-            'messageAdd'=>'1 loại sách đã được thêm vào'
+//            'message'=>'Thêm loại sách mới thành công !',
+            'messageAdd'=>'Đã thêm loại sách ID: '.$kind_of_book->LS_MA
         ]);
-    }
-
-    public function showUpdate($id){
-        $kindOfBook=KindOfBook::where('LS_MA', $id)->first();
-        return view('admin.book.kind_of_book.update_kob', compact('kindOfBook'));
     }
 
     public function updateKindOfBook(Request $request, $id){
-        $this->validate($request,[
-            'name' => 'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên loại sách !',
-        ]);
-
         $kind_of_book = KindOfBook::where('LS_MA',$id)->first();
-        $kind_of_book->LS_TEN=$request->name;
-        $kind_of_book->LS_MOTA=$request->description;
+        $kind_of_book->LS_TEN=$request->name_update;
+        $kind_of_book->LS_CHIETKHAU=$request->input('discount_update');
+        $kind_of_book->LS_MOTA=$request->description_update;
         $kind_of_book->save();
-        return redirect('/admin/kind-of-book')->with('messageUpdate','Cập nhật thành công !');
+        return redirect()->back()->with('messageUpdate','Đã cập nhật loại sách ID: '.$id);
     }
 
     public function deleteKindOfBook($id){
-        //Chưa xử lí khóa ngoại
-        KindOfBook::where('LS_MA',$id)->delete();
-        return redirect()->back()->with('messageDelete','Xóa thành công !');
+        $kob = KindOfBook::where('LS_MA',$id)->first();
+        $book = $kob->book()->first();
+        if (isset($book)){
+            return redirect()->back()->with('messageDeleteError','Không thể xóa vì tồn tại sách có ID loại sách: '.$id.' !');
+        }else{
+            KindOfBook::where('LS_MA',$id)->delete();
+            return redirect()->back()->with('messageDelete','Đã xóa loại sách có ID: '.$id.' !');
+        }
     }
 }

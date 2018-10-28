@@ -84,7 +84,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/kind-of-book','Admin\KindOfBookController@kind_of_book');
 
     //chỉnh sửa loại sách
-    Route::get('/kind-of-book/update/{id}','Admin\KindOfBookController@showUpdate');
     Route::post('/kind-of-book/update/{id}','Admin\KindOfBookController@updateKindOfBook');
     //xóa loại sách
     Route::get('/kind-of-book/delete/{id}','Admin\KindOfBookController@deleteKindOfBook');
