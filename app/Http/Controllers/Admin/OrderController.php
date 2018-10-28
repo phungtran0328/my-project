@@ -21,7 +21,14 @@ class OrderController extends Controller
 
     public function complete($id){
         $order=Order::where('DH_MA',$id)->first();
-        $order->DH_TTDONHANG=2;
+        $temps=$order->book()->get();
+
+        //Trừ số lượng mua vào số lượng tồn kho
+        foreach ($temps as $key=>$value){
+            $value->S_SLTON=$value->S_SLTON-$value->pivot->DHCT_SOLUONG;
+            $value->save();
+        }
+        $order->DH_TTDONHANG=2; //Trạng thái giao hàng thành công
         $order->save();
         return redirect()->back()->with('messComplete','Đã cập nhật trạng thái cho đơn hàng !');
     }

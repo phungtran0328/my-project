@@ -81,21 +81,15 @@ class InvoiceInController extends Controller
         //sl tồn += sl nhập ---cộng dồn sl
         //Giá = (sl tồn/tổng số)*(giá cũ*sl tồn)+(sl nhập/tổng sổ)*(giá mới*sl nhập)
         foreach ($update as $key=>$value){
-            $qty_front=$value->S_SLTON; //Lấy số lượng còn tồn lại
-            $price_front=$value->S_GIA; //Lấy giá của số lượng tồn (đã *1.4)
             $qty_back=$value->pivot->PNCT_SOLUONG; //Lấy số lượng nhập
-            $price_back=$value->pivot->PNCT_GIA; //Lấy giá nhập (chưa *1.4)
 
-            $qty_total=$qty_front+$qty_back; //Lấy tổng số lượng (nhập + đã có)
+            $book_kind=Book::where('S_MA',$value->S_MA)->first();
+            $book_kind_item=$book_kind->kind_of_book()->first();
+            $discount=$book_kind_item->LS_CHIETKHAU; //Lấy chiết khấu theo loại sách
+            $price_total=($value->pivot->PNCT_GIA)*$discount;
 
-            $round_front=round($qty_front/$qty_total,2); //Lấy phần trăm sl tồn/tống số lượng
-            $price_total_front=$round_front*$price_front;  // (sl tồn/tổng số)*giá
-            $price_total_back=(1-$round_front)*$price_back*1.4; // (sl nhập/tổng số)*giá nhập*1.4
-            $price_total_sum= $price_total_back+$price_total_front;
-
-
-            $value->S_SLTON = $qty_total;
-            $value->S_GIA = $price_total_sum;
+            $value->S_SLTON += $qty_back;
+            $value->S_GIA = $price_total;
             $value->save();
         }
         return redirect('admin/invoice-in')->with('messAddDetail','Thêm hóa đơn chi tiết thành công !');

@@ -46,14 +46,8 @@ class InvoiceController extends Controller
         //lưu vào table hd_chitiet
         InvoiceDetails::insert($data);
 
-        //Trừ số lượng mua vào số lượng tồn kho
-        foreach ($temps as $key=>$value){
-            $value->S_SLTON=$value->S_SLTON-$value->pivot->DHCT_SOLUONG;
-            $value->save();
-        }
-
         //Cập nhật lại trạng thái đơn hàng và nhân viên
-        $order->DH_TTDONHANG=1;
+        $order->DH_TTDONHANG=1; // Trạng thái đang vận chuyển
         $order->NV_MA=$user;
         $order->save();
         return redirect()->back()->with('messInvoice','Đã lập hóa đơn cho đơn hàng !');
