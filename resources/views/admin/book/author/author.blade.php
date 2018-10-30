@@ -23,9 +23,42 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <a href="{{url('/admin/author/create')}}" class="btn btn-primary btn-block">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#authorCreate">
                                     <span class="glyphicon glyphicon-plus"></span>
-                                </a>
+                                </button>
+                                {{--modal create author--}}
+                                <div class="modal fade" id="authorCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">Thêm tác giả</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{url('/admin/author')}}" method="post">
+                                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Tên tác giả</label>
+                                                        <input type="text" class="form-control" placeholder="Tên tác giả" name="name_create" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">Mô tả</label>
+                                                        <input type="text" class="form-control" placeholder="Mô tả" name="description_create">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">Ghi chú</label>
+                                                        <input type="text" class="form-control" placeholder="Ghi chú" name="note_create">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary">Thêm mới</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             @if(isset($search))
                                 <div class="col-md-4"></div>
@@ -68,6 +101,12 @@
                                 {{Session::get('messageRemove')}}
                             </div>
                         @endif
+                        @if(Session::has('messageRemoveError'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messageRemoveError')}}
+                            </div>
+                        @endif
                         <div class="table-responsive " id="mySearch">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
@@ -88,9 +127,10 @@
                                         <td>{{$author->TG_MOTA}}</td>
                                         <td>{{$author->TG_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/author/update',$author->TG_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/author/delete',$author->TG_MA)}}">
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#authorUpdate-{{$author->TG_MA}}">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                            <a class="btn btn-default btn-sm" href="{{url('admin/author/delete',$author->TG_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>
@@ -104,4 +144,43 @@
             </div>
         </div>
     </div>
+    {{--modal update author--}}
+    @foreach($authors as $author)
+        <div class="modal fade" id="authorUpdate-{{$author->TG_MA}}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="updateModal">Cập nhật tác giả: "{{$author->TG_TEN}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('/admin/author/update', $author->TG_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            {{--@method('PATCH')--}}
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="control-label">Tên tác giả</label>
+                                    <input class="form-control" value="{{$author->TG_TEN}}" name="name_update" required>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Mô tả</label>
+                                    <input type="text" class="form-control" value="{{$author->TG_MOTA}}" name="description_update">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Ghi chú</label>
+                                    <input type="text" class="form-control" value="{{$author->TG_GHICHU}}" name="note_update">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Cập nhật</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

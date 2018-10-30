@@ -16,7 +16,7 @@
         <!-- /.col-lg-12 -->
     </div>
     <div class="row">
-        <div class="col-md-5">
+        <div class="col-md-7">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5>Chỉnh sửa khuyến mãi</h5>
@@ -28,23 +28,28 @@
                             {{Session::get('messDate')}}
                         </div>
                     @endif
-                    <form class="" action="{{url('/admin/promotion', $promotion->KM_MA)}}" method="post">
+                    <form action="{{url('/admin/promotion', $promotion->KM_MA)}}" method="post" >
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                         @method('PATCH')
                         <fieldset>
-                            <div class="form-group {{$errors->has('promotion') ? 'has-error' : ''}}">
-                                <label class="control-label">Giảm %</label>
-                                <input pattern="[0]+(\.[0-9][0-9][0-9]?)?" class="form-control" value="{{$promotion->KM_GIAM}}" name="promotion">
-                                <strong style="color: red">{{$errors->first('promotion')}}</strong>
+                            <div class="row">
+                                <div class="col-md-4 form-group {{$errors->has('promotion') ? 'has-error' : ''}}">
+                                    <label class="control-label">Giảm %</label>
+                                    <input pattern="[0]+(\.[0-9][0-9][0-9]?)?" class="form-control" value="{{$promotion->KM_GIAM}}" name="promotion">
+                                    <strong style="color: red">{{$errors->first('promotion')}}</strong>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="control-label">Áp dụng</label>
+                                    <input type="date" class="form-control" value="{{$promotion->KM_APDUNG}}" name="start" id="start_update">
+                                    <strong style="color: red">{{$errors->first('start')}}</strong>
+                                </div>
+                                <div class="col-md-4 form-group">
+                                    <label class="control-label">Hạn dùng</label>
+                                    <input type="date" class="form-control" value="{{$promotion->KM_HANDUNG}}" name="end" id="end_update">
+                                    <strong style="color: red">{{$errors->first('end')}}</strong>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">Áp dụng</label>
-                                <input type="date" class="form-control" value="{{$promotion->KM_APDUNG}}" name="start" style="width: 200px">
-                                <strong style="color: red">{{$errors->first('start')}}</strong>
-                                <label class="control-label">Hạn dùng</label>
-                                <input type="date" class="form-control" value="{{$promotion->KM_HANDUNG}}" name="end" style="width: 200px">
-                                <strong style="color: red">{{$errors->first('end')}}</strong>
-                            </div>
+
                             <div class="form-group">
                                 <label class="control-label">Mô tả chi tiết</label>
                                 <input type="text" class="form-control" value="{{$promotion->KM_CHITIET}}" name="description">

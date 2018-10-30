@@ -15,7 +15,7 @@ class CoverTypeController extends Controller
      */
     public function index()
     {
-        $cover_type = CoverType::all();
+        $cover_type = CoverType::orderBy('LB_MA','desc')->paginate(10);
         return view('admin.book.cover_type.cover_type', compact('cover_type'));
     }
 
@@ -26,7 +26,7 @@ class CoverTypeController extends Controller
      */
     public function create()
     {
-        return view('admin.book.cover_type.cover_type');
+
     }
 
     /**
@@ -37,16 +37,10 @@ class CoverTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=>'required'
-        ],
-            [
-                'name.required'=>'Vui lòng nhập tên bìa sách !'
-            ]);
         $cover = new CoverType();
-        $cover->LB_TEN=$request->name;
+        $cover->LB_TEN=$request->name_create;
         $cover->save();
-        return redirect()->back()->with('messageAdd','1 loại bìa đã được thêm vào !');
+        return redirect()->back()->with('messageAdd','Đã thêm loại bìa "'.$cover->LB_TEN.'" !');
     }
 
     /**
@@ -57,8 +51,7 @@ class CoverTypeController extends Controller
      */
     public function show($id)
     {
-        $cover=CoverType::where('LB_MA', $id)->first();
-        return view('admin.book.cover_type.update_cover', compact('cover'));
+
     }
 
     /**
@@ -72,6 +65,13 @@ class CoverTypeController extends Controller
 
     }
 
+    public function postUpdate(Request $request, $id){
+        $cover = CoverType::where('LB_MA', $id)->first();
+        $cover->LB_TEN=$request->name_update;
+        $cover->save();
+        return redirect()->back()->with('messageUpdate','Đã cập nhật loại bìa "'.$cover->LB_TEN. '" !');
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -81,17 +81,7 @@ class CoverTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required'
-        ],
-            [
-                'name.required'=>'Vui lòng nhập tên bìa sách !'
-            ]
-        );
-        $cover = CoverType::where('LB_MA', $id)->first();
-        $cover->LB_TEN=$request->name;
-        $cover->save();
-        return redirect('/admin/cover-type')->with('messageUpdate','Cập nhật thành công !');
+        //
     }
 
     /**
@@ -103,5 +93,17 @@ class CoverTypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function delete($id){
+        $cover = CoverType::where('LB_MA',$id)->first();
+        $book = $cover->book()->first();
+        if (isset($book)){
+            return redirect()->back()->with('messDeleteError','Không thể xóa vì tồn tại sách có loại bìa ID: '.$id.' !');
+        }
+        else{
+            $cover->delete();
+            return redirect()->back()->with('messDelete','Đã xóa loại bìa ID: '.$id.' !');
+        }
     }
 }

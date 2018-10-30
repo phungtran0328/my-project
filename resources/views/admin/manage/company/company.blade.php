@@ -45,8 +45,14 @@
                                 {{Session::get('messageRemove')}}
                             </div>
                         @endif
+                            @if(Session::has('messageRemoveError'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{Session::get('messageRemoveError')}}
+                                </div>
+                            @endif
                         <div class="table-responsive ">
-                            <table class="table table-striped table-bordered table-hover">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width: 5%">STT</th>
@@ -67,9 +73,9 @@
                                         <td>{{$company->CTPH_SDT}}</td>
                                         <td>{{$company->CTPH_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/company/update',$company->CTPH_MA)}}">
+                                            <a class="btn btn-primary btn-sm" href="{{url('admin/company/update',$company->CTPH_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/company/delete',$company->CTPH_MA)}}">
+                                            <a class="btn btn-default btn-sm" href="{{url('admin/company/delete',$company->CTPH_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>

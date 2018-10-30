@@ -15,7 +15,7 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        $promotions = Promotion::all();
+        $promotions = Promotion::orderBy('KM_MA','desc')->paginate(10);
         return view('admin.book.promotion.promotion', compact('promotions'));
     }
 
@@ -37,32 +37,14 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'promotion'=>'required',
-            'start' =>'required',
-            //chưa bắt được after: end
-            'end'=>'required',
-        ],[
-            'promotion.required'=>'Vui lòng chọn giảm giá !',
-            'start.required'=>'Vui lòng chọn ngày bắt đầu áp dụng !',
-            'end.required'=>'Vui lòng chọn ngày hết hạn !',
-        ]);
-        $start=strtotime($request->input('start'));
-        $end=strtotime($request->input('end'));
-        if ($start>=$end){
-            return redirect()->back()
-                ->with('messDate','Thời gian áp dụng không được lớn hơn hoặc bằng thời gian kết thúc');
-        }
-
         $promotion=new Promotion();
-        $promotion->KM_GIAM=$request->promotion;
-        $promotion->KM_APDUNG=$start;
-        $promotion->KM_HANDUNG=$end;
-        $promotion->KM_CHITIET=$request->description;
+        $promotion->KM_GIAM=$request->promotion_create;
+        $promotion->KM_APDUNG=$request->input('start_create');
+        $promotion->KM_HANDUNG=$request->input('end_create');
+        $promotion->KM_CHITIET=$request->description_create;
         $promotion->save();
         return redirect()->back()->with([
-            'message'=>'Thêm thành công !',
-            'messageAdd'=>'1 giá khuyến mãi đã được thêm vào !'
+            'messageAdd'=>'Đã thêm khuyến mãi ID: '.$promotion->KM_MA.' !'
         ]);
     }
 
@@ -117,11 +99,11 @@ class PromotionController extends Controller
 
         $promotion=Promotion::where('KM_MA',$id)->first();
         $promotion->KM_GIAM=$request->promotion;
-        $promotion->KM_APDUNG=$start;
-        $promotion->KM_HANDUNG=$end;
+        $promotion->KM_APDUNG=$request->input('start');
+        $promotion->KM_HANDUNG=$request->input('end');
         $promotion->KM_CHITIET=$request->description;
         $promotion->save();
-        return redirect('/admin/promotion')->with('messageUpdate','Cập nhật thành công !');
+        return redirect('/admin/promotion')->with('messageUpdate','Đã cập nhật khuyến mãi có ID: '.$id.' !');
     }
 
     /**
@@ -138,7 +120,13 @@ class PromotionController extends Controller
 
     public function delete($id)
     {
-        Promotion::where('KM_MA',$id)->delete();
-        return redirect()->back()->with('messageRemove','Xóa thành công !');
+        $promotion = Promotion::where('KM_MA',$id)->first();
+        $book = $promotion->book()->first();
+        if (isset($book)){
+            return redirect()->back()->with('messageRemoveError','Không thể xóa vì tồn tại sách có khuyến mãi ID: '.$id.' !');
+        }else{
+            $promotion->delete();
+            return redirect()->back()->with('messageRemove','Đã xóa khuyến mãi có ID: '.$id.' !');
+        }
     }
 }

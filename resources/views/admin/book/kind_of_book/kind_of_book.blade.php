@@ -98,21 +98,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0;$i<count($kob_sort);$i++)
+                            @foreach($kob_sort as $index=>$kob)
                             <tr>
-                                <td>{{$i+1}}</td>
-                                <td>{{$kob_sort[$i]->LS_TEN}}</td>
-                                <td>{{$kob_sort[$i]->LS_CHIETKHAU}}</td>
-                                <td>{{$kob_sort[$i]->LS_MOTA}}</td>
+                                <td>{{$index + $kob_sort->firstItem()}}</td>
+                                <td>{{$kob->LS_TEN}}</td>
+                                <td>{{$kob->LS_CHIETKHAU}}</td>
+                                <td>{{$kob->LS_MOTA}}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateKOB-{{$kob_sort[$i]->LS_MA}}">
+                                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateKOB-{{$kob->LS_MA}}">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
-                                    <a class="btn btn-default btn-sm" href="{{url('/admin/kind-of-book/delete',$kob_sort[$i]->LS_MA)}}">
+                                    <a class="btn btn-default btn-sm" href="{{url('/admin/kind-of-book/delete',$kob->LS_MA)}}">
                                         <span class="glyphicon glyphicon-remove"></span></a>
                                 </td>
                             </tr>
-                            @endfor
+                            @endforeach
                             </tbody>
                         </table>
                         {{$kob_sort->render()}}

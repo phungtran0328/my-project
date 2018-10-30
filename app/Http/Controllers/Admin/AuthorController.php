@@ -22,7 +22,7 @@ class AuthorController extends Controller
                 ->orderBy('TG_MA','desc')->paginate(10);
         }
         else{
-            $authors=Author::paginate(10);
+            $authors=Author::orderBy('TG_MA','desc')->paginate(10);
         }
         return view('admin.book.author.author',compact('authors','search'));
     }
@@ -34,7 +34,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        return view('admin.book.author.create_author');
+
     }
 
     /**
@@ -45,17 +45,12 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=>'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên tác giả !',
-        ]);
         $author=new Author();
-        $author->TG_TEN=$request->name;
-        $author->TG_MOTA=$request->description;
-        $author->TG_GHICHU=$request->note;
+        $author->TG_TEN=$request->name_create;
+        $author->TG_MOTA=$request->description_create;
+        $author->TG_GHICHU=$request->note_create;
         $author->save();
-        return redirect('admin/author')->with('messageAdd','Thêm thành công');
+        return redirect()->back()->with('messageAdd','Đã thêm tác giả "'.$author->TG_TEN.'" !');
     }
 
     /**
@@ -69,9 +64,14 @@ class AuthorController extends Controller
 
     }
 
-    public function getUpdate($id){
-        $author=Author::where('TG_MA',$id)->first();
-        return view('admin.book.author.update_author',compact('author'));
+    public function postUpdate(Request $request, $id){
+        $author= Author::where('TG_MA',$id)->first();
+        $author->TG_TEN=$request->name_update;
+        $author->TG_MOTA=$request->description_update;
+        $author->TG_GHICHU=$request->note_update;
+        $author->save();
+        return redirect()->back()->with('messageUpdate','Đã cập nhật tác giả ID: '.$id.' !');
+
     }
 
     /**
@@ -94,17 +94,7 @@ class AuthorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên tác giả !',
-        ]);
-        $author= Author::where('TG_MA',$id)->first();
-        $author->TG_TEN=$request->name;
-        $author->TG_MOTA=$request->description;
-        $author->TG_GHICHU=$request->note;
-        $author->save();
-        return redirect('admin/author')->with('messageUpdate','Chỉnh sửa thành công !');
+
     }
 
     /**
@@ -120,12 +110,16 @@ class AuthorController extends Controller
 
     public function delete($id)
     {
-        Author::where('TG_MA',$id)->delete();
-        return redirect('admin/author')->with('messageRemove','Xóa thành công !');
+        $author = Author::where('TG_MA',$id)->first();
+        $book = $author->book()->first();
+        $translate = $author->translate_book()->first();
+        if (isset($book) or isset($translate->pivot->DICHGIA)){
+            return redirect()->back()->with('messageRemoveError','Không thể xóa vì tồn tại sách có tác giả ID: '.$id.' !');
+        }
+        else{
+            Author::where('TG_MA',$id)->delete();
+            return redirect()->back()->with('messageRemove','Xóa thành công !');
+        }
     }
 
-    public function getSearch(Request $request){
-        $authors=Author::where('TG_TEN','LIKE','%'.$request->input('search').'%')->get();
-        return view('admin.book.author.search', compact('authors'));
-    }
 }

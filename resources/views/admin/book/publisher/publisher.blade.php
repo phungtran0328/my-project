@@ -21,8 +21,42 @@
                         <h5>Danh sách nhà xuất bản</h5>
                     </div>
                     <div class="panel-body">
-                        <a href="{{url('/admin/publisher/create')}}" class="btn btn-primary" style="width: 100px;"> + </a>
-
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#publisherCreate">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                {{--modal create author--}}
+                                <div class="modal fade" id="publisherCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">Thêm nhà xuất bản</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{url('/admin/publisher')}}" method="post">
+                                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Tên nhà xuất bản</label>
+                                                        <input type="text" class="form-control" placeholder="Tên nhà xuất bản" name="name_create" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">Ghi chú</label>
+                                                        <input type="text" class="form-control" placeholder="Ghi chú" name="note_create">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary">Thêm mới</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <hr>
                         @if(Session::has('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
@@ -40,6 +74,12 @@
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('messageRemove')}}
+                            </div>
+                        @endif
+                        @if(Session::has('messageRemoveError'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messageRemoveError')}}
                             </div>
                         @endif
                         <div class="table-responsive ">
@@ -60,9 +100,10 @@
                                         <td>{{$publisher->NXB_TEN}}</td>
                                         <td>{{$publisher->NXB_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="{{url('admin/publisher',$publisher->NXB_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/publisher/delete',$publisher->NXB_MA)}}">
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#publisherUpdate-{{$publisher->NXB_MA}}">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
+                                            <a class="btn btn-default btn-sm" href="{{url('admin/publisher/delete',$publisher->NXB_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>
@@ -76,4 +117,36 @@
             </div>
         </div>
     </div>
+    @foreach($publishers as $publisher)
+        <div class="modal fade" id="publisherUpdate-{{$publisher->NXB_MA}}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="updateModal">Cập nhật: "{{$publisher->NXB_TEN}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form class="" action="{{url('/admin/publisher/update', $publisher->NXB_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <fieldset>
+                                <div class="form-group ">
+                                    <label class="control-label">Tên nhà xuất bản</label>
+                                    <input class="form-control" value="{{$publisher->NXB_TEN}}" name="name_update" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Ghi chú</label>
+                                    <input type="text" class="form-control" value="{{$publisher->NXB_GHICHU}}" name="note_update">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-block">Cập nhật</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection

@@ -23,26 +23,38 @@
                     </div>
                     <div class="panel-body">
                         <div class="row" >
-                            <div class="col-md-2" id="myAdd" style="display: {{$errors->has('name') ? 'none' : 'block'}};">
-                                <button class="btn btn-primary btn-block" onclick="asd(1)"><span class="glyphicon glyphicon-plus"></span></button>
-                            </div>
-                            <div id="myHide" style="display: {{$errors->has('name') ? 'block' : 'none'}};" class="col-md-2">
-                                <button class="btn btn-success btn-block" onclick="asd(0)"><span class="glyphicon glyphicon-minus"></span></button>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#coverTypeCreate">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                                {{--modal create author--}}
+                                <div class="modal fade" id="coverTypeCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="exampleModalLabel">Thêm bìa sách</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{{url('/admin/cover-type')}}" method="post">
+                                                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                    <div class="form-group ">
+                                                        <label class="control-label">Tên bìa sách</label>
+                                                        <input type="text" class="form-control" placeholder="Tên bìa sách" name="name_create" required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary">Thêm mới</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <hr>
-
-                        <form id="asd" action="{{url('/admin/cover-type')}}" method="post" style="display: {{$errors->has('name') ? 'block' : 'none'}}">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                            <div class="form-group ">
-                                <label class="control-label">Tên bìa sách</label>
-                                <input type="text" class="form-control" placeholder="Tên bìa sách" name="name" style="width: 200px">
-                                <strong style="color: red">{{$errors->first('name')}}</strong>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-primary">Thêm mới</button>
-                            </div>
-                        </form>
 
                         <div class="table-responsive ">
                             @if(Session::has('messageAdd'))
@@ -57,7 +69,19 @@
                                         {{Session::get('messageUpdate')}}
                                     </div>
                                 @endif
-                            <table class="table table-striped table-bordered table-hover">
+                                @if(Session::has('messDeleteError'))
+                                    <div class="alert alert-danger alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{Session::get('messDeleteError')}}
+                                    </div>
+                                @endif
+                                @if(Session::has('messDelete'))
+                                    <div class="alert alert-success alert-dismissable">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{Session::get('messDelete')}}
+                                    </div>
+                                @endif
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width: 10%">STT</th>
@@ -66,41 +90,55 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @for($i=0; $i<count($cover_type); $i++)
+                                @foreach($cover_type as $index=>$cover)
                                 <tr>
-                                    <td>{{$i+1}}</td>
-                                    <td>{{$cover_type[$i]->LB_TEN}}</td>
+                                    <td>{{$index + $cover_type->firstItem()}}</td>
+                                    <td>{{$cover->LB_TEN}}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-default" href="{{url('/admin/cover-type',$cover_type[$i]->LB_MA)}}"><span class="glyphicon glyphicon-pencil"></span></a>
-                                        <a class="btn btn-default" href=""><span class="glyphicon glyphicon-remove"></span></a>
+                                        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#coverUpdate-{{$cover->LB_MA}}">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                        <a class="btn btn-default btn-sm" href="{{url('admin/cover-type/delete',$cover->LB_MA)}}"><span class="glyphicon glyphicon-remove"></span></a>
                                     </td>
                                 </tr>
-                                @endfor
+                                @endforeach
                                 </tbody>
                             </table>
+                            {{$cover_type->render()}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script type="text/javascript">
+    @foreach($cover_type as $item)
+        <div class="modal fade" id="coverUpdate-{{$item->LB_MA}}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="updateModal">Cập nhật loại bìa: "{{$item->LB_TEN}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('/admin/cover-type/update', $item->LB_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <fieldset>
+                                <div class="form-group">
+                                    <label class="control-label">Tên loại bìa</label>
+                                    <input type="text" class="form-control" value="{{$item->LB_TEN}}" name="name_update" required>
 
-        //    window.onload = function() {
-        //        document.getElementById("asd").style.display = "none";
-        //    };
-
-        function asd(a) {
-            if (a == 1) {
-                document.getElementById("asd").style.display = "block";
-                document.getElementById("myHide").style.display = "block";
-                document.getElementById("myAdd").style.display="none";
-            } else {
-                document.getElementById("asd").style.display = "none";
-                document.getElementById("myHide").style.display = "none";
-                document.getElementById("myAdd").style.display="block";
-            }
-        }
-    </script>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-primary btn-block">Cập nhật</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 @endsection
 

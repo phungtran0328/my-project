@@ -10,6 +10,6 @@ class ReleaseCompany extends Model
     protected $primaryKey = 'CTPH_MA';
 
     public function invoice_in(){
-        return $this->hasMany('App\InvoiceIn','CTPH_MA','CTPH_MA');
+        return $this->hasMany('App\InvoiceIn','CTPH_MA');
     }
 }

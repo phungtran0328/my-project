@@ -89,19 +89,22 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/kind-of-book/delete/{id}','Admin\KindOfBookController@deleteKindOfBook');
 
     //route dạng resource [index, create, store, show{$id}, edit{$id}, update{$id}, destroy{$id}]
-    Route::resource('cover-type','Admin\CoverTypeController')->only(['index','create','store','show','update']);
-
+    Route::resource('cover-type','Admin\CoverTypeController')->only(['index','store']);
+    Route::post('cover-type/update/{id}','Admin\CoverTypeController@postUpdate');
+    Route::get('cover-type/delete/{id}','Admin\CoverTypeController@delete');
     //promotion
     Route::resource('promotion','Admin\PromotionController')->except(['edit','destroy']);
     //promotion delete
     Route::get('promotion/delete/{id}','Admin\PromotionController@delete');
 
     //publisher
-    Route::resource('publisher','Admin\PublisherController')->except(['edit','destroy']);
+    Route::resource('publisher','Admin\PublisherController')->except(['edit','destroy','show','update','create']);
+    Route::post('publisher/update/{id}','Admin\PublisherController@postUpdate');
     Route::get('publisher/delete/{id}','Admin\PublisherController@delete');
 
-    Route::resource('author','Admin\AuthorController')->except(['show','edit','destroy']);
-    Route::get('author/update/{id}','Admin\AuthorController@getUpdate');
+    Route::resource('author','Admin\AuthorController')->except(['show','edit','destroy','create','update']);
+    Route::post('author/update/{id}','Admin\AuthorController@postUpdate');
+//    Route::get('author/update/{id}','Admin\AuthorController@getUpdate');
     Route::get('author/delete/{id}','Admin\AuthorController@delete');
 
     //book show, update

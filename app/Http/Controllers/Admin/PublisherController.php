@@ -15,7 +15,7 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        $publishers=Publisher::paginate(10);
+        $publishers=Publisher::orderBy('NXB_MA','desc')->paginate(10);
         return view('admin.book.publisher.publisher',compact('publishers'));
     }
 
@@ -26,7 +26,7 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        return view('admin.book.publisher.create_publisher');
+        //
     }
 
     /**
@@ -37,16 +37,11 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'name'=>'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên nhà xuất bản !',
-        ]);
         $publisher=new Publisher();
-        $publisher->NXB_TEN=$request->name;
-        $publisher->NXB_GHICHU=$request->note;
+        $publisher->NXB_TEN=$request->name_create;
+        $publisher->NXB_GHICHU=$request->note_create;
         $publisher->save();
-        return redirect('admin/publisher')->with('messageAdd','Thêm thành công');
+        return redirect()->back()->with('messageAdd','Đã thêm NXB ID: '.$publisher->NXB_MA);
     }
 
     /**
@@ -57,8 +52,7 @@ class PublisherController extends Controller
      */
     public function show($id)
     {
-        $publisher=Publisher::where('NXB_MA',$id)->first();
-        return view('admin.book.publisher.update_publisher', compact('publisher'));
+        //
     }
 
     /**
@@ -81,17 +75,16 @@ class PublisherController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name'=>'required',
-        ],[
-            'name.required'=>'Vui lòng nhập tên nhà xuất bản !'
-        ]);
 
+
+    }
+
+    public function postUpdate(Request $request, $id){
         $publisher=Publisher::where('NXB_MA', $id)->first();
-        $publisher->NXB_TEN=$request->name;
-        $publisher->NXB_GHICHU=$request->note;
+        $publisher->NXB_TEN=$request->name_update;
+        $publisher->NXB_GHICHU=$request->note_update;
         $publisher->save();
-        return redirect('admin/publisher')->with('messageUpdate','Cập nhật thành công');
+        return redirect()->back()->with('messageUpdate','Đã cập nhật NXB ID: '.$publisher->NXB_MA);
     }
 
     /**
@@ -107,7 +100,14 @@ class PublisherController extends Controller
 
     public function delete($id)
     {
-        Publisher::where('NXB_MA',$id)->delete();
-        return redirect('admin/publisher')->with('messageRemove','Xóa thành công !');
+        $publisher = Publisher::where('NXB_MA',$id)->first();
+        $book = $publisher->book()->first();
+        if (isset($book)){
+            return redirect()->back()->with('messageRemoveError','Không thể xóa vì tồn tại sách có NXB ID: '.$id.' !');
+        }
+        else{
+            $publisher->delete();
+            return redirect()->back()->with('messageRemove','Đã xóa NXB có ID: '.$id.' !');
+        }
     }
 }

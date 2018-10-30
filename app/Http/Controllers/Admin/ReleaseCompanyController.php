@@ -65,7 +65,13 @@ class ReleaseCompanyController extends Controller
     }
 
     public function delete($id){
-        ReleaseCompany::where('CTPH_MA',$id)->delete();
-        return redirect('admin/company')->with('messageRemove','Xóa thành công !');
+        $company = ReleaseCompany::where('CTPH_MA',$id)->first();
+        $invoice_in = $company->invoice_in()->first();
+        if (isset($invoice_in)){
+            return redirect()->back()->with('messageRemoveError','Không thể xóa vì tồn tại phiếu nhập có CTPH ID: '.$id.' !');
+        }else{
+            $company->delete();
+            return redirect()->back()->with('messageRemove','Đã xóa CTPH có ID: '.$id.' !');
+        }
     }
 }
