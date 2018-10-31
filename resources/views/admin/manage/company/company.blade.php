@@ -21,11 +21,53 @@
                         <h5>Danh sách công ty phát hành</h5>
                     </div>
                     <div class="panel-body">
-                        @can('invoice-in.create')
-                        <a href="{{url('admin/company/create')}}" class="btn btn-primary" style="width: 150px;">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                        @endcan
+                        <div class="row">
+                            <div class="col-md-2">
+                                @can('invoice-in.create')
+                                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#companyCreate">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                @endcan
+                            </div>
+                        </div>
+                        <div class="modal fade" id="companyCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="exampleModalLabel">Thêm công ty phát hành</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{url('admin/company')}}" method="post" name="companyForm" onsubmit="return validateCompany()">
+                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                <div class="form-group {{$errors->has('name') ? 'has-error' : ''}}">
+                                                    <label class="control-label">Tên công ty phát hành</label>
+                                                    <input type="text" class="form-control" placeholder="Tên công ty phát hành" name="name_create">
+                                                    <strong style="color: red">{{$errors->first('name')}}</strong>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Địa chỉ</label>
+                                                    <input type="text" class="form-control" placeholder="Địa chỉ" name="address_create">
+                                                </div>
+                                                <div class="form-group {{$errors->has('phone') ? 'has-error' : ''}}">
+                                                    <label class="control-label">Số điện thoại</label>
+                                                    <input type="tel" class="form-control" placeholder="Số điện thoại" name="phone_create">
+                                                    <strong style="color: red">{{$errors->first('phone')}}</strong>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label">Ghi chú</label>
+                                                    <input type="text" class="form-control" placeholder="Ghi chú" name="note_create">
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary">Thêm mới</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         <hr>
                         @if(Session::has('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
@@ -73,8 +115,9 @@
                                         <td>{{$company->CTPH_SDT}}</td>
                                         <td>{{$company->CTPH_GHICHU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-primary btn-sm" href="{{url('admin/company/update',$company->CTPH_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
+                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#companyUpdate-{{$company->CTPH_MA}}">
+                                                <span class="glyphicon glyphicon-pencil"></span>
+                                            </button>
                                             <a class="btn btn-default btn-sm" href="{{url('admin/company/delete',$company->CTPH_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
@@ -89,4 +132,65 @@
             </div>
         </div>
     </div>
+
+    @foreach($companies as $company)
+        <div class="modal fade" id="companyUpdate-{{$company->CTPH_MA}}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="updateModal">Cập nhật tác giả: "{{$company->CTPH_TEN}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('/admin/company/update',$company->CTPH_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <div class="form-group">
+                                <label class="control-label">Tên công ty phát hành</label>
+                                <input type="text" class="form-control" value="{{$company->CTPH_TEN}}" name="name_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Địa chỉ</label>
+                                <input type="text" class="form-control" value="{{$company->CTPH_DIACHI}}" name="address_update">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Số điện thoại</label>
+                                <input type="tel" class="form-control" value="{{$company->CTPH_SDT}}"
+                                       name="phone_update" pattern="[0-9]{10}">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Ghi chú</label>
+                                <input type="text" class="form-control" value="{{$company->CTPH_GHICHU}}" name="note_update">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    @endforeach
+
+    <script>
+        function validateCompany()
+        {
+            var y = document.forms["companyForm"]["name_create"].value;
+            var x = document.forms["companyForm"]["phone_create"].value;
+//            console.log(x);
+            var phone_no = /^\d{10}$/;
+            if (y.trim()==''){
+                alert("Vui lòng nhập tên công ty phát hành !");
+                return false;
+            }
+            if(!x.match(phone_no))
+            {
+                alert("Số điện thoại gồm 10 số. Vui lòng nhập lại !");
+                return false;
+            }
+
+        }
+    </script>
 @endsection

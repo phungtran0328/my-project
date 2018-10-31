@@ -128,9 +128,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     //release company
     Route::get('company','Admin\ReleaseCompanyController@index');
-    Route::get('company/create','Admin\ReleaseCompanyController@create')->middleware('can:invoice-in.create');
-    Route::post('company/create','Admin\ReleaseCompanyController@store');
-    Route::get('company/update/{id}','Admin\ReleaseCompanyController@show');
+//    Route::get('company/create','Admin\ReleaseCompanyController@create')->middleware('can:invoice-in.create');
+    Route::post('company','Admin\ReleaseCompanyController@store');
     Route::post('company/update/{id}','Admin\ReleaseCompanyController@update');
     Route::get('company/delete/{id}','Admin\ReleaseCompanyController@delete');
 
