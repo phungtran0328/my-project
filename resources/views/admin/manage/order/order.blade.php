@@ -30,8 +30,10 @@
                             <select class="form-control" name="status">
                                 <option value="">---Trạng thái đơn hàng---</option>
                                 <option value="0">Đang xử lí</option>
+                                <option value="3">Đang chờ hủy đơn hàng</option>
                                 <option value="1">Đang vận chuyển</option>
                                 <option value="2">Giao hàng thành công</option>
+                                <option value="4">Đã hủy</option>
                             </select>
                             <span class="input-group-btn">
                                 <button class="btn btn-default-sm" type="submit">
@@ -70,8 +72,8 @@
                                     <th style="width: 8%">Phí VC</th>
                                     <th>TTĐH</th>
                                     <th style="width: 20%">HTTT</th>
-                                    <th style="width: 10%">Hành động</th>
-                                    <th style="width: 6%">Hủy</th>
+                                    <th style="width: 12%">Hành động</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -114,7 +116,13 @@
                                                         echo 'Đang vận chuyển';
                                                         break;
                                                     case 2:
-                                                        echo 'Giao hàng thành công';
+                                                        echo 'Giao hàng thành công'; //Chỉ trường hợp này mới trừ sl tồn
+                                                        break;
+                                                    case 3:
+                                                        echo 'Đang chờ xử lí hủy đơn hàng';
+                                                        break;
+                                                    case 4:
+                                                        echo 'Đã hủy';
                                                         break;
                                                 }
                                             ?>
@@ -122,7 +130,7 @@
                                         <td>{{$order->DH_GHICHU}}</td>
                                         <td class="text-center">
                                             @can('order.update')
-                                                @if($order->DH_TTDONHANG==0)
+                                               {{-- @if($order->DH_TTDONHANG==0)
                                                     <a class="btn btn-primary btn-sm" href="{{url('admin/order/invoice',$order->DH_MA)}}">
                                                         Lập HĐ</a>
                                                 @elseif($order->DH_TTDONHANG==1)
@@ -130,13 +138,33 @@
                                                         Check</a>
                                                     @else
                                                     <a class="btn btn-success btn-sm">Complete</a>
-                                                @endif
+                                                @endif--}}
+                                                @switch($order->DH_TTDONHANG)
+                                                    @case(0)
+                                                        <a class="btn btn-primary btn-sm" href="{{url('admin/order/invoice',$order->DH_MA)}}">
+                                                            Lập HĐ</a>
+                                                    @break
+                                                    @case(1)
+                                                        <a class="btn btn-info btn-sm" href="{{url('admin/order/complete',$order->DH_MA)}}">
+                                                            Check</a>
+                                                    @break
+                                                    @case(2)
+                                                        <a class="btn btn-success btn-sm">Hoàn thành</a>
+                                                    @break
+                                                    @case(3)
+                                                        <a class="btn btn-danger btn-sm" href="{{url('admin/order/cancel',$order->DH_MA)}}">
+                                                            Hủy ĐH</a>
+                                                    @break
+                                                    @case(4)
+                                                        <a class="btn btn-default btn-sm">Đã hủy</a>
+                                                    @break
+                                                @endswitch
                                             @endcan
                                         </td>
-                                        <td class="text-center">
+                                        {{--<td class="text-center">
                                             <a class="btn btn-default" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
-                                        </td>
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

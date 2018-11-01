@@ -5,6 +5,24 @@
  * Date: 08/29/2018
  * Time: 1:45 PM
  */
+
+$orders = \App\Order::where('DH_TTDONHANG', 0)->get();
+//dd(count($orders));
+$now = strtotime('now');
+$last_week = strtotime('-1 week');
+//echo $last_week;
+$books_low_in_stock = \App\Book::where('S_SLTON','<',10)->get();
+$books_out_stock = \App\Book::where('S_SLTON','=', 0)->get();
+$data_low_in_stock = array();
+$data_out_stock = array();
+foreach ($books_low_in_stock as $key=>$value){
+    $data_low_in_stock[$key]=$value->S_TEN;
+}
+foreach ($books_out_stock as $key=>$value){
+    $data_out_stock[$key]=$value->S_TEN;
+}
+//dd($data_low_in_stock);
+//dd(count($data_out_stock));
 ?>
 @extends('admin/master')
 @section('content')
@@ -18,43 +36,22 @@
         <!-- /.row -->
         <div class="row">
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-primary">
+                <div class="panel panel-red">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-comments fa-5x"></i>
+                                <i class="fa fa-remove fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">26</div>
-                                <div>New Comments!</div>
+                                <div class="huge">{{count($data_out_stock)}}</div>
+
+                                <div>Sách hết hàng !</div>
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="{{url('admin/book')}}">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
-                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                            <div class="clearfix"></div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6">
-                <div class="panel panel-green">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-3">
-                                <i class="fa fa-tasks fa-5x"></i>
-                            </div>
-                            <div class="col-xs-9 text-right">
-                                <div class="huge">12</div>
-                                <div>New Tasks!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#">
-                        <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Xem chi tiết</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -66,17 +63,17 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">
-                                <i class="fa fa-shopping-cart fa-5x"></i>
+                                <i class="glyphicon glyphicon-alert fa-5x"></i>
                             </div>
                             <div class="col-xs-9 text-right">
-                                <div class="huge">124</div>
-                                <div>New Orders!</div>
+                                <div class="huge">{{count($data_low_in_stock)}}</div>
+                                <div>Sách sắp hết hàng !</div>
                             </div>
                         </div>
                     </div>
-                    <a href="#">
+                    <a href="{{url('admin/book')}}">
                         <div class="panel-footer">
-                            <span class="pull-left">View Details</span>
+                            <span class="pull-left">Xem chi tiết</span>
                             <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                             <div class="clearfix"></div>
                         </div>
@@ -84,7 +81,29 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <div class="panel panel-red">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-shopping-cart fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge">{{count($orders)}}</div>
+                                <div>Đơn hàng mới !</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{url('admin/order')}}">
+                        <div class="panel-footer">
+                            <span class="pull-left">Xem chi tiết</span>
+                            <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-green">
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-xs-3">

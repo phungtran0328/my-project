@@ -82,11 +82,17 @@
                                                     case 2:
                                                         echo 'Giao hàng thành công';
                                                         break;
+                                                    case 3:
+                                                        echo 'Đang chờ xử lí hủy đơn hàng';
+                                                        break;
+                                                    case 4:
+                                                        echo 'Đã hủy';
+                                                        break;
                                                 }
                                                 ?>
                                             </td>
                                             @if($order->DH_TTDONHANG==0)
-                                                <td><a href=""><span class="glyphicon glyphicon-remove"></span></a></td>
+                                                <td><a href="{{url('order/delete',$order->DH_MA)}}"><span class="glyphicon glyphicon-remove"></span></a></td>
                                                 @else
                                                 <td></td>
                                             @endif

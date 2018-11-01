@@ -58,7 +58,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/change-password/{id}','EditController@showChangePass');
     Route::post('/change-password/{id}','EditController@changePass');
     Route::get('/order/{id}','EditController@showOrder');
-
+    Route::get('/order/delete/{id}','EditController@deleteOrder');
 });
 
 Route::group(['prefix' => 'admin'], function () {
@@ -166,6 +166,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('order/invoice/{id}','Admin\InvoiceController@invoice')->middleware('can:order.update');
     //Xác nhận giao hàng thành công
     Route::get('order/complete/{id}','Admin\OrderController@complete')->middleware('can:order.update');
+    //Hủy đơn hàng
+    Route::get('order/cancel/{id}','Admin\OrderController@cancelOrder')->middleware('can:order.update');
     //hiển thị danh sách hóa đơn
     Route::get('invoice','Admin\InvoiceController@index');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');

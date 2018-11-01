@@ -92,4 +92,11 @@ class EditController extends Controller
         $orders=Order::where('KH_MA',$id)->get();
         return view('page.customer.order',compact('orders'));
     }
+
+    public function deleteOrder($id){
+        $order = Order::where('DH_MA',$id)->first();
+        $order->DH_TTDONHANG = 3;
+        $order->save();
+        return redirect()->back();
+    }
 }

@@ -14,7 +14,13 @@ class CustomerController extends Controller
     }
 
     public function delete($id){
-        Customer::destroy($id);
-        return redirect('admin/customer')->with('messageRemove','Xóa thành công !');
+        $customer = Customer::where('KH_MA',$id)->first();
+        $order = $customer->order()->first();
+        if (isset($order)){
+            return redirect()->back()->with('messRemoveError','Không thể xóa vì khách hàng ID: '.$id.' có đặt hàng !');
+        }else{
+            Customer::destroy($id);
+            return redirect()->back()->with('messageRemove','Đã xóa khách hàng có ID: '.$id.' !');
+        }
     }
 }

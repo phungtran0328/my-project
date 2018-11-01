@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -31,5 +32,14 @@ class OrderController extends Controller
         $order->DH_TTDONHANG=2; //Trạng thái giao hàng thành công
         $order->save();
         return redirect()->back()->with('messComplete','Đã cập nhật trạng thái cho đơn hàng !');
+    }
+
+    public function cancelOrder($id){
+        $order=Order::where('DH_MA',$id)->first();
+        $user=Auth::user()->NV_MA;
+        $order->NV_MA = $user;
+        $order->DH_TTDONHANG = 4;
+        $order->save();
+        return redirect()->back();
     }
 }

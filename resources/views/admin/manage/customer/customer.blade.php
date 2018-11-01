@@ -21,41 +21,30 @@
                         <h5>Danh sách khách hàng</h5>
                     </div>
                     <div class="panel-body">
-                        {{--<a href="{{url('admin/user/create')}}" class="btn btn-primary" style="width: 150px;">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                        <hr>
-                        @if(Session::has('messageAdd'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
-                            </div>
-                        @endif
-                        @if(Session::has('messageUpdate'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageUpdate')}}
-                            </div>
-                        @endif--}}
                         @if(Session::has('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{Session::get('messageRemove')}}
                             </div>
                         @endif
+                        @if(Session::has('messRemoveError'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messRemoveError')}}
+                            </div>
+                        @endif
                         <div class="table-responsive ">
-                            <table class="table table-striped table-bordered table-hover" style="width: 1500px">
+                            <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width: 3%">STT</th>
-                                    <th style="width: 10%">Tên</th>
-                                    <th style="width: 6%">Giới tính</th>
-                                    <th style="width: 4%">Ngày sinh</th>
+                                    <th style="width: 15%">Tên</th>
+                                    <th style="width: 8%">Giới tính</th>
+                                    <th style="width: 8%">Ngày sinh</th>
                                     <th>Địa chỉ</th>
                                     <th style="width: 4%">SĐT</th>
                                     <th>Email</th>
-                                    <th>Password</th>
-                                    <th style="width: 8%">Hành động</th>
+                                    <th style="width: 6%">Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -70,11 +59,10 @@
                                         <td>{{$customer->KH_DIACHI}}</td>
                                         <td>{{$customer->KH_SDT}}</td>
                                         <td>{{$customer->KH_EMAIL}}</td>
-                                        <td>{{$customer->KH_MATKHAU}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="{{url('admin/customer/delete',$customer->KH_MA)}}">
+                                            {{--<a class="btn btn-default" href="">
+                                                <span class="glyphicon glyphicon-pencil"></span></a>--}}
+                                            <a class="btn btn-default btn-sm" href="{{url('admin/customer/delete',$customer->KH_MA)}}">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>
