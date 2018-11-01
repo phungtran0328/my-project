@@ -7,7 +7,7 @@
  */
 
 $orders = \App\Order::where('DH_TTDONHANG', 0)->get();
-//dd(count($orders));
+
 $now = strtotime('now');
 $last_week = strtotime('-1 week');
 //echo $last_week;
