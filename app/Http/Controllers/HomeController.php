@@ -24,8 +24,16 @@ class HomeController extends Controller
         $invoiceIns=InvoiceIn::orderBy('PN_NGAYNHAP','desc')->take(3)->get();
 
         $invoices=DB::table('hd_chitiet')->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as total'))
-            ->groupBy('S_MA')->orderBy('HDCT_SOLUONG','desc')->take(4)->get();
+            ->groupBy('S_MA')->orderBy('total','desc')->take(4)->get();
 
+        /*$cate_data = array();
+        foreach ($invoices as $index=>$invoice){
+            $book_invoice = Book::where('S_MA',$invoice->S_MA)->first();
+            $cate = $book_invoice->kind_of_book()->first();
+            $cate_data[$index] = $cate->LS_TEN;
+        }*/
+//        dd(array_unique($cate_data));
+//        dd($cate_data);
 //        dd($invoices);
 //        $i=0;
         foreach ($invoiceIns as $key=>$value){
