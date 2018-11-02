@@ -130,7 +130,7 @@ foreach ($books_out_stock as $key=>$value){
             <div class="col-lg-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Area Chart Example
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Doanh thu theo từng loại sách
                         <div class="pull-right">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
@@ -153,8 +153,11 @@ foreach ($books_out_stock as $key=>$value){
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="morris-area-chart"></div>
+                        <div id="revenue-category-chart">
+                            {!! $chart->container() !!}
+                        </div>
                     </div>
+                {!! $chart->script() !!}
                     <!-- /.panel-body -->
                 </div>
                 <!-- /.panel -->
@@ -568,4 +571,7 @@ foreach ($books_out_stock as $key=>$value){
         <!-- /.row -->
     </div>
     <!-- /#page-wrapper -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js" charset="utf-8"></script>
 @endsection
