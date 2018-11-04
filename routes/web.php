@@ -25,6 +25,8 @@ Route::group(['middleware' => 'filter'], function() {
     Route::get('/detail/{id}','DetailController@getDetail');
 });
 
+Route::get('/search','HomeController@searchName');
+Route::get('/search_book','HomeController@search');
 
 //shopping cart
 Route::get('/cart','CartController@index');

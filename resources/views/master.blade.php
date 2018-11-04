@@ -40,13 +40,47 @@
                 display: none;
             }
         }
-
     </style>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 </head>
 <body>
 
     @include('header')
+    <script>
+        jQuery(document).ready(function($) {
+            var engine = new Bloodhound({
+                remote: {
+                    url: 'search?q=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+                datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
 
+            $(".search-input").typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 3
+            }, {
+                source: engine.ttAdapter(),
+                name: 'books-name',
+                display: function(data) {
+                    return data.S_TEN;
+                },
+                templates: {
+                    empty: [
+                        '<div class="list-group"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
+                    ],
+                    suggestion: function (data) {
+                        return '<a href="detail/' + data.S_MA + '" class="list-group-item">' + data.S_TEN + '</a>'
+                    }
+                }
+            });
+        });
+    </script>
 
     @yield('content')
 
@@ -56,9 +90,9 @@
 
 
 <!-- include js files -->
-<script language="JavaScript" type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script language="JavaScript" type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
 <script src="source/assets/dest/js/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
 <script src="source/assets/dest/vendors/jqueryui/jquery-ui-1.10.4.custom.min.js"></script>
 <script language="JavaScript" type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>

@@ -17,9 +17,17 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <form class="col-md-4 navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 100%">
+                        {{--<form class="col-md-4 navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 98%">
                             <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 100%"/>
                             <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
+                        </form>--}}
+                        <form class="navbar-form navbar-left typeahead" role="search" method="get" action="{{url('/search_book')}}">
+                            <input type="text" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 150%">
+                            <span class="input-group-btn" style="display: none">
+                                <button class="btn btn-default-sm" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
                         </form>
                     </div>
                     <div class="col-md-4">
@@ -86,5 +94,7 @@
         x.style.color='black';
     }
 </script>
+
+
 
 

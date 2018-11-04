@@ -8,6 +8,7 @@ use App\InvoiceIn;
 use App\KindOfBook;
 use App\Slider;
 use App\Book;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -46,5 +47,15 @@ class HomeController extends Controller
 //        dd(count($book_item));
 //        dd($invoiceIns[1]->PN_MA);
         return view('page.home', compact('categories', 'sliders','books','book_item','invoices'));
+    }
+
+    public function searchName(Request $request){
+        $books = Book::where('S_TEN','like', '%'. $request->get('q'). '%')->get();
+        return response()->json($books);
+    }
+
+    public function search(Request $request){
+        $books = Book::where('S_TEN','like', '%'. $request->get('q'). '%')->get();
+        return view('page.search', compact('books'));
     }
 }
