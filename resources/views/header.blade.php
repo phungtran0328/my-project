@@ -60,14 +60,14 @@
         </nav>
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="dropdown">
+                <div class="col-lg-4 col-md-4">
+                    <div class="dropdown" style="">
                         <a href="#" id="myDrop" class="dropdown-toggle list-group-item"
-                           style="font-size: medium; text-align: center; background-color: gray; color: white"
+                           style="font-size: medium; text-align: center; background-color: gray; color: white; "
                            data-toggle="dropdown">Danh mục sách</a>
-                        <ul class="dropdown-menu" id="menuDrop" style="width: 360px;" role="menu" aria-labelledby="drop3">
+                        <ul class="dropdown-menu" id="menuDrop" style=" width: 100%" role="menu" aria-labelledby="drop3">
                             @foreach($categories as $category)
-                                <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="" style="font-size: 17px; color: black; border: none"
+                                <li><a tabindex="-1" href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: 17px; color: black; border: none; margin-bottom: 5px"
                                        onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a></li>
                             @endforeach
                         </ul>

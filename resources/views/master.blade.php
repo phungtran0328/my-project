@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="source/assets/dest/css/style.css?version=51">
+    <link rel="stylesheet" type="text/css" href="source/assets/dest/css/style.css?version=52">
     {{--?version=51 dùng làm mới lại css khi có chỉnh sửa trong file css --}}
     <link rel="stylesheet" href="source/assets/dest/css/animate.css">
     <link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
@@ -60,7 +60,7 @@
                 queryTokenizer: Bloodhound.tokenizers.whitespace
             });
 
-            $(".search-input").typeahead({
+            $(".typeahead .search-input").typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 3
@@ -119,14 +119,14 @@
             }}
         )
     });*/
-    $(document).ready(function($){
+    /*$(document).ready(function($){
         $("#myDrop").mouseenter(function(){
             $("#menuDrop").show();
         });
         $("#menuDrop").mouseleave(function(){
             $("#menuDrop").hide();
         });
-    });
+    });*/
 </script>
 
 </body>

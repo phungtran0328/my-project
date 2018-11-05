@@ -82,14 +82,14 @@ for($j=0;$j<count($book_item);$j++){
         <div class="col-sm-4">
             <div class="list-group">
                 {{--<a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>--}}
-                @foreach($categories as $category)
+                {{--@foreach($categories as $category)
                 <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: 15px; color: black; border: none"
                    onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a>
-                @endforeach
+                @endforeach--}}
             </div>
         </div>
         <div class="col-sm-8">
-            <div class="list-group">
+            <div class="">
                 {{--<a class="list-group-item" style="border: none">Daily Deals</a>--}}
 
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
@@ -164,41 +164,34 @@ for($j=0;$j<count($book_item);$j++){
                         <div class="row">
                             @for($i=0;$i<count($books);$i++)
                                 @if($books[$i]->S_SLTON>0)
-                                    <div class="col-sm-3">
-                                        <div class="single-item">
-                                            <div class="single-item-header">
-                                                @if(isset($images[$i]))
-                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}" style="" class="text-center">
-                                                        <img src="images/{{$images[$i]->HA_URL}}" alt="" height="270px">
-                                                    </a>
-                                                @else
-                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}">
-                                                        <img src="images/sorry-image-not-available.jpg" alt="" height="270px">
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$books[$i]->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$books[$i]->S_TEN}}</a>
-                                                <p class="single-item-price" style="font-size: 15px">
-                                                    @if($sales[$i]<$books[$i]->S_GIA)
-                                                        <span class="flash-del">{{number_format($books[$i]->S_GIA)}} đ</span>
-                                                        <span class="flash-sale">{{number_format($sales[$i])}} đ</span>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                            <div class="single-item">
+                                                <div class="single-item-header text-center" >
+                                                    @if(isset($images[$i]))
+                                                        <a href="{{url('/detail',$books[$i]->S_MA)}}" style="" class="">
+                                                            <img src="images/{{$images[$i]->HA_URL}}" alt="ádasd" height="250px">
+                                                        </a>
                                                     @else
-                                                        <span>{{number_format($sales[$i])}} đ</span>
+                                                        <a href="{{url('/detail',$books[$i]->S_MA)}}">
+                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
+                                                        </a>
                                                     @endif
-                                                </p>
+                                                </div>
+                                                <div class="single-item-body text-center">
+                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$books[$i]->S_TEN}}</a>
+                                                    <p class="single-item-price" style="font-size: 15px">
+                                                        @if($sales[$i]<$books[$i]->S_GIA)
+                                                            <span class="flash-del">{{number_format($books[$i]->S_GIA)}} đ</span>
+                                                            <span class="flash-sale">{{number_format($sales[$i])}} đ</span>
+                                                        @else
+                                                            <span>{{number_format($sales[$i])}} đ</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <br>
+
                                             </div>
-                                            <br>
-                                            <div class="clearfix"></div>
-                                            <div class="single-item-caption text-center">
-                                                {{--@if($book->S_SLTON>0)
-                                                <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                                --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
-                                                    @else
-                                                    <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                                @endif--}}
-                                            </div>
-                                            <br>
                                         </div>
                                     </div>
                                 @endif
@@ -216,30 +209,33 @@ for($j=0;$j<count($book_item);$j++){
                         </div>
                         <div class="row">
                             @for($sum=0;$sum<4;$sum++)
-                                <div class="col-sm-3">
-                                    <div class="single-item">
-                                        <div class="single-item-header">
-                                            <a href="{{url('/detail',$data_new[$sum]['id'])}}" style="" class="text-center">
-                                                <img src="images/{{$data_new[$sum]['image']}}" alt="" height="270px">
-                                            </a>
-                                        </div>
-                                        <div class="single-item-body text-center">
-                                            <a href="{{url('/detail',$data_new[$sum]['id'])}}" class="single-item-title" style="font-size: 16px">{{$data_new[$sum]['name']}}</a>
-                                            <p class="single-item-price" style="font-size: 15px">
-                                                @if($data_new[$sum]['price']<$data_new[$sum]['sale'])
-                                                    <span class="flash-del">{{number_format($data_new[$sum]['price'])}} đ</span>
-                                                    <span class="flash-sale">{{number_format($data_new[$sum]['sale'])}} đ</span>
-                                                @else
-                                                    <span>{{number_format($data_new[$sum]['sale'])}} đ</span>
-                                                @endif
-                                            </p>
-                                        </div>
-                                        <div class="single-item-caption">
-                                           {{-- <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
-                                            <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                            <div class="clearfix"></div>--}}
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                        <div class="single-item">
+                                            <div class="single-item-header text-center">
+                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" style="" class="">
+                                                    <img src="images/{{$data_new[$sum]['image']}}" alt="" height="250px">
+                                                </a>
+                                            </div>
+                                            <div class="single-item-body text-center">
+                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" class="single-item-title" style="font-size: 16px">{{$data_new[$sum]['name']}}</a>
+                                                <p class="single-item-price" style="font-size: 15px">
+                                                    @if($data_new[$sum]['price']<$data_new[$sum]['sale'])
+                                                        <span class="flash-del">{{number_format($data_new[$sum]['price'])}} đ</span>
+                                                        <span class="flash-sale">{{number_format($data_new[$sum]['sale'])}} đ</span>
+                                                    @else
+                                                        <span>{{number_format($data_new[$sum]['sale'])}} đ</span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <div class="single-item-caption">
+                                                {{-- <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                                 <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
+                                                 <div class="clearfix"></div>--}}
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                             @endfor
                         </div>
@@ -279,43 +275,46 @@ for($j=0;$j<count($book_item);$j++){
                                     $sales_view=$view->S_GIA; //Không có khuyến mãi
                                 }
                                 ?>
-                                <div class="col-sm-3">
-                                    <div class="single-item">
-                                        <div class="single-item-header">
-                                            @if(isset($image_view))
-                                                <a href="{{url('/detail',$view->S_MA)}}" style="" class="text-center">
-                                                    <img src="images/{{$image_view->HA_URL}}" alt="" height="270px">
-                                                </a>
-                                            @else
-                                                <a href="{{url('/detail',$view->S_MA)}}">
-                                                    <img src="images/sorry-image-not-available.jpg" alt="" height="270px">
-                                                </a>
-                                            @endif
-                                        </div>
-                                        <div class="single-item-body text-center">
-                                            <a href="{{url('/detail',$view->S_MA)}}" class="single-item-title" style="font-size: 16px">
-                                                {{$view->S_TEN}}</a>
-                                            <p class="single-item-price" style="font-size: 15px">
-                                                @if($sales_view < $view->S_GIA)
-                                                    <span class="flash-del">{{number_format($view->S_GIA)}} đ</span>
-                                                    <span class="flash-sale">{{number_format($sales_view)}} đ</span>
+                                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                    <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                        <div class="single-item">
+                                            <div class="single-item-header text-center">
+                                                @if(isset($image_view))
+                                                    <a href="{{url('/detail',$view->S_MA)}}" style="" class="">
+                                                        <img src="images/{{$image_view->HA_URL}}" alt="" height="250px">
+                                                    </a>
                                                 @else
-                                                    <span>{{number_format($sales_view)}} đ</span>
+                                                    <a href="{{url('/detail',$view->S_MA)}}">
+                                                        <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
+                                                    </a>
                                                 @endif
-                                            </p>
+                                            </div>
+                                            <div class="single-item-body text-center">
+                                                <a href="{{url('/detail',$view->S_MA)}}" class="single-item-title">
+                                                    {{$view->S_TEN}}</a>
+                                                <p class="single-item-price" style="font-size: 14px">
+                                                    @if($sales_view < $view->S_GIA)
+                                                        <span class="flash-del">{{number_format($view->S_GIA)}} đ</span>
+                                                        <span class="flash-sale">{{number_format($sales_view)}} đ</span>
+                                                    @else
+                                                        <span>{{number_format($sales_view)}} đ</span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            <br>
+                                            <div class="clearfix"></div>
+                                            <div class="single-item-caption text-center">
+                                                {{--@if($book->S_SLTON>0)
+                                                <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
+                                                --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
+                                                    @else
+                                                    <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
+                                                @endif--}}
+                                            </div>
+                                            <br>
                                         </div>
-                                        <br>
-                                        <div class="clearfix"></div>
-                                        <div class="single-item-caption text-center">
-                                            {{--@if($book->S_SLTON>0)
-                                            <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                            --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
-                                                @else
-                                                <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                            @endif--}}
-                                        </div>
-                                        <br>
                                     </div>
+
                                 </div>
                             @endforeach
                         </div>
@@ -351,41 +350,43 @@ for($j=0;$j<count($book_item);$j++){
                                 }
                                 ?>
                                 @if($invoice_temp->S_SLTON>0)
-                                    <div class="col-sm-3">
-                                        <div class="single-item">
-                                            <div class="single-item-header">
-                                                @if(isset($image_seller))
-                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" style="" class="text-center">
-                                                        <img src="images/{{$image_seller->HA_URL}}" alt="" height="270px">
-                                                    </a>
-                                                @else
-                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}">
-                                                        <img src="images/sorry-image-not-available.jpg" alt="" height="270px">
-                                                    </a>
-                                                @endif
-                                            </div>
-                                            <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$invoice_temp->S_TEN}}</a>
-                                                <p class="single-item-price" style="font-size: 15px">
-                                                    @if($sales_seller<$invoice_temp->S_GIA)
-                                                        <span class="flash-del">{{number_format($invoice_temp->S_GIA)}} đ</span>
-                                                        <span class="flash-sale">{{number_format($sales_seller)}} đ</span>
+                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                        <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                            <div class="single-item">
+                                                <div class="single-item-header text-center">
+                                                    @if(isset($image_seller))
+                                                        <a href="{{url('/detail',$invoice_temp->S_MA)}}" style="" class="">
+                                                            <img src="images/{{$image_seller->HA_URL}}" alt="" height="250px">
+                                                        </a>
                                                     @else
-                                                        <span>{{number_format($sales_seller)}} đ</span>
+                                                        <a href="{{url('/detail',$invoice_temp->S_MA)}}">
+                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
+                                                        </a>
                                                     @endif
-                                                </p>
+                                                </div>
+                                                <div class="single-item-body text-center">
+                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 15px">{{$invoice_temp->S_TEN}}</a>
+                                                    <p class="single-item-price" style="font-size: 14px">
+                                                        @if($sales_seller<$invoice_temp->S_GIA)
+                                                            <span class="flash-del">{{number_format($invoice_temp->S_GIA)}} đ</span>
+                                                            <span class="flash-sale">{{number_format($sales_seller)}} đ</span>
+                                                        @else
+                                                            <span>{{number_format($sales_seller)}} đ</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                <br>
+                                                <div class="clearfix"></div>
+                                                <div class="single-item-caption text-center">
+                                                    {{--@if($book->S_SLTON>0)
+                                                    <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
+                                                    --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
+                                                        @else
+                                                        <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
+                                                    @endif--}}
+                                                </div>
+                                                <br>
                                             </div>
-                                            <br>
-                                            <div class="clearfix"></div>
-                                            <div class="single-item-caption text-center">
-                                                {{--@if($book->S_SLTON>0)
-                                                <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                                --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
-                                                    @else
-                                                    <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                                @endif--}}
-                                            </div>
-                                            <br>
                                         </div>
                                     </div>
                                 @endif
@@ -402,5 +403,14 @@ for($j=0;$j<count($book_item);$j++){
     </div> <!-- #content -->
 
 </div> <!-- .container -->
+    <script>
+        window.onload = function () {
+            var x = window.location.href;
+            if (x=='http://localhost:8000/bookstore/public/index'){
+                document.getElementById('menuDrop').style.display='block';
+            }
+            console.log(window.location.href);
+        }
+    </script>
 @endsection
 
