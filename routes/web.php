@@ -21,6 +21,8 @@ Route::get('/', function () {
 //]);
 
 Route::get('/category/{id}','CategoryController@category');
+Route::get('/category/author/{id}','CategoryController@authorCategory');
+
 Route::group(['middleware' => 'filter'], function() {
     Route::get('/detail/{id}','DetailController@getDetail');
 });

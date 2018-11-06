@@ -179,7 +179,8 @@ for($j=0;$j<count($book_item);$j++){
                                                     @endif
                                                 </div>
                                                 <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}" class="single-item-title" style="font-size: 16px">{{$books[$i]->S_TEN}}</a>
+                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}" class="single-item-title" style="font-size: 16px">
+                                                        {{ str_limit($books[$i]->S_TEN, $limit = 25, $end = '...') }}</a>
                                                     <p class="single-item-price" style="font-size: 15px">
                                                         @if($sales[$i]<$books[$i]->S_GIA)
                                                             <span class="flash-del">{{number_format($books[$i]->S_GIA)}} đ</span>
@@ -189,7 +190,7 @@ for($j=0;$j<count($book_item);$j++){
                                                         @endif
                                                     </p>
                                                 </div>
-                                                <br>
+
 
                                             </div>
                                         </div>
@@ -218,7 +219,8 @@ for($j=0;$j<count($book_item);$j++){
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" class="single-item-title" style="font-size: 16px">{{$data_new[$sum]['name']}}</a>
+                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" class="single-item-title" style="font-size: 16px">
+                                                    {{ str_limit($data_new[$sum]['name'], $limit = 25, $end = '...') }}</a>
                                                 <p class="single-item-price" style="font-size: 15px">
                                                     @if($data_new[$sum]['price']<$data_new[$sum]['sale'])
                                                         <span class="flash-del">{{number_format($data_new[$sum]['price'])}} đ</span>
@@ -228,11 +230,11 @@ for($j=0;$j<count($book_item);$j++){
                                                     @endif
                                                 </p>
                                             </div>
-                                            <div class="single-item-caption">
-                                                {{-- <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
+                                            {{--<div class="single-item-caption">
+                                                 <a class="add-to-cart pull-left" href="shopping_cart.html"><i class="fa fa-shopping-cart"></i></a>
                                                  <a class="beta-btn primary" href="product.html">Details <i class="fa fa-chevron-right"></i></a>
-                                                 <div class="clearfix"></div>--}}
-                                            </div>
+                                                 <div class="clearfix"></div>
+                                            </div>--}}
                                         </div>
                                     </div>
 
@@ -291,7 +293,7 @@ for($j=0;$j<count($book_item);$j++){
                                             </div>
                                             <div class="single-item-body text-center">
                                                 <a href="{{url('/detail',$view->S_MA)}}" class="single-item-title">
-                                                    {{$view->S_TEN}}</a>
+                                                    {{ str_limit($view->S_TEN, $limit = 25, $end = '...') }}</a>
                                                 <p class="single-item-price" style="font-size: 14px">
                                                     @if($sales_view < $view->S_GIA)
                                                         <span class="flash-del">{{number_format($view->S_GIA)}} đ</span>
@@ -301,17 +303,17 @@ for($j=0;$j<count($book_item);$j++){
                                                     @endif
                                                 </p>
                                             </div>
-                                            <br>
+                                            {{--<br>
                                             <div class="clearfix"></div>
                                             <div class="single-item-caption text-center">
-                                                {{--@if($book->S_SLTON>0)
+                                                @if($book->S_SLTON>0)
                                                 <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                                --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
+                                                <a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>
                                                     @else
                                                     <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                                @endif--}}
+                                                @endif
                                             </div>
-                                            <br>
+                                            <br>--}}
                                         </div>
                                     </div>
 
@@ -365,7 +367,8 @@ for($j=0;$j<count($book_item);$j++){
                                                     @endif
                                                 </div>
                                                 <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 15px">{{$invoice_temp->S_TEN}}</a>
+                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 15px">
+                                                        {{ str_limit($invoice_temp->S_TEN, $limit = 25, $end = '...') }}</a>
                                                     <p class="single-item-price" style="font-size: 14px">
                                                         @if($sales_seller<$invoice_temp->S_GIA)
                                                             <span class="flash-del">{{number_format($invoice_temp->S_GIA)}} đ</span>
@@ -375,17 +378,17 @@ for($j=0;$j<count($book_item);$j++){
                                                         @endif
                                                     </p>
                                                 </div>
-                                                <br>
+
                                                 <div class="clearfix"></div>
-                                                <div class="single-item-caption text-center">
-                                                    {{--@if($book->S_SLTON>0)
+                                                {{--<div class="single-item-caption text-center">
+                                                    @if($book->S_SLTON>0)
                                                     <a class="btn btn-primary" href="" style="width: 180px"><span class="fa fa-shopping-cart"></span> Thêm vào giỏ hàng</a>
-                                                    --}}{{--<a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>--}}{{--
+                                                    <a class="beta-btn primary" href="">Details <i class="fa fa-chevron-right"></i></a>
                                                         @else
                                                         <a class="btn btn-success" href="" style="width: 180px"><span class=""></span> Đã hết hàng</a>
-                                                    @endif--}}
-                                                </div>
-                                                <br>
+                                                    @endif
+                                                </div>--}}
+
                                             </div>
                                         </div>
                                     </div>
