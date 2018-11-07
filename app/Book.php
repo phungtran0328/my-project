@@ -60,4 +60,42 @@ class Book extends Model
     public function translator(){
         return $this->belongsToMany('App\Author','dichsach', 'S_MA', 'TG_MA')->withPivot('DICHGIA');
     }
+
+    public function getBookPromotion($id){
+        $book = Book::where('S_MA', $id)->first();
+        $date = strtotime(date('Y-m-d'));
+        $image = $book->image()->first();
+        if (isset($image)){
+            $url = $image->HA_URL;
+        }else{
+            $url = 'sorry-image-not-available.jpg';
+        }
+        $promotion = $book->promotion()->first();
+        if (isset($promotion)){
+            $start = strtotime($promotion->KM_APDUNG);
+            $end = strtotime($promotion->KM_HANDUNG);
+            if (($start<=$date) and ($date<=$end)){
+                return $results = array(
+                    'id'=>$id,
+                    'name'=>$book->S_TEN,
+                    'price'=>$book->S_GIA,
+                    'image'=>$url,
+                    'sale'=>($book->S_GIA)*(1-$promotion->KM_GIAM));
+            }else{
+                return $results = array(
+                    'id'=>$id,
+                    'name'=>$book->S_TEN,
+                    'price'=>$book->S_GIA,
+                    'image'=>$url
+                );
+            }
+        }else{
+            return $results = array(
+                'id'=>$id,
+                'name'=>$book->S_TEN,
+                'price'=>$book->S_GIA,
+                'image'=>$url
+            );
+        }
+    }
 }

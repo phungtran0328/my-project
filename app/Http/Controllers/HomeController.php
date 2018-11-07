@@ -37,16 +37,30 @@ class HomeController extends Controller
 //        dd($cate_data);
 //        dd($invoices);
 //        $i=0;
-        foreach ($invoiceIns as $key=>$value){
+
+
+//        foreach ($invoiceIns as $key=>$value){
+//            $temp=InvoiceIn::where('PN_MA',$value->PN_MA)->first();
+//            $book_item[$key]=$temp->book()->get();
+//            //Mảng trong mảng
+////            $i+=count($book_item);
+////            echo $invoiceIn->PN_MA;
+//        }
+        $i =0;
+        $temp_results = array();
+        foreach ($invoiceIns as $value){
             $temp=InvoiceIn::where('PN_MA',$value->PN_MA)->first();
-            $book_item[$key]=$temp->book()->get();
-            //Mảng trong mảng
-//            $i+=count($book_item);
-//            echo $invoiceIn->PN_MA;
+            $book_item=$temp->book()->get();
+            foreach ($book_item as $item){
+                $temp_results[$i] = $item->S_MA;
+                $i++;
+            }
         }
-//        dd(count($book_item));
+        $results = array_unique($temp_results);
+//        dd(($results));
+//        dd(($book_item));
 //        dd($invoiceIns[1]->PN_MA);
-        return view('page.home', compact('categories', 'sliders','books','book_item','invoices'));
+        return view('page.home', compact('categories', 'sliders','books','results','invoices'));
     }
 
     public function searchName(Request $request){

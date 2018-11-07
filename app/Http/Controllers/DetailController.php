@@ -31,8 +31,13 @@ class DetailController extends Controller
         $cover_type = $book->cover_type()->first();
 //        dd($cover_type);
         $kind_of_book = $book->kind_of_book()->first();
+
+        $temp_book = new Book();
+        $temps = $temp_book->getBookPromotion($id);
+//        dd($temps['id']);
+
         $images = $book->image()->get();
-        $promotion=$book->promotion()->first();
+        /*$promotion=$book->promotion()->first();
         $date=strtotime(date('Y-m-d'));
         if (isset($promotion)){
             $start=strtotime($promotion->KM_APDUNG);
@@ -46,9 +51,9 @@ class DetailController extends Controller
             }
         }else{
             $saleoff=$book->S_GIA; //không có khuyến mãi
-        }
+        }*/
 
         return view('page.detail', compact('book','company','publisher','authors',
-            'cover_type','kind_of_book','images','translators','promotion','saleoff'));
+            'cover_type','kind_of_book','translators','temps', 'images'));
     }
 }

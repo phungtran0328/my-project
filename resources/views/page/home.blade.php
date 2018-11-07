@@ -6,74 +6,18 @@
  * Time: 10:07 AM
  */
 
-$images=array();
-$promotions=array();
-$sales=array();
-$date=strtotime(date('Y-m-d')); //Lấy thời gian hiện tại=>giây
-
-for($i=0;$i<count($books);$i++){
-    $temp = \App\Book::where('S_MA', $books[$i]->S_MA)->first();
-    $images[$i] = $temp->image()->first();
-    $promotions[$i] = $temp->promotion()->first();
-    if (isset($promotions[$i])){
-        $start=strtotime($promotions[$i]->KM_APDUNG);
-        $end=strtotime($promotions[$i]->KM_HANDUNG);
-        if (($start<=$date)and($end>=$date)){
-            $sales[$i]=($books[$i]->S_GIA)-($books[$i]->S_GIA)*($promotions[$i]->KM_GIAM);
-            //Có khuyến mãi và đang trong thời gian có hiệu lực
-        }else{
-            $sales[$i]=$books[$i]->S_GIA;
-            //Có khuyến mãi nhưng chưa tới thời gian
-        }
-    }else{
-        $sales[$i]=$books[$i]->S_GIA; //Không có khuyến mãi
-    }
-}
-
 $sum=0;
-for($j=0;$j<count($book_item);$j++){
-    //Số phần tử $book_item của $invoiceIns
-    for ($i=0;$i<count($book_item[$j]);$i++){
-        //Từng phần từ trong 1 phần tử $book_item
-        if ($sum<4){
-            $temp = \App\Book::where('S_MA', $book_item[$j][$i]->S_MA)->first();
-            $image_new=$temp->image()->first();
-            if (isset($image_new)){
-                $image_temp = $image_new->HA_URL;
-            }else{
-                $image_temp = 'sorry-image-not-available.jpg';
-            }
-
-            $promotion_new=$temp->promotion()->first();
-            if (isset($promotion_new)){
-                $start=strtotime($promotion_new->KM_APDUNG);
-                $end=strtotime($promotion_new->KM_HANDUNG);
-                if (($start<=$date)and($end>=$date)){
-                    $sales_new=($book_item[$j][$i]->S_GIA)-($book_item[$j][$i]->S_GIA)*($promotion_new->KM_GIAM);
-                    //Có khuyến mãi và đang trong thời gian có hiệu lực
-                }else{
-                    $sales_new=$book_item[$j][$i]->S_GIA;
-                    //Có khuyến mãi nhưng chưa tới thời gian
-                }
-            }else{
-                $sales_new=$book_item[$j][$i]->S_GIA; //Không có khuyến mãi
-            }
-            $data_new[$sum]= [
-                'id'=>$temp->S_MA,
-                'name'=>$temp->S_TEN,
-                'price'=>$temp->S_GIA,
-                'sale'=>$sales_new,
-                'image'=>$image_temp,
-            ];
-            $sum+=1;
-        }
-        else{
-            //Chỉ lấy 4 phần tử sách/tất cả $book_item
-            break;
-        }
+$temp_new_book_promotion = array();
+foreach ($results as $result){
+    if ($sum<4){
+        $temp_new_book = new \App\Book();
+        $temp_new_book_promotion[$sum] = $temp_new_book->getBookPromotion($result);
+        $sum++;
+    }else{
+        break;
     }
 }
-
+//dd($temp_new_book_promotion);
 ?>
 @extends('master')
 @section('content')
@@ -164,34 +108,30 @@ for($j=0;$j<count($book_item);$j++){
                         <div class="row">
                             @for($i=0;$i<count($books);$i++)
                                 @if($books[$i]->S_SLTON>0)
+                                    @php
+                                        $new_book = new \App\Book();
+                                        $book_promotion = $new_book->getBookPromotion($books[$i]->S_MA);
+                                    @endphp
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                             <div class="single-item">
                                                 <div class="single-item-header text-center" >
-                                                    @if(isset($images[$i]))
-                                                        <a href="{{url('/detail',$books[$i]->S_MA)}}" style="" class="">
-                                                            <img src="images/{{$images[$i]->HA_URL}}" alt="ádasd" height="250px">
-                                                        </a>
-                                                    @else
-                                                        <a href="{{url('/detail',$books[$i]->S_MA)}}">
-                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
-                                                        </a>
-                                                    @endif
+                                                    <a href="{{url('/detail',$book_promotion['id'])}}" style="" class="">
+                                                        <img src="images/{{$book_promotion['image']}}" alt="ádasd" height="250px">
+                                                    </a>
                                                 </div>
                                                 <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$books[$i]->S_MA)}}" class="single-item-title" style="font-size: 16px">
-                                                        {{ str_limit($books[$i]->S_TEN, $limit = 25, $end = '...') }}</a>
-                                                    <p class="single-item-price" style="font-size: 15px">
-                                                        @if($sales[$i]<$books[$i]->S_GIA)
-                                                            <span class="flash-del">{{number_format($books[$i]->S_GIA)}} đ</span>
-                                                            <span class="flash-sale">{{number_format($sales[$i])}} đ</span>
+                                                    <a href="{{url('/detail',$book_promotion['id'])}}" class="single-item-title" >
+                                                        {{ str_limit($book_promotion['name'], $limit = 25, $end = '...') }}</a>
+                                                    <p class="single-item-price" >
+                                                        @if(isset($book_promotion['sale']))
+                                                            <span class="flash-del">{{number_format($book_promotion['price'])}} đ</span>
+                                                            <span class="flash-sale">{{number_format($book_promotion['sale'])}} đ</span>
                                                         @else
-                                                            <span>{{number_format($sales[$i])}} đ</span>
+                                                            <span>{{number_format($book_promotion['price'])}} đ</span>
                                                         @endif
                                                     </p>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +139,7 @@ for($j=0;$j<count($book_item);$j++){
                             @endfor
                         </div>
                     </div> <!-- .beta-products-list -->
-
+                    <div class="clearfix"></div>
                     <div class="space50">&nbsp;</div>
 
                     <div class="beta-products-list">
@@ -214,19 +154,19 @@ for($j=0;$j<count($book_item);$j++){
                                     <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
-                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" style="" class="">
-                                                    <img src="images/{{$data_new[$sum]['image']}}" alt="" height="250px">
+                                                <a href="{{url('/detail',$temp_new_book_promotion[$sum]['id'])}}" style="" class="">
+                                                    <img src="images/{{$temp_new_book_promotion[$sum]['image']}}" alt="" height="250px">
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$data_new[$sum]['id'])}}" class="single-item-title" style="font-size: 16px">
-                                                    {{ str_limit($data_new[$sum]['name'], $limit = 25, $end = '...') }}</a>
-                                                <p class="single-item-price" style="font-size: 15px">
-                                                    @if($data_new[$sum]['price']<$data_new[$sum]['sale'])
-                                                        <span class="flash-del">{{number_format($data_new[$sum]['price'])}} đ</span>
-                                                        <span class="flash-sale">{{number_format($data_new[$sum]['sale'])}} đ</span>
+                                                <a href="{{url('/detail',$temp_new_book_promotion[$sum]['id'])}}" class="single-item-title" >
+                                                    {{ str_limit($temp_new_book_promotion[$sum]['name'], $limit = 25, $end = '...') }}</a>
+                                                <p class="single-item-price" >
+                                                    @if(isset($temp_new_book_promotion[$sum]['sale']))
+                                                        <span class="flash-del">{{number_format($temp_new_book_promotion[$sum]['price'])}} đ</span>
+                                                        <span class="flash-sale">{{number_format($temp_new_book_promotion[$sum]['sale'])}} đ</span>
                                                     @else
-                                                        <span>{{number_format($data_new[$sum]['sale'])}} đ</span>
+                                                        <span>{{number_format($temp_new_book_promotion[$sum]['price'])}} đ</span>
                                                     @endif
                                                 </p>
                                             </div>
@@ -260,46 +200,27 @@ for($j=0;$j<count($book_item);$j++){
                         <div class="row">
                             @foreach($views as $view)
                                 <?php
-                                $view_temp=\App\Book::where('S_MA',$view->S_MA)->first();
-                                $image_view=$view_temp->image()->first();
-                                $promotions_view = $view_temp->promotion()->first();
-                                if (isset($promotions_view)){
-                                    $start=strtotime($promotions_view->KM_APDUNG);
-                                    $end=strtotime($promotions_view->KM_HANDUNG);
-                                    if (($start<=$date)and($end>=$date)){
-                                        $sales_view=($view->S_GIA)-($view->S_GIA)*($promotions_view->KM_GIAM);
-                                        //Có khuyến mãi và đang trong thời gian có hiệu lực
-                                    }else{
-                                        $sales_view=$view->S_GIA;
-                                        //Có khuyến mãi nhưng chưa tới thời gian
-                                    }
-                                }else{
-                                    $sales_view=$view->S_GIA; //Không có khuyến mãi
-                                }
+                                $temp_view = new \App\Book();
+                                $temp_view_book = $temp_view->getBookPromotion($view->S_MA);
+
                                 ?>
                                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                     <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
-                                                @if(isset($image_view))
-                                                    <a href="{{url('/detail',$view->S_MA)}}" style="" class="">
-                                                        <img src="images/{{$image_view->HA_URL}}" alt="" height="250px">
-                                                    </a>
-                                                @else
-                                                    <a href="{{url('/detail',$view->S_MA)}}">
-                                                        <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
-                                                    </a>
-                                                @endif
+                                                <a href="{{url('/detail',$temp_view_book['id'])}}" style="" class="">
+                                                    <img src="images/{{$temp_view_book['image']}}" alt="" height="250px">
+                                                </a>
                                             </div>
                                             <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$view->S_MA)}}" class="single-item-title">
-                                                    {{ str_limit($view->S_TEN, $limit = 25, $end = '...') }}</a>
-                                                <p class="single-item-price" style="font-size: 14px">
-                                                    @if($sales_view < $view->S_GIA)
-                                                        <span class="flash-del">{{number_format($view->S_GIA)}} đ</span>
-                                                        <span class="flash-sale">{{number_format($sales_view)}} đ</span>
+                                                <a href="{{url('/detail',$temp_view_book['id'])}}" class="single-item-title">
+                                                    {{ str_limit($temp_view_book['name'], $limit = 25, $end = '...') }}</a>
+                                                <p class="single-item-price" >
+                                                    @if(isset($temp_view_book['sale']))
+                                                        <span class="flash-del">{{number_format($temp_view_book['price'])}} đ</span>
+                                                        <span class="flash-sale">{{number_format($temp_view_book['sale'])}} đ</span>
                                                     @else
-                                                        <span>{{number_format($sales_view)}} đ</span>
+                                                        <span>{{number_format($temp_view_book['price'])}} đ</span>
                                                     @endif
                                                 </p>
                                             </div>
@@ -334,47 +255,28 @@ for($j=0;$j<count($book_item);$j++){
                         <div class="row">
                             @foreach($invoices as $invoice)
                                 <?php
-                                $invoice_temp=\App\Book::where('S_MA',$invoice->S_MA)->first();
-                                $image_seller=$invoice_temp->image()->first();
-                                $promotions_seller = $invoice_temp->promotion()->first();
-                                if (isset($promotions_seller)){
-                                    $start=strtotime($promotions_seller->KM_APDUNG);
-                                    $end=strtotime($promotions_seller->KM_HANDUNG);
-                                    if (($start<=$date)and($end>=$date)){
-                                        $sales_seller=($invoice_temp->S_GIA)-($invoice_temp->S_GIA)*($promotions_seller->KM_GIAM);
-                                        //Có khuyến mãi và đang trong thời gian có hiệu lực
-                                    }else{
-                                        $sales_seller=$invoice_temp->S_GIA;
-                                        //Có khuyến mãi nhưng chưa tới thời gian
-                                    }
-                                }else{
-                                    $sales_seller=$invoice_temp->S_GIA; //Không có khuyến mãi
-                                }
+                                $in_stock = \App\Book::where('S_MA', $invoice->S_MA)->first();
+                                $temp_invoice = new \App\Book();
+                                $temp_invoice_book = $temp_invoice->getBookPromotion($invoice->S_MA);
                                 ?>
-                                @if($invoice_temp->S_SLTON>0)
+                                @if($in_stock->S_SLTON>0)
                                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                         <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                             <div class="single-item">
                                                 <div class="single-item-header text-center">
-                                                    @if(isset($image_seller))
-                                                        <a href="{{url('/detail',$invoice_temp->S_MA)}}" style="" class="">
-                                                            <img src="images/{{$image_seller->HA_URL}}" alt="" height="250px">
-                                                        </a>
-                                                    @else
-                                                        <a href="{{url('/detail',$invoice_temp->S_MA)}}">
-                                                            <img src="images/sorry-image-not-available.jpg" alt="" height="250px">
-                                                        </a>
-                                                    @endif
+                                                    <a href="{{url('/detail',$temp_invoice_book['id'])}}" style="" class="">
+                                                        <img src="images/{{$temp_invoice_book['image']}}" alt="" height="250px">
+                                                    </a>
                                                 </div>
                                                 <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$invoice_temp->S_MA)}}" class="single-item-title" style="font-size: 15px">
-                                                        {{ str_limit($invoice_temp->S_TEN, $limit = 25, $end = '...') }}</a>
-                                                    <p class="single-item-price" style="font-size: 14px">
-                                                        @if($sales_seller<$invoice_temp->S_GIA)
-                                                            <span class="flash-del">{{number_format($invoice_temp->S_GIA)}} đ</span>
-                                                            <span class="flash-sale">{{number_format($sales_seller)}} đ</span>
+                                                    <a href="{{url('/detail',$temp_invoice_book['id'])}}" class="single-item-title" >
+                                                        {{ str_limit($temp_invoice_book['name'], $limit = 25, $end = '...') }}</a>
+                                                    <p class="single-item-price" >
+                                                        @if(isset($temp_invoice_book['sale']))
+                                                            <span class="flash-del">{{number_format($temp_invoice_book['price'])}} đ</span>
+                                                            <span class="flash-sale">{{number_format($temp_invoice_book['sale'])}} đ</span>
                                                         @else
-                                                            <span>{{number_format($sales_seller)}} đ</span>
+                                                            <span>{{number_format($temp_invoice_book['price'])}} đ</span>
                                                         @endif
                                                     </p>
                                                 </div>

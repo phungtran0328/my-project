@@ -1872,17 +1872,19 @@ position:relative
 }
 
 .single-item-header {
-margin-bottom:20px
+margin-bottom:10px
 }
 
 .single-item-title {
-font-size:15px;
-margin-bottom:5px
+font-size:16px;
+color: black;
 }
 
 .single-item-price {
-font-size:20px;
-color:#000
+font-size:18px;
+color:#3a5c83;
+margin-bottom: 10px;
+margin-top: 10px;
 }
 
 .add-to-cart {
