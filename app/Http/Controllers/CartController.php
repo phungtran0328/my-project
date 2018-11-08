@@ -41,13 +41,18 @@ class CartController extends Controller
     }*/
 
     public function update(Request $request, $id){
+        $item = Cart::instance('default')->get($id);
+//        dd($item->id);
+        $book_id = Book::where('S_MA', $item->id)->first();
+        $max = $book_id->S_SLTON;
         $this->validate($request,[
-            'qty'=>'min:1|numeric'
+            'qty'=>'min:1|numeric|max:'.$max,
         ],[
             'qty.min'=>'Số lượng nhỏ nhất bằng 1 !',
+            'qty.max'=>'Số lượng cung ứng không đủ, vui lòng nhập lại số lượng!',
             'qty.numeric'=>'Số lượng là số nguyên !'
         ]);
-        $item = Cart::instance('default')->get($id);
+
         Cart::update($id, $item->qty=$request->qty);
         return redirect()->back();
     }

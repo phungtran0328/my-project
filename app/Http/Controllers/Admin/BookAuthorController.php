@@ -28,9 +28,7 @@ class BookAuthorController extends Controller
      */
     public function create()
     {
-        $authors=Author::all();
-        $books = Book::all();
-        return view('admin.book.create_book_author',compact('authors','books'));
+
     }
 
     /**
@@ -41,121 +39,7 @@ class BookAuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //Trường hợp cập nhật tác giả lưu vào bảng tg_vietsach
 
-        $this->validate($request,[
-            'book'=>'required',
-            'author'=>'required',
-        ],[
-            'book.required'=>'Vui lòng chọn sách !',
-            'author.required'=>'Vui lòng chọn tác giả !',
-        ]);
-
-        $data=array();
-        $books=$request->input('book'); //lưu giá trị chọn book
-//        dd($books);
-        $authors=$request->input('author'); //lưu mảng giá trị chọn author
-//        dd($authors);
-        for ($i=0;$i<count($authors);$i++){
-            $data[]=[
-                'TG_MA'=>$authors[$i],
-                'S_MA'=>$books
-            ];
-        }
-//        dd($data);
-        /*if (count($authors)<>count($books)){
-            if (count($authors)>count($books)){
-                for($i=0;$i<count($authors);$i++){
-                    $data[]=[
-                        'TG_MA'=>$authors[$i],
-                        'S_MA'=>$books[0]
-                    ];
-                }
-            }
-            else{
-                for($i=0;$i<count($books);$i++){
-                    $data[]=[
-                        'S_MA'=>$books[$i],
-                        'TG_MA'=>$authors[0]
-                    ];
-                }
-            }
-        }
-        else{
-            $data[]=[
-                'S_MA'=>$books[0],
-                'TG_MA'=>$authors[0]
-            ];
-        }*/
-//        dd($data);
-//        ['S_MA'=>$books,'TG_MA'=>$authors]
-
-        if (WriteBook::insert($data)){
-            return redirect()->back()->with('messBookAuthor','Cập nhật tác giả cho sách thành công !');
-        }
-        else {
-            return redirect()->back()->with('messErrorAuthor','Cập nhật không thành công !');
-        }
-    }
-
-    public function storeTrans(Request $request){
-
-        //Trường hợp lưu vào bảng dichsach
-
-        $this->validate($request,[
-            'book'=>'required',
-            'author'=>'required',
-            'translator'=>'required'
-        ],[
-            'book.required'=>'Vui lòng chọn sách !',
-            'author.required'=>'Vui lòng chọn tác giả !',
-            'translator.required'=>'Vui lòng nhập tên người dịch !'
-        ]);
-
-        $books=$request->input('book'); //lấy giá trị book lưu vào mảng
-        $authors=$request->input('author'); //lấy giá trị author lưu vào mảng
-        $data=array();
-        for($i=0;$i<count($authors);$i++){
-            $data[]=[
-                'TG_MA'=>$authors[$i],
-                'S_MA'=>$books,
-                'DICHGIA'=>$request->input('translator')
-            ];
-        }
-
-        /*if (count($authors)<>count($books)){
-            if (count($authors)>count($books)){
-                for($i=0;$i<count($authors);$i++){
-                $data[]=[
-                    'TG_MA'=>$authors[$i],
-                    'S_MA'=>$books[0],
-                    'DICHGIA'=>$request->input('translator')
-                    ];
-                }
-            }
-            else {
-                for($i=0;$i<count($books);$i++){
-                $data[]=[
-                    'S_MA'=>$books[$i],
-                    'TG_MA'=>$authors[0],
-                    'DICHGIA'=>$request->input('translator')
-                    ];
-                }
-            }
-        }
-        else{
-            $data[]=[
-                'S_MA'=>$books[0],
-                'TG_MA'=>$authors[0],
-                'DICHGIA'=>$request->input('translator')
-            ];
-        }*/
-        if (Translator::insert($data)){
-            return redirect()->back()->with('messBookTranslator','Cập nhật tác giả và người dịch cho sách thành công !');
-        }
-        else {
-            return redirect()->back()->with('messErrorTranslator','Cập nhật không thành công !');
-        }
     }
 
     /**
@@ -166,8 +50,7 @@ class BookAuthorController extends Controller
      */
     public function show($id)
     {
-        $book=Book::where('S_MA',$id)->first();
-        return view('admin.book.update_book_author', compact('book'));
+        //
     }
 
     /**
@@ -220,7 +103,7 @@ class BookAuthorController extends Controller
 //                dd($book_author);
             WriteBook::insert($book_author);
         }
-        return redirect('admin/book')->with('messUpdateAuthor','Cập nhật tác giả thành công !');
+        return redirect()->back()->with('messUpdateAuthor','Cập nhật tác giả thành công !');
     }
 
     public function updateTrans(Request $request, $id)
@@ -256,7 +139,7 @@ class BookAuthorController extends Controller
 //                dd($book_author);
             Translator::insert($book_author);
         }
-        return redirect('admin/book')->with('messUpdateTranslator','Cập nhật tác giả, dịch giả thành công !');
+        return redirect()->back()->with('messUpdateTranslator','Cập nhật tác giả, dịch giả thành công !');
     }
 
     /**

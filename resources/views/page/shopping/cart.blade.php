@@ -34,7 +34,7 @@
                                 <th style="width: 10%">Hình ảnh</th>
                                 <th >Tên sách</th>
                                 <th >Số lượng</th>
-                                <th>Giá</th>
+                                <th>Giá gốc</th>
                                 <th>Giá đã giảm</th>
                                 <th>Thành tiền</th>
                                 <th>Xóa</th>
@@ -76,12 +76,13 @@
                                                 <button class="btn btn-default-sm">Cập nhật</button>
                                             </span>
                                         </form>
+                                        <p>{{$errors->has('qty') ? $errors->first('qty') : ''}}</p>
                                     </td>
                                     <td>
-                                        {{ number_format($item->model->S_GIA) }} đ
+                                        <p>{{ number_format($item->model->S_GIA) }} đ</p>
                                     </td>
                                     <td>
-                                        {{number_format($item->price)}} đ <br><br>
+                                        <p>{{number_format($item->price)}} đ </p><br>
                                         @if($percent<>0)
                                             <p style="background: orange; width: 50px; color: white">-{{$percent}}%</p>
                                         @endif
@@ -105,7 +106,6 @@
                                 <td style="text-align: right" colspan="2">
                                     <form action="{{url('/cart/empty')}}" method="post">
                                         {!! csrf_field() !!}
-                                        {{--<input type="hidden" name="_method" value="DELETE">--}}
                                         <input type="submit" class="btn btn-danger" value="Xóa giỏ hàng">
                                     </form>
                                 </td>
@@ -148,18 +148,3 @@
         <hr>
     </div> <!-- end container -->
 @endsection
-<script>
-    /*function updateQty() {
-        var id = $("#qty-num").attr('data-id');
-        var qty= $("#qty-num").val();
-//        var decrement = parseInt($(inputQtyNum).val()) - 1;
-
-        $.ajax({
-            type: "post",
-            url: '' + '/' + id,
-            data:{
-                'qty': qty
-            }
-        })
-    }*/
-</script>

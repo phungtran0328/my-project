@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Author;
 use App\Book;
 use App\CoverType;
 use App\Image;
+use App\InvoiceDetails;
+use App\InvoiceInDetails;
 use App\KindOfBook;
+use App\OrderDetails;
 use App\Promotion;
 use App\Publisher;
 use App\Translator;
@@ -46,10 +50,11 @@ class BookController extends Controller
         $promotions = Promotion::all();
         $coverTypes = CoverType::all();
         $kindOfBooks = KindOfBook::all();
+        $authors = Author::all();
 //        $publisher_name=$publishers->pluck('NXB_TEN')->all();
 //        $publisher_id=$publishers->pluck('NXB_MA')->all();
         //dd($publisher_id);
-        return view('admin.book.create_book', compact('publishers','promotions','coverTypes','kindOfBooks'));
+        return view('admin.book.create_book', compact('publishers','promotions','coverTypes','kindOfBooks','authors'));
     }
 
     /**
@@ -66,6 +71,8 @@ class BookController extends Controller
             'publisher'=>'required',
             'coverType'=>'required',
             'kindOfBook'=>'required',
+            'author'=>'required',
+
         ],
             [
                 'name.required'=>'Vui lòng nhập tên sách !',
@@ -73,6 +80,7 @@ class BookController extends Controller
                 'publisher.required'=>'Vui lòng chọn nhà xuất bản !',
                 'coverType.required'=>'Vui lòng chọn loại bìa !',
                 'kindOfBook.required'=>'Vui lòng chọn loại sách !',
+                'author.required'=>'Vui lòng chọn tác giả !',
             ]);
 
         $book = new Book();
@@ -90,6 +98,63 @@ class BookController extends Controller
         $book->S_GIOITHIEU=$request->description;
         $book->S_GIA=0;
         $book->save();
+
+        $data = array();
+        $authors = $request->input('author'); //lưu mảng giá trị chọn author
+        $translator = $request->input('translator');
+        if (!is_null($translator)){
+            for ($i=0;$i<count($authors);$i++){
+                $data[] = [
+                    'S_MA'=>$book->S_MA,
+                    'TG_MA'=>$authors[$i],
+                    'DICHGIA'=>$translator
+                ];
+            }
+            Translator::insert($data);
+        }else{
+            for ($i=0;$i<count($authors);$i++){
+                $data[]=[
+                    'S_MA'=>$book->S_MA,
+                    'TG_MA'=>$authors[$i]
+                ];
+            }
+            WriteBook::insert($data);
+        }
+
+        $images = array();
+//        dd($files);
+        if ($files=$request->file('images')){
+            foreach ($files as $file){
+                // get name file upload
+                $name=$file->getClientOriginalName();
+//                dd($name);
+                //save image to public_path
+                $destinationPath = public_path('images');
+//                dd($destinationPath);
+                $file->move($destinationPath,$name);
+//                dd($file);
+                $images[]=$name;
+            }
+        }
+        //
+        $book_image = array();
+        if (!empty($images)){
+            for ($i=0;$i<count($images);$i++){
+                // lưu tạm vào mảng book_image
+                $book_image[]=[
+                    'S_MA'=>$book->S_MA,
+                    'HA_URL'=>$images[$i],
+                ];
+            }
+        }
+        for ($i=0;$i<count($book_image);$i++){
+            //lưu từng phần tử của book_image vào database
+            $image_add=new Image();
+            $image_add->S_MA=$book_image[$i]['S_MA'];
+            $image_add->HA_URL=$book_image[$i]['HA_URL'];
+            $image_add->save();
+        }
+
         return redirect('/admin/book')->with('messAddBook','Thêm sách thành công !');
     }
 
@@ -101,20 +166,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        /*$book=Book::where('S_MA',$id)->first();
-        $publisher = $book->publisher()->first();
-        $authors = $book->author()->get();
-        $translators = $book->translator()->get();
-        $promotion = $book->promotion()->first();
-        $kind_of_book = $book->kind_of_book()->first();
-        $cover_type = $book->cover_type()->first();
-        $images = $book->image()->get();
-        return view('admin.book.book_detail',compact('book'));*/
-    }
 
-    public function detail($id){
-        $book=Book::where('S_MA',$id)->first();
-        return view('admin.book.book_detail',compact('book'));
     }
 
     /**
@@ -196,6 +248,9 @@ class BookController extends Controller
         $authors=$books->author()->get();
         $trans=$books->translator()->get();
         $image=$books->image()->get();
+        $order = $books->order()->get();
+        $invoice_in = $books->invoice_in()->get();
+        $invoice = $books->invoice()->get();
         if (isset($authors)){
             WriteBook::where('S_MA',$id)->delete();
         }
@@ -205,8 +260,17 @@ class BookController extends Controller
         if (isset($image)){
             Image::where('S_MA',$id)->delete();
         }
+        if (isset($order)){
+            OrderDetails::where('S_MA',$id)->delete();
+        }
+        if (isset($invoice_in)){
+            InvoiceInDetails::where('S_MA',$id)->delete();
+        }
+        if (isset($invoice)){
+            InvoiceDetails::where('S_MA',$id)->delete();
+        }
         $books->delete();
-        return redirect()->back()->with('messDelete','Xóa sách thành công !');
+        return redirect()->back()->with('messDelete','Đã xóa sách với ID: '.$id.' !');
     }
 
 }

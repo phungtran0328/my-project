@@ -113,7 +113,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     //book show, update
     Route::resource('book','Admin\BookController')->only('index');
-    Route::get('book/detail/{id}','Admin\BookController@detail');
     Route::get('book/create','Admin\BookController@create')->middleware('can:book.create');
     Route::post('book','Admin\BookController@store')->middleware('can:book.create');
     Route::get('book/edit/{id}','Admin\BookController@edit')->middleware('can:book.update');
@@ -122,12 +121,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //book image
-    Route::resource('book/image','Admin\ImageController')->only('create','store','show','update');
+    Route::resource('book/image','Admin\ImageController')->only('update');
 
     //book author and translator
-    Route::resource('book/author','Admin\BookAuthorController')->only('create','store','show','update');
-
-    Route::post('book/author/translator','Admin\BookAuthorController@storeTrans');
+    Route::resource('book/author','Admin\BookAuthorController')->only('update');
     Route::post('book/author/translator/{id}','Admin\BookAuthorController@updateTrans');
 
     //release company

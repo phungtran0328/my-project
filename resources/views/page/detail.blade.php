@@ -106,7 +106,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-md-8">
-                                    <form class="form-inline " action="{{url('/cart')}}" method="post">
+                                    <form action="{{url('/cart')}}" method="post" onsubmit="return qtyValidate()">
                                         <p style="margin-bottom: 10px">Số lượng:</p>
                                         @if($book->S_SLTON>0)
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -117,9 +117,19 @@
                                             @else
                                                 <input value="{{$temps['price']}}" type="hidden" name="price">
                                             @endif
-                                            <input type="number" min="1" class="form-control" style="width: 70px" value="1" name="qty">
-                                            <button class="btn btn-primary" style="margin-left: 50px">
-                                                <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <input class="btn btn-default btn-group" style="width: 40px; margin-right: -4px; border-radius: 0" onclick="qtyDecrement(this)"
+                                                       value=" - " type="button">
+                                                <input type="text" class="btn-group" style="width: 50px" value="1" id="qty" name="qty">
+                                                <input class="btn btn-default btn-group" style="width: 40px;margin-left: -5px; border-radius: 0 " onclick="qtyIncrement(this)"
+                                                       value=" + " type="button">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <button class="btn btn-primary" type="submit">
+                                                    <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
+                                            </div>
+                                        </div>
                                         @else
                                             <button class="btn btn-default btn-group" style="width: 40px" disabled>
                                                 <span> - </span>
@@ -132,8 +142,6 @@
                                                 <span class="" style="font-size: 20px"></span> Đã hết hàng</button>
                                         @endif
                                     </form>
-                                </div>
-                                <div class="col-md-4">
                                 </div>
                             </div>
 
@@ -327,5 +335,47 @@
         var src = img.src;
         var html = "<img src='"+src+"' class='img-rounded zoom' width='350px' height='350px'>";
         document.getElementById('myImg').innerHTML = html;
+    }
+
+    var y = '<?php echo $book->S_SLTON; ?>';
+    parseInt(y);
+//    console.log(y);
+
+    function qtyValidate() {
+        var x = document.getElementById('qty');
+//        console.log(x.value);
+        if (parseInt(x.value,10)<=0){
+            alert('Số lượng mua không nhỏ hơn hoặc bằng 0 !');
+            document.getElementById('qty').value = 1;
+            return false;
+        }
+        if (parseInt(x.value,10)>y){
+            alert('Không đủ số lượng cung ứng !');
+            document.getElementById('qty').value = 1;
+            return false;
+        }
+    }
+
+    function qtyIncrement() {
+        var x = parseInt(document.getElementById('qty').value, 10);
+        x = isNaN(x) ? 0 : x;
+        x++;
+        if (x>y){
+            alert('Không đủ số lượng cung ứng !');
+            x--;
+        }
+//        console.log(x);
+        document.getElementById('qty').value = x;
+    }
+    function qtyDecrement() {
+        var x = parseInt(document.getElementById('qty').value, 10);
+        x = isNaN(x) ? 0 : x;
+        x--;
+        if (x<=0){
+            alert('Số lượng mua không nhỏ hơn hoặc bằng 0 !');
+            x++;
+        }
+//        console.log(x);
+        document.getElementById('qty').value = x;
     }
 </script>
