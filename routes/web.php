@@ -35,6 +35,14 @@ Route::get('/top-san-pham-ban-chay-nhat',[
     'as'=>'sell',
     'uses'=>'SellController@getTopSell']
 );
+Route::get('/top-sach-van-hoc-ban-chay-nhat',[
+    'as'=>'sell/kindOfBook',
+    'uses'=>'SellController@getTopSellKindOfBook'
+]);
+Route::get('/top-sach-kinh-te-ban-chay-nhat',[
+    'as'=>'sell/kindOfBookEconomic',
+    'uses'=>'SellController@getTopSellEconomic'
+]);
 // (/ =>url , as => route)
 
 //shopping cart

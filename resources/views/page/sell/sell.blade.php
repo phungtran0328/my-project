@@ -9,10 +9,16 @@
 @extends('master')
 @section('content')
     <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="{{url('/index')}}">Trang chủ</a></li>
+            <li class="active">Sách bán chạy</li>
+        </ul>
+    </div>
+    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive ">
-                    <table class="table table-bordered table-hover">
+                    <table class="table table-hover">
                         <tbody>
                         @php $i = 1; @endphp
 
@@ -23,11 +29,23 @@
                                     $book = $temp->getBookPromotion($item['id']);
                                 @endphp
                             <tr>
-                                <td>{{$i}}</td>
-                                <td><img src="images/{{$book['image']}}" width="50px" height="50px"></td>
-                                <td>
-                                    {{$book['name']}} <br><br>
-                                    Giá bìa: {{$book['price']}}
+                                <td style="font-size: large; width: 10%" class="text-center"> #{{$i}}</td>
+                                <td style="width: 30%" class="text-center">
+                                    <a href="{{url('/detail',$book['id'])}}">
+                                        <img src="images/{{$book['image']}}" width="140px" height="150px">
+                                    </a>
+                                </td>
+                                <td class="">
+                                    <a href="{{url('/detail',$book['id'])}}" style="font-size: medium; color: #0a263c">{{$book['name']}}</a> <br><br>
+                                    @if(isset($book['sale']))
+                                        <strong>Giá: </strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px;" class="flash-del">
+                                            {{number_format($book['price'])}} đ</strong><br><br>
+                                        <strong>Giảm còn: </strong><strong class="flash-sale" style="margin-left: 20px">
+                                            {{number_format($book['sale'])}} đ</strong>
+                                        @else
+                                        <strong>Giá :</strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px">
+                                            {{number_format($book['price'])}} đ</strong><br>
+                                    @endif
                                 </td>
                                 <td></td>
                             </tr>

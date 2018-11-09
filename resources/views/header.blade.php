@@ -8,21 +8,22 @@
 ?>
 <div id="header">
     <div class="myNav">
-        <nav class="navbar-default">
+        <nav class="navbar-default" style="margin-bottom: 15px">
             <div class=" container">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="navbar-header">
                             <a class="navbar-brand" style="" href="{{url('/index')}}">Bookstore</a>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                         {{--<form class="col-md-4 navbar-form navbar-left" role="search" method="get" id="searchform" action="" style="width: 98%">
                             <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 100%"/>
                             <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
                         </form>--}}
-                        <form class="navbar-form navbar-left typeahead" role="search" method="get" action="{{url('/search_book')}}">
-                            <input type="text" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 150%">
+                        <form class="navbar-form navbar-left typeahead"  method="get" action="{{url('/search_book')}}">
+                            <input type="search" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 160%">
+                            {{--<button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>--}}
                             <span class="input-group-btn" style="display: none">
                                 <button class="btn btn-default-sm" type="submit">
                                     <i class="fa fa-search"></i>
@@ -75,13 +76,13 @@
                 </div>
                 <div class="col-md-3">
                     <div class="dropdown" style="">
-                        <a href="#" id="myDrop" class="dropdown-toggle btn btn-default"
+                        <a href="#" id="myDrop" class="dropdown-toggle list-group-item"
                            style="font-size: medium; text-align: center; background-color: gray; color: white; "
-                           data-toggle="dropdown">Top sản phẩm bán chạy</a>
+                           data-toggle="dropdown">Top sách nổi bật <span class="caret"></span></a>
                         <ul class="dropdown-menu" id="menuDrop" style=" width: 100%" role="menu" aria-labelledby="drop3">
-                            <li><a tabindex="-1" href="{{route('sell')}}" class="list-group-item">Top 10 sách bán chạy nhất</a></li>
-                            <li><a tabindex="-1" href="" class="list-group-item">Top 10 sách văn học bán chạy nhất</a></li>
-                            <li><a tabindex="-1" href="" class="list-group-item">Top 10 sách kinh tế bán chạy nhất</a></li>
+                            <li><a tabindex="-1" href="{{route('sell')}}" class="">Top 10 sách bán chạy nhất</a></li>
+                            <li><a tabindex="-1" href="{{route('sell/kindOfBook')}}" class="">Top 10 sách văn học bán chạy</a></li>
+                            <li><a tabindex="-1" href="{{route('sell/kindOfBookEconomic')}}" class="">Top 10 sách kinh tế bán chạy</a></li>
                         </ul>
                     </div>
                 </div>

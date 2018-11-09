@@ -75,7 +75,7 @@
                         '<div class="list-group"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
                     ],
                     suggestion: function (data) {
-                        return '<a href="detail/' + data.S_MA + '" class="list-group-item">' + data.S_TEN + '</a>'
+                        return '<a href="detail/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
                     }
                 }
             });

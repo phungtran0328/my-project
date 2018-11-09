@@ -99,4 +99,22 @@ class Book extends Model
             );
         }
     }
+
+    public function getKindOfBook(array $ids_book, $id){
+//        $ids_book = array('id'=>..., 'name'=>....)
+        $i = 0 ;
+        $data = array();
+        foreach ($ids_book as $item){
+            $book = Book::where('S_MA', $item['id'])->first();
+            if ($book->LS_MA == $id){
+                $data[$i] = [
+                    'id'=>$item['id'],
+                    'name'=>$book->S_TEN,
+                    'price'=>$book->S_GIA
+                ];
+                $i++;
+            }
+        }
+        return $data;
+    }
 }
