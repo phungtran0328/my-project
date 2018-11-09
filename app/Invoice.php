@@ -8,6 +8,7 @@ class Invoice extends Model
 {
     protected $table = 'hoadon';
     protected $primaryKey = 'HD_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     public function customer(){
         return $this->belongsTo('App\Customer','KH_MA');

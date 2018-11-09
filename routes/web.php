@@ -30,6 +30,13 @@ Route::group(['middleware' => 'filter'], function() {
 Route::get('/search','HomeController@searchName');
 Route::get('/search_book','HomeController@search');
 
+//top sell
+Route::get('/top-san-pham-ban-chay-nhat',[
+    'as'=>'sell',
+    'uses'=>'SellController@getTopSell']
+);
+// (/ =>url , as => route)
+
 //shopping cart
 Route::get('/cart','CartController@index');
 Route::post('/cart','CartController@store');

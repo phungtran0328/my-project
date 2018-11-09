@@ -8,6 +8,7 @@ class Book extends Model
 {
     protected $table = 'sach'; //Khai báo table nếu không theo quy định đặt tên, nếu Model là Book thì table là books laravel ngầm hiểu
     protected $primaryKey = 'S_MA'; //Mặc định khóa chính sẽ là id, nếu không dùng id thì khai báo
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     //Khi định nghĩa quan hệ không nhất thiết có khóa chính vì nó đã được khai báo ở $primaryKey, nhưng cần có khóa ngoại
     //Khi gọi tới relation nhất định không được all() mà phải có điều kiện

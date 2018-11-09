@@ -8,6 +8,7 @@ class Author extends Model
 {
     protected $table = 'tacgia';
     protected $primaryKey = 'TG_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     public function book(){
         return $this->belongsToMany('App\Book','tg_vietsach','TG_MA','S_MA');

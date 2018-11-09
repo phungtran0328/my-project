@@ -8,6 +8,7 @@ class Order extends Model
 {
     protected $table = 'donhang';
     protected $primaryKey = 'DH_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     public function customer(){
         return $this->belongsTo('App\Customer','KH_MA');

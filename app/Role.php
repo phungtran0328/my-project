@@ -8,7 +8,7 @@ class Role extends Model
 {
     protected $table = 'quyen';
     protected $primaryKey = 'Q_MA';
-
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
     protected $fillable = ['Q_TEN','Q_QUYEN'];
 
     protected $casts = [

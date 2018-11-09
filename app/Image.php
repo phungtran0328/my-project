@@ -11,6 +11,8 @@ class Image extends Model
     protected $fillable = [
         'HA_URL'
     ];
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
+
     public function book(){
         return $this->belongsTo('App\Book','S_MA');
     }

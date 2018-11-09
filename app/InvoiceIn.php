@@ -8,6 +8,7 @@ class InvoiceIn extends Model
 {
     protected $table = 'phieunhap';
     protected $primaryKey = 'PN_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     public function user(){
         return $this->belongsTo('App\User','NV_MA');

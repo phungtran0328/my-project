@@ -11,6 +11,8 @@ class User extends Authenticatable
 
     protected $table = 'nhanvien';
     protected $primaryKey = 'NV_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
+
     /**
      * The attributes that are mass assignable.
      *

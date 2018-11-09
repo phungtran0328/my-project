@@ -73,8 +73,17 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-8">
-                    <a class="list-group-item" style="border: none">Daily Deals</a>
+                <div class="col-md-3">
+                    <div class="dropdown" style="">
+                        <a href="#" id="myDrop" class="dropdown-toggle btn btn-default"
+                           style="font-size: medium; text-align: center; background-color: gray; color: white; "
+                           data-toggle="dropdown">Top sản phẩm bán chạy</a>
+                        <ul class="dropdown-menu" id="menuDrop" style=" width: 100%" role="menu" aria-labelledby="drop3">
+                            <li><a tabindex="-1" href="{{route('sell')}}" class="list-group-item">Top 10 sách bán chạy nhất</a></li>
+                            <li><a tabindex="-1" href="" class="list-group-item">Top 10 sách văn học bán chạy nhất</a></li>
+                            <li><a tabindex="-1" href="" class="list-group-item">Top 10 sách kinh tế bán chạy nhất</a></li>
+                        </ul>
+                    </div>
                 </div>
 
             </div>

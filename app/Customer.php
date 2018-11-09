@@ -18,6 +18,7 @@ class Customer extends Authenticatable
     protected $table = 'khachhang';
     protected $primaryKey = 'KH_MA';
     protected $guarded = 'customer';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     /**
      * The attributes that are mass assignable.

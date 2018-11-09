@@ -8,6 +8,7 @@ class KindOfBook extends Model
 {
     protected $table = 'loaisach';
     protected $primaryKey = 'LS_MA';
+    protected $dates = ['CREATED_AT','UPDATED_AT'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
