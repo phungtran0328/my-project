@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Invoice;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class SellController extends Controller
 {
