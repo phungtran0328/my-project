@@ -36,6 +36,21 @@ class Helper
         return $groups;
     }
 
+    function getUniqueArray($data) {
+        $groups = array();
+        foreach ($data as $item) {
+            $key = $item['name'];
+            if (!array_key_exists($key, $groups)) {
+                //Loại bỏ giá trị trùng
+                $groups[$key] = $item['total'];
+            } else {
+                //Cộng dồn total khi trùng name (name duyệt từ id nên không lo lỗi ký tự)
+                $groups[$key]= $groups[$key] + $item['total'];
+            }
+        }
+        return $groups;
+    }
+
     public function getBookDate(Collection $collection){
         $i = 0;
         $data = array();
@@ -53,4 +68,5 @@ class Helper
         }
         return $data;
     }
+
 }

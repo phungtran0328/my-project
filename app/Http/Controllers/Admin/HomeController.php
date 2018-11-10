@@ -10,7 +10,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Book;
 use App\Charts\RevenueChart;
+use App\Helper;
 use App\Http\Controllers\Controller;
+use App\Invoice;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -33,43 +36,49 @@ class HomeController extends Controller
             $cate_total[$i]= ['name'=>$cate->LS_TEN,'total'=>$invoice->total];
             $i++;
         }
-//        dd($cate_total);
-        //total theo loại sách
-        function getSum($data) {
-            $groups = array();
-            foreach ($data as $item) {
-                $key = $item['name'];
-                if (!array_key_exists($key, $groups)) {
-                    //Loại bỏ giá trị trùng
-                    $groups[$key] = $item['total'];
-                } else {
-                    //Cộng dồn total khi trùng name (name duyệt từ id nên không lo lỗi ký tự)
-                    $groups[$key]= $groups[$key] + $item['total'];
-                }
+        $temp = new Helper();
+
+
+        $result_month = array();
+        $a = 0;
+        $data = array();
+        for ($j=1;$j<13;$j++){
+            $months = Invoice::whereMonth('CREATED_AT','=',$j)
+                ->whereYear('CREATED_AT', '=', date('Y'))
+                ->get();
+            $result_month[$j] = $temp->getBookDate($months);
+            for ($c=0; $c<count($result_month[$j]);$c++){
+                $data[$a] = ['name'=>$j, 'total'=>$result_month[$j][$c]['totalPrice']];
+                $a++;
             }
-            return $groups;
         }
-        $result = getSum($cate_total);
+        $total_month = $temp->getUniqueArray($data);
+        $labels_month = array_keys($total_month);
+        $values_month = array_values($total_month);
+//        dd($labels_month, $values_month);
+        $chart_month = new RevenueChart();
+        $chart_month->labels($labels_month);
+        $chart_month->dataset('Doanh thu năm','bar',$values_month);
+
+        $year = Invoice::whereYear('CREATED_AT', '=', date('Y'))
+            ->get();
+//        dd($months);
+
+
+        $result = $temp->getUniqueArray($cate_total);
 //        dd(array_keys($result));
         $labels = array_keys($result); //Tên cột trong biểu đồ
         $values = array_values($result); //Giá trị của biểu đồ (số hoặc tập số)
 
         $chart = new RevenueChart();
         $chart->labels($labels);
-        $chart->dataset('RevenueCategory','bar',$values);
-        $chart->dataset('abc','line',[100000,200000,300000]);
+        $chart->title('Biểu đồ doanh thu theo từng loại sách ',20, '#333333');
+        $chart->barWidth(0.5);
+        $chart->loaderColor('#333333');
+        $chart->dataset('RevenueCategory','bar',$values );
+//        $chart->dataset('abc','line',[100000,200000,300000]);
 
-        /*$inputs = DB::table('pn_chitiet')->select('S_MA',DB::raw('sum(PNCT_SOLUONG) as qty'),DB::raw('sum(PNCT_GIA*PNCT_SOLUONG) as total'))
-            ->groupBy('S_MA')->orderBy('S_MA','desc')->get();
-//        dd($input);
-        $qty = array();
-        $j = 0;
-        foreach ($inputs as $input){
-            $book_input = Book::where('S_MA',$input->S_MA)->first();
-            $qty[$j] = $input->qty-($book_input->S_SLTON);
-            $j++;
-        }*/
-//        dd($qty);
-        return view('admin.home', compact('chart'));
+
+        return view('admin.home', compact('chart','chart_month'));
     }
 }
