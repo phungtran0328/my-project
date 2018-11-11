@@ -42,10 +42,9 @@ return [
     */
 
     'disks' => [
-
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root' => storage_path('app\Laravel'),
         ],
 
         'public' => [
@@ -64,6 +63,12 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        /* App\bookBackup
+         * 'dropbox' => [
+            'driver' => 'dropbox',
+            'accessToken' => env('AGuLn4Cv1YAAAAAAAAAAFebc5QRUbn07a622b2zbHajfIYMmAO-byubSg_8QCezD'), // access token
+            'appSecret' => env('y4kvyjfn163aiaj'),  // secrest key
+        ]*/
     ],
 
 ];

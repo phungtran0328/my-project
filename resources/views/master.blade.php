@@ -63,7 +63,7 @@
             $(".typeahead .search-input").typeahead({
                 hint: true,
                 highlight: true,
-                minLength: 3
+                minLength: 1
             }, {
                 source: engine.ttAdapter(),
                 name: 'books-name',

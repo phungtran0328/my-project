@@ -178,13 +178,23 @@ Route::group(['prefix' => 'admin'], function () {
 
     //order
     Route::get('order','Admin\OrderController@index');
+
     //Lập hóa đơn
     Route::get('order/invoice/{id}','Admin\InvoiceController@invoice')->middleware('can:order.update');
+
     //Xác nhận giao hàng thành công
     Route::get('order/complete/{id}','Admin\OrderController@complete')->middleware('can:order.update');
+
     //Hủy đơn hàng
     Route::get('order/cancel/{id}','Admin\OrderController@cancelOrder')->middleware('can:order.update');
+
     //hiển thị danh sách hóa đơn
     Route::get('invoice','Admin\InvoiceController@index');
 //    Route::resource('/admin/order', 'Admin\AdminBillController');
+
+    //backup
+    Route::get('backup','Admin\BackupController@index');
+    Route::get('backup/create','Admin\BackupController@create');
+    Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
+    Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
 });
