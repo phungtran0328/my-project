@@ -8,8 +8,10 @@
 
 namespace app\Http\Controllers\Admin;
 
+use App\Helper;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,6 +37,10 @@ class BackupController extends Controller
         }
         // reverse the backups, so the newest one would be on top
         $backups = array_reverse($backups);
+
+        $temp = new Helper();
+        $backups = $temp->paginate($backups,2,request('page'), ['path' => request()->path()]);
+
         return view('admin.manage.backup')->with(compact('backups'));
     }
 
@@ -42,8 +48,9 @@ class BackupController extends Controller
         try {
             Artisan::call('backup:run',['--only-db'=>true]);
             $output = Artisan::output();
-            // log the results
-            Log::info("Backpack\\BackupManager -- new backup started from admin interface \r\n" . $output);
+            $user = Auth::user();
+            // log the results => ./storage/logs/laravel.log
+            Log::info("Backpack\\BackupManager -- new backup started from admin interface, admin: ".$user->NV_TEN."\r\n" . $output);
             return redirect()->back()->with('messCreate','Đã tạo mới sao lưu dữ liệu !');
 
         }catch (\Exception $exception){

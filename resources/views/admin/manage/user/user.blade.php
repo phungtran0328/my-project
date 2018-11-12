@@ -30,9 +30,9 @@
                                 </div>
                                 <div class="col-md-9"></div>
                                 <div class="col-md-1">
-                                    <button class="btn btn-success btn-block" onclick="printDiv('printUser')">
+                                    <a class="btn btn-success btn-block" onclick="printDiv('printUser')" href="{{url('admin/user/print')}}">
                                         <span class="glyphicon glyphicon-print"></span>
-                                    </button>
+                                    </a>
                                 </div>
                             @endcan
                         </div>
@@ -163,10 +163,9 @@
             var printContents = document.getElementById(divName).innerHTML; //Lấy thẻ div
             var originalContents = document.body.innerHTML;
             document.body.innerHTML = printContents;
-
             window.print();
-
             document.body.innerHTML = originalContents; //trả về nguyên vẹn trước khi in
         }
+
     </script>
 @endsection

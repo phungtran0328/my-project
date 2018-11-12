@@ -159,6 +159,8 @@ Route::group(['prefix' => 'admin'], function () {
     //user update role
     Route::post('user/update/role/{id}','Admin\UserController@updateRole');
     Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
+    Route::get('user/print','Admin\UserController@print');
+
     //role
     Route::get('role','Admin\RoleController@index');
     Route::get('role/create','Admin\RoleController@create');
@@ -197,4 +199,5 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('backup/create','Admin\BackupController@create');
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
     Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
+
 });

@@ -22,14 +22,7 @@ function humanFilesize($size, $precision = 2) {
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <br><br>
-                <a class="btn btn-primary" href="{{url('admin/backup/create')}}">Sao lưu dữ liệu</a>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <hr>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -37,6 +30,9 @@ function humanFilesize($size, $precision = 2) {
                         <h5>Danh sách sao lưu</h5>
                     </div>
                     <div class="panel-body">
+                        <a class="btn btn-primary" href="{{url('admin/backup/create')}}">
+                            <span class="glyphicon glyphicon-plus"></span> Sao lưu dữ liệu</a>
+                        <br><br>
                         <div class="table-responsive">
                             @if(Session::has('messCreate'))
                                 <div class="alert alert-success alert-dismissable">
@@ -67,9 +63,8 @@ function humanFilesize($size, $precision = 2) {
                                     <thead>
                                     <tr>
                                         <th>File</th>
-                                        <th>Size</th>
-                                        <th>Date</th>
-                                        <th>Age</th>
+                                        <th>Kích thước</th>
+                                        <th>Ngày chỉnh sửa</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -81,10 +76,11 @@ function humanFilesize($size, $precision = 2) {
                                                 {{ humanFilesize($backup['file_size']) }}
                                             </td>
                                             <td>
-                                                {{ $backup['last_modified'] }}
-                                            </td>
-                                            <td>
-                                                {{ $backup['last_modified'] }}
+                                                <?php
+                                                    $date = new DateTime();
+                                                    $date->setTimestamp($backup['last_modified']);
+                                                ?>
+                                                {{ $date->format('d/m/Y, g:i a') }}
                                             </td>
                                             <td class="text-right">
                                                 <a class="btn btn-xs btn-default"
@@ -92,15 +88,16 @@ function humanFilesize($size, $precision = 2) {
                                                             class="fa fa-cloud-download"></i> Download</a>
                                                 <a class="btn btn-xs btn-danger" data-button-type="delete"
                                                    href="{{ url('admin/backup/delete/'.$backup['file_name']) }}"><i class="fa fa-trash-o"></i>
-                                                    Delete</a>
+                                                    Xóa</a>
                                             </td>
                                         </tr>
                                     @endforeach
                                     </tbody>
                                 </table>
+                                    {{$backups->render()}}
                             @else
                                 <div class="well">
-                                    <h4>There are no backups</h4>
+                                    <h4>Không có file backup !</h4>
                                 </div>
                             @endif
                         </div>

@@ -7,7 +7,9 @@ use App\User;
 use App\User_Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
@@ -132,5 +134,11 @@ class UserController extends Controller
     public function delete($id){
         User::destroy($id);
         return redirect('admin/user')->with('messageRemove','Xóa thành công !');
+    }
+
+    public function print(){
+        $user = Auth::user();
+        Log::info("Nhân viên đã in danh sách nhân viên: ".$user->NV_MA." - ".$user->NV_TEN."\r\n");
+        return redirect()->back();
     }
 }
