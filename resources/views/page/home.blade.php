@@ -117,7 +117,7 @@ foreach ($results as $result){
                                             <div class="single-item">
                                                 <div class="single-item-header text-center" >
                                                     <a href="{{url('/detail',$book_promotion['id'])}}" style="" class="">
-                                                        <img src="images/{{$book_promotion['image']}}" alt="ádasd" height="250px">
+                                                        <img src="images/avatar/{{$book_promotion['image']}}" alt="ádasd" height="250px">
                                                     </a>
                                                 </div>
                                                 <div class="single-item-body text-center">
@@ -155,7 +155,7 @@ foreach ($results as $result){
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
                                                 <a href="{{url('/detail',$temp_new_book_promotion[$sum]['id'])}}" style="" class="">
-                                                    <img src="images/{{$temp_new_book_promotion[$sum]['image']}}" alt="" height="250px">
+                                                    <img src="images/avatar/{{$temp_new_book_promotion[$sum]['image']}}" alt="" height="250px">
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
@@ -209,7 +209,7 @@ foreach ($results as $result){
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
                                                 <a href="{{url('/detail',$temp_view_book['id'])}}" style="" class="">
-                                                    <img src="images/{{$temp_view_book['image']}}" alt="" height="250px">
+                                                    <img src="images/avatar/{{$temp_view_book['image']}}" alt="" height="250px">
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
@@ -265,7 +265,7 @@ foreach ($results as $result){
                                             <div class="single-item">
                                                 <div class="single-item-header text-center">
                                                     <a href="{{url('/detail',$temp_invoice_book['id'])}}" style="" class="">
-                                                        <img src="images/{{$temp_invoice_book['image']}}" alt="" height="250px">
+                                                        <img src="images/avatar/{{$temp_invoice_book['image']}}" alt="" height="250px">
                                                     </a>
                                                 </div>
                                                 <div class="single-item-body text-center">

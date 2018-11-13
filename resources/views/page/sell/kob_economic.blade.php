@@ -31,7 +31,7 @@
                                     <td style="font-size: large; width: 10%" class="text-center"> #{{$i}}</td>
                                     <td style=" width: 30%" class="text-center">
                                         <a href="{{url('/detail',$book['id'])}}">
-                                            <img src="images/{{$book['image']}}" width="140px" height="150px">
+                                            <img src="images/avatar/{{$book['image']}}" width="110px" height="150px">
                                         </a>
                                     </td>
                                     <td>

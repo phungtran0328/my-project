@@ -5,32 +5,6 @@
  * Date: 09/07/2018
  * Time: 10:47 AM
  */
-
-$images=array();
-$promotions=array();
-$sales=array();
-$date=strtotime(date('Y-m-d')); //Lấy thời gian hiện tại=>giây
-
-for ($i=0;$i<count($category_paginate);$i++){
-    $temp = \App\Book::where('S_MA', $category_paginate[$i]->S_MA)->first();
-    $images[$i] = $temp->image()->first();
-    $promotions[$i] = $temp->promotion()->first();
-    if (isset($promotions[$i])){
-        $start=strtotime($promotions[$i]->KM_APDUNG);
-        $end=strtotime($promotions[$i]->KM_HANDUNG);
-        if (($start<=$date)and($end>=$date)){
-            $sales[$i]=($category_paginate[$i]->S_GIA)-($category_paginate[$i]->S_GIA)*($promotions[$i]->KM_GIAM);
-            //Có khuyến mãi và đang trong thời gian có hiệu lực
-        }else{
-            $sales[$i]=$category_paginate[$i]->S_GIA;
-            //Có khuyến mãi nhưng chưa tới thời gian
-        }
-    }else{
-        $sales[$i]=$category_paginate[$i]->S_GIA; //Không có khuyến mãi
-    }
-}
-
-
 ?>
 @extends('master')
 @section('content')
@@ -78,34 +52,31 @@ for ($i=0;$i<count($category_paginate);$i++){
 
                             <div class="row">
                                 @for($i=0;$i<count($category_paginate);$i++)
-                                    @if($category_paginate[$i]->S_SLTON>0)
+                                    <?php
+                                    $temp = new \App\Book();
+                                    $cate_book = $temp->getBookPromotion($category_paginate[$i]->S_MA);
+                                    ?>
+                                    @if($cate_book['in_stock']>0)
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div style="border: 1px solid #dddddd; margin-bottom: 20px">
                                                 <div class="single-item">
                                                     <div class="single-item-header">
-                                                        @if(isset($images[$i]))
-                                                            <a href="{{url('/detail',$category_paginate[$i]->S_MA)}}" class="text-center">
-                                                                <img src="images/{{$images[$i]->HA_URL}}" alt="" style="width: 100%;" height="170px">
-                                                            </a>
-                                                        @else
-                                                            <a href="{{url('/detail',$category_book[$i]->S_MA)}}">
-                                                                <img src="images/sorry-image-not-available.jpg" alt="" height="150px">
-                                                            </a>
-                                                        @endif
+                                                        <a href="{{url('/detail',$cate_book['id'])}}" class="text-center">
+                                                            <img src="images/avatar/{{$cate_book['image']}}" alt="" style="width: 100%" height="250px">
+                                                        </a>
                                                     </div>
                                                     <div class="single-item-body text-center">
-                                                        <a href="{{url('/detail',$category_paginate[$i]->S_MA)}}" class="single-item-title" style="font-size: 14px">
-                                                            {{ str_limit($category_paginate[$i]->S_TEN, $limit = 20, $end = '...') }}</a>
+                                                        <a href="{{url('/detail',$cate_book['id'])}}" class="single-item-title" style="font-size: 14px">
+                                                            {{ str_limit($cate_book['name'], $limit = 20, $end = '...') }}</a>
                                                         <p class="single-item-price" style="font-size: 13px">
-                                                            @if($sales[$i]<$category_paginate[$i]->S_GIA)
-                                                                <span class="flash-del">{{number_format($category_paginate[$i]->S_GIA)}} đ</span>
-                                                                <span class="flash-sale">{{number_format($sales[$i])}} đ</span>
+                                                            @if(isset($cate_book['sale']))
+                                                                <span class="flash-del">{{number_format($cate_book['price'])}} đ</span>
+                                                                <span class="flash-sale">{{number_format($cate_book['sale'])}} đ</span>
                                                             @else
-                                                                <span>{{number_format($sales[$i])}} đ</span>
+                                                                <span>{{number_format($cate_book['price'])}} đ</span>
                                                             @endif
                                                         </p>
                                                     </div>
-                                                    <br>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>

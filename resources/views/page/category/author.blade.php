@@ -11,7 +11,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{url('/index')}}">Trang chủ</a></li>
-            <li><a href="{{url('/category',$books[0]['category']->LS_MA)}}">{{$books[0]['category']->LS_TEN}}</a></li>
+            <li><a href="{{url('/category',$cate->LS_MA)}}">{{$cate->LS_TEN}}</a></li>
             <li class="active">{{$author->TG_TEN}}</li>
         </ul>
     </div>
@@ -58,29 +58,22 @@
                                             <div style="border: 1px solid #dddddd; margin-bottom: 20px">
                                                 <div class="single-item">
                                                     <div class="single-item-header">
-                                                        @if(isset($books[$i]['image']))
-                                                            <a href="{{url('/detail',$books[$i]['id'])}}" class="text-center">
-                                                                <img src="images/{{$books[$i]['image']->HA_URL}}" alt="" style="width: 100%;" height="170px">
-                                                            </a>
-                                                        @else
-                                                            <a href="{{url('/detail',$books[$i]['id'])}}">
-                                                                <img src="images/sorry-image-not-available.jpg" alt="" height="150px">
-                                                            </a>
-                                                        @endif
+                                                        <a href="{{url('/detail',$books[$i]['id'])}}" class="text-center">
+                                                            <img src="images/avatar/{{$books[$i]['image']}}" alt="" style="width: 100%;" height="250px">
+                                                        </a>
                                                     </div>
                                                     <div class="single-item-body text-center">
                                                         <a href="{{url('/detail',$books[$i]['id'])}}" class="single-item-title" style="font-size: 14px">
                                                             {{ str_limit($books[$i]['name'], $limit = 20, $end = '...') }}</a>
                                                         <p class="single-item-price" style="font-size: 13px">
-                                                            @if($books[$i]['sale']<$books[$i]['price'])
+                                                            @if(isset($books[$i]['sale']))
                                                                 <span class="flash-del">{{number_format($books[$i]['price'])}} đ</span>
                                                                 <span class="flash-sale">{{number_format($books[$i]['sale'])}} đ</span>
                                                             @else
-                                                                <span>{{number_format($books[$i]['sale'])}} đ</span>
+                                                                <span>{{number_format($books[$i]['price'])}} đ</span>
                                                             @endif
                                                         </p>
                                                     </div>
-                                                    <br>
                                                     <div class="clearfix"></div>
                                                 </div>
                                             </div>

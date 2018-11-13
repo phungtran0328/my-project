@@ -192,7 +192,7 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                 {{Session::get('messUpdateImage')}}
                             </div>
                         @endif
-                        <form action="{{url('/admin/book',$book->S_MA)}}" method="post">
+                        <form action="{{url('/admin/book',$book->S_MA)}}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             @method('PATCH')
                             <div class="row">
@@ -267,7 +267,7 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label class="control-label">Khuyến mãi</label>
                                     <select class="form-control" name="promotion">
                                         <option value="">---Chọn khuyến mãi---</option>
@@ -285,6 +285,10 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                             <option value="{{$promotion->KM_MA}}">{{$promotion->KM_GIAM}} - {{$promotion->KM_CHITIET}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="control-label">Avatar</label>
+                                    <input type="file" name="avatar" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group" >

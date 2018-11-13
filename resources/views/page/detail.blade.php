@@ -61,20 +61,15 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-4">
-                            @if(!empty($images[0]))
-                                <div class="float-left" id="myImg" style="margin-bottom: 10px">
-                                    <img src="images/{{$images[0]->HA_URL}}" class="img-rounded zoom" alt="" width="350px" height="350px">
-                                </div>
-                                @foreach($images as $image)
-                                    <a id="myImgSmall" class="btn-default">
-                                        <img src="images/{{$image->HA_URL}}" width="70px" height="70px" onclick="clickImg(this)">
-                                    </a>
-                                @endforeach
-                            @else
-                                <div class="float-left" id="myImg" style="margin-bottom: 10px">
-                                    <img src="images/sorry-image-not-available.jpg" class="img-rounded zoom" alt="" width="350px" height="300px">
-                                </div>
-                            @endif
+                            <div class="float-left" id="myImg" style="margin-bottom: 10px">
+                                <img src="images/avatar/{{$book->S_AVATAR}}" class="img-rounded zoom" alt="" width="300px" height="350px">
+                            </div>
+                            @foreach($images as $image)
+                                <a id="myImgSmall" class="btn-default">
+                                    <img src="images/avatar/{{$book->S_AVATAR}}" width="50px" height="70px" onclick="clickImg(this)">
+                                    <img src="images/{{$image->HA_URL}}" width="50px" height="70px" onclick="clickImg(this)">
+                                </a>
+                            @endforeach
                         </div>
                         <div class="col-md-8">
                             <div>
@@ -262,7 +257,7 @@
                                             <a href="{{url('/detail',$temp_author_book_promotion[$j]['id'])}}">
                                                 <div class="">
                                                     <div class=" text-center">
-                                                        <img class=""  src="images/{{$temp_author_book_promotion[$j]['image']}}" width="120px" height="130px"><br>
+                                                        <img class=""  src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
                                                         <p style="font-size: 14px; margin-bottom: 5px; margin-top: 5px">
                                                             {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 20, $end = '...') }}</p>
                                                         <p style="font-size: 14px; margin-bottom: 5px">
@@ -304,7 +299,7 @@
                                                 <a href="{{url('/detail',$temp_translator_book_promotion[$j]['id'])}}">
                                                     <div class="">
                                                         <div class=" text-center">
-                                                            <img class=""  src="images/{{$temp_translator_book_promotion[$j]['image']}}" width="120px" height="130px"><br>
+                                                            <img class=""  src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
                                                             <p style="font-size: 14px; margin-bottom: 5px; margin-top: 5px">
                                                                 {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 20, $end = '...') }}</p>
                                                             <p style="font-size: 14px; margin-bottom: 5px">
@@ -333,7 +328,7 @@
 <script>
     function clickImg(img) {
         var src = img.src;
-        var html = "<img src='"+src+"' class='img-rounded zoom' width='350px' height='350px'>";
+        var html = "<img src='"+src+"' class='img-rounded zoom' width='300px' height='350px'>";
         document.getElementById('myImg').innerHTML = html;
     }
 

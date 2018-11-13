@@ -16,6 +16,7 @@ use App\Translator;
 use App\WriteBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class BookController extends Controller
 {
@@ -82,21 +83,26 @@ class BookController extends Controller
                 'kindOfBook.required'=>'Vui lòng chọn loại sách !',
                 'author.required'=>'Vui lòng chọn tác giả !',
             ]);
+        $avatar = $request->file('avatar'); //Lấy file avatar
+        $avatar_name = $avatar->getClientOriginalName(); //lấy name
+        $avatar_path = public_path('images\avatar'); //lấy đường dẫn lưu images\avatar
+        $avatar->move($avatar_path, $avatar_name); //di chuyển file avatar vào thư mục images
 
         $book = new Book();
-        $book->KM_MA=$request->promotion;
-        $book->NXB_MA=$request->publisher;
-        $book->LS_MA=$request->kindOfBook;
-        $book->LB_MA=$request->coverType;
-        $book->S_TEN=$request->name;
-        $book->S_SLTON=0;
-        $book->S_KICHTHUOC=$request->size;
-        $book->S_SOTRANG=$request->page_num;
-        $book->S_NGAYXB=$request->publish_date;
-        $book->S_LUOTXEM=0;
-        $book->S_TAIBAN=$request->republish;
-        $book->S_GIOITHIEU=$request->description;
-        $book->S_GIA=0;
+        $book->KM_MA = $request->input('promotion');
+        $book->NXB_MA = $request->input('publisher');
+        $book->LS_MA = $request->input('kindOfBook');
+        $book->LB_MA = $request->input('coverType');
+        $book->S_TEN = $request->input('name');
+        $book->S_SLTON = 0;
+        $book->S_KICHTHUOC = $request->input('size');
+        $book->S_SOTRANG = $request->input('page_num');
+        $book->S_NGAYXB = $request->input('publish_date');
+        $book->S_LUOTXEM = 0;
+        $book->S_TAIBAN = $request->input('republish');
+        $book->S_GIOITHIEU = $request->input('description');
+        $book->S_GIA = 0;
+        $book->S_AVATAR = $avatar_name;
         $book->save();
 
         $data = array();
@@ -126,7 +132,7 @@ class BookController extends Controller
         if ($files=$request->file('images')){
             foreach ($files as $file){
                 // get name file upload
-                $name=$file->getClientOriginalName();
+                $name = $file->getClientOriginalName();
 //                dd($name);
                 //save image to public_path
                 $destinationPath = public_path('images');
@@ -177,16 +183,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        $book=Book::where('S_MA',$id)->first();
-//        $publisher=$book->publisher()->first();
-//        $publishers = Publisher::all();
-//        $authors = $book->author()->get();
-//        $translators = $book->translator()->get();
-//        $promotions = Promotion::all();
-//        $kindOfBooks = KindOfBook::all();
-//        $coverTypes = CoverType::all();
-//        $images = $book->image()->get();
-        return view('admin.book.update_book',compact('book'));
+        $book = Book::where('S_MA',$id)->first();
+
+        return view('admin.book.update_book',compact('book','avatar'));
     }
 
     /**
@@ -211,8 +210,17 @@ class BookController extends Controller
             'coverType.required'=>'Vui lòng chọn loại bìa !',
             'publish_date.before'=>'Ngày xuất bản không lớn hơn hôm nay !',
         ]);
-
         $book=Book::where('S_MA',$id)->first();
+        $path = public_path('images/avatar/'.$book->S_AVATAR);
+        if (File::exists($path)){
+            File::delete($path);
+        }
+
+        $avatar = $request->file('avatar'); //Lấy file avatar
+        $avatar_name = $avatar->getClientOriginalName(); //lấy name
+        $avatar_path = public_path('images/avatar'); //lấy đường dẫn lưu images\avatar
+        $avatar->move($avatar_path, $avatar_name); //di chuyển file avatar vào thư mục images
+
         $book->S_TEN=$request->name;
         $book->NXB_MA=$request->publisher;
         $book->LS_MA=$request->kindOfBook;
@@ -223,7 +231,7 @@ class BookController extends Controller
         $book->S_KICHTHUOC=$request->size;
         $book->S_SOTRANG=$request->page_num;
         $book->S_GIOITHIEU=$request->description;
-
+        $book->S_AVATAR = $avatar_name;
         if ($book->save()){
             return redirect('admin/book')->with('messUpdateBook','Đã cập nhật sách: "'.$book->S_TEN.'" !');
         }
@@ -248,9 +256,12 @@ class BookController extends Controller
         $authors=$books->author()->get();
         $trans=$books->translator()->get();
         $image=$books->image()->get();
-        $order = $books->order()->get();
-        $invoice_in = $books->invoice_in()->get();
-        $invoice = $books->invoice()->get();
+        $order = $books->order()->first();
+        $invoice_in = $books->invoice_in()->first();
+
+        if (isset($order) or (isset($invoice_in))){
+            return redirect()->back()->with('messDeleteError','Không thể xóa, vì tồn tại sách trong đơn hàng và phiếu nhập !');
+        }
         if (isset($authors)){
             WriteBook::where('S_MA',$id)->delete();
         }
@@ -258,17 +269,18 @@ class BookController extends Controller
             Translator::where('S_MA',$id)->delete();
         }
         if (isset($image)){
-            Image::where('S_MA',$id)->delete();
+            foreach ($image as $item){
+                $path = public_path('images/'.$item->HA_URL); //Xóa hình ảnh trong thư mục public/images
+                File::delete($path);
+            }
+            Image::where('S_MA',$id)->delete(); //Xóa dữ liệu hình ảnh trong database
         }
-        if (isset($order)){
-            OrderDetails::where('S_MA',$id)->delete();
+
+        $avatar_path = public_path('images/avatar/'.$books->S_AVATAR);
+        if (File::exists($avatar_path)){
+            File::delete($avatar_path);
         }
-        if (isset($invoice_in)){
-            InvoiceInDetails::where('S_MA',$id)->delete();
-        }
-        if (isset($invoice)){
-            InvoiceDetails::where('S_MA',$id)->delete();
-        }
+
         $books->delete();
         return redirect()->back()->with('messDelete','Đã xóa sách với ID: '.$id.' !');
     }

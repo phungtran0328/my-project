@@ -28,12 +28,12 @@
                         <form action="{{url('/admin/book')}}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="row">
-                                <div class="col-md-6 form-group {{$errors->has('name') ? 'has-error' : ''}}" >
+                                <div class="col-md-4 form-group {{$errors->has('name') ? 'has-error' : ''}}" >
                                     <label class="control-label">Tên sách *</label>
                                     <input type="text" class="form-control" placeholder="Nhập tên sách" name="name">
                                     <strong style="color: red">{{$errors->first('name')}}</strong>
                                 </div>
-                                <div class="col-md-6 form-group">
+                                <div class="col-md-4 form-group">
                                     <label class="control-label">Khuyến mãi</label>
                                     <select class="form-control" name="promotion">
                                         <option value="">---Chọn giá khuyến mãi---</option>
@@ -42,7 +42,11 @@
                                         @endforeach
                                     </select>
                                 </div>
-
+                                <div class="col-md-4 form-group">
+                                    <label class="control-label">Avatar *</label>
+                                    {{--name="images[]" lưu nhiều record cùng lúc--}}
+                                    <input required type="file" class="form-control" name="avatar">
+                                </div>
                             </div>
 
                             <div class="row">
@@ -72,11 +76,10 @@
                             </div>
 
                             <div class="row">
-                                <div class="col-md-4 form-group {{$errors->has('images') ? 'has-error' : ''}}">
-                                    <label class="control-label">Hình ảnh</label>
+                                <div class="col-md-4 form-group">
+                                    <label class="control-label">Tập hình ảnh *</label>
                                     {{--name="images[]" lưu nhiều record cùng lúc--}}
                                     <input required type="file" class="form-control" name="images[]" placeholder="image" multiple>
-                                    <strong style="color: red">{{$errors->first('images')}}</strong>
                                 </div>
                                 <div class="col-md-3 form-group {{$errors->has('kindOfBook') ? 'has-error' : ''}}">
                                     <label class="control-label">Loại sách *</label>

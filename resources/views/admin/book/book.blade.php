@@ -67,6 +67,12 @@
                                 {{Session::get('messDelete')}}
                             </div>
                         @endif
+                        @if(Session::has('messDeleteError'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{Session::get('messDeleteError')}}
+                            </div>
+                        @endif
                         <div class="table-responsive ">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead >
@@ -90,7 +96,7 @@
                                         $publisher = $temp->publisher()->first();
                                         $authors = $temp->author()->get();
                                         $translators = $temp->translator()->get();
-                                        $image = $temp->image()->first();
+
                                     ?>
                                     <tr style="text-align: justify">
                                         {{--increment not reset in second page--}}
@@ -115,11 +121,7 @@
                                         <td>{{number_format($book->S_GIA)}}</td>
                                         <td>{{$book->S_LUOTXEM}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>
-                                        @if(isset($image))
-                                            <td><img src="images/{{$image->HA_URL}}" width="50px" height="50px"></td>
-                                        @else
-                                            <td>Chưa có hình ảnh</td>
-                                        @endif
+                                        <td><img src="images/avatar/{{$book->S_AVATAR}}" width="50px" height="70px"></td>
                                         <td class="text-center">
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bookDetail-{{$book->S_MA}}">
                                                 <span class="glyphicon glyphicon-check"></span>

@@ -62,57 +62,20 @@ class CategoryController extends Controller
         $temp_books = $author->book()->paginate(2);
         $temp_trans_book = $author->translate_book()->paginate(2);
         $books=array();
-        $date=strtotime(date('Y-m-d')); //Lấy thời gian hiện tại=>giây
         if (!is_null($temp_books)){
             for ($i=0;$i<count($temp_books);$i++){
-                $temp = Book::where('S_MA', $temp_books[$i]->S_MA)->first();
-                $books[0]['category'] = $temp->kind_of_book()->first();
-                $books[$i]['id'] = $temp_books[$i]->S_MA;
-                $books[$i]['name'] = $temp_books[$i]->S_TEN;
-                $books[$i]['in_stock'] = $temp_books[$i]->S_SLTON;
-                $books[$i]['price'] = $temp_books[$i]->S_GIA;
-                $books[$i]['image'] = $temp->image()->first();
-                $books[$i]['promotion'] = $temp->promotion()->first();
-                if (isset($books[$i]['promotion'])){
-                    $start=strtotime($books[$i]['promotion']->KM_APDUNG);
-                    $end=strtotime($books[$i]['promotion']->KM_HANDUNG);
-                    if (($start<=$date)and($end>=$date)){
-                        $books[$i]['sale']=($temp_books[$i]->S_GIA)*(1-$books[$i]['promotion']->KM_GIAM);
-                        //Có khuyến mãi và đang trong thời gian có hiệu lực
-                    }else{
-                        $books[$i]['sale']=$temp_books[$i]->S_GIA;
-                        //Có khuyến mãi nhưng chưa tới thời gian
-                    }
-                }else{
-                    $books[$i]['sale']=$temp_books[$i]->S_GIA; //Không có khuyến mãi
-                }
+                $temp = new Book();
+                $books[$i] = $temp->getBookPromotion($temp_books[$i]->S_MA);
+                $cate = $temp_books[0]->kind_of_book()->first();
             }
         }
         if (!is_null($temp_trans_book)){
             for ($i = 0; $i < count($temp_trans_book); $i++) {
-                $temp = Book::where('S_MA', $temp_trans_book[$i]->S_MA)->first();
-                $books[0]['category'] = $temp->kind_of_book()->first();
-                $books[$i]['id'] = $temp_trans_book[$i]->S_MA;
-                $books[$i]['name'] = $temp_trans_book[$i]->S_TEN;
-                $books[$i]['in_stock'] = $temp_trans_book[$i]->S_SLTON;
-                $books[$i]['price'] = $temp_trans_book[$i]->S_GIA;
-                $books[$i]['image'] = $temp->image()->first();
-                $books[$i]['promotion'] = $temp->promotion()->first();
-                if (isset($books[$i]['promotion'])) {
-                    $start = strtotime($books[$i]['promotion']->KM_APDUNG);
-                    $end = strtotime($books[$i]['promotion']->KM_HANDUNG);
-                    if (($start <= $date) and ($end >= $date)) {
-                        $books[$i]['sale'] = ($temp_trans_book[$i]->S_GIA) * (1 - $books[$i]['promotion']->KM_GIAM);
-                        //Có khuyến mãi và đang trong thời gian có hiệu lực
-                    } else {
-                        $books[$i]['sale'] = $temp_trans_book[$i]->S_GIA;
-                        //Có khuyến mãi nhưng chưa tới thời gian
-                    }
-                } else {
-                    $books[$i]['sale'] = $temp_trans_book[$i]->S_GIA; //Không có khuyến mãi
-                }
+                $temp = new Book();
+                $books[$i] = $temp->getBookPromotion($temp_trans_book[$i]->S_MA);
+                $cate = $temp_trans_book[0]->kind_of_book()->first();
             }
         }
-        return view('page.category.author', compact('books', 'author', 'temp_books', 'temp_trans_book'));
+        return view('page.category.author', compact('books', 'author','cate', 'temp_books', 'temp_trans_book'));
     }
 }
