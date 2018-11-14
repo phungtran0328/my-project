@@ -47,9 +47,7 @@ class CategoryController extends Controller
             }
             return $temp_array;
         }
-//        dd($temp_authors);
-//        dd(unique_multidim_array($temp_authors,'id'));
-//        dd(unique_multidim_array($temp_translator,'id'));
+
         $authors = unique_multidim_array($temp_authors,'id');
         $translators = unique_multidim_array($temp_translator,'id');
 
