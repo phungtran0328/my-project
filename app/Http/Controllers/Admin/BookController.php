@@ -211,15 +211,18 @@ class BookController extends Controller
             'publish_date.before'=>'Ngày xuất bản không lớn hơn hôm nay !',
         ]);
         $book=Book::where('S_MA',$id)->first();
-        $path = public_path('images/avatar/'.$book->S_AVATAR);
-        if (File::exists($path)){
-            File::delete($path);
-        }
-
         $avatar = $request->file('avatar'); //Lấy file avatar
-        $avatar_name = $avatar->getClientOriginalName(); //lấy name
-        $avatar_path = public_path('images/avatar'); //lấy đường dẫn lưu images\avatar
-        $avatar->move($avatar_path, $avatar_name); //di chuyển file avatar vào thư mục images
+
+        if (isset($avatar)){
+            $path = public_path('images/avatar/'.$book->S_AVATAR);
+            if (File::exists($path)){
+                File::delete($path);
+            }
+            $avatar_name = $avatar->getClientOriginalName(); //lấy name
+            $avatar_path = public_path('images/avatar'); //lấy đường dẫn lưu images\avatar
+            $avatar->move($avatar_path, $avatar_name); //di chuyển file avatar vào thư mục images
+            $book->S_AVATAR = $avatar_name;
+        }
 
         $book->S_TEN=$request->name;
         $book->NXB_MA=$request->publisher;
@@ -231,7 +234,7 @@ class BookController extends Controller
         $book->S_KICHTHUOC=$request->size;
         $book->S_SOTRANG=$request->page_num;
         $book->S_GIOITHIEU=$request->description;
-        $book->S_AVATAR = $avatar_name;
+
         if ($book->save()){
             return redirect('admin/book')->with('messUpdateBook','Đã cập nhật sách: "'.$book->S_TEN.'" !');
         }

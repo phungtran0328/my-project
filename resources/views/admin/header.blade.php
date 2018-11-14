@@ -285,6 +285,9 @@
                             <a href="{{url('admin/role')}}">Quyền </a>
                         </li>
                         <li>
+                            <a href="{{url('admin/slider')}}">Sliders</a>
+                        </li>
+                        <li>
                             <a href="#">Quản lý xuất <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>

@@ -200,4 +200,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
     Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
 
+    //slider
+    Route::get('slider','Admin\SliderController@index');
+    Route::post('slider/create','Admin\SliderController@store');
+    Route::post('slider/update/{id}','Admin\SliderController@update');
+    Route::get('slider/delete/{id}','Admin\SliderController@delete');
 });

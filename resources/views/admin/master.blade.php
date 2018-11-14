@@ -80,6 +80,15 @@
             "scrollX": true
         } );
     } );*/
+$('#myTooltipBook [data-toggle="tooltip"]').tooltip({
+    placement: 'left',
+    html: true
+});
+$('#myTooltipSlider [data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'right',
+    html: true
+});
 </script>
 </body>
 

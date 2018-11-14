@@ -121,7 +121,11 @@
                                         <td>{{number_format($book->S_GIA)}}</td>
                                         <td>{{$book->S_LUOTXEM}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>
-                                        <td><img src="images/avatar/{{$book->S_AVATAR}}" width="50px" height="70px"></td>
+                                        <td id="myTooltipBook">
+                                            <a data-toggle="tooltip" title="<img src='images/avatar/{{$book->S_AVATAR}}' width='100%' height='100%' class='thumbnail'>">
+                                                <img src="images/avatar/{{$book->S_AVATAR}}" width="50px" height="70px">
+                                            </a>
+                                        </td>
                                         <td class="text-center">
                                             <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#bookDetail-{{$book->S_MA}}">
                                                 <span class="glyphicon glyphicon-check"></span>

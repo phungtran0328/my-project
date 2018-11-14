@@ -51,7 +51,7 @@ foreach ($results as $result){
                     <div class="carousel-inner" role="listbox">
 
                         <div class="item active">
-                            <img src="images/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                            <img src="images/slider/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
                             <div class="carousel-caption">
                                 <h3>Sell $</h3>
                                 <p>Money Money.</p>
@@ -59,7 +59,7 @@ foreach ($results as $result){
                         </div>
                         @for($i=1;$i<$total;$i++)
                             <div class="item">
-                                <img src="images/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                                <img src="images/slider/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
                                 <div class="carousel-caption">
                                     <h3>More Sell $</h3>
                                     <p>Lorem ipsum...</p>
