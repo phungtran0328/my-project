@@ -30,31 +30,29 @@ class CoverTypePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasAccess(['book.create']);
     }
 
     /**
      * Determine whether the user can update the cover type.
      *
      * @param  \App\User  $user
-     * @param  \App\CoverType  $coverType
      * @return mixed
      */
-    public function update(User $user, CoverType $coverType)
+    public function update(User $user)
     {
-        //
+        return $user->hasAccess(['book.update']);
     }
 
     /**
      * Determine whether the user can delete the cover type.
      *
      * @param  \App\User  $user
-     * @param  \App\CoverType  $coverType
      * @return mixed
      */
-    public function delete(User $user, CoverType $coverType)
+    public function delete(User $user)
     {
-        //
+        return $user->hasAccess(['book.delete']);
     }
 
     /**

@@ -16,9 +16,11 @@
                         <h5>Danh sách sliders</h5>
                     </div>
                     <div class="panel-body">
+                        @can('book.create')
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#sliderCreate" style="width: 15%">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
+                        @endcan
                         <hr>
                         {{--modal create author--}}
                         <div class="modal fade" id="sliderCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -85,12 +87,16 @@
                                             </a>
                                         </td>
                                         <td class="text-right">
-                                            <a class="btn btn-sm btn-default"
+                                            @can('book.update')
+                                            <a class="btn btn-sm btn-info"
                                                data-toggle="modal" data-target="#sliderUpdate-{{$slider->id}}">
                                                 <i class="fa fa-pencil"></i> Sửa</a>
+                                            @endcan
+                                            @can('book.delete')
                                             <a class="btn btn-sm btn-danger" data-button-type="delete"
                                                href="{{url('admin/slider/delete',$slider->id)}}" onclick="return confirm('Bạn có chắc chắn xóa slider? ');">
                                                 <i class="fa fa-trash-o"></i> Xóa</a>
+                                                @endcan
                                         </td>
                                     </tr>
                                     @php $i++; @endphp

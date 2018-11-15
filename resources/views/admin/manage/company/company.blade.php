@@ -115,11 +115,15 @@
                                         <td>{{$company->CTPH_SDT}}</td>
                                         <td>{{$company->CTPH_GHICHU}}</td>
                                         <td class="text-center">
-                                            <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#companyUpdate-{{$company->CTPH_MA}}">
+                                            @can('invoice-in.update')
+                                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#companyUpdate-{{$company->CTPH_MA}}">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                             </button>
-                                            <a class="btn btn-default btn-sm" href="{{url('admin/company/delete',$company->CTPH_MA)}}">
+                                            @endcan
+                                            @can('invoice-in.delete')
+                                            <a class="btn btn-danger btn-sm" href="{{url('admin/company/delete',$company->CTPH_MA)}}" onclick="return confirm('Bạn chắn chắn xóa ? ')">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
+                                                @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -26,7 +26,7 @@ class PromotionController extends Controller
      */
     public function create()
     {
-        return view('admin.book.promotion.promotion');
+        //
     }
 
     /**

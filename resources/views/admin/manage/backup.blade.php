@@ -30,8 +30,10 @@ function humanFilesize($size, $precision = 2) {
                         <h5>Danh sách sao lưu</h5>
                     </div>
                     <div class="panel-body">
+                        @can('backup.create')
                         <a class="btn btn-primary" href="{{url('admin/backup/create')}}">
                             <span class="glyphicon glyphicon-plus"></span> Sao lưu dữ liệu</a>
+                        @endcan
                         <br><br>
                         <div class="table-responsive">
                             @if(Session::has('messCreate'))
@@ -83,12 +85,16 @@ function humanFilesize($size, $precision = 2) {
                                                 {{ $date->format('d/m/Y, g:i a') }}
                                             </td>
                                             <td class="text-right">
+                                                @can('backup.download')
                                                 <a class="btn btn-xs btn-default"
                                                    href="{{ url('admin/backup/download/'.$backup['file_name']) }}"><i
                                                             class="fa fa-cloud-download"></i> Download</a>
+                                                @endcan
+                                                @can('backup.delete')
                                                 <a class="btn btn-xs btn-danger" data-button-type="delete"
                                                    href="{{ url('admin/backup/delete/'.$backup['file_name']) }}"><i class="fa fa-trash-o"></i>
                                                     Xóa</a>
+                                                    @endcan
                                             </td>
                                         </tr>
                                     @endforeach

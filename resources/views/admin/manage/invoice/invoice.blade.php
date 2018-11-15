@@ -108,7 +108,7 @@
                                             </table>
                                         </td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="">
+                                            <a class="btn btn-danger btn-sm" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>

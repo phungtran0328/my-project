@@ -44,37 +44,22 @@
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Create (*)</label>
                                         <select class="form-control" name="create">
-                                            @if($create=="true")
-                                                <option value="true" selected> True</option>
-                                                <option value="false"> False</option>
-                                                @else
-                                                <option value="true" > True</option>
-                                                <option value="false" selected> False</option>
-                                            @endif
+                                            <option value="true" {{$create=="true" ? 'selected' : ''}}> True</option>
+                                            <option value="false" {{$create=="false" ? 'selected' : ''}}> False</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Update (*)</label>
                                         <select class="form-control" name="update">
-                                            @if($update=="true")
-                                                <option value="true" selected> True</option>
-                                                <option value="false"> False</option>
-                                            @else
-                                                <option value="true" > True</option>
-                                                <option value="false" selected> False</option>
-                                            @endif
+                                            <option value="true" {{$update=="true" ? 'selected' : ''}}> True</option>
+                                            <option value="false" {{$update=="false" ? 'selected' : ''}}> False</option>
                                         </select>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label class="control-label">Delete (*)</label>
                                         <select class="form-control" name="delete">
-                                            @if($delete=="true")
-                                                <option value="true" selected> True</option>
-                                                <option value="false"> False</option>
-                                            @else
-                                                <option value="true" > True</option>
-                                                <option value="false" selected> False</option>
-                                            @endif
+                                            <option value="true" {{$delete=="true" ? 'selected' : ''}}> True</option>
+                                            <option value="false" {{$delete=="false" ? 'selected' : ''}}> False</option>
                                         </select>
                                     </div>
                                 </div>

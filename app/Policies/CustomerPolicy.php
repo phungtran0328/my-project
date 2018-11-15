@@ -49,12 +49,11 @@ class CustomerPolicy
      * Determine whether the user can delete the customer.
      *
      * @param  \App\User  $user
-     * @param  \App\Customer  $customer
      * @return mixed
      */
-    public function delete(User $user, Customer $customer)
+    public function delete(User $user)
     {
-        //
+        return $user->hasAccess(['customer.delete']);
     }
 
     /**

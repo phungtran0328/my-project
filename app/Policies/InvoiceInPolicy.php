@@ -14,10 +14,9 @@ class InvoiceInPolicy
      * Determine whether the user can view the invoice in.
      *
      * @param  \App\User  $user
-     * @param  \App\InvoiceIn  $invoiceIn
      * @return mixed
      */
-    public function view(User $user, InvoiceIn $invoiceIn)
+    public function view(User $user)
     {
         //
     }
@@ -37,24 +36,22 @@ class InvoiceInPolicy
      * Determine whether the user can update the invoice in.
      *
      * @param  \App\User  $user
-     * @param  \App\InvoiceIn  $invoiceIn
      * @return mixed
      */
-    public function update(User $user, InvoiceIn $invoiceIn)
+    public function update(User $user)
     {
-        return $user->hasAccess(['invoice-in.update']) or $user->NV_MA==$invoiceIn->NV_MA;
+        return $user->hasAccess(['invoice-in.update']);
     }
 
     /**
      * Determine whether the user can delete the invoice in.
      *
      * @param  \App\User  $user
-     * @param  \App\InvoiceIn  $invoiceIn
      * @return mixed
      */
-    public function delete(User $user, InvoiceIn $invoiceIn)
+    public function delete(User $user)
     {
-        //
+        return $user->hasAccess(['invoice-in.delete']);
     }
 
     /**

@@ -65,32 +65,29 @@
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    @can('user.update')
-                                    <th style="width: 8%" colspan="2">Hành động</th>
-                                    @endcan
+                                    <th style="width: 15%"></th>
                                     <th style="width: 15%">Tên</th>
-                                    <th style="width: 10%">Giới tính</th>
+                                    <th style="width: 8%">Giới tính</th>
                                     <th style="width: 4%">Ngày sinh</th>
                                     <th>Địa chỉ</th>
                                     <th style="width: 4%">SĐT</th>
-                                    <th style="width: 7%">Quyền</th>
+                                    <th style="width: 10%">Quyền</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $index=>$user)
                                     <tr>
-                                        @can('user.update')
-                                            <td class="text-center" colspan="1">
-                                                <a class="btn btn-default btn-sm" href="{{url('admin/user/update',$user->NV_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
-                                            </td>
-                                        @endcan
-                                        @can('user.delete')
-                                            <td class="text-center" colspan="1">
-                                                <a class="btn btn-default btn-sm" href="">
-                                                    <span class="glyphicon glyphicon-remove"></span></a>
-                                            </td>
-                                        @endcan
+                                        <td class="text-center">
+                                            @can('user.update')
+                                                <a class="btn btn-info btn-sm" href="{{url('admin/user/update',$user->NV_MA)}}">
+                                                <span class="glyphicon glyphicon-pencil"></span> Sửa</a>
+                                            @endcan
+                                            @can('user.delete')
+                                                <a class="btn btn-danger btn-sm" href="">
+                                                    <span class="glyphicon glyphicon-remove" onclick="return confirm('Bạn chắn chắn xóa ? ')"></span> Xóa
+                                                </a>
+                                            @endcan
+                                        </td>
                                         <td>{{$user->NV_TEN}}</td>
                                         <td>{{$user->NV_GIOITINH}}</td>
                                         <?php

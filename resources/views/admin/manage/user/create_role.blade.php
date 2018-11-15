@@ -36,48 +36,21 @@
                                 <div class="form-group {{ $errors->has('roles') ? ' has-error' : '' }}">
                                     <label class="control-label">Danh sách quyền (*)</label><br>
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="1"> Order</label><br>
-                                            {{--<label><input type="checkbox" name="roles[]" value="order.create"><span>order.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="order.update"><span>order.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="order.delete"><span>order.delete</span></label><br>--}}
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="2"> Employee</label>
-                                            {{--<label><input type="checkbox" name="roles[]" value="employee.create"><span>employee.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="employee.update"><span>employee.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="employee.delete"><span>employee.delete</span></label><br>--}}
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="3"> Customer</label>
-                                            {{--<label><input type="checkbox" name="roles[]" value="customer.create"><span>customer.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="customer.update"><span>customer.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="customer.delete"><span>customer.delete</span></label><br>--}}
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="4"> Invoice-In</label>
-                                            {{--<label><input type="checkbox" name="roles[]" value="invoice-in.create"><span>invoice-in.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="invoice-in.update"><span>invoice-in.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="invoice-in.delete"><span>invoice-in.delete</span></label><br>--}}
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="5"> Invoice</label>
-                                            {{--<label><input type="checkbox" name="roles[]" value="invoice.create"><span>invoice.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="invoice.update"><span>invoice.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="invoice.delete"><span>invoice.delete</span></label><br>--}}
-                                        </div>
-                                        <div class="col-md-3">
-                                            <label class="control-label"><input type="radio" name="roles" value="6"> Book</label><br>
-                                            {{--<label><input type="checkbox" name="roles[]" value="book.create"><span>book.create</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="book.update"><span>book.update</span></label><br>
-                                            <label><input type="checkbox" name="roles[]" value="book.delete"><span>book.delete</span></label><br>--}}
+                                        <div class="col-md-8">
+                                            <select name="roles" class="form-control">
+                                                <option value=""> ---Chọn quyền---</option>
+                                                <option value="2"> Admin</option>
+                                                <option value="1"> Đơn hàng</option>
+                                                <option value="3"> Khách hàng</option>
+                                                <option value="4"> Hóa đơn nhập</option>
+                                                <option value="5"> Hóa đơn xuất</option>
+                                                <option value="6"> Sách</option>
+                                                <option value="7"> Sao lưu & phục hồi</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <strong style="color: red">{{$errors->first('roles') }}</strong>
                                 </div>
-                                <br>
                                 <div class="form-group">
                                     <button class="btn btn-primary" style="width: 300px">Thêm quyền</button>
                                 </div>

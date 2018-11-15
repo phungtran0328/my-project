@@ -130,15 +130,6 @@
                                         <td>{{$order->DH_GHICHU}}</td>
                                         <td class="text-center">
                                             @can('order.update')
-                                               {{-- @if($order->DH_TTDONHANG==0)
-                                                    <a class="btn btn-primary btn-sm" href="{{url('admin/order/invoice',$order->DH_MA)}}">
-                                                        Lập HĐ</a>
-                                                @elseif($order->DH_TTDONHANG==1)
-                                                    <a class="btn btn-danger btn-sm" href="{{url('admin/order/complete',$order->DH_MA)}}">
-                                                        Check</a>
-                                                    @else
-                                                    <a class="btn btn-success btn-sm">Complete</a>
-                                                @endif--}}
                                                 @switch($order->DH_TTDONHANG)
                                                     @case(0)
                                                         <a class="btn btn-primary btn-sm" href="{{url('admin/order/invoice',$order->DH_MA)}}">

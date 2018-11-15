@@ -21,9 +21,11 @@
                     <h5>Danh sách các loại sách</h5>
                 </div>
                 <div class="panel-body">
+                    @can('book.create')
                     <button style="width: 15%" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         <span class="glyphicon glyphicon-plus"></span>
                     </button>
+                    @endcan
                     <hr>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -105,11 +107,15 @@
                                 <td>{{$kob->LS_CHIETKHAU}}</td>
                                 <td>{{$kob->LS_MOTA}}</td>
                                 <td class="text-center">
+                                    @can('book.update')
                                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#updateKOB-{{$kob->LS_MA}}">
                                         <span class="glyphicon glyphicon-pencil"></span>
                                     </button>
-                                    <a class="btn btn-default btn-sm" href="{{url('/admin/kind-of-book/delete',$kob->LS_MA)}}">
+                                    @endcan
+                                    @can('book.delete')
+                                    <a class="btn btn-danger btn-sm" href="{{url('/admin/kind-of-book/delete',$kob->LS_MA)}}" onclick="return confirm('Bạn chắn chắn xóa ? ')">
                                         <span class="glyphicon glyphicon-remove"></span></a>
+                                        @endcan
                                 </td>
                             </tr>
                             @endforeach

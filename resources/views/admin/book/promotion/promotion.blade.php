@@ -21,15 +21,19 @@
                         <h5>Danh sách các loại sách</h5>
                     </div>
                     <div class="panel-body">
+                        @can('book.create')
                         <button style="width: 15%" class="btn btn-primary" data-toggle="modal" data-target="#promotionCreate">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
+                        @endcan
                         <div class="modal fade" id="promotionCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
+
                                     <div class="modal-header">
-                                        <h3 class="modal-title" id="exampleModalLabel">Thêm mới loại sách</h3>
+                                        <h3 class="modal-title" id="exampleModalLabel">Thêm mới khuyến mãi</h3>
                                     </div>
+
                                     <div class="modal-body">
                                         <form action="{{url('admin/promotion')}}" method="post" onsubmit="return validate()">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -124,12 +128,16 @@
                                         <td>{{$promotion->KM_HANDUNG}}</td>
                                         <td>{{$promotion->KM_CHITIET}}</td>
                                         <td class="text-center">
+                                            @can('book.update')
                                             <a class="btn btn-primary btn-sm" href="{{url('/admin/promotion',$promotion->KM_MA)}}">
                                                 <span class="glyphicon glyphicon-pencil"></span>
                                             </a>
-                                            <a class="btn btn-default btn-sm" href="{{url('/admin/promotion/delete',$promotion->KM_MA)}}">
+                                            @endcan
+                                            @can('book.delete')
+                                            <a class="btn btn-danger btn-sm" href="{{url('/admin/promotion/delete',$promotion->KM_MA)}}" onclick="return confirm('Bạn chắc chắn xóa ?')">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </a>
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach

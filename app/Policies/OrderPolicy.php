@@ -49,12 +49,11 @@ class OrderPolicy
      * Determine whether the user can delete the order.
      *
      * @param  \App\User  $user
-     * @param  \App\Order  $order
      * @return mixed
      */
-    public function delete(User $user, Order $order)
+    public function delete(User $user)
     {
-        //
+        return $user->hasAccess(['order.delete']);
     }
 
     /**

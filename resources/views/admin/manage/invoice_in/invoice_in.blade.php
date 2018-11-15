@@ -86,10 +86,14 @@
                                         </td>
                                         <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
                                         <td class="text-center">
-                                            <a class="btn btn-default" href="">
+                                            @can('invoice-in.update')
+                                            <a class="btn btn-info btn-sm" href="">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
-                                            <a class="btn btn-default" href="">
+                                            @endcan
+                                            @can('invoice-in.delete')
+                                            <a class="btn btn-danger btn-sm" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
+                                                @endcan
                                         </td>
                                     </tr>
                                 @endforeach

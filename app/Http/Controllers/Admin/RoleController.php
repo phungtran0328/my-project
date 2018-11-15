@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Role;
+use App\User_Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,52 +28,55 @@ class RoleController extends Controller
         ]);*/
 
         $roles=$request->input('roles');
-        /*$customer=$request->input('customer');
-        $employee=$request->input('employee');
-        $book=$request->input('book');
-        $invoice=$request->input('invoice');
-        $invoiceIn=$request->input('invoice-in');*/
+
         switch ($roles){
             case 1:
                 $data=array(
-                    'order.create'=>true,
-                    'order.update'=>true,
-                    'order.delete'=>true
+                    'order.create'=>"true",
+                    'order.update'=>"true",
+                    'order.delete'=>"true"
                 );
                 break;
             case 2:
                 $data=array(
-                    'employee.create'=>true,
-                    'employee.update'=>true,
-                    'employee.delete'=>true
+                    'user.create'=>"true",
+                    'user.update'=>"true",
+                    'user.delete'=>"true"
                 );
                 break;
             case 3:
                 $data=array(
-                    'customer.create'=>true,
-                    'customer.update'=>true,
-                    'customer.delete'=>true
+                    'customer.create'=>"true",
+                    'customer.update'=>"true",
+                    'customer.delete'=>"true"
                 );
                 break;
             case 4:
                 $data=array(
-                    'invoice-in.create'=>true,
-                    'invoice-in.update'=>true,
-                    'invoice-in.delete'=>true
+                    'invoice-in.create'=>"true",
+                    'invoice-in.update'=>"true",
+                    'invoice-in.delete'=>"true"
                 );
                 break;
             case 5:
                 $data=array(
-                    'invoice.create'=>true,
-                    'invoice.update'=>true,
-                    'invoice.delete'=>true
+                    'invoice.create'=>"true",
+                    'invoice.update'=>"true",
+                    'invoice.delete'=>"true"
                 );
                 break;
             case 6:
                 $data=array(
-                    'book.create'=>true,
-                    'book.update'=>true,
-                    'book.delete'=>true
+                    'book.create'=>"true",
+                    'book.update'=>"true",
+                    'book.delete'=>"true"
+                );
+                break;
+            case 7:
+                $data=array(
+                    'backup.create'=>"true",
+                    'backup.download'=>"true",
+                    'backup.delete'=>"true"
                 );
                 break;
         }
@@ -108,5 +112,35 @@ class RoleController extends Controller
         $role->Q_QUYEN=$results; //cập nhật lại
         $role->save();
         return redirect('admin/role')->with('messUpdate','Cập nhật thành công !');
+    }
+
+    public function updateUser(Request $request, $id){
+        $role=Role::where('Q_MA',$id)->first();
+        $users = $role->users()->get();
+        $user_role = $request->input('users');
+        $data=array();
+        for ($i=0;$i<count($user_role);$i++){
+            $data[]=[
+                'NV_MA'=>$user_role[$i],
+                'Q_MA'=>$id
+            ];
+        }
+//        dd($data);
+        if (count($users)==0){
+            //Chưa có phần tử trong bảng phân quyền
+            User_Role::insert($data);
+        }
+        else{
+            //đã có phần tử trong bảng phân quyền => xóa
+            User_Role::where('Q_MA',$id)->delete();
+            User_Role::insert($data);
+        }
+        return redirect()->back()->with('updateUser','Đã cập nhật nhân viên sử dụng quyền "'.$role->Q_TEN.'" !');
+    }
+
+    public function delete($id){
+        $role=Role::where('Q_MA',$id)->first();
+        $role->delete();
+        return redirect()->back()->with('delete', 'Đã xóa quyền "'.$role->Q_TEN.'" !');
     }
 }

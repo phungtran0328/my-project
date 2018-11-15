@@ -24,9 +24,11 @@
                     <div class="panel-body">
                         <div class="row" >
                             <div class="col-md-2">
+                                @can('book.create')
                                 <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#coverTypeCreate">
                                     <span class="glyphicon glyphicon-plus"></span>
                                 </button>
+                                @endcan
                                 {{--modal create author--}}
                                 <div class="modal fade" id="coverTypeCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -95,10 +97,15 @@
                                     <td>{{$index + $cover_type->firstItem()}}</td>
                                     <td>{{$cover->LB_TEN}}</td>
                                     <td class="text-center">
+                                        @can('book.update')
                                         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#coverUpdate-{{$cover->LB_MA}}">
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
-                                        <a class="btn btn-default btn-sm" href="{{url('admin/cover-type/delete',$cover->LB_MA)}}"><span class="glyphicon glyphicon-remove"></span></a>
+                                        @endcan
+                                        @can('book.delete')
+                                        <a class="btn btn-danger btn-sm" href="{{url('admin/cover-type/delete',$cover->LB_MA)}}" onclick="return confirm('Bạn chắc chắn xóa ?')">
+                                            <span class="glyphicon glyphicon-remove"></span></a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

@@ -100,31 +100,36 @@ Route::group(['prefix' => 'admin'], function () {
 
     //thêm, hiển thị danh sách loại sách
     Route::get('/kind-of-book','Admin\KindOfBookController@showKind_of_book');
-    Route::post('/kind-of-book','Admin\KindOfBookController@kind_of_book');
+    Route::post('/kind-of-book','Admin\KindOfBookController@kind_of_book')->middleware('can:book.create');
 
     //chỉnh sửa loại sách
-    Route::post('/kind-of-book/update/{id}','Admin\KindOfBookController@updateKindOfBook');
+    Route::post('/kind-of-book/update/{id}','Admin\KindOfBookController@updateKindOfBook')->middleware('can:book.update');
     //xóa loại sách
-    Route::get('/kind-of-book/delete/{id}','Admin\KindOfBookController@deleteKindOfBook');
+    Route::get('/kind-of-book/delete/{id}','Admin\KindOfBookController@deleteKindOfBook')->middleware('can:book.delete');
 
     //route dạng resource [index, create, store, show{$id}, edit{$id}, update{$id}, destroy{$id}]
-    Route::resource('cover-type','Admin\CoverTypeController')->only(['index','store']);
-    Route::post('cover-type/update/{id}','Admin\CoverTypeController@postUpdate');
-    Route::get('cover-type/delete/{id}','Admin\CoverTypeController@delete');
+    Route::resource('cover-type','Admin\CoverTypeController')->only(['index']);
+    Route::post('cover-type','Admin\CoverTypeController@store')->middleware('can:book.create');
+    Route::post('cover-type/update/{id}','Admin\CoverTypeController@postUpdate')->middleware('can:book.update');
+    Route::get('cover-type/delete/{id}','Admin\CoverTypeController@delete')->middleware('can:book.delete');
     //promotion
-    Route::resource('promotion','Admin\PromotionController')->except(['edit','destroy']);
+    Route::resource('promotion','Admin\PromotionController')->only(['index']);
+    Route::post('promotion','Admin\PromotionController@store')->middleware('can:book.create');
+    Route::get('promotion/{id}','Admin\PromotionController@show')->middleware('can:book.update');
+    Route::patch('promotion/{id}','Admin\PromotionController@update')->middleware('can:book.update');
     //promotion delete
-    Route::get('promotion/delete/{id}','Admin\PromotionController@delete');
+    Route::get('promotion/delete/{id}','Admin\PromotionController@delete')->middleware('can:book.delete');
 
     //publisher
-    Route::resource('publisher','Admin\PublisherController')->except(['edit','destroy','show','update','create']);
-    Route::post('publisher/update/{id}','Admin\PublisherController@postUpdate');
-    Route::get('publisher/delete/{id}','Admin\PublisherController@delete');
+    Route::resource('publisher','Admin\PublisherController')->only(['index']);
+    Route::post('publisher','Admin\PublisherController@store')->middleware('can:book.create');
+    Route::post('publisher/update/{id}','Admin\PublisherController@postUpdate')->middleware('can:book.update');
+    Route::get('publisher/delete/{id}','Admin\PublisherController@delete')->middleware('can:book.delete');
 
-    Route::resource('author','Admin\AuthorController')->except(['show','edit','destroy','create','update']);
-    Route::post('author/update/{id}','Admin\AuthorController@postUpdate');
-//    Route::get('author/update/{id}','Admin\AuthorController@getUpdate');
-    Route::get('author/delete/{id}','Admin\AuthorController@delete');
+    Route::resource('author','Admin\AuthorController')->only(['index']);
+    Route::post('author','Admin\AuthorController@store')->middleware('can:book.create');
+    Route::post('author/update/{id}','Admin\AuthorController@postUpdate')->middleware('can:book.update');
+    Route::get('author/delete/{id}','Admin\AuthorController@delete')->middleware('can:book.delete');
 
     //book show, update
     Route::resource('book','Admin\BookController')->only('index');
@@ -136,18 +141,17 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //book image
-    Route::resource('book/image','Admin\ImageController')->only('update');
+    Route::resource('book/image','Admin\ImageController')->only('update')->middleware('can:book.update');
 
     //book author and translator
-    Route::resource('book/author','Admin\BookAuthorController')->only('update');
-    Route::post('book/author/translator/{id}','Admin\BookAuthorController@updateTrans');
+    Route::resource('book/author','Admin\BookAuthorController')->only('update')->middleware('can:book.update');
+    Route::post('book/author/translator/{id}','Admin\BookAuthorController@updateTrans')->middleware('can:book.update');
 
     //release company
     Route::get('company','Admin\ReleaseCompanyController@index');
-//    Route::get('company/create','Admin\ReleaseCompanyController@create')->middleware('can:invoice-in.create');
-    Route::post('company','Admin\ReleaseCompanyController@store');
-    Route::post('company/update/{id}','Admin\ReleaseCompanyController@update');
-    Route::get('company/delete/{id}','Admin\ReleaseCompanyController@delete');
+    Route::post('company','Admin\ReleaseCompanyController@store')->middleware('can:invoice-in.create');
+    Route::post('company/update/{id}','Admin\ReleaseCompanyController@update')->middleware('can:invoice-in.update');
+    Route::get('company/delete/{id}','Admin\ReleaseCompanyController@delete')->middleware('can:invoice-in.delete');
 
     //user (employee)
     Route::get('user','Admin\UserController@index');
@@ -159,24 +163,29 @@ Route::group(['prefix' => 'admin'], function () {
     //user update role
     Route::post('user/update/role/{id}','Admin\UserController@updateRole');
     Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
-    Route::get('user/print','Admin\UserController@print');
+    Route::get('user/print','Admin\UserController@print')->middleware('can:user.create');
 
     //role
     Route::get('role','Admin\RoleController@index');
-    Route::get('role/create','Admin\RoleController@create');
-    Route::post('role/create','Admin\RoleController@store');
-    Route::get('role/update/{id}','Admin\RoleController@show');
-    Route::post('role/update/{id}','Admin\RoleController@update');
+    Route::get('role/create','Admin\RoleController@create')->middleware('can:user.create');
+    Route::post('role/create','Admin\RoleController@store')->middleware('can:user.create');
+
+    Route::post('role/update/user/{id}','Admin\RoleController@updateUser')->middleware('can:user.update');
+    Route::get('role/update/{id}','Admin\RoleController@show')->middleware('can:user.update');
+    Route::post('role/update/{id}','Admin\RoleController@update')->middleware('can:user.update');
+
+    Route::get('role/delete/{id}','Admin\RoleController@delete')->middleware('can:user.delete');
+
     //customer
     Route::get('customer','Admin\CustomerController@index');
-    Route::get('customer/delete/{id}','Admin\CustomerController@delete');
+    Route::get('customer/delete/{id}','Admin\CustomerController@delete')->middleware('can:customer.delete');
 
     //invoice-in
     Route::get('invoice-in','Admin\InvoiceInController@index');
     Route::get('invoice-in/create','Admin\InvoiceInController@create')->middleware('can:invoice-in.create');
     Route::post('invoice-in/create','Admin\InvoiceInController@store')->middleware('can:invoice-in.create');
-    Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail');
-    Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail');
+    Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail')->middleware('can:invoice-in.create');
+    Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail')->middleware('can:invoice-in.create');
 
     //order
     Route::get('order','Admin\OrderController@index');
@@ -196,13 +205,13 @@ Route::group(['prefix' => 'admin'], function () {
 
     //backup
     Route::get('backup','Admin\BackupController@index');
-    Route::get('backup/create','Admin\BackupController@create');
-    Route::get('backup/download/{file_name}', 'Admin\BackupController@download');
-    Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete');
+    Route::get('backup/create','Admin\BackupController@create')->middleware('can:backup.create');
+    Route::get('backup/download/{file_name}', 'Admin\BackupController@download')->middleware('can:backup.download');
+    Route::get('backup/delete/{file_name}', 'Admin\BackupController@delete')->middleware('can:backup.delete');
 
     //slider
     Route::get('slider','Admin\SliderController@index');
-    Route::post('slider/create','Admin\SliderController@store');
-    Route::post('slider/update/{id}','Admin\SliderController@update');
-    Route::get('slider/delete/{id}','Admin\SliderController@delete');
+    Route::post('slider/create','Admin\SliderController@store')->middleware('can:book.create');
+    Route::post('slider/update/{id}','Admin\SliderController@update')->middleware('can:book.update');
+    Route::get('slider/delete/{id}','Admin\SliderController@delete')->middleware('can:book.delete');
 });

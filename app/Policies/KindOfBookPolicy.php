@@ -30,31 +30,29 @@ class KindOfBookPolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->hasAccess(['book.create']);
     }
 
     /**
      * Determine whether the user can update the kind of book.
      *
      * @param  \App\User  $user
-     * @param  \App\KindOfBook  $kindOfBook
      * @return mixed
      */
-    public function update(User $user, KindOfBook $kindOfBook)
+    public function update(User $user)
     {
-        //
+        return $user->hasAccess(['book.update']);
     }
 
     /**
      * Determine whether the user can delete the kind of book.
      *
      * @param  \App\User  $user
-     * @param  \App\KindOfBook  $kindOfBook
      * @return mixed
      */
-    public function delete(User $user, KindOfBook $kindOfBook)
+    public function delete(User $user)
     {
-        //
+        return $user->hasAccess(['book.delete']);
     }
 
     /**
