@@ -36,16 +36,19 @@
                             @if (Auth::guard('customer')->check())
                                 <li class="dropdown">
                                     <a href="#" id="loginDrop" class="dropdown-toggle btn btn-block" data-toggle="dropdown">
-                                        <i class="fa fa-user"></i>{{Auth::guard('customer')->user()->KH_TEN}} <span class="caret"></span></a>
+                                        <span class="glyphicon glyphicon-user"></span> {{Auth::guard('customer')->user()->KH_TEN}} <span class="caret"></span></a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropEdit">
                                         <li>
-                                            <a tabindex="-1"
-                                               href="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}">
+                                            <a tabindex="-1" href="{{url('/edit',Auth::guard('customer')->user()->KH_MA)}}">
                                                 <i class="fa fa-info"></i> Thông tin tài khoản</a>
                                         </li>
-
+                                        <li>
+                                            <a href="{{url('/order',Auth::guard('customer')->user()->KH_MA)}}" tabindex="-1">
+                                                <i class="fa fa-list-alt"></i> Đơn hàng của bạn</a>
+                                        </li>
                                         <li><a href="{{url('/logout')}}" tabindex="-1">
-                                                <i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                                                <i class="fa fa-sign-out"></i> Đăng xuất</a>
+                                        </li>
                                     </ul>
                                 </li>
                             @else

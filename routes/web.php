@@ -77,6 +77,7 @@ Route::group(['middleware' => ['web']], function () {
     Route::get('/change-password/{id}','EditController@showChangePass');
     Route::post('/change-password/{id}','EditController@changePass');
     Route::get('/order/{id}','EditController@showOrder');
+    Route::get('/order/view/{id}','EditController@showOrderDetail');
     Route::get('/order/delete/{id}','EditController@deleteOrder');
 });
 

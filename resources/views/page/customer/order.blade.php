@@ -23,7 +23,7 @@
                             Đổi mật khẩu</a>
                     </li>
                     <li>
-                        <a href=""><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
+                        <a href="{{url('/order',Auth::guard('customer')->user()->KH_MA)}}"><i class="glyphicon glyphicon-list-alt" style="font-size: 20px"></i>
                             Xem đơn hàng</a>
                     </li>
                 </ul>
@@ -50,7 +50,7 @@
                                 @if(count($orders)>0)
                                     @foreach($orders as $order)
                                         <tr>
-                                            <td><a href="">#{{$order->DH_MA}}</a></td>
+                                            <td><a href="{{url('/order/view',$order->DH_MA)}}">#{{$order->DH_MA}}</a></td>
                                             <td>
                                                 <?php $date=date_create($order->DH_NGAYDAT); ?>
                                                 {{date_format($date,'d-m-Y')}}

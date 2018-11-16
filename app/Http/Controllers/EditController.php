@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderDetails;
 use Illuminate\Http\Request;
 use App\Customer;
 use Illuminate\Support\Facades\Auth;
@@ -98,5 +99,39 @@ class EditController extends Controller
         $order->DH_TTDONHANG = 3;
         $order->save();
         return redirect()->back();
+    }
+
+    public function showOrderDetail($id){
+        $order = Order::where('DH_MA', $id)->first();
+        $books = $order->book()->get();
+        $customer = $order->customer()->first();
+        $total = 0;
+        foreach ($books as $book){
+            $total += $book->pivot->DHCT_SOLUONG*$book->pivot->DHCT_GIA;
+        }
+        $shipping = $order->DH_TONGTIEN - $total;
+        $order_id = $id;
+        switch ($order->DH_TTDONHANG){
+            case 0:
+                $status = 'Đang xử lí';
+                break;
+            case 1:
+                $status = 'Đang vận chuyển';
+                break;
+            case 2:
+                $status = 'Giao hàng thành công';
+                break;
+            case 3:
+                $status = 'Đang chờ xử lí hủy đơn hàng';
+                break;
+            case 4:
+                $status = 'Đã hủy';
+                break;
+        }
+        $order_status = $order->DH_TTDONHANG;
+        $order_checkout = $order->DH_GHICHU;
+        $order_created = $order->CREATED_AT;
+        return view('page.customer.orderDetail', compact('books','shipping','total', 'order_id', 'status',
+            'order_created','customer','order_checkout'));
     }
 }
