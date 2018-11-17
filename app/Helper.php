@@ -71,6 +71,23 @@ class Helper
         return $data;
     }
 
+    public function getCustomerDate(Collection $collection){
+        $i=0;
+        $data = array();
+        foreach ($collection as $item){
+            $temp = $item->customer()->first();
+            $data[$i] = [
+                'id'=>$temp->KH_MA,
+                'name'=>$temp->KH_TEN,
+                'address'=>$temp->fulladdress,
+                'phone'=>$temp->KH_SDT,
+
+            ];
+            $i++;
+        }
+        return $data;
+    }
+
     public function paginate($items, $perPage = 15, $page = null, $options = [])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);

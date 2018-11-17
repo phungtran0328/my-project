@@ -62,13 +62,15 @@ class HomeController extends Controller
         $chart->dataset('Loại sách','bar',$values );
 
         $result_month = array();
-        $a = 0;
+        $a =0 ;
         $data = array();
+
         for ($j=1;$j<13;$j++){
             //Lấy hóa đơn tháng 1-12 trong năm hiện tại
             $months = Invoice::whereMonth('CREATED_AT','=',$j)
                 ->whereYear('CREATED_AT', '=', date('Y'))
                 ->get();
+
             $result_month[$j] = $temp->getBookDate($months); //Truyền vào collection hóa đơn
             //Lấy hóa đơn trong từng tháng 1-12 =>key=tháng, value=total
             for ($c=0; $c<count($result_month[$j]);$c++){
