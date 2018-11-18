@@ -134,7 +134,6 @@ foreach ($books_out_stock as $key=>$value){
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        @php $i=1; @endphp
                         <table class="table table-hover table-bordered">
                             <thead>
                             <tr>
@@ -142,19 +141,24 @@ foreach ($books_out_stock as $key=>$value){
                                 <th>Địa chỉ</th>
                                 <th>Số ĐT</th>
                                 <th>Email</th>
+                                <th>Tổng SL</th>
+                                <th>Tổng giá</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
+                            @for($i=0; $i<count($customer); $i++)
+                                <tr>
+                                    <td>{{$customer[$i]['name']}}</td>
+                                    <td>{{$customer[$i]['address']}}</td>
+                                    <td>{{$customer[$i]['phone']}}</td>
+                                    <td>{{$customer[$i]['email']}}</td>
+                                    <td>{{$customer[$i]['qty']}}</td>
+                                    <td>{{number_format($customer[$i]['total'])}}</td>
+                                </tr>
+                            @endfor
                             </tbody>
                         </table>
                         <!-- /.list-group -->
-                        <a href="#" class="btn btn-default btn-block">View All Alerts</a>
                     </div>
                     <!-- /.panel-body -->
                 </div>

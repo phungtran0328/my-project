@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Book;
 use App\Charts\RevenueChart;
+use App\Customer;
 use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Invoice;
@@ -91,6 +92,34 @@ class HomeController extends Controller
         $chart_month->loaderColor('#333333');
         $chart_month->dataset('Tháng','bar',$values_month);
 
-        return view('admin.home', compact('chart','chart_month'));
+        //khách hàng mua nhiều (qty)
+        //gộp qty theo khách hàng trong bảng hóa đơn (desc), tháng, năm hiện tại
+        $test_customer = DB::table('hd_chitiet')
+            ->join('hoadon','hoadon.HD_MA','=','hd_chitiet.HD_MA')
+            ->select('hoadon.KH_MA',DB::raw('sum(HDCT_SOLUONG) as qty'),DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
+            ->whereMonth('CREATED_AT','=',date('m'))
+            ->whereYear('CREATED_AT','=',date('Y'))
+            ->groupBy('hoadon.KH_MA')
+            ->orderBy('qty','desc')
+            ->get();
+
+        $customer = array();
+        $e = 0;
+        if ($e < 10){
+            foreach ($test_customer as $item){
+                $temp_customer = Customer::where('KH_MA', $item->KH_MA)->first();
+                $customer[$e] = [
+                    'name'=>$temp_customer->KH_TEN,
+                    'address'=>$temp_customer->fulladdress,
+                    'phone'=>$temp_customer->KH_SDT,
+                    'email'=>$temp_customer->KH_EMAIL,
+                    'qty'=>$item->qty,
+                    'total'=>$item->total
+                ];
+                $e++;
+            }
+        }
+
+        return view('admin.home', compact('chart','chart_month','customer'));
     }
 }
