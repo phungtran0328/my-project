@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="source/assets/dest/vendors/colorbox/example3/colorbox.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/settings.css">
     <link rel="stylesheet" href="source/assets/dest/rs-plugin/css/responsive.css">
-    <link rel="stylesheet" type="text/css" href="source/assets/dest/css/style.css?version=53">
+    <link rel="stylesheet" type="text/css" href="source/assets/dest/css/style.css?version=54">
     {{--?version=51 dùng làm mới lại css khi có chỉnh sửa trong file css --}}
     <link rel="stylesheet" href="source/assets/dest/css/animate.css">
     <link rel="stylesheet" title="style" href="source/assets/dest/css/huong-style.css">
@@ -59,26 +59,26 @@
                 datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
                 queryTokenizer: Bloodhound.tokenizers.whitespace
             });
-
             $(".typeahead .search-input").typeahead({
                 hint: true,
                 highlight: true,
                 minLength: 1
-            }, {
-                source: engine.ttAdapter(),
-                name: 'books-name',
-                display: function(data) {
-                    return data.S_TEN;
-                },
-                templates: {
-                    empty: [
-                        '<div class="list-group"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
-                    ],
-                    suggestion: function (data) {
-                        return '<a href="detail/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
+            },{
+                    source: engine.ttAdapter(),
+                    name: 'books-name',
+                    display: function(data) {
+                        return data.S_TEN;
+                    },
+                    templates: {
+                        empty: [
+                            '<div class="list-group"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
+                        ],
+                        suggestion: function (data) {
+                            return '<a href="detail/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
+                        }
                     }
                 }
-            });
+            );
         });
     </script>
 

@@ -60,14 +60,14 @@
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div style="border: 1px solid #dddddd; margin-bottom: 20px">
                                                 <div class="single-item">
-                                                    <div class="single-item-header">
-                                                        <a href="{{url('/detail',$cate_book['id'])}}" class="text-center">
-                                                            <img src="images/avatar/{{$cate_book['image']}}" alt="" style="width: 100%" height="250px">
+                                                    <div class="single-item-header text-center">
+                                                        <a href="{{url('/detail',$cate_book['id'])}}">
+                                                            <img src="images/avatar/{{$cate_book['image']}}" alt="" width="90%" height="90%">
                                                         </a>
                                                     </div>
                                                     <div class="single-item-body text-center">
                                                         <a href="{{url('/detail',$cate_book['id'])}}" class="single-item-title" style="font-size: 14px">
-                                                            {{ str_limit($cate_book['name'], $limit = 20, $end = '...') }}</a>
+                                                            {{ str_limit($cate_book['name'], $limit = 18, $end = '...') }}</a>
                                                         <p class="single-item-price" style="font-size: 13px">
                                                             @if(isset($cate_book['sale']))
                                                                 <span class="flash-del">{{number_format($cate_book['price'])}} đ</span>

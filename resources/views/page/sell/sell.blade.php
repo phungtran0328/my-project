@@ -30,22 +30,26 @@
                                 @endphp
                             <tr>
                                 <td style="font-size: large; width: 10%" class="text-center"> #{{$i}}</td>
-                                <td style="width: 30%" class="text-center">
-                                    <a href="{{url('/detail',$book['id'])}}">
-                                        <img src="images/avatar/{{$book['image']}}" width="110px" height="150px">
-                                    </a>
-                                </td>
-                                <td class="">
-                                    <a href="{{url('/detail',$book['id'])}}" style="font-size: medium; color: #0a263c">{{$book['name']}}</a> <br><br>
-                                    @if(isset($book['sale']))
-                                        <strong>Giá: </strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px;" class="flash-del">
-                                            {{number_format($book['price'])}} đ</strong><br><br>
-                                        <strong>Giảm còn: </strong><strong class="flash-sale" style="margin-left: 20px">
-                                            {{number_format($book['sale'])}} đ</strong>
-                                        @else
-                                        <strong>Giá :</strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px">
-                                            {{number_format($book['price'])}} đ</strong><br>
-                                    @endif
+                                <td style="width: 80%" class="text-center">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-sm-6">
+                                            <a href="{{url('/detail',$book['id'])}}">
+                                                <img src="images/avatar/{{$book['image']}}" width="70%" height="70%">
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-6">
+                                            <a href="{{url('/detail',$book['id'])}}" style="font-size: medium; color: #0a263c">{{$book['name']}}</a> <br><br>
+                                            @if(isset($book['sale']))
+                                                <strong>Giá: </strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px;" class="flash-del">
+                                                    {{number_format($book['price'])}} đ</strong><br><br>
+                                                <strong>Giảm còn: </strong><strong class="flash-sale" style="margin-left: 20px">
+                                                    {{number_format($book['sale'])}} đ</strong>
+                                            @else
+                                                <strong>Giá :</strong><strong style="color: darkblue; margin-left: 20px; font-size: 14px">
+                                                    {{number_format($book['price'])}} đ</strong><br>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </td>
                                 <td></td>
                             </tr>

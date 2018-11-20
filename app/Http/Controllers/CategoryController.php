@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Author;
+use App\Helper;
 use Illuminate\Http\Request;
 use App\KindOfBook;
 use App\Book;
@@ -55,25 +56,24 @@ class CategoryController extends Controller
     }
 
 
-    public function authorCategory(Request $request, $id){
+    public function authorCategory($id){
         $author = Author::where('TG_MA', $id)->first();
-        $temp_books = $author->book()->paginate(2);
-        $temp_trans_book = $author->translate_book()->paginate(2);
+        $temp_books = $author->book()->paginate(1);
+        $temp_trans_book = $author->translate_book()->paginate(1);
         $books=array();
         if (!is_null($temp_books)){
             for ($i=0;$i<count($temp_books);$i++){
                 $temp = new Book();
                 $books[$i] = $temp->getBookPromotion($temp_books[$i]->S_MA);
-                $cate = $temp_books[0]->kind_of_book()->first();
             }
         }
         if (!is_null($temp_trans_book)){
             for ($i = 0; $i < count($temp_trans_book); $i++) {
                 $temp = new Book();
                 $books[$i] = $temp->getBookPromotion($temp_trans_book[$i]->S_MA);
-                $cate = $temp_trans_book[0]->kind_of_book()->first();
             }
         }
+
         return view('page.category.author', compact('books', 'author','cate', 'temp_books', 'temp_trans_book'));
     }
 }
