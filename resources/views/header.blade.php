@@ -21,7 +21,7 @@
                             <input class="form-control" type="text" value="" name="key" id="s" placeholder="Tìm sách..." style="width: 100%"/>
                             <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
                         </form>--}}
-                        <form class="navbar-form navbar-left typeahead"  method="get" action="{{url('/search_book')}}">
+                        <form class="navbar-form navbar-left typeahead"  method="get" action="{{route('search-book')}}">
                             <input type="search" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 160%">
                             {{--<button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>--}}
                             <span class="input-group-btn" style="display: none">
@@ -55,7 +55,7 @@
                                 <li><a href="{{url('/register')}}" ><span class="glyphicon glyphicon-user"></span> Tạo tài khoản</a></li>
                                 <li><a href="{{url('/login')}}" ><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
                             @endif
-                            <li><a href="{{url('/cart')}}" ><span class="glyphicon glyphicon-shopping-cart"></span>
+                            <li><a href="{{route('cart')}}" ><span class="glyphicon glyphicon-shopping-cart"></span>
                                     Giỏ hàng <span class="badge">{{Cart::instance('default')->count(false)}}</span></a></li>
                         </ul>
                     </div>

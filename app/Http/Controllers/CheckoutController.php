@@ -9,6 +9,7 @@ use App\OrderDetails;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use League\Flysystem\Exception;
 
 class CheckoutController extends Controller
@@ -32,17 +33,6 @@ class CheckoutController extends Controller
     }
 
     public function checkAuth(Request $request){
-        $this->validate($request,
-            [
-                'email'=>'required|email',
-                'password'=>'required',
-            ],
-            [
-                'email.required' => 'Vui lòng nhập email',
-                'email.email' => 'Địa chỉ mail không hợp lệ',
-                'password.required' => 'Vui lòng nhập mật khẩu'
-            ]
-        );
         $email = $request['email'];
         $password = $request['password'];
 
@@ -60,29 +50,20 @@ class CheckoutController extends Controller
     public function registerAuth(Request $request){
         $this->validate($request,
             [
-                'username' => 'required',
-                'email' => 'required|email|unique:khachhang,KH_EMAIL',
+                'email' => 'unique:khachhang,KH_EMAIL',
                 //unique: table,column_name
-                'phone' => 'required|regex:/(0)[0-9]{9}$/',
+                'phone' => 'regex:/(0)[0-9]{9}$/',
                 //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
-                'birthday' => 'required|before:2006-01-01',
+                'birthday' => 'before:2006-01-01',
                 //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
-                'address' => 'required',
-                'city'=>'required'
             ],
             [
-                'username.required' => 'Vui lòng nhập họ tên !',
-                'email.required'=>'Vui lòng nhập email ! ',
-                'email.email'=>'Địa chỉ mail không hợp lệ !',
                 'email.unique'=>'Email đã có người sử dụng ! ',
-                'address.required' => 'Vui lòng nhập địa chỉ !',
-                'city.required'=>'Vui lòng chọn tỉnh/thành phố !',
-                'phone.required'=>'Vui lòng nhập số điện thoại ! ',
                 'phone.regex'=>'Số điện thoại không hợp lệ ! ',
-                'birthday.required'=>'Vui lòng điền ngày sinh !',
                 'birthday.before'=>'Phải lớn hơn 12 tuổi !'
             ]
         );
+
         $carts=Cart::content();
         //Thêm người dùng vào database
         $customer=new Customer();

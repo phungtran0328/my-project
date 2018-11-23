@@ -138,12 +138,12 @@ foreach ($results as $result){
                                     <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
-                                                <a href="{{url('/detail',$temp_new_book_promotion[$sum]['id'])}}" style="" class="">
+                                                <a href="{{url('/chi-tiet-sach',$temp_new_book_promotion[$sum]['id'])}}" style="" class="">
                                                     <img src="images/avatar/{{$temp_new_book_promotion[$sum]['image']}}" alt="" height="90%" width="90%">
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$temp_new_book_promotion[$sum]['id'])}}" class="single-item-title" >
+                                                <a href="{{url('/chi-tiet-sach',$temp_new_book_promotion[$sum]['id'])}}" class="single-item-title" >
                                                     {{ str_limit($temp_new_book_promotion[$sum]['name'], $limit = 18, $end = '...') }}</a>
                                                 <p class="single-item-price" >
                                                     @if(isset($temp_new_book_promotion[$sum]['sale']))
@@ -186,12 +186,12 @@ foreach ($results as $result){
                                     <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                         <div class="single-item">
                                             <div class="single-item-header text-center">
-                                                <a href="{{url('/detail',$temp_view_book['id'])}}" style="" class="">
+                                                <a href="{{url('/chi-tiet-sach',$temp_view_book['id'])}}" style="" class="">
                                                     <img src="images/avatar/{{$temp_view_book['image']}}" alt="" width="90%" height="90%">
                                                 </a>
                                             </div>
                                             <div class="single-item-body text-center">
-                                                <a href="{{url('/detail',$temp_view_book['id'])}}" class="single-item-title">
+                                                <a href="{{url('/chi-tiet-sach',$temp_view_book['id'])}}" class="single-item-title">
                                                     {{ str_limit($temp_view_book['name'], $limit = 18, $end = '...') }}</a>
                                                 <p class="single-item-price" >
                                                     @if(isset($temp_view_book['sale']))
@@ -231,12 +231,12 @@ foreach ($results as $result){
                                         <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                             <div class="single-item">
                                                 <div class="single-item-header text-center">
-                                                    <a href="{{url('/detail',$temp_invoice_book['id'])}}" style="" class="">
+                                                    <a href="{{url('/chi-tiet-sach',$temp_invoice_book['id'])}}" style="" class="">
                                                         <img src="images/avatar/{{$temp_invoice_book['image']}}" alt="" height="90%" width="90%">
                                                     </a>
                                                 </div>
                                                 <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$temp_invoice_book['id'])}}" class="single-item-title" >
+                                                    <a href="{{url('/chi-tiet-sach',$temp_invoice_book['id'])}}" class="single-item-title" >
                                                         {{ str_limit($temp_invoice_book['name'], $limit = 18, $end = '...') }}</a>
                                                     <p class="single-item-price" >
                                                         @if(isset($temp_invoice_book['sale']))

@@ -98,30 +98,30 @@
                             <div class="group-tabs">
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Đăng nhập</a></li>
-                                    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Khách</a></li>
+                                    <li role="presentation" class="{{$errors->has('*') ? '' : 'active'}}">
+                                        <a href="#home" aria-controls="home" role="tab" data-toggle="tab">Đăng nhập</a></li>
+                                    <li role="presentation" class="{{$errors->has('*') ? 'active' : ''}}">
+                                        <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Khách</a></li>
                                 </ul>
 
                                 <!-- Tab panes -->
-                                <div class="tab-content">
-                                    <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="tab-content" id="showTab">
+                                    <div role="tabpanel" class="tab-pane {{$errors->has('*') ? '' : 'active'}}" id="home">
                                         <br><br>
                                         <form class="form-horizontal" action="{{url('/checkout/check')}}" method="POST">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                                <label class="col-md-3 control-label required" for="txtUsername">Email (*)</label>
+                                            <div class="form-group">
+                                                <label class="col-md-3 control-label">Email (*)</label>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control "
+                                                    <input type="email" class="form-control "
                                                            name="email" placeholder="Nhập email" value="{{old('email')}}">
-                                                    <strong style="color: red">{{$errors->first('email') }}</strong>
                                                 </div>
                                             </div>
-                                            <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
+                                            <div class="form-group">
                                                 <label class="col-md-3 control-label required" for="txtPassword">Mật khẩu (*)</label>
                                                 <div class="col-md-7">
                                                     <input type="password" class="form-control" name="password"
                                                            placeholder="Mật khẩu từ 6 đến 32 ký tự" value="{{old('password')}}">
-                                                    <strong style="color: red">{{$errors->first('password') }}</strong>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -132,25 +132,24 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="profile">
+                                    <div role="tabpanel" class="tab-pane {{$errors->has('*') ? 'active' : ''}}" id="profile">
                                         <br><br>
                                         <form class="form-horizontal" action="{{url('/checkout/register')}}" method="POST">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
-                                                <label class="col-md-2 control-label required">Họ tên (*)</label>
+                                            <div class="form-group">
+                                                <label class="col-md-2 control-label ">Họ tên (*)</label>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control "
+                                                    <input type="text" class="form-control " required
                                                            name="username" placeholder="Nhập họ tên" value="{{old('username')}}">
-                                                    <strong style="color: red">{{$errors->first('username') }}</strong>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group {{ $errors->has('address') ? ' has-error' : '' }}">
+                                            <div class="form-group">
                                                 <label class="col-md-2 control-label required">Địa chỉ (*)</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" class="form-control "
+                                                    <input type="text" class="form-control " required
                                                            name="address" placeholder="Nhập địa chỉ" value="{{old('address')}}">
-                                                    <strong style="color: red">{{$errors->first('address') }}</strong>
+
                                                 </div>
                                                 <div class="col-md-4">
                                                     <select name="city" class="form-control" onchange="shipping(this);">
@@ -162,26 +161,26 @@
                                                 </div>
                                             </div>
                                             <div class="form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
-                                                <label class="col-md-2 control-label required">Số ĐT (*)</label>
+                                                <label class="col-md-2 control-label ">Số ĐT (*)</label>
                                                 <div class="col-md-4">
-                                                    <input type="tel" class="form-control "
+                                                    <input type="tel" class="form-control " required
                                                            name="phone" placeholder="Nhập số điện thoại" value="{{old('phone')}}">
                                                     <strong style="color: red">{{$errors->first('phone') }}</strong>
                                                 </div>
                                                 <label class="control-label"></label>
                                             </div>
                                             <div class="form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
-                                                <label class="col-md-2 control-label required">Ngày sinh (*)</label>
+                                                <label class="col-md-2 control-label ">Ngày sinh (*)</label>
                                                 <div class="col-md-4">
-                                                    <input type="date" class="form-control "
+                                                    <input type="date" class="form-control " required
                                                            name="birthday" placeholder="Chọn ngày sinh" value="{{old('birthday')}}">
                                                     <strong style="color: red">{{$errors->first('birthday') }}</strong>
                                                 </div>
                                             </div>
-                                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                                            <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
                                                 <label class="col-md-2 control-label required" >Email (*)</label>
                                                 <div class="col-md-7">
-                                                    <input type="text" class="form-control "
+                                                    <input type="email" class="form-control " required
                                                            name="email" placeholder="Nhập email" value="{{old('email')}}">
                                                     <strong style="color: red">{{$errors->first('email') }}</strong>
                                                 </div>
@@ -191,8 +190,6 @@
                                                 <div class="col-md-7">
                                                     <label><input type="radio" name="checkout" value="Thanh toán bằng tiền mặt khi nhận hàng"
                                                                   checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>
-                                                    <label><input type="radio" name="checkout" value="Thanh toán qua thẻ nội địa">
-                                                        Thanh toán qua thẻ nội địa</label><br>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -226,9 +223,8 @@
                                     <form action="{{url('/checkout')}}" method="post">
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
                                         <div class="form-group">
-                                            <label><input type="radio" name="checkout" value="Thanh toán bằng tiền mặt khi nhận hàng"
+                                            <label><input type="radio" name="checkout" value="TT bằng tiền mặt khi nhận hàng"
                                                           checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>
-                                            <label><input type="radio" name="checkout" value="Thanh toán qua thẻ nội địa"> Thanh toán qua thẻ nội địa</label>
                                         </div>
                                         <div class="form-group">
                                             <button class="btn btn-primary">ĐẶT HÀNG</button>
@@ -247,7 +243,7 @@
                                 Đơn hàng ({{Cart::instance()->count(false)}} sản phẩm)
                             </div>
                             <div class="col-md-3" style="text-align: center; margin-bottom: 15px">
-                                <a href="{{url('/cart')}}" class="btn btn-default">Sửa</a>
+                                <a href="{{route('cart')}}" class="btn btn-default">Sửa</a>
                             </div>
                         </div>
                         @if (sizeof(Cart::content()) > 0)
@@ -281,7 +277,7 @@
                                 <div class="col-md-7" style="text-align: left; font-size: 15px; margin-bottom: 15px">
                                     <p>Thành tiền:</p>
                                 </div>
-                                <div class="col-md-5" style="text-align: right; color: red; font-size: 18px">
+                                <div class="col-md-5" style="text-align: right; color: red; font-size: 18px; font-weight: bold">
                                     @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
                                         <div id="myTotal">
                                             {{Cart::subtotal()}} đ

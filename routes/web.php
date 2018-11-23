@@ -24,34 +24,37 @@ Route::get('/category/{id}','CategoryController@category');
 Route::get('/category/author/{id}','CategoryController@authorCategory');
 
 Route::group(['middleware' => 'filter'], function() {
-    Route::get('/detail/{id}','DetailController@getDetail');
+    Route::get('/chi-tiet-sach/{id}','DetailController@getDetail');
 });
 
 Route::get('/search','HomeController@searchName');
-Route::get('/search_book','HomeController@search');
+Route::get('/tim-kiem','HomeController@search')->name('search-book');
 
 //top sell
-Route::get('/top-san-pham-ban-chay-nhat',[
+$top_sach = str_slug('top sach ban chay nhat','-');
+Route::get('/'.$top_sach,[
     'as'=>'sell',
     'uses'=>'SellController@getTopSell']
 );
-Route::get('/top-sach-van-hoc-ban-chay-nhat',[
+$top_van_hoc = str_slug('top sach van hoc ban chay nhat','-');
+Route::get('/'.$top_van_hoc,[
     'as'=>'sell/kindOfBook',
     'uses'=>'SellController@getTopSellKindOfBook'
 ]);
-Route::get('/top-sach-kinh-te-ban-chay-nhat',[
+$top_kinh_te = str_slug('top sach kinh te ban chay nhat','-');
+Route::get('/'.$top_kinh_te,[
     'as'=>'sell/kindOfBookEconomic',
     'uses'=>'SellController@getTopSellEconomic'
 ]);
 // (/ =>url , as => route)
 
 //shopping cart
-Route::get('/cart','CartController@index');
+Route::get('/gio-hang','CartController@index')->name('cart');
 Route::post('/cart','CartController@store');
 Route::post('/cart/update/{id}','CartController@update');
 Route::post('cart/delete/{id}','CartController@destroy');
 Route::post('/cart/empty', 'CartController@emptyCart');
-Route::get('/checkout','CheckoutController@index');
+Route::get('/thanh-toan','CheckoutController@index')->name('checkout');
 Route::post('/checkout/check','CheckoutController@checkAuth');
 Route::post('/checkout/register','CheckoutController@registerAuth');
 Route::post('/checkout','CheckoutController@checkout');

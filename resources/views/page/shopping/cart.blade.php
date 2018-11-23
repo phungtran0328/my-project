@@ -9,7 +9,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
                 <br>
                 <h4>GIỎ HÀNG ({{Cart::instance()->count(false)}})</h4>
                 <br>
@@ -45,10 +45,9 @@
                             @foreach (Cart::content() as $item)
                                 <tr>
                                     <td colspan="1">
-                                        <a href="{{ url('detail', [$item->id]) }}">
+                                        <a href="{{ url('chi-tiet-sach', [$item->id]) }}">
                                             <?php
                                                 $temp=\App\Book::where('S_MA',[$item->id])->first();
-                                                $image=$temp->image()->first();
                                                 $promotion=$temp->promotion()->first();
                                                 $total=0;
                                                 if ($item->price <> $item->model->S_GIA){
@@ -61,11 +60,15 @@
                                                 $sum+=$total;
                                                 //tổng giá chưa giảm (bởi vì thêm giá khuyến mãi vào cho $item->price)
                                             ?>
-                                            <img src="images/{{$image->HA_URL}}" width="100" height="100" >
+                                                <div class="row">
+                                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                                        <img src="images/avatar/{{$item->model->S_AVATAR}}">
+                                                    </div>
+                                                </div>
                                         </a>
                                     </td>
                                     <td colspan="1">
-                                        <a href="{{ url('detail', [$item->id]) }}">{{ $item->model->S_TEN }}</a>
+                                        <a href="{{ url('chi-tiet-sach', [$item->id]) }}">{{ $item->model->S_TEN }}</a>
                                     </td>
                                     <td style="width: 15%">
                                         <form class="input-group" action="{{url('/cart/update',$item->rowId)}}" method="post">
@@ -73,7 +76,7 @@
                                             <input value="{{$item->qty}}" class="form-control" type="number" min="1" id="qty-num" name="qty">
                                             <input type="hidden" name="id" value="{{$item->rowId}}">
                                             <span class="input-group-btn">
-                                                <button class="btn btn-default-sm">Cập nhật</button>
+                                                <button class="btn btn-default-sm"><span class="glyphicon glyphicon-refresh"></span></button>
                                             </span>
                                         </form>
                                         <p>{{$errors->has('qty') ? $errors->first('qty') : ''}}</p>
@@ -115,7 +118,7 @@
                         <div class="row">
                             <div class="col-md-7">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-sm-12 col-xs-12">
                                 <table class="table table-bordered" style="border: none; width: 100%">
                                     <tr>
                                         <th style="font-size: 18px; text-align: left;" colspan="50%">TỔNG CHƯA GIẢM</th>
@@ -123,10 +126,10 @@
                                     </tr>
                                     <tr>
                                         <th style="font-size: 18px;  text-align: left" colspan="50%">TỔNG CỘNG</th>
-                                        <td style="font-size: 18px; text-align: right; color: red">{{ Cart::instance('default')->subtotal()}} đ</td>
+                                        <td style="font-size: 18px; text-align: right; color: red; font-weight: bold">{{ Cart::instance('default')->subtotal()}} đ</td>
                                     </tr>
                                 </table>
-                                <a href="{{url('/checkout')}}" class="btn btn-success btn-block">Tiến hành thanh toán</a>
+                                <a href="{{route('checkout')}}" class="btn btn-success btn-block">Tiến hành thanh toán</a>
                             </div>
                         </div>
                     @else

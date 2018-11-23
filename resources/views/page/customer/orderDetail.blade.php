@@ -76,7 +76,7 @@
                                                     <img src="images/avatar/{{$book->S_AVATAR}}" >
                                                 </div>
                                                 <div class="col-lg-9 col-md-9 col-sm-6">
-                                                    <a href="{{url('/detail',$book->S_MA)}}">{{$book->S_TEN}}</a>
+                                                    <a href="{{url('/chi-tiet-sach',$book->S_MA)}}">{{$book->S_TEN}}</a>
                                                 </div>
                                             </div>
 

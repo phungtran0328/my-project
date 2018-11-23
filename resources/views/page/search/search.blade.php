@@ -46,7 +46,7 @@
                                             <div style="margin-bottom: 20px; border: 1px solid #dddddd">
                                                 <div class="single-item">
                                                     <div class="single-item-header text-center" >
-                                                        <a href="{{url('/detail',$book_search['id'])}}" style="" class="">
+                                                        <a href="{{url('chi-tiet-sach',$book_search['id'])}}" style="" class="">
                                                             <img src="images/avatar/{{$book_search['image']}}" alt="" height="90%" width="90%">
                                                         </a>
                                                     </div>

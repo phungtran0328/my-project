@@ -61,7 +61,7 @@
                                             <div style="border: 1px solid #dddddd; margin-bottom: 20px">
                                                 <div class="single-item">
                                                     <div class="single-item-header text-center">
-                                                        <a href="{{url('/detail',$cate_book['id'])}}">
+                                                        <a href="{{url('/chi-tiet-sach',$cate_book['id'])}}">
                                                             <img src="images/avatar/{{$cate_book['image']}}" alt="" width="90%" height="90%">
                                                         </a>
                                                     </div>
