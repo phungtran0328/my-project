@@ -13,7 +13,7 @@
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="navbar-header">
-                            <a class="navbar-brand" style="" href="{{url('/index')}}">Bookstore</a>
+                            <a class="navbar-brand" style="margin-left: 60px;font-weight: bold; font-size: 30px;" href="{{url('/index')}}">BookStore</a>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -55,7 +55,7 @@
                                 <li><a href="{{url('/register')}}" ><span class="glyphicon glyphicon-user"></span> Tạo tài khoản</a></li>
                                 <li><a href="{{url('/login')}}" ><span class="glyphicon glyphicon-log-in"></span> Đăng nhập</a></li>
                             @endif
-                            <li><a href="{{route('cart')}}" ><span class="glyphicon glyphicon-shopping-cart"></span>
+                            <li><a href="{{url('/cart')}}" ><span class="glyphicon glyphicon-shopping-cart"></span>
                                     Giỏ hàng <span class="badge">{{Cart::instance('default')->count(false)}}</span></a></li>
                         </ul>
                     </div>

@@ -127,7 +127,8 @@ foreach ($results as $result){
                     </div> <!-- .beta-products-list -->
 
                     <div class="beta-products-list">
-                        <h4>Sách mới (dựa vào ngày nhập)</h4>
+                        {{--dựa vào ngày nhập--}}
+                        <h4>Sách mới</h4>
                         <div class="beta-products-details">
                             {{--<p class="pull-left">Sách mới</p>--}}
                             <div class="clearfix"></div>
@@ -165,7 +166,8 @@ foreach ($results as $result){
                     <div class="space40">&nbsp;</div>
 
                     <div class="beta-products-list">
-                        <h4>Sách nổi bật (dựa vào lượt xem)</h4>
+                        {{--dựa vào lượt xem--}}
+                        <h4>Sách nổi bật</h4>
                         <div class="beta-products-details">
                             <?php
                                 $views=\App\Book::where('S_SLTON','<>',0)->orderBy('S_LUOTXEM','desc')
@@ -213,7 +215,8 @@ foreach ($results as $result){
                     <div class="space40">&nbsp;</div>
 
                     <div class="beta-products-list">
-                        <h4>Sách bán chạy (dựa vào hóa đơn)</h4>
+                        {{--dựa vào hóa đơn--}}
+                        <h4>Sách bán chạy</h4>
                         <div class="beta-products-details">
                             {{--<p class="pull-left">Có {{$count}} sách</p>--}}
                             <div class="clearfix"></div>

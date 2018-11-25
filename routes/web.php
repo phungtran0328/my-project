@@ -49,7 +49,7 @@ Route::get('/'.$top_kinh_te,[
 // (/ =>url , as => route)
 
 //shopping cart
-Route::get('/gio-hang','CartController@index')->name('cart');
+Route::get('/cart','CartController@index');
 Route::post('/cart','CartController@store');
 Route::post('/cart/update/{id}','CartController@update');
 Route::post('cart/delete/{id}','CartController@destroy');

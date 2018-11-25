@@ -128,7 +128,6 @@ class EditController extends Controller
                 $status = 'Đã hủy';
                 break;
         }
-        $order_status = $order->DH_TTDONHANG;
         $order_checkout = $order->DH_GHICHU;
         $order_created = $order->CREATED_AT;
         return view('page.customer.orderDetail', compact('books','shipping','total', 'order_id', 'status',

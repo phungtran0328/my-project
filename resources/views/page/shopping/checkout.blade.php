@@ -51,26 +51,26 @@
             <li class="active">Thanh toán</li>
         </ul>
     </div>
-
+    @if(Session::has('messCheck'))
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{Session::get('messCheck')}}
+        </div>
+    @endif
+    @if(Session::has('message'))
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            {{Session::get('message')}}
+        </div>
+    @endif
     <div class="container">
-        <div class="row">
+        {{--<div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        @if(Session::has('messCheck'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messCheck')}}
-                            </div>
-                        @endif
-                            @if(Session::has('message'))
-                                <div class="alert alert-danger alert-dismissable">
-                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('message')}}
-                                </div>
-                            @endif
 
-                        {{--<div class="stepwizard">
+
+                        --}}{{--<div class="stepwizard">
                             <div class="stepwizard-row setup-panel">
                                 <div class="stepwizard-step col-xs-4">
                                     <a href="#step-1" class="btn btn-success">1</a>
@@ -85,11 +85,11 @@
                                     <p>Thanh toán & Đặt mua</p>
                                 </div>
                             </div>
-                        </div>--}}
+                        </div>--}}{{--
                     </div>
                 </div>
             </div>
-        </div>
+        </div>--}}
         <div class="row">
             <div class="col-md-8">
                 @if(!(\Illuminate\Support\Facades\Auth::guard('customer')->check()))
@@ -243,7 +243,7 @@
                                 Đơn hàng ({{Cart::instance()->count(false)}} sản phẩm)
                             </div>
                             <div class="col-md-3" style="text-align: center; margin-bottom: 15px">
-                                <a href="{{route('cart')}}" class="btn btn-default">Sửa</a>
+                                <a href="{{url('/cart')}}" class="btn btn-default">Sửa</a>
                             </div>
                         </div>
                         @if (sizeof(Cart::content()) > 0)

@@ -64,12 +64,18 @@ class Book extends Model
 
     public function getBookPromotion($id){
         $book = Book::where('S_MA', $id)->first();
-        $date = strtotime(date('Y-m-d'));
+        $date = strtotime(date('Y-m-d H:i:s'));
         $image = $book->S_AVATAR;
         $promotion = $book->promotion()->first();
         if (isset($promotion)){
             $start = strtotime($promotion->KM_APDUNG);
-            $end = strtotime($promotion->KM_HANDUNG);
+            $temp_end = $promotion->KM_HANDUNG; // Số ngày áp dụng
+            if ($temp_end>1){
+                $end = strtotime("+".$temp_end." days", $start); //Lấy ngày áp dụng + số ngày áp dụng
+            }
+            else{
+                $end = strtotime("+".$temp_end." day", $start);
+            }
             if (($start<=$date) and ($date<=$end)){
                 return $results = array(
                     'id'=>$id,

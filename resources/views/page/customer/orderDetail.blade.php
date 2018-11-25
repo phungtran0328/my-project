@@ -35,25 +35,30 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-4">
-                                <strong>ĐỊA CHỈ NGƯỜI NHẬN</strong>
-                                <div class="panel panel-default panel-body" style="height: 130px">
-                                    <p style="font-size: 15px; margin-bottom: 10px;"> {{$customer->KH_TEN}}</p>
-                                    <p style="font-size: 13px; "> Địa chỉ: {{$customer->fulladdress}}</p>
-                                    <p style="font-size: 13px; "> Số ĐT: {{$customer->KH_SDT}}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <strong>HÌNH THỨC GIAO HÀNG</strong>
-                                <div class="panel panel-default panel-body" style="height: 130px">
-                                    <p> Giao hàng tiêu chuẩn</p>
-                                    <p> Phí vận chuyển: {{number_format($shipping)}} đ</p>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <strong>HÌNH THỨC THANH TOÁN</strong>
-                                <div class="panel panel-default panel-body" style="height: 130px">
-                                    <p>{{$order_checkout}}</p>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="panel panel-default panel-body">
+                                    <table class="table">
+                                        <tr>
+                                            <th style="width: 20%">Người nhận:</th>
+                                            <td>{{mb_strtoupper($customer->KH_TEN,'UTF-8')}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Địa chỉ:</th>
+                                            <td>{{$customer->fulladdress}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Số điện thoại:</th>
+                                            <td>{{$customer->KH_SDT}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Phí vận chuyển:</th>
+                                            <td>{{number_format($shipping)}} đ</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Hình thức thanh toán:</th>
+                                            <td>{{$order_checkout}}</td>
+                                        </tr>
+                                    </table>
                                 </div>
                             </div>
                         </div>

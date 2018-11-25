@@ -29,7 +29,7 @@
                                     </a>
                                 @endcan
                             </div>
-                            <div class="col-md-4"></div>
+                            <div class="col-md-2"></div>
                             <div class="col-md-6">
                                 <form role="search" class="input-group" action="{{url('admin/book')}}" method="get">
                                     <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}">

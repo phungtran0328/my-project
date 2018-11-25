@@ -55,7 +55,7 @@
                                     <th style="width: 15%">Ngày nhập</th>
                                     <th>Sách</th>
                                     <th>Tồng tiền</th>
-                                    <th style="width: 12%">Hành động</th>
+                                    {{--<th style="width: 12%">Hành động</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -85,7 +85,7 @@
                                             </table>
                                         </td>
                                         <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
-                                        <td class="text-center">
+                                        {{--<td class="text-center">
                                             @can('invoice-in.update')
                                             <a class="btn btn-info btn-sm" href="">
                                                 <span class="glyphicon glyphicon-pencil"></span></a>
@@ -94,7 +94,7 @@
                                             <a class="btn btn-danger btn-sm" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                                 @endcan
-                                        </td>
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

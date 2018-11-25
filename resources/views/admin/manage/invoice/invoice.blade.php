@@ -66,7 +66,7 @@
                                     <th style="width: 8%">Tồng tiền</th>
                                     <th style="width: 8%">Phí VC</th>
                                     <th class="text-center" colspan="3">Sách | SL | Giá</th>
-                                    <th style="width: 6%">Hủy</th>
+                                    {{--<th style="width: 6%">Hủy</th>--}}
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -107,10 +107,10 @@
                                                 @endforeach
                                             </table>
                                         </td>
-                                        <td class="text-center">
+                                        {{--<td class="text-center">
                                             <a class="btn btn-danger btn-sm" href="">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
-                                        </td>
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

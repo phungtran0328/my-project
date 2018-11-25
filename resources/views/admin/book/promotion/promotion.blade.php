@@ -18,7 +18,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Danh sách các loại sách</h5>
+                        <h5>Danh sách khuyến mãi</h5>
                     </div>
                     <div class="panel-body">
                         @can('book.create')
@@ -35,7 +35,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <form action="{{url('admin/promotion')}}" method="post" onsubmit="return validate()">
+                                        <form action="{{url('admin/promotion')}}" method="post">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <div class="row">
                                                 <div class="col-md-4">
@@ -45,26 +45,18 @@
                                                                placeholder="0.000" required>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <div class="form-group">
-                                                        <label class="control-label">Áp dụng</label>
-                                                        <input type="date" class="form-control" placeholder="Ngày áp dụng"
-                                                               name="start_create" id="start_create" required>
-                                                        <strong style="color: red"></strong>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class=" form-group">
-                                                        <label class="control-label">Hạn dùng</label>
-                                                        <input type="date" class="form-control" placeholder="Ngày hết hạn"
-                                                               name="end_create" id="end_create" required>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4"></div>
-                                                <div class="col-md-8">
-                                                    <strong style="color: red" id="end_error"></strong>
+                                                <div class="form-group col-md-6">
+                                                    <label class="control-label">Áp dụng</label>
+                                                    <input type="datetime" class="form-control" placeholder="yyyy-mm-dd H:i:s"
+                                                           name="start_create" id="start_create" required>
+                                                    <strong style="color: red"></strong>
+                                                </div>
+                                                <div class=" form-group col-md-6">
+                                                    <label class="control-label">Hạn dùng</label>
+                                                    <input type="number" min="1" class="form-control" placeholder="Số ngày áp dụng"
+                                                           name="end_create" id="end_create" required>
                                                 </div>
                                             </div>
                                             <div class="form-group">
@@ -151,7 +143,7 @@
         </div>
     </div>
     <script>
-        var s, e, dateStart, dateEnd;
+        /*var s, e, dateStart, dateEnd;
 
         document.getElementById("start_create").addEventListener("change", function() {
             dateStart = new Date(this.value);
@@ -171,6 +163,6 @@
             }else {
                 document.getElementById('end_error').innerHTML = '';
             }
-        }
+        }*/
     </script>
 @endsection
