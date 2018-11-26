@@ -26,14 +26,13 @@
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                         @endcan
+                        {{--create promotion--}}
                         <div class="modal fade" id="promotionCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-
                                     <div class="modal-header">
                                         <h3 class="modal-title" id="exampleModalLabel">Thêm mới khuyến mãi</h3>
                                     </div>
-
                                     <div class="modal-body">
                                         <form action="{{url('admin/promotion')}}" method="post">
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -75,28 +74,34 @@
                             </div>
                         </div>
                         <hr>
-                        @if(Session::has('messageAdd'))
+                        @if(session('Add'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
+                                {{session('Add')}}
                             </div>
                         @endif
-                            @if(Session::has('messageUpdate'))
+                            @if(session('Update'))
                                 <div class="alert alert-success alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('messageUpdate')}}
+                                    {{session('Update')}}
                                 </div>
                             @endif
-                            @if(Session::has('messageRemove'))
+                            @if(session('UpdateBook'))
                                 <div class="alert alert-success alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('messageRemove')}}
+                                    {{session('UpdateBook')}}
                                 </div>
                             @endif
-                        @if(Session::has('messageRemoveError'))
+                            @if(session('Remove'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('Remove')}}
+                                </div>
+                            @endif
+                        @if(session('RemoveError'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemoveError')}}
+                                {{session('RemoveError')}}
                             </div>
                         @endif
                         <div class="table-responsive ">
@@ -108,7 +113,7 @@
                                     <th>Ngày áp dụng</th>
                                     <th>Ngày hết hạn</th>
                                     <th>Chi tiết</th>
-                                    <th style="width: 18%">Hành động</th>
+                                    <th style="width: 25%"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -121,14 +126,17 @@
                                         <td>{{$promotion->KM_CHITIET}}</td>
                                         <td class="text-center">
                                             @can('book.update')
-                                            <a class="btn btn-primary btn-sm" href="{{url('/admin/promotion',$promotion->KM_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span>
-                                            </a>
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#promotionUpdateBook-{{$promotion->KM_MA}}">
+                                                    <span class="glyphicon glyphicon-plus"></span> Thêm sách
+                                                </a>
+                                                <a class="btn btn-success btn-sm" data-toggle="modal" data-target="#promotionUpdate-{{$promotion->KM_MA}}">
+                                                    <span class="glyphicon glyphicon-pencil"></span> Sửa
+                                                </a>
                                             @endcan
                                             @can('book.delete')
-                                            <a class="btn btn-danger btn-sm" href="{{url('/admin/promotion/delete',$promotion->KM_MA)}}" onclick="return confirm('Bạn chắc chắn xóa ?')">
-                                                <span class="glyphicon glyphicon-remove"></span>
-                                            </a>
+                                                <a class="btn btn-danger btn-sm" href="{{url('/admin/promotion/delete',$promotion->KM_MA)}}" onclick="return confirm('Bạn chắc chắn xóa ?')">
+                                                    <span class="glyphicon glyphicon-remove"></span> Xóa
+                                                </a>
                                             @endcan
                                         </td>
                                     </tr>
@@ -142,6 +150,86 @@
             </div>
         </div>
     </div>
+
+    @foreach($promotions as $promotion)
+        {{--update promotion book--}}
+        <div class="modal fade" id="promotionUpdate-{{$promotion->KM_MA}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Chỉnh sửa khuyến mãi "{{$promotion->KM_GIAM}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('/admin/promotion', $promotion->KM_MA)}}" method="post" >
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            @method('PATCH')
+                            <div class="form-group">
+                                <label class="control-label">Giảm %</label>
+                                <input pattern="[0]+(\.[0-9][0-9][0-9]?)?" class="form-control" value="{{$promotion->KM_GIAM}}" name="promotion_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Áp dụng</label>
+                                <input type="datetime" class="form-control" value="{{$promotion->KM_APDUNG}}" name="start_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Hạn dùng</label>
+                                <input type="number" min="1" class="form-control" value="{{$promotion->KM_HANDUNG}}" name="end_update" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Mô tả chi tiết</label>
+                                <input type="text" class="form-control" value="{{$promotion->KM_CHITIET}}" name="description_update">
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="promotionUpdateBook-{{$promotion->KM_MA}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="exampleModalLabel">Thêm sách cho khuyến mãi "{{$promotion->KM_CHITIET}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('admin/promotion/book',$promotion->KM_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            <div class="form-group">
+                                <label class="control-label">Sách</label>
+                                <select name="book_id[]" class="form-control" multiple style="height: 200px">
+                                    <option value="">---Chọn sách---</option>
+                                    @php
+                                        $books_in = $promotion->book()->get();
+                                        $books = \App\Book::where('KM_MA','<>',$promotion->KM_MA)
+                                                            ->orWhere('KM_MA', '=', null)
+                                                            ->get();
+                                    @endphp
+                                    @foreach($books_in as $item)
+                                        <option value="{{$item->S_MA}}" selected>{{$item->S_TEN}}</option>
+                                    @endforeach
+                                    @foreach($books as $book)
+                                        <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
+                                    @endforeach
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Thêm</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <script>
         /*var s, e, dateStart, dateEnd;
 

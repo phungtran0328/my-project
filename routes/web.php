@@ -119,8 +119,8 @@ Route::group(['prefix' => 'admin'], function () {
     //promotion
     Route::resource('promotion','Admin\PromotionController')->only(['index']);
     Route::post('promotion','Admin\PromotionController@store')->middleware('can:book.create');
-    Route::get('promotion/{id}','Admin\PromotionController@show')->middleware('can:book.update');
     Route::patch('promotion/{id}','Admin\PromotionController@update')->middleware('can:book.update');
+    Route::post('promotion/book/{id}','Admin\PromotionController@updateBook')->middleware('can:book.update');
     //promotion delete
     Route::get('promotion/delete/{id}','Admin\PromotionController@delete')->middleware('can:book.delete');
 
