@@ -8,17 +8,12 @@
 @extends('admin/master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Sách</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Quản lý sách</h5>
+                        <a href="{{url('/admin/book')}}">Quản lý sách</a>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -29,10 +24,10 @@
                                     </a>
                                 @endcan
                             </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-6">
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
                                 <form role="search" class="input-group" action="{{url('admin/book')}}" method="get">
-                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}">
+                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}" id="dummy">
                                     <span class="input-group-btn">
                                         <button class="btn btn-default-sm" type="submit">
                                             <i class="fa fa-search"></i>
@@ -40,37 +35,30 @@
                                     </span>
                                 </form>
                             </div>
-                            @if(isset($search))
-                                <div class="col-md-2">
-                                    <a href="{{url('/admin/book')}}" class="btn btn-primary btn-block">
-                                        <span class="glyphicon glyphicon-arrow-left"> Trở lại</span>
-                                    </a>
-                                </div>
-                            @endif
                         </div>
                         <hr>
-                        @if(Session::has('messAddBook'))
+                        @if(session('messAddBook'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messAddBook')}}
+                                {{session('messAddBook')}}
                             </div>
                         @endif
-                        @if(Session::has('messUpdateBook'))
+                        @if(session('messUpdateBook'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messUpdateBook')}}
+                                {{session('messUpdateBook')}}
                             </div>
                         @endif
-                        @if(Session::has('messDelete'))
+                        @if(session('messDelete'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messDelete')}}
+                                {{session('messDelete')}}
                             </div>
                         @endif
-                        @if(Session::has('messDeleteError'))
+                        @if(session('messDeleteError'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messDeleteError')}}
+                                {{session('messDeleteError')}}
                             </div>
                         @endif
                         <div class="table-responsive ">
@@ -286,4 +274,11 @@
             </div>
         </div>
     @endforeach
+    <script>
+        function removeDummy() {
+            var elem = document.getElementById('dummy');
+            elem.value = '';
+            return false;
+        }
+    </script>
 @endsection

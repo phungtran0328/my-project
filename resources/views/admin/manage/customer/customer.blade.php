@@ -8,12 +8,7 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Khách hàng</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -21,20 +16,22 @@
                         <h5>Danh sách khách hàng</h5>
                     </div>
                     <div class="panel-body">
-                        @if(Session::has('messageRemove'))
+                        @if(session('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemove')}}
+                                {{session('messageRemove')}}
                             </div>
                         @endif
-                        @if(Session::has('messRemoveError'))
+                        @if(session('messRemoveError'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messRemoveError')}}
+                                {{session('messRemoveError')}}
                             </div>
                         @endif
+                        <a class="btn btn-primary" href="{{url('/admin/customer/export')}}">Xuất file Excel</a>
+                        <br><br>
                         <div class="table-responsive ">
-                            <table class="table table-striped table-bordered table-hover">
+                            <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width: 3%">STT</th>

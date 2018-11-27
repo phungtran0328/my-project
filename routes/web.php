@@ -183,6 +183,7 @@ Route::group(['prefix' => 'admin'], function () {
     //customer
     Route::get('customer','Admin\CustomerController@index');
     Route::get('customer/delete/{id}','Admin\CustomerController@delete')->middleware('can:customer.delete');
+    Route::get('customer/export','Admin\CustomerController@export');
 
     //invoice-in
     Route::get('invoice-in','Admin\InvoiceInController@index');

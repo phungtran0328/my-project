@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Customer;
+use App\Exports\CustomersExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CustomerController extends Controller
 {
@@ -22,5 +24,9 @@ class CustomerController extends Controller
             Customer::destroy($id);
             return redirect()->back()->with('messageRemove','Đã xóa khách hàng có ID: '.$id.' !');
         }
+    }
+
+    public function export(){
+        return Excel::download(new CustomersExport(), 'customers.xlsx');
     }
 }
