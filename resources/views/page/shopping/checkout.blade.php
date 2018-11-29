@@ -51,19 +51,19 @@
             <li class="active">Thanh toán</li>
         </ul>
     </div>
-    @if(Session::has('messCheck'))
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{Session::get('messCheck')}}
-        </div>
-    @endif
-    @if(Session::has('message'))
-        <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            {{Session::get('message')}}
-        </div>
-    @endif
     <div class="container">
+        @if(session('messCheck'))
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{session('messCheck')}}
+            </div>
+        @endif
+        @if(session('message'))
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                {{session('message')}}
+            </div>
+        @endif
         {{--<div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -91,6 +91,7 @@
             </div>
         </div>--}}
         <div class="row">
+
             <div class="col-md-8">
                 @if(!(\Illuminate\Support\Facades\Auth::guard('customer')->check()))
                     <div class="panel panel-default" id="step-1" >
@@ -250,16 +251,16 @@
                             <table class="table">
                                 @foreach(Cart::content() as $item)
                                     <tr>
-                                        <th>{{$item->qty}} x {{$item->name}}</th>
+                                        <th style="width: 60%">{{$item->qty}} x {{$item->name}}</th>
                                         <td style="text-align: right">{{number_format($item->price * $item->qty)}} đ</td>
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <th>Tạm tính</th>
+                                    <th style="width: 60%">Tạm tính</th>
                                     <td style="text-align: right">{{Cart::subtotal()}} đ</td>
                                 </tr>
                                 <tr>
-                                    <th>Phí vận chuyển</th>
+                                    <th style="width: 60%">Phí vận chuyển</th>
                                     @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
                                         <td id="ship" style="text-align: right"></td>
                                     @else
@@ -274,10 +275,10 @@
                                 </tr>
                             </table>
                             <div class="row">
-                                <div class="col-md-7" style="text-align: left; font-size: 15px; margin-bottom: 15px">
+                                <div class="col-md-6" style="text-align: left; font-size: 15px; margin-bottom: 15px">
                                     <p>Thành tiền:</p>
                                 </div>
-                                <div class="col-md-5" style="text-align: right; color: red; font-size: 18px; font-weight: bold">
+                                <div class="col-md-6" style="text-align: right; color: red; font-size: 18px; font-weight: bold">
                                     @if(!\Illuminate\Support\Facades\Auth::guard('customer')->check())
                                         <div id="myTotal">
                                             {{Cart::subtotal()}} đ

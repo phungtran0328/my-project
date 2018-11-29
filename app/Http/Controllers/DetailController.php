@@ -37,21 +37,6 @@ class DetailController extends Controller
 //        dd($temps['id']);
 
         $images = $book->image()->get();
-        /*$promotion=$book->promotion()->first();
-        $date=strtotime(date('Y-m-d'));
-        if (isset($promotion)){
-            $start=strtotime($promotion->KM_APDUNG);
-            $end=strtotime($promotion->KM_HANDUNG);
-            if (($start<=$date)and($end>=$date)){
-                $saleoff=($book->S_GIA)-($book->S_GIA)*($promotion->KM_GIAM);
-                //trường hợp có khuyến mãi và đang trong thời gian có hiệu lực
-            }else{
-                $saleoff=$book->S_GIA;
-                //Có khuyến mãi nhưng chưa tới thời gian
-            }
-        }else{
-            $saleoff=$book->S_GIA; //không có khuyến mãi
-        }*/
 
         return view('page.detail', compact('book','company','publisher','authors',
             'cover_type','kind_of_book','translators','temps', 'images'));

@@ -15,8 +15,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="book.ico" />
     <title>BookStore</title>
     <base href="{{asset('')}}">
-    <link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+    {{--<link href='http://fonts.googleapis.com/css?family=Dosis:300,400' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>--}}
     <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     {{--<link rel="stylesheet" type="text/css" href="css/login.css">--}}
     <link rel="stylesheet" href="source/assets/dest/css/font-awesome.min.css">
@@ -71,10 +71,10 @@
                     },
                     templates: {
                         empty: [
-                            '<div class="list-group"><div class="list-group-item">Không có kết quả phù hợp.</div></div>'
+                            '<div class="list-group"><div class="list-group-item" style="width: 160%">Không có kết quả phù hợp.</div></div>'
                         ],
                         suggestion: function (data) {
-                            return '<a href="detail/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
+                            return '<a href="chi-tiet-sach/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
                         }
                     }
                 }

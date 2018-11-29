@@ -30,7 +30,7 @@
                             <div class="row">
                                 <div class="col-md-4 form-group {{$errors->has('name') ? 'has-error' : ''}}" >
                                     <label class="control-label">Tên sách *</label>
-                                    <input type="text" class="form-control" placeholder="Nhập tên sách" name="name">
+                                    <input type="text" class="form-control" placeholder="Nhập tên sách" name="name" value="{{old('name')}}">
                                     <strong style="color: red">{{$errors->first('name')}}</strong>
                                 </div>
                                 <div class="col-md-4 form-group">
@@ -67,11 +67,11 @@
                                 </div>
                                 <div class="form-group col-md-3">
                                     <label class="control-label" >Tái bản</label>
-                                    <input type="text" class="form-control" placeholder="Năm tái bản" name="republish" >
+                                    <input type="text" class="form-control" placeholder="Năm tái bản" name="republish" value="{{old('republish')}}">
                                 </div>
                                 <div class="form-group col-md-2" >
                                     <label class="control-label">Số trang</label>
-                                    <input type="number" min="0" class="form-control" placeholder="Số trang" name="page_num" >
+                                    <input type="number" min="0" class="form-control" placeholder="Số trang" name="page_num" value="{{old('page_num')}}">
                                 </div>
                             </div>
 
@@ -103,7 +103,7 @@
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label class="control-label" >Kích thước</label>
-                                    <input type="text" class="form-control" placeholder="Kích thước" name="size" >
+                                    <input type="text" class="form-control" placeholder="Kích thước" name="size" value="{{old('size')}}">
                                 </div>
 
                             </div>
@@ -124,13 +124,13 @@
                                     <div id="translatorList" style="display: none">
                                         <div class="form-group">
                                             <label class="control-label">Người dịch</label>
-                                            <input class="form-control" placeholder="Người dịch" name="translator">
+                                            <input class="form-control" placeholder="Người dịch" name="translator" >
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-8 form-group" >
                                     <label class="control-label">Giới thiệu sách</label>
-                                    <textarea rows="16" class="form-control" placeholder="Giới thiệu sách" name="description"></textarea>
+                                    <textarea rows="16" class="form-control" placeholder="Giới thiệu sách" name="description">{{old('description')}}</textarea>
                                 </div>
                             </div>
                             <div class="row">

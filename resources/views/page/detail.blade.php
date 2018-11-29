@@ -60,18 +60,22 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-4">
-                            <div class="float-left" id="myImg" style="margin-bottom: 10px">
-                                <img src="images/avatar/{{$book->S_AVATAR}}" class="img-rounded zoom" alt="" width="300px" height="350px">
-                            </div>
-                            @foreach($images as $image)
-                                <a id="myImgSmall" class="btn-default">
-                                    <img src="images/avatar/{{$book->S_AVATAR}}" width="50px" height="70px" onclick="clickImg(this)">
-                                    <img src="images/{{$image->HA_URL}}" width="50px" height="70px" onclick="clickImg(this)">
-                                </a>
-                            @endforeach
+                        <div class="col-lg-1 col-md-1 col-sm-2">
+                            <a id="myImgSmall" class="btn-default">
+                                <img src="images/avatar/{{$book->S_AVATAR}}" class="thumbnail" onclick="clickImg(this)">
+                                @if(isset($images))
+                                    @foreach($images as $image)
+                                        <img src="images/{{$image->HA_URL}}" onclick="clickImg(this)" class="thumbnail">
+                                    @endforeach
+                                @endif
+                            </a>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="text-center" id="myImg" style="margin-bottom: 10px; height: 60%">
+                                <img src="images/avatar/{{$book->S_AVATAR}}" class="img-rounded zoom" alt="" width="auto" height="auto">
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-6">
                             <div>
                                 <h3>{{$book->S_TEN}}</h3>
                                 @if(isset($authors) or isset($translators))
@@ -107,17 +111,13 @@
                                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                                             <input type="hidden" name="id" value="{{ $book->S_MA }}">
                                             <input type="hidden" name="name" value="{{ $book->S_TEN}}">
-                                            @if(isset($temps['sale']))
-                                                <input value="{{$temps['sale']}}" type="hidden" name="price">
-                                            @else
-                                                <input value="{{$temps['price']}}" type="hidden" name="price">
-                                            @endif
+                                            <input value="{{isset($temps['sale']) ? $temps['sale'] : $temps['price']}}" type="hidden" name="price">
                                         <div class="row">
-                                            <div class="col-md-5">
-                                                <input class="btn btn-default btn-group" style="width: 40px; margin-right: -4px; border-radius: 0" onclick="qtyDecrement(this)"
+                                            <div class="col-md-6">
+                                                <input class="btn btn-default btn-group" style="width: 30px; margin-right: -4px; border-radius: 0" onclick="qtyDecrement(this)"
                                                        value=" - " type="button">
-                                                <input type="text" class="btn-group" style="width: 50px" value="1" id="qty" name="qty">
-                                                <input class="btn btn-default btn-group" style="width: 40px;margin-left: -5px; border-radius: 0 " onclick="qtyIncrement(this)"
+                                                <input type="text" class="btn-group" style="width: 40px" value="1" id="qty" name="qty">
+                                                <input class="btn btn-default btn-group" style="width: 30px;margin-left: -5px; border-radius: 0 " onclick="qtyIncrement(this)"
                                                        value=" + " type="button">
                                             </div>
                                             <div class="col-md-6">
@@ -254,7 +254,7 @@
                                 @for($j=0; $j<count($temp_author_book_promotion); $j++)
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                         <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                            <a href="{{url('/detail',$temp_author_book_promotion[$j]['id'])}}">
+                                            <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}">
                                                 <div class="">
                                                     <div class=" text-center">
                                                         <img class=""  src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
@@ -296,12 +296,12 @@
                                     @for($j=0; $j<count($temp_translator_book_promotion); $j++)
                                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                             <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                                <a href="{{url('/detail',$temp_translator_book_promotion[$j]['id'])}}">
+                                                <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}">
                                                     <div class="">
                                                         <div class=" text-center">
                                                             <img class=""  src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
                                                             <p style="font-size: 14px; margin-bottom: 5px; margin-top: 5px">
-                                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 20, $end = '...') }}</p>
+                                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 15, $end = '...') }}</p>
                                                             <p style="font-size: 14px; margin-bottom: 5px">
                                                                 @if(isset($temp_translator_book_promotion[$j]['sale']))
                                                                     <span class="flash-del">{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
@@ -328,7 +328,7 @@
 <script>
     function clickImg(img) {
         var src = img.src;
-        var html = "<img src='"+src+"' class='img-rounded zoom' width='300px' height='350px'>";
+        var html = "<img src='"+src+"' class='img-rounded zoom' width='auto' height='auto'>";
         document.getElementById('myImg').innerHTML = html;
     }
 
