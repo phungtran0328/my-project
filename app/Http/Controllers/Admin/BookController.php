@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Author;
 use App\Book;
 use App\CoverType;
+use App\Exports\BooksExport;
 use App\Image;
 use App\InvoiceDetails;
 use App\InvoiceInDetails;
@@ -17,6 +18,7 @@ use App\WriteBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
 {
@@ -29,15 +31,28 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $search=$request->input('search');
+        $qty = $request->input('qty');
         if (isset($search)){
             $books=Book::where('S_TEN','like','%'.$search.'%')
-                ->orderBy('S_MA','desc')->paginate(10);
+                ->orderBy('S_MA','desc')->paginate(20);
         }
-        else{
-            $books=Book::orderBy('S_MA','desc')->paginate(10);
+        else {
+            if (isset($qty)) {
+                switch ($qty) {
+                    case 'asc':
+                        $books = Book::orderBy('S_SLTON', 'asc')->paginate(20);
+                        break;
+                    case 'desc':
+                        $books = Book::orderBy('S_SLTON', 'desc')->paginate(20);
+                        break;
+                };
+            }
+            else{
+                $books=Book::orderBy('S_MA','desc')->paginate(20);
+            }
         }
         //sắp xếp S_MA giảm dần lấy 10 record trên 1 trang
-        return view('admin.book.book', compact('books','search'));
+        return view('admin.book.book', compact('books','search','qty'));
     }
 
     /**
@@ -288,4 +303,7 @@ class BookController extends Controller
         return redirect()->back()->with('messDelete','Đã xóa sách với ID: '.$id.' !');
     }
 
+    public function export(){
+        return (new BooksExport())->download('books.xlsx');
+    }
 }

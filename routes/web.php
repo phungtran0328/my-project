@@ -142,7 +142,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('book/edit/{id}','Admin\BookController@edit')->middleware('can:book.update');
     Route::patch('book/{id}','Admin\BookController@update')->middleware('can:book.update');
     Route::get('book/delete/{id}','Admin\BookController@delete')->middleware('can:book.delete');
-
+    Route::get('book/export','Admin\BookController@export');
 
     //book image
     Route::resource('book/image','Admin\ImageController')->only('update')->middleware('can:book.update');

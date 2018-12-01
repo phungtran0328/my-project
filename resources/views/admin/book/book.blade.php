@@ -24,7 +24,26 @@
                                     </a>
                                 @endcan
                             </div>
-                            <div class="col-md-6"></div>
+                            <div class="col-md-2">
+                                <a href="{{url('/admin/book/export')}}" class="btn btn-info btn-block">
+                                    <span> Export</span>
+                                </a>
+                            </div>
+                            <div class="col-md-2"></div>
+                            <div class="col-md-2">
+                                <form action="{{url('admin/book')}}" method="get" class="input-group">
+                                    <select name="qty" class="form-control">
+                                        <option value="">--SLT--</option>
+                                        <option value="asc" {{$qty=='asc' ? 'selected' : ''}}> Tăng </option>
+                                        <option value="desc" {{$qty=='desc' ? 'selected' : ''}}> Giảm </option>
+                                    </select>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default-sm" type="submit">
+                                            <i class="fa fa-filter"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
                             <div class="col-md-4">
                                 <form role="search" class="input-group" action="{{url('admin/book')}}" method="get">
                                     <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}" id="dummy">
@@ -62,7 +81,7 @@
                             </div>
                         @endif
                         <div class="table-responsive ">
-                            <table class="table table-striped table-bordered table-hover">
+                            <table class="table table-bordered table-hover">
                                 <thead >
                                 <tr>
                                     <th></th>
@@ -73,8 +92,8 @@
                                     <th>Giá</th>
                                     <th>V</th>
                                     <th>Nhà xuất bản</th>
-                                    <th>Hình ảnh</th>
-                                    <th style="width: 15%">Hành động</th>
+                                    <th>HA</th>
+                                    <th style="width: 14%">Hành động</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -253,15 +272,14 @@
                                 </tr>
                                 <tr>
                                     <th>Hình ảnh</th>
-                                    @if(isset($images))
-                                        <td>
+                                    <td>
+                                        <img src="images/avatar/{{$book->S_AVATAR}}" width="20%" height="30%">
+                                        @if(isset($images))
                                             @foreach($images as $image)
-                                                <img src="images/{{$image->HA_URL}}" width="100px" height="100px">
+                                                <img src="images/{{$image->HA_URL}}" width="30%" height="30%">
                                             @endforeach
-                                        </td>
-                                    @else
-                                        <td>Chưa có hình ảnh</td>
-                                    @endif
+                                        @endif
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -275,10 +293,6 @@
         </div>
     @endforeach
     <script>
-        function removeDummy() {
-            var elem = document.getElementById('dummy');
-            elem.value = '';
-            return false;
-        }
+
     </script>
 @endsection
