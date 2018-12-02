@@ -30,6 +30,7 @@
                             <li><a href=""><i class="fa fa-chevron-right"></i> Hướng dẫn đặt hàng</a></li>
                             <li><a href=""><i class="fa fa-chevron-right"></i> Phương thức vân chuyển</a></li>
                             <li><a href=""><i class="fa fa-chevron-right"></i> Chính sách đổi trả</a></li>
+                            <li><a href="{{url('/request/new')}}"><i class="fa fa-chevron-right"></i> Yêu cầu hỗ trợ</a></li>
                         </ul>
                     </div>
                 </div>
@@ -42,7 +43,7 @@
                         <div>
                             <div class="contact-info">
                                 <i class="fa fa-map-marker"></i>
-                                <p>90-92 Nguyễn Thị Riêng - Q. Tân Bình - TP.Hồ Chí Minh</p>
+                                <a href="{{url('/map')}}">103 - 30/4 - An Lạc - Ninh Kiều - Cần Thơ</a>
                             </div>
                         </div>
                     </div>

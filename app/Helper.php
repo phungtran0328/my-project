@@ -53,7 +53,7 @@ class Helper
         return $groups;
     }
 
-    public function getBookDate(Collection $collection){
+    public function getBookDateInvoice(Collection $collection){
         $i = 0;
         $data = array();
         foreach ($collection as $month){
@@ -64,6 +64,24 @@ class Helper
                     'id'=>$temp->S_MA,
                     'qty'=>$temp->pivot->HDCT_SOLUONG,
                     'totalPrice'=>$temp->pivot->HDCT_SOLUONG*$temp->pivot->HDCT_GIA
+                ];
+                $i++;
+            }
+        }
+        return $data;
+    }
+
+    public function getBookDateInvoiceIn(Collection $collection){
+        $i = 0;
+        $data = array();
+        foreach ($collection as $month){
+            $temps = $month->book()->get();
+            foreach ($temps as $temp){
+                //Lấy mảng chứa id, qty, totalPrice => trùng do sách có thể ở nhiều phiếu nhập
+                $data[$i] = [
+                    'id'=>$temp->S_MA,
+                    'qty'=>$temp->pivot->PNCT_SOLUONG,
+                    'totalPrice'=>$temp->pivot->PNCT_SOLUONG*$temp->pivot->PNCT_GIA
                 ];
                 $i++;
             }

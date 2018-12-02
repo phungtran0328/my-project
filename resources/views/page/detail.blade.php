@@ -5,33 +5,7 @@
  * Date: 09/15/2018
  * Time: 1:22 PM
  */
-
-
 ?>
-{{--<style>
-    /*.zoom {*/
-        /*-webkit-transition: all 0.35s ease-in-out;*/
-        /*-moz-transition: all 0.35s ease-in-out;*/
-        /*transition: all 0.35s ease-in-out;*/
-        /*cursor: -webkit-zoom-in;*/
-        /*cursor: -moz-zoom-in;*/
-        /*cursor: zoom-in;*/
-    /*}*/
-
-    /*.zoom:hover,*/
-    /*.zoom:active,*/
-    /*.zoom:focus {*/
-        /*!**adjust scale to desired size,*/
-        /*add browser prefixes**!*/
-        /*-ms-transform: scale(2.5);*/
-        /*-moz-transform: scale(2.5);*/
-        /*-webkit-transform: scale(2.5);*/
-        /*-o-transform: scale(2.5);*/
-        /*transform: scale(2.5);*/
-        /*position:relative;*/
-        /*z-index:100;*/
-    /*}*/
-</style>--}}
 @extends('master')
 @section('content')
 <div class="container">
@@ -44,16 +18,16 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            @if(Session::has('messAdd'))
+            @if(session('messAdd'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{Session::get('messAdd')}}
+                    {{session('messAdd')}}
                 </div>
             @endif
-                @if(Session::has('message'))
+                @if(session('message'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{Session::get('message')}}
+                        {{session('message')}}
                     </div>
                 @endif
 
@@ -61,7 +35,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-1 col-md-1 col-sm-2">
-                            <a id="myImgSmall" class="btn-default">
+                            <a id="myImgSmall">
                                 <img src="images/avatar/{{$book->S_AVATAR}}" class="thumbnail" onclick="clickImg(this)">
                                 @if(isset($images))
                                     @foreach($images as $image)
@@ -71,7 +45,7 @@
                             </a>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4">
-                            <div class="text-center" id="myImg" style="margin-bottom: 10px; height: 60%">
+                            <div class="text-center" id="myImg" style="margin-bottom: 10px; height: 65%">
                                 <img src="images/avatar/{{$book->S_AVATAR}}" class="img-rounded zoom" alt="" width="auto" height="auto">
                             </div>
                         </div>

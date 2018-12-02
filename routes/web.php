@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +30,13 @@ Route::group(['middleware' => 'filter'], function() {
 
 Route::get('/search','HomeController@searchName');
 Route::get('/tim-kiem','HomeController@search')->name('search-book');
+
+//contact
+Route::get('/request/new','ContactController@indexRequest');
+Route::post('/request','ContactController@storeRequest');
+Route::get('/map', function (){
+   return view('page.contact.map');
+});
 
 //top sell
 $top_sach = str_slug('top sach ban chay nhat','-');
@@ -219,4 +227,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('slider/create','Admin\SliderController@store')->middleware('can:book.create');
     Route::post('slider/update/{id}','Admin\SliderController@update')->middleware('can:book.update');
     Route::get('slider/delete/{id}','Admin\SliderController@delete')->middleware('can:book.delete');
+
+    Route::get('contact','Admin\ContactController@index');
+    Route::get('contact/delete/{id}','Admin\ContactController@delete')->middleware('can:book.delete');
 });

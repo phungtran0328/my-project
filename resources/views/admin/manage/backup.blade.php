@@ -36,28 +36,28 @@ function humanFilesize($size, $precision = 2) {
                         @endcan
                         <br><br>
                         <div class="table-responsive">
-                            @if(Session::has('messCreate'))
+                            @if(session('messCreate'))
                                 <div class="alert alert-success alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('messCreate')}}
+                                    {{session('messCreate')}}
                                 </div>
                             @endif
-                            @if(Session::has('delete'))
+                            @if(session('delete'))
                                 <div class="alert alert-success alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('delete')}}
+                                    {{session('delete')}}
                                 </div>
                             @endif
-                            @if(Session::has('messError'))
+                            @if(session('messError'))
                                 <div class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('messError')}}
+                                    {{session('messError')}}
                                 </div>
                             @endif
-                            @if(Session::has('deleteError'))
+                            @if(session('deleteError'))
                                 <div class="alert alert-danger alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('deleteError')}}
+                                    {{session('deleteError')}}
                                 </div>
                             @endif
                             @if (count($backups))

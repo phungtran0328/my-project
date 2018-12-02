@@ -78,6 +78,12 @@
                         <li>
                             <a href="{{url('/admin/promotion')}}">Khuyến mãi</a>
                         </li>
+                        <li>
+                            <a href="{{url('admin/slider')}}">Sliders</a>
+                        </li>
+                        <li>
+                            <a href="{{url('admin/contact')}}">Contacts</a>
+                        </li>
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
@@ -93,9 +99,6 @@
                         </li>
                         <li>
                             <a href="{{url('admin/role')}}">Quyền </a>
-                        </li>
-                        <li>
-                            <a href="{{url('admin/slider')}}">Sliders</a>
                         </li>
                         <li>
                             <a href="#">Quản lý xuất <span class="fa arrow"></span></a>

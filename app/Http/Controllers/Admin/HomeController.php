@@ -10,31 +10,67 @@ namespace App\Http\Controllers\Admin;
 
 use App\Book;
 use App\Charts\RevenueChart;
-use App\Customer;
 use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Invoice;
-use Carbon\Carbon;
+use App\InvoiceIn;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index(){
+    public function index(Request $request){
         if (!Auth::check()){
             return view('admin.login');
         }
 
-        //Lấy mảng hóa đơn chi tiết tháng, năm hiện tại, gồm sách, số lượng (sum), giá (sum(sl*giá))
-        //gộp số lượng theo mã sách => trong cùng 1 hóa đơn
-        $test = DB::table('hd_chitiet')
-                ->join('hoadon','hd_chitiet.HD_MA','=','hoadon.HD_MA')
-                ->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as qty'), DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
-                ->whereMonth('hoadon.CREATED_AT',date('m'))
-                ->whereYear('hoadon.CREATED_AT',date('Y'))
-                ->groupBy('S_MA')
-                ->orderBy('qty','desc')
-                ->get();
+        $date = intval(date('d'));
+        $month = intval(date('m'));
+        $year = intval(date('Y'));
+
+        //kind-of-book
+        if ($request->input('month_kob')==null){
+            $month_kob = $month;
+        }else{
+            $month_kob = $request->input('month_kob');
+        }
+        if ($request->input('year_kob')==null){
+            $year_kob = $year;
+        }else{
+            $year_kob = $request->input('year_kob');
+        }
+
+        //customer
+        if ($request->input('month_customer')==null){
+            $month_customer = $month;
+        }else{
+            $month_customer = $request->input('month_customer');
+        }
+        if ($request->input('year_customer')==null){
+            $year_customer = $year;
+        }else{
+            $year_customer = $request->input('year_customer');
+        }
+
+        //book
+        if ($request->input('date_book')==null){
+            $date_book = $date;
+        }else{
+            $date_book = $request->input('date_book');
+        }
+        if ($request->input('month_book')==null){
+            $month_book = $month;
+        }else{
+            $month_book = $request->input('month_book');
+        }
+        if ($request->input('year_book')==null){
+            $year_book = $year;
+        }else{
+            $year_book = $request->input('year_book');
+        }
+        $temp_invoice = new Invoice();
+        $test = $temp_invoice->getSumKindOfBook($month_kob, $year_kob); //hàm trong model Invoice
+        $array_year = $temp_invoice->year();
 
         $cate_total = array();
         $i = 0;
@@ -57,26 +93,39 @@ class HomeController extends Controller
 
         $chart = new RevenueChart();
         $chart->labels($labels);
-        $chart->title('Biểu đồ doanh thu từng loại sách tháng '. date('m'), 20, '#333333');
+        $chart->title('Biểu đồ doanh thu từng loại sách tháng '. $month_kob, 20, '#333333');
         $chart->barWidth(0.5);
         $chart->loaderColor('#333333');
         $chart->dataset('Loại sách','bar',$values );
 
-        $result_month = array();
+        $result_invoice_month = array();
+        $result_invoice_in_month = array();
         $a =0 ;
+        $b = 0;
         $data = array();
+        $data_invoice = array();
 
         for ($j=1;$j<13;$j++){
             //Lấy hóa đơn tháng 1-12 trong năm hiện tại
-            $months = Invoice::whereMonth('CREATED_AT','=',$j)
+            $invoice_months = Invoice::whereMonth('CREATED_AT','=',$j)
                 ->whereYear('CREATED_AT', '=', date('Y'))
                 ->get();
 
-            $result_month[$j] = $temp->getBookDate($months); //Truyền vào collection hóa đơn
+            $invoice_in_months = InvoiceIn::whereMonth('CREATED_AT','=',$j)
+                ->whereYear('CREATED_AT','=',date('Y'))->get();
+
+            $result_invoice_month[$j] = $temp->getBookDateInvoice($invoice_months); //Truyền vào collection hóa đơn
+            $result_invoice_in_month[$j] = $temp->getBookDateInvoiceIn($invoice_in_months);
+
             //Lấy hóa đơn trong từng tháng 1-12 =>key=tháng, value=total
-            for ($c=0; $c<count($result_month[$j]);$c++){
-                $data[$a] = ['name'=>$j, 'total'=>$result_month[$j][$c]['totalPrice']];
+            for ($c=0; $c<count($result_invoice_month[$j]);$c++){
+                $data[$a] = ['name'=>$j, 'total'=>$result_invoice_month[$j][$c]['totalPrice']];
                 $a++;
+            }
+
+            for ($c=0; $c<count($result_invoice_in_month[$j]);$c++){
+                $data_invoice[$b] = ['name'=>$j, 'total'=>$result_invoice_in_month[$j][$c]['totalPrice']];
+                $b++;
             }
         }
 
@@ -84,42 +133,23 @@ class HomeController extends Controller
         $total_month = $temp->getUniqueArray($data);
         $labels_month = array_keys($total_month);
         $values_month = array_values($total_month);
+
+        $total_invoice_in = $temp->getUniqueArray($data_invoice);
+        $values_invoice_in = array_values($total_invoice_in);
+
 //        dd($labels_month, $values_month);
         $chart_month = new RevenueChart();
         $chart_month->labels($labels_month);
         $chart_month->title('Biểu đồ doanh thu năm '.date('Y') ,20, '#333333');
         $chart_month->barWidth(0.5);
         $chart_month->loaderColor('#333333');
-        $chart_month->dataset('Tháng','bar',$values_month);
+        $chart_month->dataset('Doanh thu','bar',$values_month);
+        $chart_month->dataset('Vốn','bar',$values_invoice_in);
 
-        //khách hàng mua nhiều (qty)
-        //gộp qty theo khách hàng trong bảng hóa đơn (desc), tháng, năm hiện tại
-        $test_customer = DB::table('hd_chitiet')
-            ->join('hoadon','hoadon.HD_MA','=','hd_chitiet.HD_MA')
-            ->select('hoadon.KH_MA',DB::raw('sum(HDCT_SOLUONG) as qty'),DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
-            ->whereMonth('CREATED_AT','=',date('m'))
-            ->whereYear('CREATED_AT','=',date('Y'))
-            ->groupBy('hoadon.KH_MA')
-            ->orderBy('qty','desc')
-            ->get();
+        $customer = $temp_invoice->getSumCustomer($month_customer, $year_customer);
+        $books = $temp_invoice->getSumBook($date_book, $month_book, $year_book);
 
-        $customer = array();
-        $e = 0;
-        if ($e < 10){
-            foreach ($test_customer as $item){
-                $temp_customer = Customer::where('KH_MA', $item->KH_MA)->first();
-                $customer[$e] = [
-                    'name'=>$temp_customer->KH_TEN,
-                    'address'=>$temp_customer->fulladdress,
-                    'phone'=>$temp_customer->KH_SDT,
-                    'email'=>$temp_customer->KH_EMAIL,
-                    'qty'=>$item->qty,
-                    'total'=>$item->total
-                ];
-                $e++;
-            }
-        }
-
-        return view('admin.home', compact('chart','chart_month','customer'));
+        return view('admin.home', compact('chart','chart_month','customer','month_kob',
+            'month_customer','year_customer','array_year','books','date_book','month_book','year_book'));
     }
 }
