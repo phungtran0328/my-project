@@ -230,4 +230,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('contact','Admin\ContactController@index');
     Route::get('contact/delete/{id}','Admin\ContactController@delete')->middleware('can:book.delete');
+
+    Route::get('search','Admin\HomeController@search');
 });

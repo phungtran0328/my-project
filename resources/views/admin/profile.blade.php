@@ -20,10 +20,10 @@
         <div class="col-lg-5">
             <form class="form-horizontal" action="" method="post">
                 <input type="hidden" name="_token" value="{{csrf_token()}}">
-                @if(Session::has('message'))
+                @if(session('message'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{Session::get('message')}}
+                        {{session('message')}}
                     </div>
                 @endif
                 <fieldset>
@@ -40,17 +40,8 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Giới tính</label>
-                            @if(Auth::user()->NV_GIOITINH=='Nam')
-
-                                <label><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
-                                <label><input type="radio" name="gender" value="Nữ" style="width: 20px">Nữ</label>
-
-                            @else
-
-                                <label><input type="radio" name="gender" value="Nam" style="width: 20px">Nam</label>
-                                <label><input type="radio" name="gender" value="Nữ" style="width: 20px" checked>Nữ</label>
-
-                            @endif
+                            <label><input type="radio" name="gender" value="Nam" style="width: 20px" {{Auth::user()->NV_GIOITINH=='Nam' ? 'checked' : ''}}>Nam</label>
+                            <label><input type="radio" name="gender" value="Nữ" style="width: 20px" {{Auth::user()->NV_GIOITINH=='Nữ' ? 'checked' : ''}}>Nữ</label>
                         </div>
                         <div class="form-group {{$errors->has('address') ? 'has-error' : ''}}">
                             <label class="control-label">Địa chỉ</label>

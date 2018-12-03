@@ -38,7 +38,7 @@ class Helper
         return $groups;
     }
 
-    function getUniqueArray($data) {
+    function getUniqueArray(array $data) {
         $groups = array();
         foreach ($data as $item) {
             $key = $item['name'];
@@ -53,7 +53,7 @@ class Helper
         return $groups;
     }
 
-    public function getBookDateInvoice(Collection $collection){
+    /*public function getBookDateInvoice(Collection $collection){
         $i = 0;
         $data = array();
         foreach ($collection as $month){
@@ -69,6 +69,14 @@ class Helper
             }
         }
         return $data;
+    }*/
+
+    public function getBookDateInvoice(Collection $collection){
+        $total = 0;
+        foreach ($collection as $month){
+            $total += $month->total;
+        }
+        return $total;
     }
 
     public function getBookDateInvoiceIn(Collection $collection){

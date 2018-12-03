@@ -132,7 +132,7 @@ foreach ($books_out_stock as $key=>$value){
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bell fa-fw"></i> Sách bán nhiều trong ngày
+                        <i class="fa fa-bell fa-fw"></i> Sách bán ra trong ngày {{$date_book}} tháng {{$month_book}} năm {{$year_book}}
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -148,7 +148,6 @@ foreach ($books_out_stock as $key=>$value){
                                 @endfor
                             </select>
                             <select name="year_book" class="form-control">
-
                                 @for($i=0;$i<count($array_year);$i++)
                                     <option value="{{$array_year[$i]}}" {{$array_year[$i]==$year_book ? 'selected' : ''}}>Năm {{$year_book}}</option>
                                 @endfor
@@ -240,24 +239,19 @@ foreach ($books_out_stock as $key=>$value){
                 <!-- /.panel -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Bar Chart Example
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Doanh thu năm {{$year_revenue}}
                         <div class="pull-right">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                    Actions
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu pull-right" role="menu">
-                                    <li><a href="#">Action</a>
-                                    </li>
-                                    <li><a href="#">Another action</a>
-                                    </li>
-                                    <li><a href="#">Something else here</a>
-                                    </li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a>
-                                    </li>
-                                </ul>
+                                <form action="{{url('admin/index')}}" method="get">
+                                    <div>
+                                        <select name="year_revenue" >
+                                            @for($i=0;$i<count($array_year);$i++)
+                                                <option value="{{$array_year[$i]}}" {{$array_year[$i]==$year_revenue ? 'selected' : ''}}>Năm {{$year_revenue}}</option>
+                                            @endfor
+                                        </select>
+                                        <button style="height: 20px" class="btn btn-primary btn-xs">Xem</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -289,7 +283,9 @@ foreach ($books_out_stock as $key=>$value){
                                             @endfor
                                         </select>
                                         <select name="year_kob" >
-                                            <option value="">Năm {{date('Y')}}</option>
+                                            @for($i=0;$i<count($array_year);$i++)
+                                                <option value="{{$array_year[$i]}}" {{$array_year[$i]==$year_kob ? 'selected' : ''}}>Năm {{$year_kob}}</option>
+                                            @endfor
                                         </select>
                                         <button style="height: 20px" class="btn btn-primary btn-xs">Xem</button>
                                     </div>

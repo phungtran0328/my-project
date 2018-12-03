@@ -8,12 +8,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Author;
 use App\Book;
 use App\Charts\RevenueChart;
 use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Invoice;
 use App\InvoiceIn;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,45 +31,21 @@ class HomeController extends Controller
         $year = intval(date('Y'));
 
         //kind-of-book
-        if ($request->input('month_kob')==null){
-            $month_kob = $month;
-        }else{
-            $month_kob = $request->input('month_kob');
-        }
-        if ($request->input('year_kob')==null){
-            $year_kob = $year;
-        }else{
-            $year_kob = $request->input('year_kob');
-        }
+        $month_kob = ($request->input('month_kob'))!= null ? $request->input('month_kob') : $month;
+        $year_kob = ($request->input('year_kob')) !=null ? $request->input('year_kob') : $year;
 
         //customer
-        if ($request->input('month_customer')==null){
-            $month_customer = $month;
-        }else{
-            $month_customer = $request->input('month_customer');
-        }
-        if ($request->input('year_customer')==null){
-            $year_customer = $year;
-        }else{
-            $year_customer = $request->input('year_customer');
-        }
+        $month_customer = ($request->input('month_customer'))!=null ? $request->input('month_customer') : $month;
+        $year_customer = ($request->input('year_customer'))!= null ? $request->input('year_customer') : $year;
 
         //book
-        if ($request->input('date_book')==null){
-            $date_book = $date;
-        }else{
-            $date_book = $request->input('date_book');
-        }
-        if ($request->input('month_book')==null){
-            $month_book = $month;
-        }else{
-            $month_book = $request->input('month_book');
-        }
-        if ($request->input('year_book')==null){
-            $year_book = $year;
-        }else{
-            $year_book = $request->input('year_book');
-        }
+        $date_book = ($request->input('date_book')) != null ? $request->input('date_book') : $date;
+        $month_book = ($request->input('month_book')) != null ? $request->input('month_book') : $month;
+        $year_book = ($request->input('year_book')) !=null ? $request->input('year_book') : $year;
+
+        //revenue
+        $year_revenue = ($request->input('year_revenue')) !=null ? $request->input('year_revenue') : $year;
+
         $temp_invoice = new Invoice();
         $test = $temp_invoice->getSumKindOfBook($month_kob, $year_kob); //hàm trong model Invoice
         $array_year = $temp_invoice->year();
@@ -87,69 +65,55 @@ class HomeController extends Controller
         $temp = new Helper();
 //      Biểu đồ dùng cho doanh thu theo loại sách tháng hiện tại
         $result = $temp->getUniqueArray($cate_total);
-//        dd(array_keys($result));
         $labels = array_keys($result); //Tên cột trong biểu đồ
         $values = array_values($result); //Giá trị của biểu đồ (số hoặc tập số)
 
         $chart = new RevenueChart();
         $chart->labels($labels);
-        $chart->title('Biểu đồ doanh thu từng loại sách tháng '. $month_kob, 20, '#333333');
+        $chart->title('Biểu đồ doanh thu từng loại sách tháng '. $month_kob . ' năm '. $year_kob, 20, '#666666');
         $chart->barWidth(0.5);
         $chart->loaderColor('#333333');
         $chart->dataset('Loại sách','bar',$values );
 
         $result_invoice_month = array();
-        $result_invoice_in_month = array();
-        $a =0 ;
-        $b = 0;
-        $data = array();
-        $data_invoice = array();
 
         for ($j=1;$j<13;$j++){
-            //Lấy hóa đơn tháng 1-12 trong năm hiện tại
-            $invoice_months = Invoice::whereMonth('CREATED_AT','=',$j)
-                ->whereYear('CREATED_AT', '=', date('Y'))
-                ->get();
-
-            $invoice_in_months = InvoiceIn::whereMonth('CREATED_AT','=',$j)
-                ->whereYear('CREATED_AT','=',date('Y'))->get();
-
-            $result_invoice_month[$j] = $temp->getBookDateInvoice($invoice_months); //Truyền vào collection hóa đơn
-            $result_invoice_in_month[$j] = $temp->getBookDateInvoiceIn($invoice_in_months);
-
-            //Lấy hóa đơn trong từng tháng 1-12 =>key=tháng, value=total
-            for ($c=0; $c<count($result_invoice_month[$j]);$c++){
-                $data[$a] = ['name'=>$j, 'total'=>$result_invoice_month[$j][$c]['totalPrice']];
-                $a++;
+            $invoice_month = $temp_invoice->getSumKindOfBook($j, $year); //lấy group sách theo tháng, năm
+            $total = 0;
+            foreach ($invoice_month as $item){
+                $total += $item->total;
             }
-
-            for ($c=0; $c<count($result_invoice_in_month[$j]);$c++){
-                $data_invoice[$b] = ['name'=>$j, 'total'=>$result_invoice_in_month[$j][$c]['totalPrice']];
-                $b++;
-            }
+            $result_invoice_month[$j] = ['name'=>$j, 'total'=>$total];
         }
 
         //Biểu đồ cho doanh thu năm
-        $total_month = $temp->getUniqueArray($data);
+        $total_month = $temp->getUniqueArray($result_invoice_month);
         $labels_month = array_keys($total_month);
         $values_month = array_values($total_month);
-
-        $total_invoice_in = $temp->getUniqueArray($data_invoice);
-        $values_invoice_in = array_values($total_invoice_in);
 
 //        dd($labels_month, $values_month);
         $chart_month = new RevenueChart();
         $chart_month->labels($labels_month);
-        $chart_month->title('Biểu đồ doanh thu năm '.date('Y') ,20, '#333333');
+        $chart_month->title('Biểu đồ doanh thu năm '.$year_revenue ,20, '#333333');
         $chart_month->barWidth(0.5);
         $chart_month->loaderColor('#333333');
         $chart_month->dataset('Doanh thu','bar',$values_month);
-        $chart_month->dataset('Vốn','bar',$values_invoice_in);
 
         $customer = $temp_invoice->getSumCustomer($month_customer, $year_customer);
         $books = $temp_invoice->getSumBook($date_book, $month_book, $year_book);
 
-        return view('admin.home', compact('chart','chart_month','customer','month_kob',
-            'month_customer','year_customer','array_year','books','date_book','month_book','year_book'));
+        return view('admin.home', compact('chart','chart_month','customer','month_kob', 'year_kob',
+            'month_customer','year_customer','array_year','books','date_book','month_book','year_book', 'year_revenue'));
+    }
+
+    public function search(Request $request){
+        $search = $request->input('q');
+        $books = Book::where('S_TEN','like','%'.$search.'%')->get();
+        $authors = Author::where('TG_TEN','like','%'.$search.'%')->get();
+        $invoices = Invoice::where('HD_MA','like','%'.$search.'%')->get();
+        $invoices_in = InvoiceIn::where('PN_MA','like','%'.$search.'%')->get();
+        $employees = User::where('NV_TEN','like','%'.$search.'%')->get();
+        return view('admin.search', compact('books','authors','invoices','invoices_in','employees'
+        ,'search'));
     }
 }
