@@ -193,12 +193,11 @@
                                                                   checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label class="col-md-3 control-label"></label>
-                                                <div class="col-md-7">
-                                                    <button type="submit" name="register" class="btn btn-primary btn-block">Đặt hàng</button>
+                                            @if(!session('messCheck'))
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary">ĐẶT HÀNG</button>
                                                 </div>
-                                            </div>
+                                            @endif
                                         </form>
                                     </div>
                                 </div>
@@ -206,10 +205,10 @@
                         </div>
                     </div>
                 @endif
-                @if(\Illuminate\Support\Facades\Auth::guard('customer')->check() and !(Session::has('stepThree')))
+                @if(\Illuminate\Support\Facades\Auth::guard('customer')->check() and !(session('stepThree')))
                     <div class="panel panel-default" id="step-2" >
                         <div class="panel-body">
-                            <p style="font-size: 20px"><b>2. Địa chỉ giao hàng</b></p><br>
+                            <p style="font-size: 20px"><b>Địa chỉ giao hàng</b></p><br>
                             <div >
                                 <p style="margin-bottom: 15px">Họ tên: <b>{{\Illuminate\Support\Facades\Auth::guard('customer')->user()->KH_TEN}}</b></p>
                                 <p style="margin-bottom: 15px">Địa chỉ: {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->full_address}}</p>
@@ -219,7 +218,7 @@
                     </div>
                         <div class="panel panel-default" id="step-3" >
                             <div class="panel-body">
-                                <p style="font-size: 20px"><b>3. Thanh toán và đặt mua</b></p><br>
+                                <p style="font-size: 20px"><b>Thanh toán và đặt mua</b></p><br>
                                 <div>
                                     <form action="{{url('/checkout')}}" method="post">
                                         <input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -227,9 +226,11 @@
                                             <label><input type="radio" name="checkout" value="TT bằng tiền mặt khi nhận hàng"
                                                           checked> Thanh toán bằng tiền mặt khi nhận hàng</label><br>
                                         </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary">ĐẶT HÀNG</button>
-                                        </div>
+                                        @if(!session('messCheck'))
+                                            <div class="form-group">
+                                                <button class="btn btn-primary">ĐẶT HÀNG</button>
+                                            </div>
+                                        @endif
                                     </form>
                                 </div>
                             </div>

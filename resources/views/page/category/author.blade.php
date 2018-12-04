@@ -18,7 +18,7 @@
         <div id="content" class="space-top-none">
             <div class="main-content">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-lg-12">
                         <div class="beta-products-list">
                             <div class="row">
                                 @for($i=0;$i<count($books);$i++)
@@ -50,11 +50,7 @@
                                     @endif
                                 @endfor
                             </div>
-                            @if(!is_null($temp_books))
-                                {{$temp_books->links()}}
-                            @else
-                                {{$temp_trans_book->render()}}
-                            @endif
+                            {{($temp_books->total())>0 ? $temp_books->render() : $temp_trans_book->render()}}
 
                         </div> <!-- .beta-products-list -->
                         <div class="space50">&nbsp;</div>

@@ -37,7 +37,7 @@
                         <div class="col-lg-1 col-md-1 col-sm-2">
                             <a id="myImgSmall">
                                 <img src="images/avatar/{{$book->S_AVATAR}}" class="thumbnail" onclick="clickImg(this)">
-                                @if(isset($images))
+                                @if(count($images)>0)
                                     @foreach($images as $image)
                                         <img src="images/{{$image->HA_URL}}" onclick="clickImg(this)" class="thumbnail">
                                     @endforeach
@@ -52,7 +52,7 @@
                         <div class="col-lg-7 col-md-7 col-sm-6">
                             <div>
                                 <h3>{{$book->S_TEN}}</h3>
-                                @if(isset($authors) or isset($translators))
+                                @if((count($authors)>0) or (count($translators)>0))
                                     <p style="margin-bottom: 10px; margin-top: 10px;">Tác giả:
                                         @foreach($authors as $author)
                                             {{$author->TG_TEN}} <br>
@@ -87,14 +87,14 @@
                                             <input type="hidden" name="name" value="{{ $book->S_TEN}}">
                                             <input value="{{isset($temps['sale']) ? $temps['sale'] : $temps['price']}}" type="hidden" name="price">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-5">
                                                 <input class="btn btn-default btn-group" style="width: 30px; margin-right: -4px; border-radius: 0" onclick="qtyDecrement(this)"
                                                        value=" - " type="button">
                                                 <input type="text" class="btn-group" style="width: 40px" value="1" id="qty" name="qty">
                                                 <input class="btn btn-default btn-group" style="width: 30px;margin-left: -5px; border-radius: 0 " onclick="qtyIncrement(this)"
                                                        value=" + " type="button">
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <button class="btn btn-primary" type="submit">
                                                     <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
                                             </div>
@@ -208,7 +208,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
-                        @if(isset($authors))
+                        @if(count($authors)>0)
                             @foreach($authors as $author)
                                 <?php
                                 $temps=App\Author::where('TG_MA',$author->TG_MA)->first();
@@ -216,35 +216,40 @@
                                 $temp_author=$temps->book()->get();
                                 $temp_author_book_promotion = array();
                                 $i = 0;
-                                foreach ($temp_author as $item){
-                                    //Lấy mảng book với điều kiện book khác book đang xem chi tiết
-                                    if ($item->S_MA <> $book->S_MA){
-                                        $temp_author_book = new \App\Book();
-                                        $temp_author_book_promotion[$i] = $temp_author_book->getBookPromotion($item->S_MA);
-                                        $i++;
+                                if ($i<6){
+                                    foreach ($temp_author as $item){
+                                        //Lấy mảng book với điều kiện book khác book đang xem chi tiết
+                                        if ($item->S_MA <> $book->S_MA){
+                                            $temp_author_book = new \App\Book();
+                                            $temp_author_book_promotion[$i] = $temp_author_book->getBookPromotion($item->S_MA);
+                                            $i++;
+                                        }
                                     }
                                 }
                                 ?>
                                 @for($j=0; $j<count($temp_author_book_promotion); $j++)
                                     <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                         <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                            <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}">
-                                                <div class="">
-                                                    <div class=" text-center">
-                                                        <img class=""  src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
-                                                        <p style="font-size: 14px; margin-bottom: 5px; margin-top: 5px">
-                                                            {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 20, $end = '...') }}</p>
-                                                        <p style="font-size: 14px; margin-bottom: 5px">
-                                                            @if(isset($temp_author_book_promotion[$j]['sale']))
-                                                                <span class="flash-del">{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
-                                                                <span class="flash-sale">{{number_format($temp_author_book_promotion[$j]['sale'])}} đ</span>
-                                                            @else
-                                                                <span>{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
-                                                            @endif
-                                                        </p>
-                                                    </div>
+                                            <div class="single-item">
+                                                <div class="single-item-header text-center">
+                                                    <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}">
+                                                        <img src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="90%">
+                                                    </a>
                                                 </div>
-                                            </a>
+                                            </div>
+                                            <div class="single-item-body text-center">
+                                                <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}" class="single-item-title" >
+                                                    {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                                </a>
+                                                <p class="single-item-price" >
+                                                    @if(isset($temp_author_book_promotion[$j]['sale']))
+                                                        <span class="flash-del">{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
+                                                        <span class="flash-sale">{{number_format($temp_author_book_promotion[$j]['sale'])}} đ</span>
+                                                    @else
+                                                        <span>{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
+                                                    @endif
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 @endfor
@@ -258,35 +263,40 @@
                                     $temp_translator = $temps->translate_book()->get();
                                     $temp_translator_book_promotion = array();
                                     $i = 0;
-                                    foreach ($temp_translator as $item){
-                                        //Lấy mảng book với điều kiện book khác book đang xem chi tiết
-                                        if ($item->S_MA <> $book->S_MA){
-                                            $temp_translator_book = new \App\Book();
-                                            $temp_translator_book_promotion[$i] = $temp_translator_book->getBookPromotion($item->S_MA);
-                                            $i++;
+                                    if ($i<6){
+                                        foreach ($temp_translator as $item){
+                                            //Lấy mảng book với điều kiện book khác book đang xem chi tiết
+                                            if ($item->S_MA <> $book->S_MA){
+                                                $temp_translator_book = new \App\Book();
+                                                $temp_translator_book_promotion[$i] = $temp_translator_book->getBookPromotion($item->S_MA);
+                                                $i++;
+                                            }
                                         }
                                     }
                                     ?>
                                     @for($j=0; $j<count($temp_translator_book_promotion); $j++)
                                         <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
                                             <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                                <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}">
-                                                    <div class="">
-                                                        <div class=" text-center">
-                                                            <img class=""  src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="120px" height="150px"><br>
-                                                            <p style="font-size: 14px; margin-bottom: 5px; margin-top: 5px">
-                                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 15, $end = '...') }}</p>
-                                                            <p style="font-size: 14px; margin-bottom: 5px">
-                                                                @if(isset($temp_translator_book_promotion[$j]['sale']))
-                                                                    <span class="flash-del">{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
-                                                                    <span class="flash-sale">{{number_format($temp_translator_book_promotion[$j]['sale'])}} đ</span>
-                                                                @else
-                                                                    <span>{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
-                                                                @endif
-                                                            </p>
-                                                        </div>
+                                                <div class="single-item">
+                                                    <div class="single-item-header text-center">
+                                                        <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}">
+                                                            <img src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="90%">
+                                                        </a>
                                                     </div>
-                                                </a>
+                                                </div>
+                                                <div class="single-item-body text-center">
+                                                    <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}" class="single-item-title" >
+                                                        {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                                    </a>
+                                                    <p class="single-item-price" >
+                                                        @if(isset($temp_translator_book_promotion[$j]['sale']))
+                                                            <span class="flash-del">{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
+                                                            <span class="flash-sale">{{number_format($temp_translator_book_promotion[$j]['sale'])}} đ</span>
+                                                        @else
+                                                            <span>{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
+                                                        @endif
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     @endfor

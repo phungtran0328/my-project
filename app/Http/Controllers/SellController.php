@@ -66,7 +66,7 @@ class SellController extends Controller
         array_multisort($qty, SORT_DESC, $dataSum); //Sắp xếp trật tự giảm dần theo số lượng
 
         $book = new Book();
-        $data_finish = $book->getKindOfBook($dataSum, 7); //Lọc ra sách có loại sách = mã loại sách
+        $data_finish = $book->getKindOfBook($dataSum, 13); //Lọc ra sách có loại sách = mã loại sách
         // 7: manga, 13: văn học, 4: kinh tế
         return view('page.sell.kind_of_book', compact('data_finish'));
     }
@@ -90,7 +90,7 @@ class SellController extends Controller
         array_multisort($qty, SORT_DESC, $dataSum); //Sắp xếp trật tự giảm dần theo số lượng
 
         $book = new Book();
-        $data_finish = $book->getKindOfBook($dataSum, 13); //Lọc ra sách có loại sách = mã loại sách
+        $data_finish = $book->getKindOfBook($dataSum, 4); //Lọc ra sách có loại sách = mã loại sách
         // 7: manga, 13: văn học, 4: kinh tế
         return view('page.sell.kob_economic', compact('data_finish'));
     }

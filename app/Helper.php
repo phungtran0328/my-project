@@ -53,7 +53,7 @@ class Helper
         return $groups;
     }
 
-    /*public function getBookDateInvoice(Collection $collection){
+    public function getBookDate(Collection $collection){
         $i = 0;
         $data = array();
         foreach ($collection as $month){
@@ -69,7 +69,7 @@ class Helper
             }
         }
         return $data;
-    }*/
+    }
 
     public function getBookDateInvoice(Collection $collection){
         $total = 0;

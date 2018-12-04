@@ -58,18 +58,18 @@ class CategoryController extends Controller
 
     public function authorCategory($id){
         $author = Author::where('TG_MA', $id)->first();
-        $temp_books = $author->book()->paginate(1);
-        $temp_trans_book = $author->translate_book()->paginate(1);
+        $temp_books = $author->book()->paginate(12);
+        $temp_trans_book = $author->translate_book()->paginate(12);
+
         $books=array();
+        $temp = new Book();
         if (!is_null($temp_books)){
             for ($i=0;$i<count($temp_books);$i++){
-                $temp = new Book();
                 $books[$i] = $temp->getBookPromotion($temp_books[$i]->S_MA);
             }
         }
         if (!is_null($temp_trans_book)){
             for ($i = 0; $i < count($temp_trans_book); $i++) {
-                $temp = new Book();
                 $books[$i] = $temp->getBookPromotion($temp_trans_book[$i]->S_MA);
             }
         }

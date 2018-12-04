@@ -44,56 +44,44 @@
                             </div>
                         @endif
                         @if(Auth::guard('customer')->check())
-                            <div class="col-md-8 form-group">
+                            <div class="col-md-12 form-group">
                                 <label class=" control-label " >Email</label>
                                 <input type="email" class="form-control "
                                        name="email" value="{{Auth::guard('customer')->user()->KH_EMAIL}}" readonly="">
                             </div>
-
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6 form-group {{ $errors->has('username') ? ' has-error' : '' }}">
+                                    <div class="col-md-8 form-group {{ $errors->has('username') ? ' has-error' : '' }}">
                                         <label class="control-label required" for="username">Họ tên</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="{{Auth::guard('customer')->user()->KH_TEN}}">
+                                        <input type="text" class="form-control" name="username" value="{{Auth::guard('customer')->user()->KH_TEN}}">
                                         <strong style="color: red">{{$errors->first('username') }}</strong>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <label class="control-label" style="text-align: left">Giới tính</label>
-                                        @if(Auth::guard('customer')->user()->KH_GIOITINH=='Nam')
-                                            <div class="row">
-                                                <div class="col-md-3"></div>
-                                                <label class="col-md-4"><input type="radio" name="gender" value="Nam" style="width: 20px" checked>Nam</label>
-                                                <label class="col-md-4"><input type="radio" name="gender" value="Nữ" style="width: 20px">Nữ</label>
-                                            </div>
-                                        @else
-                                            <div class="row">
-                                                <div class="col-md-3"></div>
-                                                <label class="col-md-4"><input type="radio" name="gender" value="Nam" style="width: 20px">Nam</label>
-                                                <label class="col-md-4"><input type="radio" name="gender" value="Nữ" style="width: 20px" checked>Nữ</label>
-                                            </div>
-                                        @endif
+                                        <div class="row">
+                                            <div class="col-md-3"></div>
+                                            <label class="col-md-4">
+                                                <input type="radio" name="gender" value="Nam"
+                                                       style="width: 20px" {{Auth::guard('customer')->user()->KH_GIOITINH=='Nam' ? 'checked' : ''}}>Nam</label>
+                                            <label class="col-md-4">
+                                                <input type="radio" name="gender" value="Nữ"
+                                                       style="width: 20px" {{Auth::guard('customer')->user()->KH_GIOITINH=='Nữ' ? 'checked' : ''}}>Nữ</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-6 form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
+                                    <div class="col-md-8 form-group {{ $errors->has('phone') ? ' has-error' : '' }}">
                                         <label class="control-label">Số điện thoại</label>
                                         <input type="tel" class="form-control" name="phone" value="{{Auth::guard('customer')->user()->KH_SDT}}">
                                         <strong style="color: red">{{$errors->first('phone') }}</strong>
                                     </div>
-                                    <div class="col-md-6 form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
+                                    <div class="col-md-4 form-group {{ $errors->has('birthday') ? ' has-error' : '' }}">
                                         <label class="control-label required">Ngày sinh</label>
                                         <input type="date" class="form-control" name="birthday" value="{{Auth::guard('customer')->user()->KH_NGAYSINH}}">
                                         <strong style="color: red">{{$errors->first('birthday') }}</strong>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8 form-group">
-                                <div class="row">
-
                                 </div>
                             </div>
                             <div class="col-md-12 ">
@@ -117,12 +105,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         @endif
-
-                        <div class="form-group">
-                            <div class="text-center">
-                                <button class="btn btn-primary" style="width: 300px">Cập nhật</button>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button class="btn btn-primary">Cập nhật</button>
                             </div>
                         </div>
                     </form>

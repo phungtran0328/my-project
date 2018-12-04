@@ -17,40 +17,25 @@
     <div class="container">
         <div id="content" class="space-top-none">
             <div class="main-content">
-
                 <div class="row">
                     <div class="col-sm-3">
-                        <div class="aside-menu">
-                            <div style="font-size: 15px; font-weight: bold">
-                                TÁC GIẢ
-                            </div>
-                            <div>
-                                <ul>
-                                    @foreach($authors as $author)
-                                        <li><a href="{{url('category/author',$author['id'])}}">{{$author['name']}}</a></li>
-                                    @endforeach
-                                    @foreach($translators as $translator)
-                                        <li><a href="{{url('category/author',$translator['id'])}}">{{$translator['name']}}</a></li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        {{--<ul class="aside-menu">
-                           --}}{{-- @foreach ($danhmuc as $item)
-                                <li><a href="{{route('danh-muc-sach',$item->LS_MA)}}">{{$item->LS_TEN}}</a></li>
-                            @endforeach--}}{{--
-
-                        </ul>--}}
+                        <ul class="aside-menu">
+                            <li style="font-size: 16px; font-weight: bold">TÁC GIẢ</li>
+                            @foreach($authors as $author)
+                                <li>
+                                    <a href="{{url('category/author',$author['id'])}}">{{$author['name']}}</a>
+                                </li>
+                            @endforeach
+                            @foreach($translators as $translator)
+                                <li>
+                                    <a href="{{url('category/author',$translator['id'])}}">{{$translator['name']}}</a>
+                                </li>
+                            @endforeach
+                        </ul>
                     </div>
                     <div class="col-sm-9">
                         <div class="beta-products-list">
-                            <h4>Sách mới - Nổi bật</h4>
-                            <div class="beta-products-details">
-                                {{--<p class="pull-left">Tìm thấy {{count($category_book)}}</p>--}}
-                                <div class="clearfix"></div>
-                            </div>
-
-                            <div class="row">
+                            <div class="row" id="category_author">
                                 @for($i=0;$i<count($category_paginate);$i++)
                                     <?php
                                     $temp = new \App\Book();
@@ -88,25 +73,9 @@
                         </div> <!-- .beta-products-list -->
                         {{$category_paginate->render()}}
                         <div class="space50">&nbsp;</div>
-
-                        <div class="beta-products-list">
-                            <h4>Xem thêm ...</h4>
-                            <div class="beta-products-details">
-
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="row">
-
-                            </div>
-                            <div class="space40">&nbsp;</div>
-
-                        </div> <!-- .beta-products-list -->
                     </div>
                 </div> <!-- end section with sidebar and main content -->
-
-
             </div> <!-- .main-content -->
         </div> <!-- #content -->
     </div> <!-- .container -->
-
 @endsection

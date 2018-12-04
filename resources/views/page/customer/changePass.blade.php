@@ -39,17 +39,19 @@
                 <div class="panel-body">
                     <form class="form-horizontal" action="{{url('/change-password',Auth::guard('customer')->user()->KH_MA)}}" method="post">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        @if(Session::has('message'))
-                            <div class="alert alert-success">
-                                {{Session::get('message')}}
+                        @if(session('message'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{session('message')}}
                             </div>
-                        @elseif(Session::has('pass_error'))
-                            <div class="alert alert-danger">
-                                {{Session::get('pass_error')}}
+                        @elseif(session('pass_error'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{session('pass_error')}}
                             </div>
                         @endif
                         <div class="form-group {{ $errors->has('old_password') ? ' has-error' : '' }}">
-                            <label class="col-md-3 control-label required" for="old_password">Mật khẩu cũ</label>
+                            <label class="col-md-3 control-label" for="old_password">Mật khẩu cũ *</label>
                             <div class="col-md-5">
                                 <input type="password" class="form-control" id="old_password" name="old_password" placeholder="Nhập mật khẩu hiện tại">
                                 <strong style="color: red">{{$errors->first('old_password') }}</strong>
@@ -57,14 +59,14 @@
                         </div>
                         <div class="{{ $errors->has('password') ? 'form-group has-error' : '' }}">
                             <div class="form-group ">
-                                <label class="col-md-3 control-label required" for="password">Mật khẩu mới</label>
+                                <label class="col-md-3 control-label" for="password">Mật khẩu mới *</label>
                                 <div class="col-md-5">
                                     <input type="password" class="form-control" id="password" name="password" placeholder="Nhập mật khẩu mới">
                                     <strong style="color: red">{{$errors->first('password') }}</strong>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-3 control-label required" for="password_confirmation">Nhập lại</label>
+                                <label class="col-md-3 control-label" for="password_confirmation">Nhập lại mật khẩu mới*</label>
                                 <div class="col-md-5">
                                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Nhập lại mật khẩu mới">
                                     <strong style="color: red">{{$errors->first('password') }}</strong>
@@ -76,7 +78,7 @@
                             <div class="col-md-3">
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-primary btn-block">Cập nhật</button>
+                                <button class="btn btn-primary">Cập nhật</button>
                             </div>
                         </div>
                     </form>

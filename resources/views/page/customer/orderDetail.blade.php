@@ -10,7 +10,8 @@
     <div class="container">
         <ul class="breadcrumb">
             <li><a href="{{url('/index')}}">Trang chủ</a></li>
-            <li class="active">Đơn hàng của tôi</li>
+            <li><a href="{{url('/order',Auth::guard('customer')->user()->KH_MA)}}">Đơn hàng của tôi</a></li>
+            <li class="active">Chi tiết đơn hàng #{{$order_id}}</li>
         </ul>
     </div>
     <div class="container">
