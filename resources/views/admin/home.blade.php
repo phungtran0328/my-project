@@ -138,7 +138,7 @@ foreach ($books_out_stock as $key=>$value){
                     <div class="panel-body">
                         <form class="form-inline" action="{{url('admin/index')}}" method="get">
                             <select name="date_book" class="form-control">
-                                @for($i=1;$i<32;$i++)
+                                @for($i=1;$i<31;$i++)
                                     <option value="{{$i}}" {{$i==$date_book ? 'selected' : ''}}>Ngày {{$i}}</option>
                                 @endfor
                             </select>
@@ -165,17 +165,19 @@ foreach ($books_out_stock as $key=>$value){
                             </tr>
                             </thead>
                             <tbody>
-                            @for($i=0; $i<count($books); $i++)
+                            <?php $i=0; ?>
+                            @foreach($books as $book)
                                 <tr>
-                                    <td>{{$i+1}}</td>
-                                    <td>{{$books[$i]['name']}}</td>
-                                    <td>{{$books[$i]['qty']}}</td>
-                                    <td>{{number_format($books[$i]['price'])}}</td>
+                                    <td>{{$i + $books->firstItem()}}</td>
+                                    <td>{{$book['name']}}</td>
+                                    <td>{{$book['qty']}}</td>
+                                    <td>{{number_format($book['price'])}}</td>
                                 </tr>
-                            @endfor
+                                <?php $i++; ?>
+                            @endforeach
                             </tbody>
                         </table>
-
+                        {{$books->render()}}
                         <!-- /.list-group -->
                     </div>
                     <!-- /.panel-body -->

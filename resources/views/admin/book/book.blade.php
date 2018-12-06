@@ -99,17 +99,16 @@
                                 <tbody>
                                 @foreach($books as $index=>$book)
                                     <?php
-                                        $temp = \App\Book::where('S_MA',$book->S_MA)->first();
-                                        $publisher = $temp->publisher()->first();
-                                        $authors = $temp->author()->get();
-                                        $translators = $temp->translator()->get();
-
+                                        $publisher = $book->publisher()->first();
+                                        $authors = $book->author()->get();
+                                        $translators = $book->translator()->get();
+                                        $book_qty = $book->S_SLTON;
                                     ?>
                                     <tr style="text-align: justify">
                                         {{--increment not reset in second page--}}
                                         <td>{{$index + $books->firstItem()}}</td>
                                         <td>{{$book->S_TEN}}</td>
-                                        @if(isset($authors) or isset($translators))
+                                        @if((count($authors)>0) or (count($translators)>0))
                                             <td>
                                                 @foreach($authors as $author)
                                                     {{$author->TG_TEN}} <br><br>
@@ -124,7 +123,7 @@
                                             @else
                                             <td>Không có</td>
                                             @endif
-                                        <td>{{$book->S_SLTON}}</td>
+                                        <td style="{{($book_qty<11) ? 'color: red' : ''}}">{{$book->S_SLTON}}</td>
                                         <td>{{number_format($book->S_GIA)}}</td>
                                         <td>{{$book->S_LUOTXEM}}</td>
                                         <td>{{$publisher->NXB_TEN}}</td>

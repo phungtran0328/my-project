@@ -27,7 +27,7 @@
             <ul class="dropdown-menu dropdown-user">
                 <li><a href="{{url('/admin/profile',Auth::user()->NV_MA)}}"><i class="fa fa-user fa-fw"></i> {{Auth::user()->NV_TEN}}</a>
                 </li>
-                <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                <li><a href="{{url('/admin/setting',Auth::user()->NV_MA)}}"><i class="fa fa-gear fa-fw"></i> Đổi mật khẩu</a>
                 </li>
                 <li class="divider"></li>
                 <li><a href="{{url('/admin/logout')}}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>

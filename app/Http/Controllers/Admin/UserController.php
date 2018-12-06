@@ -24,33 +24,31 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+        $date = date('Y-m-d', strtotime('-18 years'));
         $this->validate($request,
             [
                 'username' => 'required|unique:nhanvien,NV_TENDANGNHAP',
                 //unique: table,column_name => ,column_name -> [column_name]; , column_name -> [ column_name]
-                'name'=>'required',
-                'phone' => 'required|regex:/^(\84)[0-9]{9}$/',
+                'phone' => 'required|regex:/(0)[0-9]{9}$/',
                 //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
-                'birthday' => 'required|before:2006-01-01',
-                //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
-                'address' => 'required',
-
+                'birthday' => 'required|before:'.$date,
+                //before: ngày sinh phải trước ngày 01 tháng 01 năm 2000 (nhân viên >= 18 tuổi)
             ],
             [
                 'username.required' => 'Vui lòng nhập tên đăng nhập !',
                 'username.unique'=>'Tên đăng nhập đã có người sử dụng ! ',
-                'name.required' => 'Vui lòng nhập họ tên !',
-                'address.required' => 'Vui lòng nhập địa chỉ !',
                 'phone.required'=>'Vui lòng nhập số điện thoại ! ',
                 'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
                 'birthday.required'=>'Vui lòng điền ngày sinh !',
-                'birthday.before'=>'Phải lớn hơn 12 tuổi !'
+                'birthday.before'=>'Phải lớn hơn 18 tuổi !'
             ]
         );
         $random=str_random(8);
         //Tạo mật khẩu ngẫu nhiên gồm 8 kí tự
 //        $password= Hash::make($random);
 //        dd($random);
+        $roles = $request->input('role');
+
         $user=new User();
         $user->NV_TEN=$request->input('name');
         $user->NV_GIOITINH=$request->input('gender');
@@ -61,55 +59,21 @@ class UserController extends Controller
         $user->NV_MATKHAU=$random;
         $user->save();
 
+        $data=array();
+        for ($i=0;$i<count($roles);$i++){
+            $data[]=[
+                'NV_MA'=>$user->NV_MA,
+                'Q_MA'=>$roles[$i]
+            ];
+        }
+        User_Role::insert($data);
         return redirect('admin/user')->with('messageAdd','Thêm nhân viên thành công !');
     }
 
-    public function show($id){
-        $user=User::where('NV_MA',$id)->first();
-        $roles=$user->roles()->get();
-        $results=array();
-        foreach ($roles as $role){
-            $results[]= $role->Q_MA;
-        }
-        $roles_user=Role::whereNotIn('Q_MA',$results)->get();
-        return view('admin.manage.user.update', compact('user','roles','roles_user'));
-    }
-
     public function update(Request $request, $id){
-        $this->validate($request,
-            [
-                'name'=>'required',
-                'phone' => 'required|regex:/^(\84)[0-9]{9}$/',
-                //regex: (đầu số 84)[dãy số từ 0-9]{gồm 9 số từ 0-9}
-                'birthday' => 'required|before:2006-01-01',
-                //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
-                'address' => 'required',
-
-            ],
-            [
-                'name.required' => 'Vui lòng nhập họ tên !',
-                'address.required' => 'Vui lòng nhập địa chỉ !',
-                'phone.required'=>'Vui lòng nhập số điện thoại ! ',
-                'phone.regex'=>'Số điện thoại mã 84 gồm 10 số ! ',
-                'birthday.required'=>'Vui lòng điền ngày sinh !',
-                'birthday.before'=>'Phải lớn hơn 12 tuổi !'
-            ]
-        );
         $user=User::where('NV_MA',$id)->first();
-        $user->NV_TEN=$request->input('name');
-        $user->NV_GIOITINH=$request->input('gender');
-        $user->NV_NGAYSINH=$request->input('birthday');
-        $user->NV_DIACHI=$request->input('address');
-        $user->NV_SDT=$request->input('phone');
-        $user->save();
-        return redirect('admin/user')->with('messageUpdate','Cập nhật thành công !');
-    }
-
-    public function updateRole(Request $request, $id){
-        $user=User::where('NV_MA',$id)->first();
-        $roles=$user->roles()->get();
-//        dd(count($roles));
-        $role=$request->input('roles');
+        $temp = $user->roles()->get();
+        $role = $request->input('roles');
         $data=array();
         for ($i=0;$i<count($role);$i++){
             $data[]=[
@@ -117,18 +81,16 @@ class UserController extends Controller
                 'Q_MA'=>$role[$i]
             ];
         }
-//        dd($data);
-        if (count($roles)==0){
+        if (count($temp)==0){
             User_Role::insert($data);
         }
         else{
-            for($i=0;$i<count($roles);$i++){
+            for($i=0;$i<count($temp);$i++){
                 User_Role::where('NV_MA',$id)->delete();
             }
             User_Role::insert($data);
         }
-
-        return redirect('admin/user')->with('messUpdateRole','Cập nhật quyền cho nhân viên thành công !');
+        return redirect('admin/user')->with('messageUpdate','Cập nhật thành công !');
     }
 
     public function delete($id){

@@ -8,12 +8,7 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Nhân viên</h1>
-            </div>
-
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -37,57 +32,46 @@
                             @endcan
                         </div>
                         <hr>
-                        @if(Session::has('messageAdd'))
+                        @if(session('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
+                                {{session('messageAdd')}}
                             </div>
                         @endif
-                        @if(Session::has('messageUpdate'))
+                        @if(session('messageUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageUpdate')}}
+                                {{session('messageUpdate')}}
                             </div>
                         @endif
-                        @if(Session::has('messUpdateRole'))
+                        @if(session('messUpdateRole'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messUpdateRole')}}
+                                {{session('messUpdateRole')}}
                             </div>
                         @endif
-                        @if(Session::has('messageRemove'))
+                        @if(session('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemove')}}
+                                {{session('messageRemove')}}
                             </div>
                         @endif
                         <div class="table-responsive">
                             <table class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
-                                    <th style="width: 15%"></th>
                                     <th style="width: 15%">Tên</th>
                                     <th style="width: 8%">Giới tính</th>
                                     <th style="width: 4%">Ngày sinh</th>
                                     <th>Địa chỉ</th>
                                     <th style="width: 4%">SĐT</th>
                                     <th style="width: 10%">Quyền</th>
+                                    <th style="width: 15%"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $index=>$user)
                                     <tr>
-                                        <td class="text-center">
-                                            @can('user.update')
-                                                <a class="btn btn-info btn-sm" href="{{url('admin/user/update',$user->NV_MA)}}">
-                                                <span class="glyphicon glyphicon-pencil"></span> Sửa</a>
-                                            @endcan
-                                            @can('user.delete')
-                                                <a class="btn btn-danger btn-sm" href="">
-                                                    <span class="glyphicon glyphicon-remove" onclick="return confirm('Bạn chắn chắn xóa ? ')"></span> Xóa
-                                                </a>
-                                            @endcan
-                                        </td>
                                         <td>{{$user->NV_TEN}}</td>
                                         <td>{{$user->NV_GIOITINH}}</td>
                                         <?php
@@ -102,6 +86,18 @@
                                             @foreach($roles as $role)
                                                 {{$role->Q_MA}}
                                             @endforeach
+                                        </td>
+                                        <td class="text-center">
+                                            @can('user.update')
+                                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#userUpdate-{{$user->NV_MA}}">
+                                                    <span class="glyphicon glyphicon-pencil"></span> Sửa
+                                                </button>
+                                            @endcan
+                                            @can('user.delete')
+                                                {{--<a class="btn btn-danger btn-sm" href="">
+                                                    <span class="glyphicon glyphicon-remove" onclick="return confirm('Bạn chắn chắn xóa ? ')"></span> Xóa
+                                                </a>--}}
+                                            @endcan
                                         </td>
                                     </tr>
                                 @endforeach
@@ -155,6 +151,52 @@
             </div>
         </div>
     </div>
+
+    @foreach($users as $user)
+        <?php
+        $roles = $user->roles()->get();
+        $results = array();
+        $i = 0;
+        foreach ($roles as $role){
+            $results[$i]= $role->Q_MA;
+            $i++;
+        }
+        $roles_user = \App\Role::whereNotIn('Q_MA',$results)->get();
+        ?>
+        <div class="modal fade" id="userUpdate-{{$user->NV_MA}}" tabindex="-1" role="dialog" aria-labelledby="updateModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="updateModal">Cập nhật quyền cho nhân viên: "{{$user->NV_TEN}}"</h3>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{url('admin/user/update',$user->NV_MA)}}" method="post">
+                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                            {{--@method('PATCH')--}}
+                            <div class="form-group {{ $errors->has('roles') ? ' has-error' : '' }}">
+                                <label class="control-label">Quyền (*)</label>
+                                <select class="form-control" name="roles[]" multiple style="height: 200px" required>
+                                    @foreach($roles as $role)
+                                        <option value="{{$role->Q_MA}}" selected>{{$role->Q_TEN}}</option>
+                                    @endforeach
+                                    @foreach($roles_user as $key=>$value)
+                                        <option value="{{$value->Q_MA}}">{{$value->Q_TEN}}</option>
+                                    @endforeach
+                                </select>
+                                <strong style="color: red">{{$errors->first('roles') }}</strong>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Cập nhật</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <script>
         function printDiv(divName) {
             var printContents = document.getElementById(divName).innerHTML; //Lấy thẻ div

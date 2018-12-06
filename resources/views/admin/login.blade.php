@@ -52,10 +52,10 @@
                 <div class="panel-body">
                     <form role="form" action="{{ url ('/admin/login') }}" method="POST">
                         <input type="hidden" name="_token" value="{{csrf_token()}}">
-                        @if(Session::has('message'))
+                        @if(session('message'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('message')}}
+                                {{session('message')}}
                             </div>
                         @endif
                         <fieldset>

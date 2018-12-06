@@ -14,16 +14,16 @@
                 <h4>GIỎ HÀNG ({{Cart::instance()->count(false)}})</h4>
                 <br>
 
-                @if(Session::has('messRemove'))
+                @if(session('messRemove'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{Session::get('messRemove')}}
+                        {{session('messRemove')}}
                     </div>
                 @endif
-                @if(Session::has('messEmpty'))
+                @if(session('messEmpty'))
                     <div class="alert alert-success alert-dismissable">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                        {{Session::get('messEmpty')}}
+                        {{session('messEmpty')}}
                     </div>
                 @endif
                 <div class="table-responsive ">
@@ -73,13 +73,13 @@
                                     <td style="width: 15%">
                                         <form class="input-group" action="{{url('/cart/update',$item->rowId)}}" method="post">
                                             {!! csrf_field() !!}
-                                            <input value="{{$item->qty}}" class="form-control" type="number" min="1" id="qty-num" name="qty">
+                                            <input value="{{$item->qty}}" class="form-control" type="number" min="1" max="{{$item->model->S_SLTON}}" id="qty-num" name="qty">
                                             <input type="hidden" name="id" value="{{$item->rowId}}">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default-sm"><span class="glyphicon glyphicon-refresh"></span></button>
                                             </span>
                                         </form>
-                                        <p>{{$errors->has('qty') ? $errors->first('qty') : ''}}</p>
+                                        <p>{{$errors->has('qty_'.$item->id) ? $errors->first('qty_'.$item->id) : ''}}</p>
                                     </td>
                                     <td>
                                         <p>{{ number_format($item->model->S_GIA) }} đ</p>

@@ -93,11 +93,14 @@
                                                 <input type="text" class="btn-group" style="width: 40px" value="1" id="qty" name="qty">
                                                 <input class="btn btn-default btn-group" style="width: 30px;margin-left: -5px; border-radius: 0 " onclick="qtyIncrement(this)"
                                                        value=" + " type="button">
+                                                <br>
+                                                <strong style="color: red;">{{$errors->first('qty')}}</strong>
                                             </div>
-                                            <div class="col-md-7">
+                                            <div class="col-md-6">
                                                 <button class="btn btn-primary" type="submit">
                                                     <span class="fa fa-shopping-cart" style="font-size: 20px"></span> Thêm vào giỏ hàng</button>
                                             </div>
+
                                         </div>
                                         @else
                                             <button class="btn btn-default btn-group" style="width: 40px" disabled>

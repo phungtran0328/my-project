@@ -109,6 +109,8 @@ Route::group(['prefix' => 'admin'], function () {
     //chỉnh sửa profile nhân viên
     Route::get('/profile/{id}','Admin\UpdateController@showUpdateForm');
     Route::post('/profile/{id}','Admin\UpdateController@updateProfile');
+    Route::get('/setting/{id}', 'Admin\UpdateController@showChangePass');
+    Route::post('/setting/{id}','Admin\UpdateController@changePass');
 
     //thêm, hiển thị danh sách loại sách
     Route::get('/kind-of-book','Admin\KindOfBookController@showKind_of_book');
@@ -169,12 +171,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('user','Admin\UserController@index');
     Route::get('user/create','Admin\UserController@create')->middleware('can:user.create');
     Route::post('user/create','Admin\UserController@store')->middleware('can:user.create');
-    Route::get('user/update/{id}','Admin\UserController@show')->middleware('can:user.update');
     //user update profile
     Route::post('user/update/{id}','Admin\UserController@update')->middleware('can:user.update');
-    //user update role
-    Route::post('user/update/role/{id}','Admin\UserController@updateRole');
-    Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
+//    Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
     Route::get('user/print','Admin\UserController@print')->middleware('can:user.create');
 
     //role

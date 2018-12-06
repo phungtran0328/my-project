@@ -9,13 +9,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
-use Auth;
-use Session;
-use Hash;
-use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -41,15 +37,26 @@ class LoginController extends Controller
                 'password.required'=>'Vui lòng nhập mật khẩu !'
             ]
         );
+        $user = $req->input('username');
+        $pass = $req->input('password');
+        $remember = $req->input('remember');
+        $auth = User::where('NV_TENDANGNHAP', '=', $user)
+                    ->where('NV_MATKHAU', '=', $pass)
+                    ->first();
 
-        $auth = User::where('NV_TENDANGNHAP', '=', $req->username)->where('NV_MATKHAU', '=', $req->password)->first();
         if($auth){
             Auth::login($auth);
-            return redirect('/admin/index');
-        }
-        else
-        {
-            return redirect()->back()->with('message','Sai tên đăng nhập hoặc mật khẩu!');
+            return redirect('admin/index');
+        }else
+            {
+            if(Auth::attempt(['NV_TENDANGNHAP' => $user, 'password' => $pass], $remember)){
+                //'password' bắt buộc phải là password vì nó đã được xác định sẵn
+                //Nhưng vẫn có thể chỉnh sửa ở file model function getAuthPassword
+                return redirect('admin/index');
+            }else
+            {
+                return redirect()->back()->with('message','Sai tên đăng nhập hoặc mật khẩu!');
+            }
         }
     }
 

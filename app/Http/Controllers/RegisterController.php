@@ -29,6 +29,7 @@ class RegisterController extends Controller
     }
 
     public function create(Request $req){
+        $date = date('Y-m-d', strtotime('-12 years'));
         $this->validate($req,
             [
                 'username' => 'required',
@@ -40,7 +41,7 @@ class RegisterController extends Controller
                 // /(01)[0-9]{9}/ kiểu 2
                 // /(0)[0-9]{9}$/ kiểu 3
                 //regex: (đầu số 84 [0])[dãy số từ 0-9]{gồm 9 số từ 0-9}
-                'birthday' => 'required|before:2006-01-01',
+                'birthday' => 'required|before:'.$date,
                 //before: ngày sinh phải trước ngày 01 tháng 01 năm 2006 (người dùng 12 tuổi)
                 'address' => 'required',
 

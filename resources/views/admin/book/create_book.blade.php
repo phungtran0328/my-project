@@ -79,7 +79,7 @@
                                 <div class="col-md-4 form-group">
                                     <label class="control-label">Tập hình ảnh *</label>
                                     {{--name="images[]" lưu nhiều record cùng lúc--}}
-                                    <input required type="file" class="form-control" name="images[]" placeholder="image" multiple>
+                                    <input type="file" class="form-control" name="images[]" placeholder="image" multiple>
                                 </div>
                                 <div class="col-md-3 form-group {{$errors->has('kindOfBook') ? 'has-error' : ''}}">
                                     <label class="control-label">Loại sách *</label>

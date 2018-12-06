@@ -26,7 +26,7 @@ class HomeController extends Controller
         $invoiceIns=InvoiceIn::orderBy('PN_NGAYNHAP','desc')->take(6)->get();
 
         $invoices=DB::table('hd_chitiet')->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as total'))
-            ->groupBy('S_MA')->orderBy('total','desc')->take(6)->get();
+            ->groupBy('S_MA')->orderBy('total','desc')->take(8)->get();
 
         $i =0;
         $temp_results = array();
