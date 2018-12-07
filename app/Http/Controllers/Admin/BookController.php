@@ -17,7 +17,9 @@ use App\Translator;
 use App\WriteBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BookController extends Controller
@@ -280,10 +282,10 @@ class BookController extends Controller
         if (isset($order) or (isset($invoice_in))){
             return redirect()->back()->with('messDeleteError','Không thể xóa, vì tồn tại sách trong đơn hàng và phiếu nhập !');
         }
-        if (isset($authors)){
+        if (count($authors)>0){
             WriteBook::where('S_MA',$id)->delete();
         }
-        if (isset($trans)){
+        if (count($trans)>0){
             Translator::where('S_MA',$id)->delete();
         }
         if (isset($image)){
@@ -300,10 +302,14 @@ class BookController extends Controller
         }
 
         $books->delete();
+        $user = Auth::user();
+        Log::info("Nhân viên xóa sách: ".$books->S_TEN." là ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
         return redirect()->back()->with('messDelete','Đã xóa sách với ID: '.$id.' !');
     }
 
     public function export(){
+        $user = Auth::user();
+        Log::info("Nhân viên xuất file: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
         return (new BooksExport())->download('books.xlsx');
     }
 }

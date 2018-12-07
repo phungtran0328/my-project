@@ -8,12 +8,7 @@
 @extends('admin/master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Sách</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12 ">
                 <div class="panel panel-default">
@@ -21,10 +16,6 @@
                         <h5>Thêm sách</h5>
                     </div>
                     <div class="panel-body">
-                        <a class="btn btn-success btn-block" style="width: 150px" href="{{url('/admin/book')}}">
-                            <span class="glyphicon glyphicon-arrow-left"></span>
-                        </a>
-                        <br>
                         <form action="{{url('/admin/book')}}" method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{csrf_token()}}">
                             <div class="row">
@@ -133,10 +124,11 @@
                                     <textarea rows="16" class="form-control" placeholder="Giới thiệu sách" name="description">{{old('description')}}</textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button class="btn btn-primary btn-block">Thêm mới</button>
-                                </div>
+                            <div class="form-group text-right">
+                                <button class="btn btn-primary">Thêm mới</button>
+                                <a class="btn btn-success" href="{{url('/admin/book')}}">
+                                    Hủy
+                                </a>
                             </div>
                         </form>
                     </div>

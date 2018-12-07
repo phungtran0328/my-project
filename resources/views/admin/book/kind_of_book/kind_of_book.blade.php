@@ -9,23 +9,35 @@
 @extends('admin.master')
 @section('content')
 <div id="page-wrapper">
-    <div class="row">
-        <div class="col-lg-12">
-            <h1 class="page-header">Thể loại sách</h1>
-        </div>
-    </div>
+    <br>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Danh sách các loại sách</h5>
+                    <a href="{{url('admin/kind-of-book')}}">Danh sách các loại sách</a>
                 </div>
                 <div class="panel-body">
-                    @can('book.create')
-                    <button style="width: 15%" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </button>
-                    @endcan
+                    <div class="row">
+                        <div class="col-md-2">
+                            @can('book.create')
+                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#exampleModal">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            @endcan
+                        </div>
+                        <div class="col-md-6"></div>
+                        <div class="col-md-4">
+                            <form role="search" class="input-group" action="{{url('admin/kind-of-book')}}" method="get">
+                                <input type="text" class="form-control" name="q" placeholder="Tìm thể loại..." value="{{$search}}">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default-sm" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </form>
+                        </div>
+                    </div>
+
                     <hr>
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -64,32 +76,32 @@
                             </div>
                         </div>
                     </div>
-                    @if(Session::has('messageAdd'))
+                    @if(session('messageAdd'))
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{Session::get('messageAdd')}}
+                            {{session('messageAdd')}}
                         </div>
                     @endif
-                    @if(Session::has('messageUpdate'))
+                    @if(session('messageUpdate'))
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{Session::get('messageUpdate')}}
+                            {{session('messageUpdate')}}
                         </div>
                     @endif
-                    @if(Session::has('messageDelete'))
+                    @if(session('messageDelete'))
                         <div class="alert alert-success alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{Session::get('messageDelete')}}
+                            {{session('messageDelete')}}
                         </div>
                     @endif
-                    @if(Session::has('messageDeleteError'))
+                    @if(session('messageDeleteError'))
                         <div class="alert alert-danger alert-dismissable">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            {{Session::get('messageDeleteError')}}
+                            {{session('messageDeleteError')}}
                         </div>
                     @endif
                     <div class="table-responsive ">
-                        <table class="table table-striped table-bordered table-hover">
+                        <table class="table table-bordered table-hover">
                             <thead>
                             <tr>
                                 <th style="width: 5%">STT</th>

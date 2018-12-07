@@ -18,7 +18,7 @@
         <div id="content" class="space-top-none">
             <div class="main-content">
                 <div class="row">
-                    <div class="col-sm-3">
+                    <div class="col-md-3">
                         <ul class="aside-menu">
                             <li style="font-size: 16px; font-weight: bold">TÁC GIẢ</li>
                             @foreach($authors as $author)
@@ -33,9 +33,9 @@
                             @endforeach
                         </ul>
                     </div>
-                    <div class="col-sm-9">
+                    <div class="col-md-9">
                         <div class="beta-products-list">
-                            <div class="row" id="category_author">
+                            <div class="row">
                                 @for($i=0;$i<count($category_paginate);$i++)
                                     <?php
                                     $temp = new \App\Book();
@@ -52,7 +52,7 @@
                                                     </div>
                                                     <div class="single-item-body text-center">
                                                         <a href="{{url('/detail',$cate_book['id'])}}" class="single-item-title" style="font-size: 14px">
-                                                            {{ str_limit($cate_book['name'], $limit = 18, $end = '...') }}</a>
+                                                            {{ str_limit($cate_book['name'], $limit = 16, $end = '...') }}</a>
                                                         <p class="single-item-price" style="font-size: 13px">
                                                             @if(isset($cate_book['sale']))
                                                                 <span class="flash-del">{{number_format($cate_book['price'])}} đ</span>
@@ -62,17 +62,14 @@
                                                             @endif
                                                         </p>
                                                     </div>
-                                                    <div class="clearfix"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     @endif
                                 @endfor
                             </div>
-                            <br/>
                         </div> <!-- .beta-products-list -->
                         {{$category_paginate->render()}}
-                        <div class="space50">&nbsp;</div>
                     </div>
                 </div> <!-- end section with sidebar and main content -->
             </div> <!-- .main-content -->

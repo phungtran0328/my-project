@@ -8,13 +8,21 @@ use App\Http\Controllers\Controller;
 
 class KindOfBookController extends Controller
 {
-    public function showKind_of_book(){
-        $kind_of_book=KindOfBook::all();
-        $kob_sort=KindOfBook::orderBy('LS_MA','desc')->paginate(10);
-        return view('admin.book.kind_of_book.kind_of_book', compact('kind_of_book','kob_sort'));
+    public function showKind_of_book(Request $request)
+    {
+        $search = $request->input('q');
+        if (isset($search)){
+            $kob_sort = KindOfBook::where('LS_TEN','like','%'.$search.'%')
+                ->orderBy('LS_MA','desc')->paginate(10);
+        }
+        else{
+            $kob_sort=KindOfBook::orderBy('LS_MA','desc')->paginate(10);
+        }
+        return view('admin.book.kind_of_book.kind_of_book', compact('kob_sort','search'));
     }
 
-    public function kind_of_book(Request $request){
+    public function kind_of_book(Request $request)
+    {
         $kind_of_book = new KindOfBook();
         $kind_of_book->LS_TEN=$request->name_create;
         $kind_of_book->LS_CHIETKHAU=$request->input('discount_create');
@@ -26,7 +34,8 @@ class KindOfBookController extends Controller
         ]);
     }
 
-    public function updateKindOfBook(Request $request, $id){
+    public function updateKindOfBook(Request $request, $id)
+    {
         $kind_of_book = KindOfBook::where('LS_MA',$id)->first();
         $kind_of_book->LS_TEN=$request->name_update;
         $kind_of_book->LS_CHIETKHAU=$request->input('discount_update');
@@ -35,7 +44,8 @@ class KindOfBookController extends Controller
         return redirect()->back()->with('messageUpdate','Đã cập nhật loại sách ID: '.$id);
     }
 
-    public function deleteKindOfBook($id){
+    public function deleteKindOfBook($id)
+    {
         $kob = KindOfBook::where('LS_MA',$id)->first();
         $book = $kob->book()->first();
         if (isset($book)){

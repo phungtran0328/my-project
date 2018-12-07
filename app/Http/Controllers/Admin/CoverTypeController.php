@@ -8,15 +8,17 @@ use App\CoverType;
 
 class CoverTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $cover_type = CoverType::orderBy('LB_MA','desc')->paginate(10);
-        return view('admin.book.cover_type.cover_type', compact('cover_type'));
+        $search = $request->input('q');
+        if (isset($search)){
+            $cover_type = CoverType::where('LB_TEN','like','%'.$search.'%')
+                ->orderBy('LB_MA','desc')->paginate(10);
+        }
+        else{
+            $cover_type = CoverType::orderBy('LB_MA','desc')->paginate(10);
+        }
+        return view('admin.book.cover_type.cover_type', compact('cover_type','search'));
     }
 
     /**

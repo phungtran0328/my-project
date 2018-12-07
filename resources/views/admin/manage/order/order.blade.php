@@ -8,32 +8,22 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Đơn hàng</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Danh sách đơn hàng</h5>
+                        <a href="{{url('admin/order')}}">Danh sách đơn hàng</a>
                     </div>
                     <div class="panel-body">
-                        {{--@can('invoice-in.create')
-                            <a href="{{url('/admin/invoice-in/create')}}" class="btn btn-primary" style="width: 150px;">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        @endcan--}}
                         <form class="input-group" action="{{url('admin/order')}}" method="get" style="width: 250px;">
                             <select class="form-control" name="status">
-                                <option value="">---Trạng thái đơn hàng---</option>
-                                <option value="0">Đang xử lí</option>
-                                <option value="3">Đang chờ hủy đơn hàng</option>
-                                <option value="1">Đang vận chuyển</option>
-                                <option value="2">Giao hàng thành công</option>
-                                <option value="4">Đã hủy</option>
+                                <option value="" >---Trạng thái đơn hàng---</option>
+                                <option value="0" {{$status=='0' ? 'selected' : ''}}>Đang xử lí</option>
+                                <option value="3" {{$status=='3' ? 'selected' : ''}}>Đang chờ hủy đơn hàng</option>
+                                <option value="1" {{$status=='1' ? 'selected' : ''}}>Đang vận chuyển</option>
+                                <option value="2" {{$status=='2' ? 'selected' : ''}}>Giao hàng thành công</option>
+                                <option value="4" {{$status=='4' ? 'selected' : ''}}>Đã hủy</option>
                             </select>
                             <span class="input-group-btn">
                                 <button class="btn btn-default-sm" type="submit">
@@ -42,22 +32,22 @@
                             </span>
                         </form>
                         <hr>
-                        @if(Session::has('messInvoice'))
+                        @if(session('messInvoice'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messInvoice')}}
+                                {{session('messInvoice')}}
                             </div>
                         @endif
-                        @if(Session::has('messUpdate'))
+                        @if(session('messUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messUpdate')}}
+                                {{session('messUpdate')}}
                             </div>
                         @endif
-                        @if(Session::has('messComplete'))
+                        @if(session('messComplete'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messComplete')}}
+                                {{session('messComplete')}}
                             </div>
                         @endif
                         <div class="table-responsive ">

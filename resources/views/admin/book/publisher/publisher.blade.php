@@ -8,17 +8,12 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Nhà xuất bản</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Danh sách nhà xuất bản</h5>
+                        <a href="{{url('admin/publisher')}}">Danh sách nhà xuất bản</a>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -58,30 +53,41 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
+                                <form role="search" class="input-group" action="{{url('admin/publisher')}}" method="get">
+                                    <input type="text" class="form-control" name="q" placeholder="Tìm NXB theo tên..." value="{{$search}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default-sm" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
                         </div>
                         <hr>
-                        @if(Session::has('messageAdd'))
+                        @if(session('messageAdd'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageAdd')}}
+                                {{session('messageAdd')}}
                             </div>
                         @endif
-                        @if(Session::has('messageUpdate'))
+                        @if(session('messageUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageUpdate')}}
+                                {{session('messageUpdate')}}
                             </div>
                         @endif
-                        @if(Session::has('messageRemove'))
+                        @if(session('messageRemove'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemove')}}
+                                {{session('messageRemove')}}
                             </div>
                         @endif
-                        @if(Session::has('messageRemoveError'))
+                        @if(session('messageRemoveError'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messageRemoveError')}}
+                                {{session('messageRemoveError')}}
                             </div>
                         @endif
                         <div class="table-responsive ">

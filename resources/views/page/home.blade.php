@@ -25,17 +25,10 @@ foreach ($results as $result){
     <div class="row">
         <div class="col-sm-4">
             <div class="list-group">
-                {{--<a class="list-group-item" style="font-size: medium; text-align: center; background: gray; color: white; border: none">Danh mục sách</a>--}}
-                {{--@foreach($categories as $category)
-                <a href="{{url('/category',$category->LS_MA)}}" class="list-group-item" style="font-size: 15px; color: black; border: none"
-                   onmouseover="tagActive(this)" onmouseout="tagDisable(this)">{{$category->LS_TEN}}</a>
-                @endforeach--}}
             </div>
         </div>
         <div class="col-sm-8">
             <div class="">
-                {{--<a class="list-group-item" style="border: none">Daily Deals</a>--}}
-
                 <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
                     <!-- Indicators -->
                     <?php $total=count($sliders); ?>
@@ -46,7 +39,6 @@ foreach ($results as $result){
 
                         @endfor
                     </ol>
-
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
 
@@ -67,7 +59,6 @@ foreach ($results as $result){
                             </div>
                         @endfor
                     </div>
-
                     <!-- Left and right controls -->
                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
                         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -91,46 +82,9 @@ foreach ($results as $result){
             <div class="row">
                 <div class="col-sm-12">
                     <div class="beta-products-list">
-                        <div class="row">
-                            {{--@for($i=0;$i<count($books);$i++)
-                                @if($books[$i]->S_SLTON>0)
-                                    @php
-                                        $new_book = new \App\Book();
-                                        $book_promotion = $new_book->getBookPromotion($books[$i]->S_MA);
-                                    @endphp
-                                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                        <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                            <div class="single-item">
-                                                <div class="single-item-header text-center" >
-                                                    <a href="{{url('/detail',$book_promotion['id'])}}" style="" class="">
-                                                        <img src="images/avatar/{{$book_promotion['image']}}" alt="ádasd" height="250px">
-                                                    </a>
-                                                </div>
-                                                <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$book_promotion['id'])}}" class="single-item-title" >
-                                                        {{ str_limit($book_promotion['name'], $limit = 25, $end = '...') }}</a>
-                                                    <p class="single-item-price" >
-                                                        @if(isset($book_promotion['sale']))
-                                                            <span class="flash-del">{{number_format($book_promotion['price'])}} đ</span>
-                                                            <span class="flash-sale">{{number_format($book_promotion['sale'])}} đ</span>
-                                                        @else
-                                                            <span>{{number_format($book_promotion['price'])}} đ</span>
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                            @endfor--}}
-                        </div>
-                    </div> <!-- .beta-products-list -->
-
-                    <div class="beta-products-list">
                         {{--dựa vào ngày nhập--}}
                         <h4>Sách mới</h4>
                         <div class="beta-products-details">
-                            {{--<p class="pull-left">Sách mới</p>--}}
                             <div class="clearfix"></div>
                         </div>
                         <div class="row">
@@ -145,7 +99,7 @@ foreach ($results as $result){
                                             </div>
                                             <div class="single-item-body text-center">
                                                 <a href="{{url('/chi-tiet-sach',$temp_new_book_promotion[$sum]['id'])}}" class="single-item-title" >
-                                                    {{ str_limit($temp_new_book_promotion[$sum]['name'], $limit = 18, $end = '...') }}</a>
+                                                    {{ str_limit($temp_new_book_promotion[$sum]['name'], $limit = 16, $end = '...') }}</a>
                                                 <p class="single-item-price" >
                                                     @if(isset($temp_new_book_promotion[$sum]['sale']))
                                                         <span class="flash-del">{{number_format($temp_new_book_promotion[$sum]['price'])}} đ</span>
@@ -194,7 +148,7 @@ foreach ($results as $result){
                                             </div>
                                             <div class="single-item-body text-center">
                                                 <a href="{{url('/chi-tiet-sach',$temp_view_book['id'])}}" class="single-item-title">
-                                                    {{ str_limit($temp_view_book['name'], $limit = 18, $end = '...') }}</a>
+                                                    {{ str_limit($temp_view_book['name'], $limit = 16, $end = '...') }}</a>
                                                 <p class="single-item-price" >
                                                     @if(isset($temp_view_book['sale']))
                                                         <span class="flash-del">{{number_format($temp_view_book['price'])}} đ</span>
@@ -218,10 +172,8 @@ foreach ($results as $result){
                         {{--dựa vào hóa đơn--}}
                         <h4>Sách bán chạy</h4>
                         <div class="beta-products-details">
-                            {{--<p class="pull-left">Có {{$count}} sách</p>--}}
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="row">
                             @foreach($invoices as $invoice)
                                 <?php
@@ -240,7 +192,7 @@ foreach ($results as $result){
                                                 </div>
                                                 <div class="single-item-body text-center">
                                                     <a href="{{url('/chi-tiet-sach',$temp_invoice_book['id'])}}" class="single-item-title" >
-                                                        {{ str_limit($temp_invoice_book['name'], $limit = 18, $end = '...') }}</a>
+                                                        {{ str_limit($temp_invoice_book['name'], $limit = 16, $end = '...') }}</a>
                                                     <p class="single-item-price" >
                                                         @if(isset($temp_invoice_book['sale']))
                                                             <span class="flash-del">{{number_format($temp_invoice_book['price'])}} đ</span>

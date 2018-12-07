@@ -8,9 +8,17 @@ use App\Http\Controllers\Controller;
 
 class ReleaseCompanyController extends Controller
 {
-    public function index(){
-        $companies=ReleaseCompany::orderBy('CTPH_MA','desc')->paginate(10);
-        return view('admin.manage.company.company', compact('companies'));
+    public function index(Request $request)
+    {
+        $search = $request->input('q');
+        if (isset($search)){
+            $companies = ReleaseCompany::where('CTPH_TEN','like','%'.$search.'%')
+                ->orderBy('CTPH_MA','desc')->paginate(10);
+        }
+        else{
+            $companies = ReleaseCompany::orderBy('CTPH_MA','desc')->paginate(10);
+        }
+        return view('admin.manage.company.company', compact('companies','search'));
     }
 
     /*public function create(){

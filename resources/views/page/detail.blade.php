@@ -212,98 +212,94 @@
                 <div class="panel-body">
                     <div class="row">
                         @if(count($authors)>0)
-                            @foreach($authors as $author)
-                                <?php
-                                $temps=App\Author::where('TG_MA',$author->TG_MA)->first();
+                            <?php
+                            $temps=App\Author::where('TG_MA',$authors[0]->TG_MA)->first();
+                            //Lấy tập hợp book có cùng tác giả
+                            $temp_author=$temps->book()->get();
+                            $temp_author_book_promotion = array();
+                            $i = 0;
+                            if ($i<6){
+                                foreach ($temp_author as $item){
+                                    //Lấy mảng book với điều kiện book khác book đang xem chi tiết
+                                    if ($item->S_MA <> $book->S_MA){
+                                        $temp_author_book = new \App\Book();
+                                        $temp_author_book_promotion[$i] = $temp_author_book->getBookPromotion($item->S_MA);
+                                        $i++;
+                                    }
+                                }
+                            }
+                            ?>
+                            @for($j=0; $j<count($temp_author_book_promotion); $j++)
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                    <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                        <div class="single-item">
+                                            <div class="single-item-header text-center">
+                                                <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}">
+                                                    <img src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="90%">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="single-item-body text-center">
+                                            <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}" class="single-item-title" >
+                                                {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                            </a>
+                                            <p class="single-item-price" >
+                                                @if(isset($temp_author_book_promotion[$j]['sale']))
+                                                    <span class="flash-del">{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
+                                                    <span class="flash-sale">{{number_format($temp_author_book_promotion[$j]['sale'])}} đ</span>
+                                                @else
+                                                    <span>{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endfor
+                        @endif
+                        @if(count($translators)>0)
+                            <?php
+                                $temps=App\Author::where('TG_MA',$translators[0]->TG_MA)->first();
                                 //Lấy tập hợp book có cùng tác giả
-                                $temp_author=$temps->book()->get();
-                                $temp_author_book_promotion = array();
+                                $temp_translator = $temps->translate_book()->get();
+                                $temp_translator_book_promotion = array();
                                 $i = 0;
                                 if ($i<6){
-                                    foreach ($temp_author as $item){
+                                    foreach ($temp_translator as $item){
                                         //Lấy mảng book với điều kiện book khác book đang xem chi tiết
                                         if ($item->S_MA <> $book->S_MA){
-                                            $temp_author_book = new \App\Book();
-                                            $temp_author_book_promotion[$i] = $temp_author_book->getBookPromotion($item->S_MA);
+                                            $temp_translator_book = new \App\Book();
+                                            $temp_translator_book_promotion[$i] = $temp_translator_book->getBookPromotion($item->S_MA);
                                             $i++;
                                         }
                                     }
                                 }
-                                ?>
-                                @for($j=0; $j<count($temp_author_book_promotion); $j++)
-                                    <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-                                        <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                            <div class="single-item">
-                                                <div class="single-item-header text-center">
-                                                    <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}">
-                                                        <img src="images/avatar/{{$temp_author_book_promotion[$j]['image']}}" width="90%">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="single-item-body text-center">
-                                                <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}" class="single-item-title" >
-                                                    {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                            ?>
+                            @for($j=0; $j<count($temp_translator_book_promotion); $j++)
+                                <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
+                                    <div style="margin-bottom: 20px; border: 1px solid #dddddd">
+                                        <div class="single-item">
+                                            <div class="single-item-header text-center">
+                                                <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}">
+                                                    <img src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="90%">
                                                 </a>
-                                                <p class="single-item-price" >
-                                                    @if(isset($temp_author_book_promotion[$j]['sale']))
-                                                        <span class="flash-del">{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
-                                                        <span class="flash-sale">{{number_format($temp_author_book_promotion[$j]['sale'])}} đ</span>
-                                                    @else
-                                                        <span>{{number_format($temp_author_book_promotion[$j]['price'])}} đ</span>
-                                                    @endif
-                                                </p>
                                             </div>
+                                        </div>
+                                        <div class="single-item-body text-center">
+                                            <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}" class="single-item-title" >
+                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                            </a>
+                                            <p class="single-item-price" >
+                                                @if(isset($temp_translator_book_promotion[$j]['sale']))
+                                                    <span class="flash-del">{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
+                                                    <span class="flash-sale">{{number_format($temp_translator_book_promotion[$j]['sale'])}} đ</span>
+                                                @else
+                                                    <span>{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
+                                                @endif
+                                            </p>
                                         </div>
                                     </div>
-                                @endfor
-                            @endforeach
-                        @endif
-                        @if(isset($translators[0]->pivot->DICHGIA))
-                            @foreach($translators as $translator)
-                                    <?php
-                                    $temps=App\Author::where('TG_MA',$translator->TG_MA)->first();
-                                    //Lấy tập hợp book có cùng tác giả
-                                    $temp_translator = $temps->translate_book()->get();
-                                    $temp_translator_book_promotion = array();
-                                    $i = 0;
-                                    if ($i<6){
-                                        foreach ($temp_translator as $item){
-                                            //Lấy mảng book với điều kiện book khác book đang xem chi tiết
-                                            if ($item->S_MA <> $book->S_MA){
-                                                $temp_translator_book = new \App\Book();
-                                                $temp_translator_book_promotion[$i] = $temp_translator_book->getBookPromotion($item->S_MA);
-                                                $i++;
-                                            }
-                                        }
-                                    }
-                                    ?>
-                                    @for($j=0; $j<count($temp_translator_book_promotion); $j++)
-                                        <div class="col-lg-2 col-md-2 col-sm-6 col-xs-12">
-                                            <div style="margin-bottom: 20px; border: 1px solid #dddddd">
-                                                <div class="single-item">
-                                                    <div class="single-item-header text-center">
-                                                        <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}">
-                                                            <img src="images/avatar/{{$temp_translator_book_promotion[$j]['image']}}" width="90%">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="single-item-body text-center">
-                                                    <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}" class="single-item-title" >
-                                                        {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
-                                                    </a>
-                                                    <p class="single-item-price" >
-                                                        @if(isset($temp_translator_book_promotion[$j]['sale']))
-                                                            <span class="flash-del">{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
-                                                            <span class="flash-sale">{{number_format($temp_translator_book_promotion[$j]['sale'])}} đ</span>
-                                                        @else
-                                                            <span>{{number_format($temp_translator_book_promotion[$j]['price'])}} đ</span>
-                                                        @endif
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endfor
-                            @endforeach
+                                </div>
+                            @endfor
                         @endif
                     </div>
                 </div>

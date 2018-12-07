@@ -24,9 +24,11 @@ class HomeController extends Controller
         $sliders = Slider::orderBy('id','desc')->take(4)->get();
         $books = Book::all();
         $invoiceIns=InvoiceIn::orderBy('PN_NGAYNHAP','desc')->take(6)->get();
-
+//        $temp = new Invoice();
         $invoices=DB::table('hd_chitiet')->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as total'))
-            ->groupBy('S_MA')->orderBy('total','desc')->take(8)->get();
+            ->groupBy('S_MA')->orderBy('total','desc')->take(6)->get();
+        /*$month = intval(date('m', strtotime('-1 month')));
+        $invoices = $temp->getSumKindOfBook($month,intval(date('Y')));*/
 
         $i =0;
         $temp_results = array();

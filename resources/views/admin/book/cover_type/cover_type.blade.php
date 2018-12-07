@@ -9,17 +9,12 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Bìa sách</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h5>Danh sách các loại bìa</h5>
+                        <a href="{{url('admin/cover-type')}}">Danh sách các loại bìa</a>
                     </div>
                     <div class="panel-body">
                         <div class="row" >
@@ -55,32 +50,42 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
+                                <form role="search" class="input-group" action="{{url('admin/cover-type')}}" method="get">
+                                    <input type="text" class="form-control" name="q" placeholder="Tìm bìa..." value="{{$search}}">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default-sm" type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </span>
+                                </form>
+                            </div>
                         </div>
                         <hr>
-
                         <div class="table-responsive ">
-                            @if(Session::has('messageAdd'))
+                            @if(session('messageAdd'))
                                 <div class="alert alert-success alert-dismissable">
                                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                    {{Session::get('messageAdd')}}
+                                    {{session('messageAdd')}}
                                 </div>
                             @endif
-                                @if(Session::has('messageUpdate'))
+                                @if(session('messageUpdate'))
                                     <div class="alert alert-success alert-dismissable">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        {{Session::get('messageUpdate')}}
+                                        {{session('messageUpdate')}}
                                     </div>
                                 @endif
-                                @if(Session::has('messDeleteError'))
+                                @if(session('messDeleteError'))
                                     <div class="alert alert-danger alert-dismissable">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        {{Session::get('messDeleteError')}}
+                                        {{session('messDeleteError')}}
                                     </div>
                                 @endif
-                                @if(Session::has('messDelete'))
+                                @if(session('messDelete'))
                                     <div class="alert alert-success alert-dismissable">
                                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                        {{Session::get('messDelete')}}
+                                        {{session('messDelete')}}
                                     </div>
                                 @endif
                             <table class="table table-bordered table-hover">

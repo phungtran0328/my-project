@@ -20,11 +20,12 @@ class EditController extends Controller
         return view('page.customer.edit', compact('keys','values'));
     }
     public function edit(Request $request){
+        $date = date('Y-m-d', strtotime('-12 years'));
         $this->validate($request,[
             'username'=>'required',
             'phone'=>'required|regex:/(0)[0-9]{9}$/',
             //điện thoại gồm mã 84 (0) và 9 số
-            'birthday' => 'required|before:2006-01-01',
+            'birthday' => 'required|before:'.$date,
             'address' => 'required',
         ],
         [

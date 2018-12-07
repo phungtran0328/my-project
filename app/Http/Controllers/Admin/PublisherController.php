@@ -8,15 +8,17 @@ use App\Http\Controllers\Controller;
 
 class PublisherController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $publishers=Publisher::orderBy('NXB_MA','desc')->paginate(10);
-        return view('admin.book.publisher.publisher',compact('publishers'));
+        $search = $request->input('q');
+        if (isset($search)){
+            $publishers = Publisher::where('NXB_TEN','like','%'.$search.'%')
+                ->orderBy('NXB_MA','desc')->paginate(10);
+        }
+        else{
+            $publishers = Publisher::orderBy('NXB_MA','desc')->paginate(10);
+        }
+        return view('admin.book.publisher.publisher',compact('publishers','search'));
     }
 
     /**
