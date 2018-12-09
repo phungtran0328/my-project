@@ -103,13 +103,11 @@
 
                                         </div>
                                         @else
-                                            <button class="btn btn-default btn-group" style="width: 40px" disabled>
-                                                <span> - </span>
-                                            </button>
-                                            <input type="text" class="btn-group" style="width: 45px" value="0" disabled>
-                                            <button class="btn btn-default btn-group" style="width: 40px" disabled>
-                                                <span> + </span>
-                                            </button>
+                                            <input class="btn btn-default btn-group" style="width: 30px; margin-right: -4px; border-radius: 0"
+                                                   value=" - " type="button" disabled>
+                                            <input type="text" class="btn-group" style="width: 40px" value="0" disabled>
+                                            <input class="btn btn-default btn-group" style="width: 30px;margin-left: -5px; border-radius: 0 "
+                                                   value=" + " type="button" disabled>
                                             <button class="btn btn-success" style="margin-left: 50px" disabled>
                                                 <span class="" style="font-size: 20px"></span> Đã hết hàng</button>
                                         @endif

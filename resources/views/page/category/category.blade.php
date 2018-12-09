@@ -36,12 +36,11 @@
                     <div class="col-md-9">
                         <div class="beta-products-list">
                             <div class="row">
-                                @for($i=0;$i<count($category_paginate);$i++)
+                                @foreach($category_paginate as $item)
                                     <?php
                                     $temp = new \App\Book();
-                                    $cate_book = $temp->getBookPromotion($category_paginate[$i]->S_MA);
+                                    $cate_book = $temp->getBookPromotion($item->S_MA);
                                     ?>
-                                    @if($cate_book['in_stock']>0)
                                         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
                                             <div style="border: 1px solid #dddddd; margin-bottom: 20px">
                                                 <div class="single-item">
@@ -65,8 +64,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    @endif
-                                @endfor
+                                @endforeach
                             </div>
                         </div> <!-- .beta-products-list -->
                         {{$category_paginate->render()}}

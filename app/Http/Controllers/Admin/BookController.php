@@ -308,8 +308,23 @@ class BookController extends Controller
     }
 
     public function export(){
+        $date = str_slug(date('d-m-Y H:i:s'),'-');
         $user = Auth::user();
         Log::info("Nhân viên xuất file: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
-        return (new BooksExport())->download('books.xlsx');
+        return (new BooksExport())->download($date.'-books.xlsx');
+    }
+
+    public function import(Request $request){
+        $name = $request->input('f');
+        dd($name);
+        $user = Auth::user();
+        Log::info("Nhân viên nhập file: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
+        $temp = Excel::import(new BooksExport, $name);
+        if ($temp){
+            return redirect()->back()->with('success','Nhập file thành công !');
+        }
+        else{
+            return redirect()->back()->with('error','Nhập file không thành công !');
+        }
     }
 }

@@ -17,19 +17,52 @@
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                 @can('book.create')
-                                    <a href="{{url('/admin/book/create')}}" class="btn btn-primary btn-block">
-                                        <span class="glyphicon glyphicon-plus"> Sách</span>
-                                    </a>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="{{url('/admin/book/create')}}" class="btn btn-primary btn-block">
+                                                <span class="glyphicon glyphicon-plus"></span> Sách
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="{{url('/admin/book/export')}}" class="btn btn-info btn-block">
+                                                <span> Export</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a class="btn btn-success btn-block" data-toggle="modal" data-target="#bookImport">
+                                                Import
+                                            </a>
+                                        </div>
+                                        <div class="modal fade" id="bookImport" tabindex="-1" role="dialog" aria-labelledby="checkModal" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content" >
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="checkModal">Nhập file</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="table-responsive ">
+                                                            <form action="{{url('admin/book/import')}}" method="post">
+                                                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                                                <div class="form-group">
+                                                                    <input type="file" name="f" class="form-control">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <button type="submit" class="btn btn-primary">Nhập file</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endcan
                             </div>
-                            <div class="col-md-2">
-                                <a href="{{url('/admin/book/export')}}" class="btn btn-info btn-block">
-                                    <span> Export</span>
-                                </a>
-                            </div>
-                            <div class="col-md-2"></div>
                             <div class="col-md-2">
                                 <form action="{{url('admin/book')}}" method="get" class="input-group">
                                     <select name="qty" class="form-control">
@@ -78,6 +111,18 @@
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                                 {{session('messDeleteError')}}
+                            </div>
+                        @endif
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{session('success')}}
+                            </div>
+                        @endif
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{session('error')}}
                             </div>
                         @endif
                         <div class="table-responsive ">
@@ -142,7 +187,7 @@
                                             @endcan
                                             @can('book.delete')
                                             <a class="btn btn-danger btn-sm" href="{{url('admin/book/delete',$book->S_MA)}}"
-                                               onclick="return confirm('Hành động này sẽ xóa các dữ liệu liên quan như: tác giả, hình ảnh,... Bạn chắc chắn xóa chứ? ')">
+                                               onclick="return confirm('Bạn chắc chắn xóa chứ? ')">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                             @endcan
                                         </td>

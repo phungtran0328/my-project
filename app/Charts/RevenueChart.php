@@ -28,11 +28,9 @@ class RevenueChart extends Chart
             ],
             'elements' => [
                 'rectangle' => [
-//                    'backgroundColor' => 'rgb(66,110,180)',
                     'borderWidth' => 10,
-                    'borderColor' => 'rgb(112,112,112)',
                 ]
-            ],
+            ]
         ]);
     }
 }

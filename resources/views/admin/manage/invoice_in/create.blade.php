@@ -18,11 +18,6 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-3">
-                                <a class="btn btn-success btn-block" href="{{url('/admin/invoice-in')}}">
-                                    <span class="glyphicon glyphicon-arrow-left"></span>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
                                 <button class="btn btn-danger btn-block" onclick="addBook()">Thêm sách mới</button>
                             </div>
                             <div class="col-md-3">
@@ -30,6 +25,9 @@
                             </div>
                             <div class="col-md-3">
                                 <button class="btn btn-default btn-block" onclick="RemoveForm()">Xóa phiếu nhập chi tiết</button><br>
+                            </div>
+                            <div class="col-md-3">
+
                             </div>
                         </div>
                         <form action="{{url('/admin/invoice-in/create')}}" method="post">
@@ -86,6 +84,7 @@
                             <div id="showInvoice"></div>
                             <div class="form-group">
                                 <button class="btn btn-primary">Thêm phiếu nhập</button>
+                                <a class="btn btn-success" href="{{url('/admin/invoice-in')}}">Hủy</a>
                             </div>
                         </form>
                     </div>
