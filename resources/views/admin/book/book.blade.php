@@ -26,11 +26,11 @@
                                             </a>
                                         </div>
                                         <div class="col-md-4">
-                                            <a href="{{url('/admin/book/export')}}" class="btn btn-info btn-block">
-                                                <span> Export</span>
+                                            <a href="{{url('/admin/book/export')}}" class="btn btn-success btn-block">
+                                                <span class="glyphicon glyphicon-download"></span> Download
                                             </a>
                                         </div>
-                                        <div class="col-md-4">
+                                        {{--<div class="col-md-4">
                                             <a class="btn btn-success btn-block" data-toggle="modal" data-target="#bookImport">
                                                 Import
                                             </a>
@@ -43,13 +43,13 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="table-responsive ">
-                                                            <form action="{{url('admin/book/import')}}" method="post">
+                                                            <form action="{{url('admin/book/import')}}" method="post" enctype="multipart/form-data">
                                                                 <input type="hidden" name="_token" value="{{csrf_token()}}">
                                                                 <div class="form-group">
                                                                     <input type="file" name="f" class="form-control">
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <button type="submit" class="btn btn-primary">Nhập file</button>
+                                                                    <button type="submit" class="btn btn-primary">Thêm</button>
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -59,7 +59,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--}}
                                     </div>
                                 @endcan
                             </div>

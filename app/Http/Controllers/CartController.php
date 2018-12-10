@@ -58,7 +58,7 @@ class CartController extends Controller
         ]);
 
         Cart::update($id, $item->qty=$request->qty);
-        return redirect()->back();
+        return redirect()->back()->with('update','Đã cập nhật số lượng cho sách "'.$book_id->S_TEN.'" !');
     }
 
     public function destroy($id)

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\UsersExport;
 use App\Role;
 use App\User;
 use App\User_Role;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
@@ -102,5 +103,12 @@ class UserController extends Controller
         $user = Auth::user();
         Log::info("Nhân viên đã in danh sách nhân viên: ".$user->NV_MA." - ".$user->NV_TEN."\r\n");
         return redirect()->back();
+    }
+
+    public function export(){
+        $date = str_slug(date('d-m-Y H:i:s'),'-');
+        $user = Auth::user();
+        Log::info("Nhân viên đã xuất danh sách nhân viên: ".$user->NV_MA." - ".$user->NV_TEN."\r\n");
+        return (new UsersExport())->download($date.'-users.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
     }
 }

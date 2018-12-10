@@ -26,6 +26,12 @@
                         {{session('messEmpty')}}
                     </div>
                 @endif
+                @if(session('update'))
+                    <div class="alert alert-success alert-dismissable">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{session('update')}}
+                    </div>
+                @endif
                 <div class="table-responsive ">
                     @if (sizeof(Cart::content()) > 0)
                         <table class="table table-bordered table-hover">

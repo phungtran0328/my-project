@@ -314,17 +314,17 @@ class BookController extends Controller
         return (new BooksExport())->download($date.'-books.xlsx');
     }
 
-    public function import(Request $request){
-        $name = $request->input('f');
-        dd($name);
+    /*public function import(Request $request){
+        $name = $request->file('f');
         $user = Auth::user();
         Log::info("Nhân viên nhập file: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
-        $temp = Excel::import(new BooksExport, $name);
+        $temp = Excel::import(new BooksExport, $name->getClientOriginalName());
+//        dd($temp);
         if ($temp){
             return redirect()->back()->with('success','Nhập file thành công !');
         }
         else{
             return redirect()->back()->with('error','Nhập file không thành công !');
         }
-    }
+    }*/
 }

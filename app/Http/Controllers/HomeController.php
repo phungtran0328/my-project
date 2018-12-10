@@ -21,7 +21,7 @@ class HomeController extends Controller
      */
     public function getIndex(){
         $categories = KindOfBook::all();
-        $sliders = Slider::orderBy('id','desc')->take(4)->get();
+        $sliders = Slider::orderBy('id','desc')->take(3)->get();
         $books = Book::all();
         $invoiceIns=InvoiceIn::orderBy('PN_NGAYNHAP','desc')->take(6)->get();
 //        $temp = new Invoice();

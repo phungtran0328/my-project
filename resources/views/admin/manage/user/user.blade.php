@@ -24,6 +24,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-9"></div>
+
                                 <div class="col-md-1">
                                     <a class="btn btn-success btn-block" onclick="printDiv('printUser')" href="{{url('admin/user/print')}}">
                                         <span class="glyphicon glyphicon-print"></span>
@@ -66,7 +67,7 @@
                                     <th>Địa chỉ</th>
                                     <th style="width: 4%">SĐT</th>
                                     <th style="width: 10%">Quyền</th>
-                                    <th style="width: 15%"></th>
+                                    <th style="width: 7%"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -118,11 +119,12 @@
                                     <th style="width: 4%">SĐT</th>
                                     <th>Username</th>
                                     <th>Password</th>
-                                    <th style="width: 7%">Quyền</th>
+                                    <th style="width: 20%">Quyền</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $index=>$user)
+                                    @if(strlen($user->NV_MATKHAU)<60)
                                     <tr>
                                         <td>{{$user->NV_TEN}}</td>
                                         <td>{{$user->NV_GIOITINH}}</td>
@@ -138,10 +140,11 @@
                                         <td>{{$user->NV_MATKHAU}}</td>
                                         <td>
                                             @foreach($roles as $role)
-                                                {{$role->Q_MA}}
+                                                {{$role->Q_TEN}} <br>
                                             @endforeach
                                         </td>
                                     </tr>
+                                    @endif
                                 @endforeach
                                 </tbody>
                             </table>

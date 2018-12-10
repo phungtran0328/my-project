@@ -177,6 +177,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('user/update/{id}','Admin\UserController@update')->middleware('can:user.update');
 //    Route::get('user/delete/{id}','Admin\UserController@delete')->middleware('can:user.delete');
     Route::get('user/print','Admin\UserController@print')->middleware('can:user.create');
+    Route::get('user/export','Admin\UserController@export')->middleware('can:user.create');
 
     //role
     Route::get('role','Admin\RoleController@index');

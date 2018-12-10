@@ -29,21 +29,19 @@ foreach ($results as $result){
         </div>
         <div class="col-sm-8">
             <div class="">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" style="height: 410px">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" >
                     <!-- Indicators -->
                     <?php $total=count($sliders); ?>
                     <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                         @for($i=1; $i<$total;$i++)
                             <li data-target="#myCarousel" data-slide-to="{{$i}}"></li>
-
                         @endfor
                     </ol>
                     <!-- Wrapper for slides -->
                     <div class="carousel-inner" role="listbox">
-
                         <div class="item active">
-                            <img src="images/slider/{{$sliders[0]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                            <img src="images/slider/{{$sliders[0]->slider}}" alt="Image">
                             <div class="carousel-caption">
                                 <h3>Sell $</h3>
                                 <p>Money Money.</p>
@@ -51,7 +49,7 @@ foreach ($results as $result){
                         </div>
                         @for($i=1;$i<$total;$i++)
                             <div class="item">
-                                <img src="images/slider/{{$sliders[$i]->slider}}" alt="Image" style="width: 800px; height: 410px">
+                                <img src="images/slider/{{$sliders[$i]->slider}}" alt="Image">
                                 <div class="carousel-caption">
                                     <h3>More Sell $</h3>
                                     <p>Lorem ipsum...</p>
@@ -116,9 +114,6 @@ foreach ($results as $result){
                             @endfor
                         </div>
                     </div> <!-- .beta-products-list -->
-
-                    <div class="space40">&nbsp;</div>
-
                     <div class="beta-products-list">
                         {{--dựa vào lượt xem--}}
                         <h4>Sách nổi bật</h4>
@@ -130,7 +125,6 @@ foreach ($results as $result){
                             {{--<p class="pull-left">Có {{$count}} sách</p>--}}
                             <div class="clearfix"></div>
                         </div>
-
                         <div class="row">
                             @foreach($views as $view)
                                 <?php
@@ -165,9 +159,6 @@ foreach ($results as $result){
                             @endforeach
                         </div>
                     </div>
-
-                    <div class="space40">&nbsp;</div>
-
                     <div class="beta-products-list">
                         {{--dựa vào hóa đơn--}}
                         <h4>Sách bán chạy</h4>
@@ -211,12 +202,8 @@ foreach ($results as $result){
                             @endforeach
                         </div>
                     </div> <!-- .beta-products-list -->
-
-                    <div class="space40">&nbsp;</div>
                 </div>
             </div> <!-- end section with sidebar and main content -->
-
-
         </div> <!-- .main-content -->
     </div> <!-- #content -->
 
