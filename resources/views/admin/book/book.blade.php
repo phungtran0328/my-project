@@ -64,28 +64,8 @@
                                 @endcan
                             </div>
                             <div class="col-md-2">
-                                <form action="{{url('admin/book')}}" method="get" class="input-group">
-                                    <select name="qty" class="form-control">
-                                        <option value="">--SLT--</option>
-                                        <option value="asc" {{$qty=='asc' ? 'selected' : ''}}> Tăng </option>
-                                        <option value="desc" {{$qty=='desc' ? 'selected' : ''}}> Giảm </option>
-                                    </select>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default-sm" type="submit">
-                                            <i class="fa fa-filter"></i>
-                                        </button>
-                                    </span>
-                                </form>
                             </div>
                             <div class="col-md-4">
-                                <form role="search" class="input-group" action="{{url('admin/book')}}" method="get">
-                                    <input type="text" class="form-control" name="search" placeholder="Tìm sách theo tên" value="{{$search}}" id="dummy">
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default-sm" type="submit">
-                                            <i class="fa fa-search"></i>
-                                        </button>
-                                    </span>
-                                </form>
                             </div>
                         </div>
                         <hr>
@@ -126,17 +106,17 @@
                             </div>
                         @endif
                         <div class="table-responsive ">
-                            <table class="table table-bordered table-hover">
+                            <table id="book" class="table table-bordered table-hover">
                                 <thead >
                                 <tr>
                                     <th></th>
                                     <th>Tên</th>
                                     <th style="width: 15%">Tác giả</th>
-                                    <th style="width: 10%">Người dịch</th>
+                                    <th style="width: 10%">Dịch giả</th>
                                     <th>SLT</th>
                                     <th>Giá</th>
                                     <th>V</th>
-                                    <th>Nhà xuất bản</th>
+                                    <th>NXB</th>
                                     <th>HA</th>
                                     <th style="width: 14%">Hành động</th>
                                 </tr>
@@ -151,7 +131,7 @@
                                     ?>
                                     <tr style="text-align: justify">
                                         {{--increment not reset in second page--}}
-                                        <td>{{$index + $books->firstItem()}}</td>
+                                        <td>{{$index+1}}</td>
                                         <td>{{$book->S_TEN}}</td>
                                         @if((count($authors)>0) or (count($translators)>0))
                                             <td>
@@ -195,7 +175,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$books->render()}}
                         </div>
                     </div>
                 </div>

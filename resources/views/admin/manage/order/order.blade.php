@@ -13,25 +13,9 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="{{url('admin/order')}}">Danh sách đơn hàng</a>
+                        <h5>Danh sách đơn hàng</h5>
                     </div>
                     <div class="panel-body">
-                        <form class="input-group" action="{{url('admin/order')}}" method="get" style="width: 250px;">
-                            <select class="form-control" name="status">
-                                <option value="" >---Trạng thái đơn hàng---</option>
-                                <option value="0" {{$status=='0' ? 'selected' : ''}}>Đang xử lí</option>
-                                <option value="3" {{$status=='3' ? 'selected' : ''}}>Đang chờ hủy đơn hàng</option>
-                                <option value="1" {{$status=='1' ? 'selected' : ''}}>Đang vận chuyển</option>
-                                <option value="2" {{$status=='2' ? 'selected' : ''}}>Giao hàng thành công</option>
-                                <option value="4" {{$status=='4' ? 'selected' : ''}}>Đã hủy</option>
-                            </select>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default-sm" type="submit">
-                                    <i class="glyphicon glyphicon-filter"></i>
-                                </button>
-                            </span>
-                        </form>
-                        <hr>
                         @if(session('messInvoice'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -51,7 +35,7 @@
                             </div>
                         @endif
                         <div class="table-responsive ">
-                            <table class="table  table-bordered table-hover">
+                            <table id="order" class="table table-bordered table-hover">
                                 <thead>
                                 <tr>
                                     <th style="width: 7%">Mã ĐH</th>
@@ -122,22 +106,22 @@
                                             @can('order.update')
                                                 @switch($order->DH_TTDONHANG)
                                                     @case(0)
-                                                        <a class="btn btn-primary btn-sm" href="{{url('admin/order/invoice',$order->DH_MA)}}">
+                                                        <a class="btn btn-primary btn-xs" href="{{url('admin/order/invoice',$order->DH_MA)}}">
                                                             Lập HĐ</a>
                                                     @break
                                                     @case(1)
-                                                        <a class="btn btn-info btn-sm" href="{{url('admin/order/complete',$order->DH_MA)}}">
+                                                        <a class="btn btn-info btn-xs" href="{{url('admin/order/complete',$order->DH_MA)}}">
                                                             Check</a>
                                                     @break
                                                     @case(2)
-                                                        <a class="btn btn-success btn-sm">Hoàn thành</a>
+                                                        <a class="btn btn-success btn-xs">Hoàn thành</a>
                                                     @break
                                                     @case(3)
-                                                        <a class="btn btn-danger btn-sm" href="{{url('admin/order/cancel',$order->DH_MA)}}">
+                                                        <a class="btn btn-danger btn-xs" href="{{url('admin/order/cancel',$order->DH_MA)}}">
                                                             Hủy ĐH</a>
                                                     @break
                                                     @case(4)
-                                                        <a class="btn btn-default btn-sm">Đã hủy</a>
+                                                        <a class="btn btn-default btn-xs">Đã hủy</a>
                                                     @break
                                                 @endswitch
                                             @endcan
@@ -150,7 +134,6 @@
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$orders->render()}}
                         </div>
                     </div>
                 </div>

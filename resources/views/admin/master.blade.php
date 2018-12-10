@@ -6,12 +6,9 @@
  * Time: 1:39 PM
  */
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="text/html; charset=utf-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +32,7 @@
 
     <!-- Custom Fonts -->
     <link href="admin/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -73,7 +70,8 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="admin/assets/dist/js/sb-admin-2.js"></script>
-
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 <script>
 /*    $(document).ready(function() {
         $('#myListBook').DataTable( {
@@ -88,6 +86,18 @@ $('#myTooltipSlider [data-toggle="tooltip"]').tooltip({
     animated: 'fade',
     placement: 'right',
     html: true
+});
+$(document).ready(function() {
+    $('#invoice-in').DataTable();
+});
+$(document).ready(function() {
+    $('#book').DataTable();
+});
+$(document).ready(function() {
+    $('#order').DataTable();
+});
+$(document).ready(function() {
+    $('#my_list').DataTable();
 });
 </script>
 </body>

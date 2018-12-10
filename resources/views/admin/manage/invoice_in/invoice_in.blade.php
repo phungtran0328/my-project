@@ -16,11 +16,18 @@
                         <h5>Danh sách hóa đơn nhập</h5>
                     </div>
                     <div class="panel-body">
-                        @can('invoice-in.create')
-                        <a href="{{url('/admin/invoice-in/create')}}" class="btn btn-primary" style="width: 150px;">
-                            <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-                        @endcan
+                        <div class="row">
+                            <div class="col-md-2">
+                                @can('invoice-in.create')
+                                    <a href="{{url('/admin/invoice-in/create')}}" class="btn btn-primary btn-block">
+                                        <span class="glyphicon glyphicon-plus"></span> Thêm
+                                    </a>
+                                @endcan
+                            </div>
+                            <div class="col-md-6"></div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
                         <hr>
                         @if(session('messAddDetail'))
                             <div class="alert alert-success alert-dismissable">
@@ -28,54 +35,83 @@
                                 {{session('messAddDetail')}}
                             </div>
                         @endif
-                        <div class="table-responsive ">
-                            <table class="table table-striped table-bordered table-hover">
-                                <thead>
+                            @if(session('messAdd'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('messAdd')}}
+                                </div>
+                            @endif
+                        <table id="invoice-in" class="table table-bordered table-hover" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th style="width: 7%">Mã HĐ</th>
+                                <th style="width: 5%">NV</th>
+                                <th style="width: 15%">CTPH</th>
+                                <th style="width: 15%">Ngày nhập</th>
+                                <th>Sách</th>
+                                <th style="width: 10%">Tồng tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($invoices as $index=>$invoice)
+                                <?php
+                                $company = $invoice->release_company()->first();
+                                $user = $invoice->user()->first();
+                                $books = $invoice->book()->get();
+                                ?>
                                 <tr>
-                                    <th style="width: 7%">Mã HĐ</th>
-                                    <th style="width: 5%">NV</th>
-                                    <th style="width: 15%">CTPH</th>
-                                    <th style="width: 15%">Ngày nhập</th>
-                                    <th>Sách</th>
-                                    <th>Tồng tiền</th>
+                                    {{--increment not reset in second page--}}
+                                    <td>{{$invoice->PN_MA}}</td>
+                                    <td>{{$user->NV_MA}}</td>
+                                    <td>{{$company->CTPH_MA}} - {{$company->CTPH_TEN}}</td>
+                                    <?php $date=date_create($invoice->PN_NGAYNHAP); ?>
+                                    <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
+                                    <td>
+                                        <table class="table table-bordered">
+                                            @foreach($books as $book)
+                                                <tr>
+                                                    <td style="width: 60%">{{$book->S_TEN}}</td>
+                                                    <td>{{$book->pivot->PNCT_SOLUONG}}</td>
+                                                    <td>{{number_format($book->pivot->PNCT_GIA)}}</td>
+                                                </tr>
+                                            @endforeach
+                                        </table>
+                                    </td>
+                                    <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($invoices as $index=>$invoice)
-                                    <?php
-                                        $temp=\App\InvoiceIn::where('PN_MA',$invoice->PN_MA)->first();
-                                        $company=$temp->release_company()->first();
-                                        $user=$temp->user()->first();
-                                        $books=$temp->book()->get();
-                                    ?>
-                                    <tr>
-                                        {{--increment not reset in second page--}}
-                                        <td>{{$invoice->PN_MA}}</td>
-                                        <td>{{$user->NV_MA}}</td>
-                                        <td>{{$company->CTPH_TEN}}</td>
-                                        <?php $date=date_create($invoice->PN_NGAYNHAP); ?>
-                                        <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
-                                        <td>
-                                            <table class="table table-bordered">
-                                                @foreach($books as $book)
-                                                    <tr>
-                                                        <td style="width: 60%">{{$book->S_TEN}}</td>
-                                                        <td>{{$book->pivot->PNCT_SOLUONG}}</td>
-                                                        <td>{{number_format($book->pivot->PNCT_GIA)}}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </table>
-                                        </td>
-                                        <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
-                            {{$invoices->render()}}
-                        </div>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {{--@foreach($invoices as $invoice)
+        <div class="modal fade" id="detailsImport-{{$invoice->PN_MA}}" tabindex="-1" role="dialog" aria-labelledby="checkModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" >
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="checkModal">Nhập file {{$invoice->PN_MA}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="table-responsive ">
+                            <form action="{{url('admin/invoice-in/import',$invoice->PN_MA)}}" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                <div class="form-group">
+                                    <input type="file" name="f" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Thêm</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach--}}
 @endsection

@@ -41,46 +41,12 @@
             }
         }
     </style>
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
 </head>
 <body>
 
     @include('header')
-    <script>
-        jQuery(document).ready(function($) {
-            var engine = new Bloodhound({
-                remote: {
-                    url: 'search?q=%QUERY%',
-                    wildcard: '%QUERY%'
-                },
-                datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace
-            });
-            $(".typeahead .search-input").typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1
-            },{
-                    source: engine.ttAdapter(),
-                    name: 'books-name',
-                    display: function(data) {
-                        return data.S_TEN;
-                    },
-                    templates: {
-                        empty: [
-                            '<div class="list-group"><div class="list-group-item" style="width: 160%">Không có kết quả phù hợp.</div></div>'
-                        ],
-                        suggestion: function (data) {
-                            return '<a href="chi-tiet-sach/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
-                        }
-                    }
-                }
-            );
-        });
-    </script>
+
 
     @yield('content')
 
@@ -108,8 +74,43 @@
 
 <!--customjs-->
 <script src="source/assets/dest/js/custom2.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
-<script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script>
+        jQuery(document).ready(function($) {
+            var engine = new Bloodhound({
+                remote: {
+                    url: 'search?q=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+                datumTokenizer: Bloodhound.tokenizers.whitespace('q'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
+            $(".typeahead .search-input").typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 1
+                },{
+                    source: engine.ttAdapter(),
+                    name: 'books-name',
+                    display: function(data) {
+                        return data.S_TEN;
+                    },
+                    templates: {
+                        empty: [
+                            '<div class="list-group"><div class="list-group-item" style="width: 160%">Không có kết quả phù hợp.</div></div>'
+                        ],
+                        suggestion: function (data) {
+                            return '<a href="chi-tiet-sach/' + data.S_MA + '" class="list-group-item" style="width: 160%">' + data.S_TEN + '</a>'
+                        }
+                    }
+                }
+            );
+        });
+    </script>
+    <script>
     /*$(document).ready(function($) {
         $(window).scroll(function(){
             if($(this).scrollTop()>150){

@@ -10,6 +10,6 @@ class InvoiceInDetails extends Model
     protected $primaryKey = [
         'S_MA', 'PN_MA',
     ];
-//    protected $fillable=['PNCT_SOLUONG','PNCT_GIA'];
     public $timestamps = false;
+    protected $fillable=['S_MA','PN_MA','PNCT_SOLUONG','PNCT_GIA'];
 }

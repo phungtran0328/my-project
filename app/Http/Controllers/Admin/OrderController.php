@@ -9,17 +9,10 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $status = $request->input('status');
-        if (isset($status)){
-            $orders = Order::where('DH_TTDONHANG',$status)->orderBy('DH_MA','desc')->paginate(10);
-        }
-        else{
-            $orders = Order::orderBy('DH_MA','desc')->paginate(10);
-        }
-//        $orders=Order::orderBy('DH_MA','desc')->paginate(10);
-        return view('admin.manage.order.order', compact('orders','status'));
+        $orders = Order::orderBy('DH_MA','desc')->get();
+        return view('admin.manage.order.order', compact('orders'));
     }
 
     public function complete($id)

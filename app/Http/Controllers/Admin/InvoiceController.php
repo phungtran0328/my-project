@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class InvoiceController extends Controller
 {
     public function index(){
-        $invoices=Invoice::orderBy('HD_MA','desc')->paginate(5);
+        $invoices = Invoice::orderBy('HD_MA','desc')->get();
         return view('admin.manage.invoice.invoice', compact('invoices'));
     }
 

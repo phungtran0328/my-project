@@ -30,31 +30,10 @@ class BookController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search=$request->input('search');
-        $qty = $request->input('qty');
-        if (isset($search)){
-            $books=Book::where('S_TEN','like','%'.$search.'%')
-                ->orderBy('S_MA','desc')->paginate(20);
-        }
-        else {
-            if (isset($qty)) {
-                switch ($qty) {
-                    case 'asc':
-                        $books = Book::orderBy('S_SLTON', 'asc')->paginate(20);
-                        break;
-                    case 'desc':
-                        $books = Book::orderBy('S_SLTON', 'desc')->paginate(20);
-                        break;
-                };
-            }
-            else{
-                $books=Book::orderBy('S_MA','desc')->paginate(20);
-            }
-        }
-        //sắp xếp S_MA giảm dần lấy 10 record trên 1 trang
-        return view('admin.book.book', compact('books','search','qty'));
+        $books=Book::orderBy('S_MA','desc')->get();
+        return view('admin.book.book', compact('books'));
     }
 
     /**

@@ -8,12 +8,7 @@
 @extends('admin.master')
 @section('content')
     <div id="page-wrapper">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Hóa đơn</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
+        <br>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -21,42 +16,9 @@
                         <h5>Danh sách hóa đơn</h5>
                     </div>
                     <div class="panel-body">
-                        {{--@can('invoice-in.create')
-                            <a href="{{url('/admin/invoice-in/create')}}" class="btn btn-primary" style="width: 150px;">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        @endcan--}}
-
-                        <form class="input-group" action="{{url('admin/invoice')}}" method="get" style="width: 350px;">
-                           <input class="form-control" name="search">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default-sm" type="submit">
-                                    <i class="glyphicon glyphicon-search"></i>
-                                </button>
-                            </span>
-                        </form>
-                        <hr>
-                        {{--@if(Session::has('messInvoice'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messInvoice')}}
-                            </div>
-                        @endif--}}
-                        {{--@if(Session::has('messUpdate'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messUpdate')}}
-                            </div>
-                        @endif--}}
-                        {{--@if(Session::has('messComplete'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messComplete')}}
-                            </div>
-                        @endif--}}
                         <div class="table-responsive ">
-                            <table class="table table-bordered table-hover">
-                                <thead >
+                            <table id="my_list" class="table table-bordered table-hover">
+                                <thead>
                                 <tr>
                                     <th style="width: 10%">Mã HĐ
                                     </th>
@@ -65,8 +27,7 @@
                                     <th style="width: 8%">Ngày lập</th>
                                     <th style="width: 8%">Tồng tiền</th>
                                     <th style="width: 8%">Phí VC</th>
-                                    <th class="text-center" colspan="3">Sách | SL | Giá</th>
-                                    {{--<th style="width: 6%">Hủy</th>--}}
+                                    <th class="text-center">Sách | SL | Giá</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -96,7 +57,7 @@
                                         <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
                                         <td>{{number_format($invoice->HD_TONGTIEN)}}</td>
                                         <td>{{$ship}}</td>
-                                        <td colspan="3">
+                                        <td>
                                             <table class="table table-bordered">
                                                 @foreach($books as $book)
                                                     <tr>
@@ -107,15 +68,10 @@
                                                 @endforeach
                                             </table>
                                         </td>
-                                        {{--<td class="text-center">
-                                            <a class="btn btn-danger btn-sm" href="">
-                                                <span class="glyphicon glyphicon-remove"></span></a>
-                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>
                             </table>
-                            {{$invoices->render()}}
                         </div>
                     </div>
                 </div>

@@ -58,7 +58,7 @@
                     <a href="{{url('admin/index')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-book fa-fw"></i> Quản lý sách<span class="fa arrow"></span></a>
+                    <a><i class="fa fa-book fa-fw"></i> Quản lý sách<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{url('/admin/book')}}">Sách</a>
@@ -89,7 +89,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-edit fa-fw"></i> Quản lý <span class="fa arrow"></span></a>
+                    <a><i class="fa fa-edit fa-fw"></i> Quản lý <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{url('admin/customer')}}">Khách hàng </a>
@@ -101,7 +101,7 @@
                             <a href="{{url('admin/role')}}">Quyền </a>
                         </li>
                         <li>
-                            <a href="#">Quản lý xuất <span class="fa arrow"></span></a>
+                            <a>Quản lý xuất <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
                                     <a href="{{url('admin/order')}}">Đơn hàng</a>
@@ -113,7 +113,7 @@
                             <!-- /.nav-third-level -->
                         </li>
                         <li>
-                            <a href="#">Quản lý nhập <span class="fa arrow"></span></a>
+                            <a>Quản lý nhập <span class="fa arrow"></span></a>
                             <ul class="nav nav-third-level">
                                 <li>
                                     <a href="{{url('admin/company')}}">Công ty phát hành</a>

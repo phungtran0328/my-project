@@ -39,7 +39,7 @@ class BackupController extends Controller
         $backups = array_reverse($backups);
 
         $temp = new Helper();
-        $backups = $temp->paginate($backups,2,request('page'), ['path' => request()->path()]);
+        $backups = $temp->paginate($backups, 5,request('page'), ['path' => request()->path()]);
 
         return view('admin.manage.backup')->with(compact('backups'));
     }

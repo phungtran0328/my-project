@@ -63,8 +63,8 @@
                             <div id="myForm">
                                 <div class="row">
                                     <div class="col-md-6 form-group">
-                                        <label class="control-label">Sách *</label>
-                                        <select class="form-control" name="book[]" required>
+                                        <label class="control-label">Sách </label>
+                                        <select class="form-control" name="book[]" >
                                             <option value="">---Chọn sách---</option>
                                             @foreach($books as $book)
                                                 <option value="{{$book->S_MA}}">{{$book->S_TEN}}</option>
@@ -72,12 +72,12 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3 form-group" >
-                                        <label class="control-label">Số lượng *</label>
-                                        <input type="number" min="1" class="form-control" name="qty[]" required>
+                                        <label class="control-label">Số lượng </label>
+                                        <input type="number" min="1" class="form-control" name="qty[]" >
                                     </div>
                                     <div class="col-md-3 form-group" >
-                                        <label class="control-label">Giá *</label>
-                                        <input type="number" min="1" step=".01" class="form-control" name="price[]" required>
+                                        <label class="control-label">Giá </label>
+                                        <input type="number" min="1" step=".01" class="form-control" name="price[]" >
                                     </div>
                                 </div>
                             </div>

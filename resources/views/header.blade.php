@@ -22,7 +22,7 @@
                             <button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>
                         </form>--}}
                         <form class="navbar-form navbar-left typeahead"  method="get" action="{{route('search-book')}}">
-                            <input type="search" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 160%">
+                            <input type="search" class="form-control search-input" name="q" placeholder="Tìm sách theo tên" style="width: 160%" autocomplete="off">
                             {{--<button class="btn btn-default" type="submit" id="searchsubmit"><i class="glyphicon glyphicon-search"></i></button>--}}
                             <span class="input-group-btn" style="display: none">
                                 <button class="btn btn-default-sm" type="submit">
