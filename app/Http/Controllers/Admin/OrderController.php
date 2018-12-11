@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::orderBy('DH_MA','desc')->get();
+        $orders = Order::all();
         return view('admin.manage.order.order', compact('orders'));
     }
 

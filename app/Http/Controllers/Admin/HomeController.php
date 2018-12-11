@@ -121,7 +121,7 @@ class HomeController extends Controller
 
         $customer = $temp_invoice->getSumCustomer($month_customer, $year_customer);
         $books = $temp_invoice->getSumBook($date_book, $month_book, $year_book);
-        $books = $temp->paginate($books, 10, request('page'), ['path' => request()->path()]);
+
         return view('admin.home', compact('chart','chart_month','customer','month_kob', 'year_kob',
             'month_customer','year_customer','array_year','books','date_book','month_book',
             'year_book', 'year_revenue'));

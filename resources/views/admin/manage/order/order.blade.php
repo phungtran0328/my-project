@@ -52,9 +52,8 @@
                                 </thead>
                                 <tbody>
                                 @foreach($orders as $index=>$order)
-                                    <?php
-                                    $temp=\App\Order::where('DH_MA',$order->DH_MA)->first();
-                                    $customer=$temp->customer()->first();
+                                    @php
+                                    $customer = $order->customer()->first();
                                     if (isset($customer->KH_DIACHI2)){
                                         if ($customer->KH_DIACHI2=='CT'){
                                             $ship=0;
@@ -65,8 +64,8 @@
                                     }else{
                                         $ship='null';
                                     }
-                                    $user=$temp->user()->first();
-                                    ?>
+                                    $user=$order->user()->first();
+                                    @endphp
                                     <tr>
                                         {{--increment not reset in second page--}}
                                         <td>#{{$order->DH_MA}}</td>
@@ -76,12 +75,12 @@
                                         @else
                                             <td></td>
                                         @endif
-                                        <?php $date=date_create($order->DH_NGAYDAT); ?>
+                                        @php $date=date_create($order->DH_NGAYDAT); @endphp
                                         <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
                                         <td>{{number_format($order->DH_TONGTIEN)}}</td>
                                         <td>{{$ship}}</td>
                                         <td>
-                                            <?php
+                                            @php
                                                 switch ($order->DH_TTDONHANG){
                                                     case 0:
                                                         echo 'Đang xử lí';
@@ -99,7 +98,7 @@
                                                         echo 'Đã hủy';
                                                         break;
                                                 }
-                                            ?>
+                                            @endphp
                                         </td>
                                         <td>{{$order->DH_GHICHU}}</td>
                                         <td class="text-center">

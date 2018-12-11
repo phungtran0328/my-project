@@ -64,33 +64,43 @@ class Invoice extends Model
             ->get();
         $data = array();
         $e = 0;
-        if ($e < 10){
-            foreach ($customer as $item){
-                $temp = Customer::where('KH_MA', $item->KH_MA)->first();
-                $data[$e] = [
-                    'name'=>$temp->KH_TEN,
-                    'address'=>$temp->fulladdress,
-                    'phone'=>$temp->KH_SDT,
-                    'email'=>$temp->KH_EMAIL,
-                    'qty'=>$item->qty,
-                    'total'=>$item->total
-                ];
-                $e++;
-            }
+        foreach ($customer as $item){
+            $temp = Customer::where('KH_MA', $item->KH_MA)->first();
+            $data[$e] = [
+                'name'=>$temp->KH_TEN,
+                'address'=>$temp->fulladdress,
+                'phone'=>$temp->KH_SDT,
+                'email'=>$temp->KH_EMAIL,
+                'qty'=>$item->qty,
+                'total'=>$item->total
+            ];
+            $e++;
         }
         return $data;
     }
 
     public function getSumBook(int $date, int $month, int $year){
-        $invoices = DB::table('hd_chitiet')
-                    ->join('hoadon','hd_chitiet.HD_MA','=','hoadon.HD_MA')
-                    ->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as qty'), DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
-                    ->whereDay('hoadon.CREATED_AT', $date)
-                    ->whereMonth('hoadon.CREATED_AT', $month)
-                    ->whereYear('hoadon.CREATED_AT', $year)
-                    ->groupBy('S_MA')
-                    ->orderBy('qty','desc')
-                    ->get();
+        if ($date!=0){
+            $invoices = DB::table('hd_chitiet')
+                ->join('hoadon','hd_chitiet.HD_MA','=','hoadon.HD_MA')
+                ->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as qty'), DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
+                ->whereDay('hoadon.CREATED_AT', $date)
+                ->whereMonth('hoadon.CREATED_AT', $month)
+                ->whereYear('hoadon.CREATED_AT', $year)
+                ->groupBy('S_MA')
+                ->orderBy('qty','desc')
+                ->get();
+        }
+        else{
+            $invoices = DB::table('hd_chitiet')
+                ->join('hoadon','hd_chitiet.HD_MA','=','hoadon.HD_MA')
+                ->select('S_MA',DB::raw('sum(HDCT_SOLUONG) as qty'), DB::raw('sum(HDCT_GIA*HDCT_SOLUONG) as total'))
+                ->whereMonth('hoadon.CREATED_AT', $month)
+                ->whereYear('hoadon.CREATED_AT', $year)
+                ->groupBy('S_MA')
+                ->orderBy('qty','desc')
+                ->get();
+        }
         $data = array();
         $i = 0;
         foreach ($invoices as $invoice){

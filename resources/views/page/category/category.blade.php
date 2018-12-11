@@ -46,18 +46,22 @@
                                                 <div class="single-item">
                                                     <div class="single-item-header text-center">
                                                         <a href="{{url('/chi-tiet-sach',$cate_book['id'])}}">
-                                                            <img src="images/avatar/{{$cate_book['image']}}" alt="" width="90%" height="90%">
+                                                            <img src="images/avatar/{{$cate_book['image']}}" alt="">
                                                         </a>
                                                     </div>
-                                                    <div class="single-item-body text-center">
-                                                        <a href="{{url('/detail',$cate_book['id'])}}" class="single-item-title" style="font-size: 14px">
+                                                    <div class="single-item-body">
+                                                        <a href="{{url('/detail',$cate_book['id'])}}" class="single-item-title text-left" style="font-size: 14px">
                                                             {{ str_limit($cate_book['name'], $limit = 16, $end = '...') }}</a>
-                                                        <p class="single-item-price" style="font-size: 13px">
-                                                            @if(isset($cate_book['sale']))
-                                                                <span class="flash-del">{{number_format($cate_book['price'])}} đ</span>
-                                                                <span class="flash-sale">{{number_format($cate_book['sale'])}} đ</span>
+                                                        <p class="single-item-price text-right" style="font-size: 13px">
+                                                            @if($cate_book['in_stock']>0)
+                                                                @if(isset($cate_book['sale']))
+                                                                    <span class="flash-del">{{number_format($cate_book['price'])}} đ</span>
+                                                                    <span class="flash-sale">{{number_format($cate_book['sale'])}} đ</span>
+                                                                @else
+                                                                    <span>{{number_format($cate_book['price'])}} đ</span>
+                                                                @endif
                                                             @else
-                                                                <span>{{number_format($cate_book['price'])}} đ</span>
+                                                                <span style="color: darkred">Đã hết hàng</span>
                                                             @endif
                                                         </p>
                                                     </div>

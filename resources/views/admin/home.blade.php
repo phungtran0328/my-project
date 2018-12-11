@@ -132,13 +132,14 @@ foreach ($books_out_stock as $key=>$value){
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bell fa-fw"></i> Sách bán ra trong ngày {{$date_book}} tháng {{$month_book}} năm {{$year_book}}
+                        <i class="fa fa-bell fa-fw"></i> Sách bán ra trong {{$date_book==0 ? '' : 'ngày '.$date_book.' '}}tháng {{$month_book}} năm {{$year_book}}
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <form class="form-inline" action="{{url('admin/index')}}" method="get">
                             <select name="date_book" class="form-control">
-                                @for($i=1;$i<31;$i++)
+                                <option value="0">Ngày</option>
+                                @for($i=1;$i<32;$i++)
                                     <option value="{{$i}}" {{$i==$date_book ? 'selected' : ''}}>Ngày {{$i}}</option>
                                 @endfor
                             </select>
@@ -155,7 +156,7 @@ foreach ($books_out_stock as $key=>$value){
                             <button class="btn btn-primary btn-sm">Xem</button>
                         </form>
                         <hr>
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" id="show_list_book">
                             <thead>
                             <tr>
                                 <th>STT</th>
@@ -165,19 +166,25 @@ foreach ($books_out_stock as $key=>$value){
                             </tr>
                             </thead>
                             <tbody>
-                            <?php $i=0; ?>
-                            @foreach($books as $book)
+                            <?php $sum_qty = 0; $sum_price = 0;?>
+                            @foreach($books as $index=>$book)
                                 <tr>
-                                    <td>{{$i + $books->firstItem()}}</td>
+                                    <td>{{$index+1}}</td>
                                     <td>{{$book['name']}}</td>
                                     <td>{{$book['qty']}}</td>
-                                    <td>{{number_format($book['price'])}}</td>
+                                    <td>{{number_format($book['price'])}} đ</td>
                                 </tr>
-                                <?php $i++; ?>
+                                <?php $sum_qty+=$book['qty']; $sum_price+=$book['price']?>
                             @endforeach
                             </tbody>
+                            <tfoot>
+                            <tr>
+                                <th colspan="2">Tổng cộng</th>
+                                <th>{{number_format($sum_qty)}}</th>
+                                <th>{{number_format($sum_price)}} đ</th>
+                            </tr>
+                            </tfoot>
                         </table>
-                        {{$books->render()}}
                         <!-- /.list-group -->
                     </div>
                     <!-- /.panel-body -->
@@ -206,9 +213,10 @@ foreach ($books_out_stock as $key=>$value){
                             <button class="btn btn-primary btn-sm">Xem</button>
                         </form>
                         <hr>
-                        <table class="table table-hover table-bordered">
+                        <table class="table table-hover table-bordered" id="show_list_customer">
                             <thead>
                             <tr>
+                                <th>STT</th>
                                 <th>Tên</th>
                                 <th>Địa chỉ</th>
                                 <th>Số ĐT</th>
@@ -220,6 +228,7 @@ foreach ($books_out_stock as $key=>$value){
                             <tbody>
                             @for($i=0; $i<count($customer); $i++)
                                 <tr>
+                                    <td>{{$i+1}}</td>
                                     <td>{{$customer[$i]['name']}}</td>
                                     <td>{{$customer[$i]['address']}}</td>
                                     <td>{{$customer[$i]['phone']}}</td>

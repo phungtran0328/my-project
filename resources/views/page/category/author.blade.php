@@ -27,22 +27,25 @@
                                             <div class="single-item">
                                                 <div class="single-item-header text-center">
                                                     <a href="{{url('/chi-tiet-sach',$books[$i]['id'])}}">
-                                                        <img src="images/avatar/{{$books[$i]['image']}}" alt="" width="90%" height="90%">
+                                                        <img src="images/avatar/{{$books[$i]['image']}}" alt="">
                                                     </a>
                                                 </div>
-                                                <div class="single-item-body text-center">
-                                                    <a href="{{url('/detail',$books[$i]['id'])}}" class="single-item-title">
+                                                <div class="single-item-body">
+                                                    <a href="{{url('/detail',$books[$i]['id'])}}" class="single-item-title  text-left">
                                                         {{ str_limit($books[$i]['name'], $limit = 16, $end = '...') }}</a>
-                                                    <p class="single-item-price">
-                                                        @if(isset($books[$i]['sale']))
-                                                            <span class="flash-del">{{number_format($books[$i]['price'])}} đ</span>
-                                                            <span class="flash-sale">{{number_format($books[$i]['sale'])}} đ</span>
+                                                    <p class="single-item-price  text-right">
+                                                        @if($books[$i]['in_stock']>0)
+                                                            @if(isset($books[$i]['sale']))
+                                                                <span class="flash-del">{{number_format($books[$i]['price'])}} đ</span>
+                                                                <span class="flash-sale">{{number_format($books[$i]['sale'])}} đ</span>
+                                                            @else
+                                                                <span>{{number_format($books[$i]['price'])}} đ</span>
+                                                            @endif
                                                         @else
-                                                            <span>{{number_format($books[$i]['price'])}} đ</span>
+                                                            <span style="color: darkred">Đã hết hàng</span>
                                                         @endif
                                                     </p>
                                                 </div>
-                                                <div class="clearfix"></div>
                                             </div>
                                         </div>
                                     </div>

@@ -106,11 +106,13 @@ class EditController extends Controller
         $order = Order::where('DH_MA', $id)->first();
         $books = $order->book()->get();
         $customer = $order->customer()->first();
-        $total = 0;
-        foreach ($books as $book){
-            $total += $book->pivot->DHCT_SOLUONG*$book->pivot->DHCT_GIA;
+        if ($customer->KH_DIACHI2 != 'CT'){
+            $shipping = 18000;
+            $total = $order->DH_TONGTIEN - $shipping;
+        }else{
+            $shipping = 0;
+            $total = $order->DH_TONGTIEN;
         }
-        $shipping = $order->DH_TONGTIEN - $total;
         $order_id = $id;
         switch ($order->DH_TTDONHANG){
             case 0:

@@ -38,11 +38,11 @@
                             <table class="table table-hover">
                                 <thead>
                                 <tr>
-                                    <th>Mã ĐH</th>
-                                    <th>Ngày mua</th>
+                                    <th style="width: 10%">Mã ĐH</th>
+                                    <th style="width: 12%">Ngày mua</th>
                                     <th>Tên sách</th>
-                                    <th>Tổng tiền</th>
-                                    <th>Trạng thái đơn hàng</th>
+                                    <th style="width: 12%">Tổng tiền</th>
+                                    <th style="width: 18%">TT đơn hàng</th>
                                     <th>Hủy</th>
                                 </tr>
                                 </thead>

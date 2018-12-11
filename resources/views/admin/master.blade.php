@@ -99,6 +99,12 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#my_list').DataTable();
 });
+$(document).ready(function() {
+    $('#show_list_book').DataTable();
+});
+$(document).ready(function() {
+    $('#show_list_customer').DataTable();
+});
 </script>
 </body>
 
