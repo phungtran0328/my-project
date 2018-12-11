@@ -41,6 +41,12 @@
                                     {{session('messAdd')}}
                                 </div>
                             @endif
+                        @if(session('import'))
+                            <div class="alert alert-success alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                {{session('import')}}
+                            </div>
+                        @endif
                         <table id="invoice-in" class="table table-bordered table-hover" style="width:100%">
                             <thead>
                             <tr>
@@ -49,24 +55,25 @@
                                 <th style="width: 15%">CTPH</th>
                                 <th style="width: 15%">Ngày nhập</th>
                                 <th>Sách</th>
-                                <th style="width: 10%">Tồng tiền</th>
+                                <th style="width: 11%">Tồng tiền</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($invoices as $index=>$invoice)
-                                <?php
+                                @php
                                 $company = $invoice->release_company()->first();
                                 $user = $invoice->user()->first();
                                 $books = $invoice->book()->get();
-                                ?>
+                                @endphp
                                 <tr>
                                     {{--increment not reset in second page--}}
                                     <td>{{$invoice->PN_MA}}</td>
                                     <td>{{$user->NV_MA}}</td>
                                     <td>{{$company->CTPH_MA}} - {{$company->CTPH_TEN}}</td>
-                                    <?php $date=date_create($invoice->PN_NGAYNHAP); ?>
+                                    @php $date=date_create($invoice->PN_NGAYNHAP); @endphp
                                     <td>{{date_format($date,"d/m/Y H:i:s")}}</td>
                                     <td>
+                                        @if(count($books)>0)
                                         <table class="table table-bordered">
                                             @foreach($books as $book)
                                                 <tr>
@@ -76,6 +83,13 @@
                                                 </tr>
                                             @endforeach
                                         </table>
+                                            @else
+                                            @can('invoice-in.create')
+                                                <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#detailsImport-{{$invoice->PN_MA}}">
+                                                    Import
+                                                </button>
+                                            @endcan
+                                        @endif
                                     </td>
                                     <td>{{number_format($invoice->PN_TONGTIEN)}}</td>
                                 </tr>
@@ -87,7 +101,7 @@
             </div>
         </div>
     </div>
-    {{--@foreach($invoices as $invoice)
+    @foreach($invoices as $invoice)
         <div class="modal fade" id="detailsImport-{{$invoice->PN_MA}}" tabindex="-1" role="dialog" aria-labelledby="checkModal" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content" >
@@ -113,5 +127,5 @@
                 </div>
             </div>
         </div>
-    @endforeach--}}
+    @endforeach
 @endsection

@@ -11,5 +11,6 @@ class InvoiceInDetails extends Model
         'S_MA', 'PN_MA',
     ];
     public $timestamps = false;
+    public $incrementing = false;
     protected $fillable=['S_MA','PN_MA','PNCT_SOLUONG','PNCT_GIA'];
 }

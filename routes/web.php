@@ -201,8 +201,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('invoice-in/create','Admin\InvoiceInController@store')->middleware('can:invoice-in.create');
     Route::get('invoice-in/create-detail','Admin\InvoiceInController@createDetail')->middleware('can:invoice-in.create');
     Route::post('invoice-in/create-detail/{id}','Admin\InvoiceInController@storeDetail')->middleware('can:invoice-in.create');
-//    Route::post('invoice-in/import/{id}','Admin\InvoiceInController@import');
-    Route::get('invoice-in/search','Admin\InvoiceInController@search');
+    Route::post('invoice-in/import/{id}','Admin\InvoiceInController@import')->middleware('can:invoice-in.create');
 
     //order
     Route::get('order','Admin\OrderController@index');

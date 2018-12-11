@@ -25,28 +25,24 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
 @section('content')
     <div id="page-wrapper">
         <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Sách</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-
-        <div class="row">
             <div class="col-md-12">
+                <br>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url('admin/index')}}">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a href="{{url('admin/book')}}">Sách</a></li>
+                        <li class="breadcrumb-item active">Cập nhật sách</li>
+                    </ol>
+                </nav>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Cập nhật sách</h5>
                     </div>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <a class="btn btn-success btn-block" href="{{url('/admin/book')}}">
-                                    <span class="glyphicon glyphicon-arrow-left"></span>
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#bookAuthorUpdate">
-                                    <span class="glyphicon glyphicon-pencil"> Tác giả</span>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#bookAuthorUpdate">
+                                    <span class="glyphicon glyphicon-pencil"></span> Tác giả
                                 </button>
                                 {{--modal update book_author--}}
                                 <div class="modal fade" id="bookAuthorUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -74,10 +70,8 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                                             </select>
                                                             <strong style="color: red">{{$errors->first('author')}}</strong>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <button class="btn btn-primary btn-block">Cập nhật tác giả</button>
-                                                            </div>
+                                                        <div class="form-group">
+                                                            <button class="btn btn-primary">Cập nhật tác giả</button>
                                                         </div>
                                                     </form>
                                                 @else
@@ -117,9 +111,9 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                 </div>
                                 {{--end model update book_author--}}
                             </div>
-                            <div class="col-md-3">
-                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#bookImageUpdate">
-                                    <span class="glyphicon glyphicon-pencil"> Hình ảnh</span>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#bookImageUpdate">
+                                    <span class="glyphicon glyphicon-pencil"></span>  Hình ảnh
                                 </button>
                                 {{--modal update book_image--}}
                                 <div class="modal fade" id="bookImageUpdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -295,10 +289,9 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                 <label class="control-label">Giới thiệu sách</label>
                                 <textarea class="form-control" name="description" rows="10">{{$book->S_GIOITHIEU}}</textarea>
                             </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <button class="btn btn-primary btn-block">Cập nhật</button>
-                                </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary">Cập nhật</button>
+                                <a class="btn btn-success" href="{{url('/admin/book')}}">Hủy</a>
                             </div>
                         </form>
                     </div>

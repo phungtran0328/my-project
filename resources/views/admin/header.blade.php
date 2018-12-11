@@ -22,10 +22,10 @@
         <li class="dropdown">
             @if (Auth::check())
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                <i class="fa fa-user fa-fw"></i> {{Auth::user()->NV_TEN}} <i class="fa fa-caret-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li><a href="{{url('/admin/profile',Auth::user()->NV_MA)}}"><i class="fa fa-user fa-fw"></i> {{Auth::user()->NV_TEN}}</a>
+                <li><a href="{{url('/admin/profile',Auth::user()->NV_MA)}}"><i class="fa fa-list fa-fw"></i> Thông tin cá nhân</a>
                 </li>
                 <li><a href="{{url('/admin/setting',Auth::user()->NV_MA)}}"><i class="fa fa-gear fa-fw"></i> Đổi mật khẩu</a>
                 </li>
@@ -58,7 +58,7 @@
                     <a href="{{url('admin/index')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a><i class="fa fa-book fa-fw"></i> Quản lý sách<span class="fa arrow"></span></a>
+                    <a><i class="fa fa-book fa-fw"></i> Quản lý danh mục<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{url('/admin/book')}}">Sách</a>

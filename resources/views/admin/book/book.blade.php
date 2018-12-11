@@ -11,9 +11,16 @@
         <br>
         <div class="row">
             <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url('admin/index')}}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quán lý danh mục</li>
+                        <li class="breadcrumb-item active">Sách</li>
+                    </ol>
+                </nav>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="{{url('/admin/book')}}">Quản lý sách</a>
+                        <h5>Quản lý sách</h5>
                     </div>
                     <div class="panel-body">
                         <div class="row">
@@ -30,7 +37,7 @@
                                                 <span class="glyphicon glyphicon-download"></span> Download
                                             </a>
                                         </div>
-                                        {{--<div class="col-md-4">
+                                        <div class="col-md-4">
                                             <a class="btn btn-success btn-block" data-toggle="modal" data-target="#bookImport">
                                                 Import
                                             </a>
@@ -59,7 +66,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>--}}
+                                        </div>
                                     </div>
                                 @endcan
                             </div>
@@ -69,42 +76,45 @@
                             </div>
                         </div>
                         <hr>
-                        @if(session('messAddBook'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('messAddBook')}}
-                            </div>
-                        @endif
-                        @if(session('messUpdateBook'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('messUpdateBook')}}
-                            </div>
-                        @endif
-                        @if(session('messDelete'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('messDelete')}}
-                            </div>
-                        @endif
-                        @if(session('messDeleteError'))
-                            <div class="alert alert-danger alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('messDeleteError')}}
-                            </div>
-                        @endif
-                        @if(session('success'))
-                            <div class="alert alert-success alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('success')}}
-                            </div>
-                        @endif
-                        @if(session('error'))
-                            <div class="alert alert-danger alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{session('error')}}
-                            </div>
-                        @endif
+                        {{--session thông báo--}}
+                        <div>
+                            @if(session('messAddBook'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('messAddBook')}}
+                                </div>
+                            @endif
+                            @if(session('messUpdateBook'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('messUpdateBook')}}
+                                </div>
+                            @endif
+                            @if(session('messDelete'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('messDelete')}}
+                                </div>
+                            @endif
+                            @if(session('messDeleteError'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('messDeleteError')}}
+                                </div>
+                            @endif
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('success')}}
+                                </div>
+                            @endif
+                            @if(session('error'))
+                                <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    {{session('error')}}
+                                </div>
+                            @endif
+                        </div>
                         <div class="table-responsive ">
                             <table id="book" class="table table-bordered table-hover">
                                 <thead >
@@ -133,16 +143,18 @@
                                         {{--increment not reset in second page--}}
                                         <td>{{$index+1}}</td>
                                         <td>{{$book->S_TEN}}</td>
+                                        <td>
                                         @if((count($authors)>0) or (count($translators)>0))
-                                            <td>
                                                 @foreach($authors as $author)
                                                     {{$author->TG_TEN}} <br><br>
                                                 @endforeach
                                                 @foreach($translators as $translator)
                                                     {{$translator->TG_TEN}} <br><br>
                                                 @endforeach
-                                            </td>
+                                        @else
+                                            Chưa cập nhật <br><br>
                                         @endif
+                                        </td>
                                         @if(isset($translators[0]))
                                             <td>{{$translators[0]->pivot->DICHGIA}}</td>
                                             @else
@@ -162,13 +174,13 @@
                                                 <span class="glyphicon glyphicon-check"></span>
                                             </button>
                                             @can('book.update')
-                                            <a class="btn btn-info btn-sm" href="{{url('/admin/book/edit',$book->S_MA)}}" >
-                                                <span class="glyphicon glyphicon-pencil"></span></a>
+                                                <a class="btn btn-info btn-sm" href="{{url('/admin/book/edit',$book->S_MA)}}" >
+                                                    <span class="glyphicon glyphicon-pencil"></span></a>
                                             @endcan
                                             @can('book.delete')
-                                            <a class="btn btn-danger btn-sm" href="{{url('admin/book/delete',$book->S_MA)}}"
-                                               onclick="return confirm('Bạn chắc chắn xóa chứ? ')">
-                                                <span class="glyphicon glyphicon-remove"></span></a>
+                                                <a class="btn btn-danger btn-sm" href="{{url('admin/book/delete',$book->S_MA)}}"
+                                                    onclick="return confirm('Bạn chắc chắn xóa chứ? ')">
+                                                    <span class="glyphicon glyphicon-remove"></span></a>
                                             @endcan
                                         </td>
                                     </tr>

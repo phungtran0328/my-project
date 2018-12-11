@@ -24,9 +24,9 @@
                                     </th>
                                     <th style="width: 14%">KH</th>
                                     <th style="width: 5%">NV</th>
-                                    <th style="width: 8%">Ngày lập</th>
-                                    <th style="width: 8%">Tồng tiền</th>
-                                    <th style="width: 8%">Phí VC</th>
+                                    <th style="width: 10%">Ngày lập</th>
+                                    <th style="width: 11%">Tồng tiền</th>
+                                    <th style="width: 10%">Phí VC</th>
                                     <th class="text-center">Sách | SL | Giá</th>
                                 </tr>
                                 </thead>

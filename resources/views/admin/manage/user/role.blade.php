@@ -22,28 +22,28 @@
                         </a>
                         @endcan
                         <hr>
-                        @if(Session::has('messAdd'))
+                        @if(session('messAdd'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messAdd')}}
+                                {{session('messAdd')}}
                             </div>
                         @endif
-                        @if(Session::has('messUpdate'))
+                        @if(session('messUpdate'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('messUpdate')}}
+                                {{session('messUpdate')}}
                             </div>
                         @endif
-                        @if(Session::has('updateUser'))
+                        @if(session('updateUser'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('updateUser')}}
+                                {{session('updateUser')}}
                             </div>
                         @endif
-                        @if(Session::has('delete'))
+                        @if(session('delete'))
                             <div class="alert alert-success alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {{Session::get('delete')}}
+                                {{session('delete')}}
                             </div>
                         @endif
                         <div class="table-responsive ">
@@ -78,7 +78,7 @@
                                         </td>
                                         <td>
                                             @foreach($users as $user)
-                                                {{$user->NV_TEN}}
+                                                {{$user->NV_TEN}}<br>
                                             @endforeach
                                         </td>
                                         <td class="text-center">
@@ -89,7 +89,7 @@
                                                 <span class="glyphicon glyphicon-pencil"></span> Sửa</a>
                                             @endcan
                                             @can('user.delete')
-                                            <a class="btn btn-danger btn-sm" href="{{url('admin/role/delete',$role->Q_MA)}}">
+                                            <a class="btn btn-danger btn-sm" href="{{url('admin/role/delete',$role->Q_MA)}}" onclick="return confirm('Bạn chắn chắn xóa ? ')">
                                                 <span class="glyphicon glyphicon-remove"></span> Xóa</a>
                                             @endcan
                                         </td>

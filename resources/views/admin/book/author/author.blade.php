@@ -11,9 +11,16 @@
         <br>
         <div class="row">
             <div class="col-md-12">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{url('admin/index')}}">Trang chủ</a></li>
+                        <li class="breadcrumb-item active">Quán lý danh mục</li>
+                        <li class="breadcrumb-item active">Tác giả</li>
+                    </ol>
+                </nav>
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="{{url('/admin/author')}}">Quản lý tác giả</a>
+                        <h5>Quản lý tác giả</h5>
                     </div>
                     <div class="panel-body">
                         <div class="row">

@@ -8,28 +8,29 @@ use App\Invoice;
 use App\InvoiceDetails;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class InvoiceController extends Controller
 {
     public function index(){
-        $invoices = Invoice::orderBy('HD_MA','desc')->get();
+        $invoices = Invoice::all();
         return view('admin.manage.invoice.invoice', compact('invoices'));
     }
 
     public function invoice($id){
-        $order=Order::where('DH_MA',$id)->first();
-        $user=Auth::user()->NV_MA;
-        $customer=$order->KH_MA;
-        $date=date('Y-m-d H:i:s');
+        $order = Order::where('DH_MA',$id)->first();
+        $user = Auth::user();
+        $customer = $order->KH_MA;
+        $date = date('Y-m-d H:i:s');
 //        dd($date);
-        $total=$order->DH_TONGTIEN;
-        $temps=$order->book()->get();
-        $data=array();
+        $total = $order->DH_TONGTIEN;
+        $temps = $order->book()->get();
+        $data = array();
 
         //Thêm 1 hóa đơn
-        $invoice=new Invoice();
-        $invoice->KH_MA=$customer;
-        $invoice->NV_MA=$user;
+        $invoice = new Invoice();
+        $invoice->KH_MA = $customer;
+        $invoice->NV_MA = $user->NV_MA;
         $invoice->HD_NGAYLAP=$date;
         $invoice->HD_TONGTIEN=$total;
         $invoice->save();
@@ -47,9 +48,10 @@ class InvoiceController extends Controller
         InvoiceDetails::insert($data);
 
         //Cập nhật lại trạng thái đơn hàng và nhân viên
-        $order->DH_TTDONHANG=1; // Trạng thái đang vận chuyển
-        $order->NV_MA=$user;
+        $order->DH_TTDONHANG = 1; // Trạng thái đang vận chuyển
+        $order->NV_MA = $user->NV_MA;
         $order->save();
+        Log::info("Nhân viên đã lập hóa đơn cho ĐH ".$id.": ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
         return redirect()->back()->with('messInvoice','Đã lập hóa đơn cho đơn hàng !');
     }
 }

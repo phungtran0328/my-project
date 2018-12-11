@@ -139,7 +139,8 @@ class RoleController extends Controller
     }
 
     public function delete($id){
-        $role=Role::where('Q_MA',$id)->first();
+        $role = Role::where('Q_MA',$id)->first();
+        User_Role::where('Q_MA',$id)->delete();
         $role->delete();
         return redirect()->back()->with('delete', 'Đã xóa quyền "'.$role->Q_TEN.'" !');
     }

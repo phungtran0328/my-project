@@ -9,7 +9,8 @@ class Book extends Model
     protected $table = 'sach'; //Khai báo table nếu không theo quy định đặt tên, nếu Model là Book thì table là books laravel ngầm hiểu
     protected $primaryKey = 'S_MA'; //Mặc định khóa chính sẽ là id, nếu không dùng id thì khai báo
     protected $dates = ['CREATED_AT','UPDATED_AT'];
-
+    protected $fillable = ['KM_MA','NXB_MA','LS_MA','LB_MA','S_TEN','S_SLTON',
+        'S_KICHTHUOC','S_SOTRANG','S_NGAYXB','S_LUOTXEM','S_TAIBAN','S_GIOITHIEU','S_GIA','S_AVATAR'];
     //Khi định nghĩa quan hệ không nhất thiết có khóa chính vì nó đã được khai báo ở $primaryKey, nhưng cần có khóa ngoại
     //Khi gọi tới relation nhất định không được all() mà phải có điều kiện
     //$a=Book::find(1)
