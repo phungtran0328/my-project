@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Customer;
+use App\Mail\OrderMail;
 use App\Order;
 use App\OrderDetails;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use League\Flysystem\Exception;
 
@@ -64,25 +66,25 @@ class CheckoutController extends Controller
             ]
         );
 
-        $carts=Cart::content();
+        $carts = Cart::content();
         //Thêm người dùng vào database
-        $customer=new Customer();
-        $customer->KH_TEN=$request['username'];
-        $customer->KH_SDT=$request['phone'];
-        $customer->KH_DIACHI=$request['address'];
-        $customer->KH_DIACHI2=$request['city'];
-        $customer->KH_NGAYSINH=$request['birthday'];
-        $customer->KH_EMAIL=$request['email'];
+        $customer = new Customer();
+        $customer->KH_TEN = $request['username'];
+        $customer->KH_SDT = $request['phone'];
+        $customer->KH_DIACHI = $request['address'];
+        $customer->KH_DIACHI2 = $request['city'];
+        $customer->KH_NGAYSINH = $request['birthday'];
+        $customer->KH_EMAIL = $request['email'];
         $customer->save();
         //Thêm đơn hàng
-        if ($customer->KH_DIACHI2=='CT'){
+        if ($customer->KH_DIACHI2 =='CT'){
             $total=str_replace(',','',Cart::subtotal());
         }
         else{
             $total=str_replace(',','',Cart::subtotal())+18000;
         }
 
-        $order=new Order();
+        $order = new Order();
         $order->KH_MA=$customer->KH_MA;
         $order->DH_DCGIAOHANG=$customer->KH_DIACHI;
         $order->DH_NGAYDAT=date('Y-m-d H:i:s');
@@ -93,25 +95,18 @@ class CheckoutController extends Controller
         //Chuẩn bị dữ liệu để thêm vào DH_CHITIET
         $data=array();
         foreach ($carts as $cart){
-            $data[]=[
+            $data[] = [
                 'DH_MA'=>$order->DH_MA,
                 'S_MA'=>$cart->id,
                 'DHCT_SOLUONG'=>$cart->qty,
                 'DHCT_GIA'=>$cart->price
             ];
         }
-
         OrderDetails::insert($data);
-
-        //Trừ số lượng mua vào số lượng tồn kho
-        /*$getOrder=Order::where('DH_MA',$order->DH_MA)->first();
-        $update=$getOrder->book()->get();
-//        dd($update);
-        foreach ($update as $key=>$value){
-            $value->S_SLTON=$value->S_SLTON-$value->pivot->DHCT_SOLUONG;
-            $value->save();
-        }*/
         Cart::destroy();
+        $mail = $customer->KH_EMAIL;
+        $mailable = new OrderMail($mail,$order->DH_MA);
+        Mail::to($mail)->send($mailable);
         return redirect()->back()->with('messCheck','Bạn đã đặt hàng thành công !');
     }
 
@@ -120,21 +115,21 @@ class CheckoutController extends Controller
     }
 
     public function checkout(Request $request){
-        $carts=Cart::content();
-        $user=Auth::guard('customer')->user();
-        $city=$user->KH_DIACHI2;
+        $carts = Cart::content();
+        $user = Auth::guard('customer')->user();
+        $city = $user->KH_DIACHI2;
 
-        $order=new Order();
-        $order->KH_MA=$user->KH_MA;
-        $order->DH_DCGIAOHANG=$user->full_address;
-        $order->DH_NGAYDAT=date('Y-m-d H:i:s');
-        if ($city=='CT'){
-            $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal());
+        $order = new Order();
+        $order->KH_MA = $user->KH_MA;
+        $order->DH_DCGIAOHANG = $user->full_address;
+        $order->DH_NGAYDAT = date('Y-m-d H:i:s');
+        if ($city == 'CT'){
+            $order->DH_TONGTIEN = str_replace(',','',Cart::subtotal());
         }else{
-            $order->DH_TONGTIEN=str_replace(',','',Cart::subtotal())+18000;
+            $order->DH_TONGTIEN = str_replace(',','',Cart::subtotal())+18000;
         }
-        $order->DH_TTDONHANG=0;
-        $order->DH_GHICHU=$request['checkout'];
+        $order->DH_TTDONHANG = 0;
+        $order->DH_GHICHU = $request['checkout'];
         $order->save();
 
         $data=array();
@@ -147,14 +142,10 @@ class CheckoutController extends Controller
             ];
         }
         OrderDetails::insert($data);
-        /*$getOrder=Order::where('DH_MA',$order->DH_MA)->first();
-        $update=$getOrder->book()->get();
-//        dd($update);
-        foreach ($update as $key=>$value){
-            $value->S_SLTON=$value->S_SLTON-$value->pivot->DHCT_SOLUONG;
-            $value->save();
-        }*/
         Cart::destroy();
+        $mail = $user->KH_EMAIL;
+        $mailable = new OrderMail($mail,$order->DH_MA);
+        Mail::to($mail)->send($mailable);
         return redirect()->back()->with('messCheck','Bạn đã đặt hàng thành công !');
     }
 }

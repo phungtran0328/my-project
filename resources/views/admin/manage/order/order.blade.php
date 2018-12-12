@@ -110,7 +110,7 @@
                                                     @break
                                                     @case(1)
                                                         <a class="btn btn-info btn-xs" href="{{url('admin/order/complete',$order->DH_MA)}}">
-                                                            Check</a>
+                                                            Đang VC</a>
                                                     @break
                                                     @case(2)
                                                         <a class="btn btn-success btn-xs">Hoàn thành</a>

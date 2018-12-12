@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Customer;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Invoice;
@@ -9,6 +11,7 @@ use App\InvoiceDetails;
 use App\Order;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class InvoiceController extends Controller
 {
@@ -52,6 +55,10 @@ class InvoiceController extends Controller
         $order->NV_MA = $user->NV_MA;
         $order->save();
         Log::info("Nhân viên đã lập hóa đơn cho ĐH ".$id.": ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
+        $temp_customer = Customer::where('KH_MA',$order->KH_MA)->first();
+        $mail = $temp_customer->KH_EMAIL;
+        $mailable = new SendMail($mail,$id);
+        Mail::to($mail)->send($mailable);
         return redirect()->back()->with('messInvoice','Đã lập hóa đơn cho đơn hàng !');
     }
 }

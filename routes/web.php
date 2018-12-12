@@ -205,7 +205,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     //order
     Route::get('order','Admin\OrderController@index');
-
     //Lập hóa đơn
     Route::get('order/invoice/{id}','Admin\InvoiceController@invoice')->middleware('can:order.update');
 
