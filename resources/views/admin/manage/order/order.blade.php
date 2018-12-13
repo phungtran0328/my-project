@@ -113,7 +113,7 @@
                                                             Đang VC</a>
                                                     @break
                                                     @case(2)
-                                                        <a class="btn btn-success btn-xs">Hoàn thành</a>
+                                                        <a class="btn btn-success btn-xs">Đã giao</a>
                                                     @break
                                                     @case(3)
                                                         <a class="btn btn-danger btn-xs" href="{{url('admin/order/cancel',$order->DH_MA)}}">

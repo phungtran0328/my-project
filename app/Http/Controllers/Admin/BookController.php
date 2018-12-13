@@ -297,7 +297,7 @@ class BookController extends Controller
     public function import(Request $request){
         $name = $request->file('f');
         $user = Auth::user();
-        Log::info("Nhân viên nhập file: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
+        Log::info("Nhân viên import file sách: ".$user->NV_MA." - ".$user->NV_TEN." \r\n" );
         Excel::import(new BooksImport, $name);
         return redirect()->back()->with('success','Nhập file thành công !');
     }

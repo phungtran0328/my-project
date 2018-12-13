@@ -11,13 +11,13 @@
         <br>
         <div class="row">
             <div class="col-md-12">
-                <nav aria-label="breadcrumb">
+                {{--<nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{url('admin/index')}}">Trang chủ</a></li>
                         <li class="breadcrumb-item active">Quán lý danh mục</li>
                         <li class="breadcrumb-item active">Sách</li>
                     </ol>
-                </nav>
+                </nav>--}}
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Quản lý sách</h5>

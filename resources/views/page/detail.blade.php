@@ -239,7 +239,7 @@
                                         </div>
                                         <div class="single-item-body text-center">
                                             <a href="{{url('/chi-tiet-sach',$temp_author_book_promotion[$j]['id'])}}" class="single-item-title" >
-                                                {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                                {{ str_limit($temp_author_book_promotion[$j]['name'], $limit = 16, $end = '...') }}
                                             </a>
                                             <p class="single-item-price" >
                                                 @if(isset($temp_author_book_promotion[$j]['sale']))
@@ -284,7 +284,7 @@
                                         </div>
                                         <div class="single-item-body text-center">
                                             <a href="{{url('/chi-tiet-sach',$temp_translator_book_promotion[$j]['id'])}}" class="single-item-title" >
-                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 18, $end = '...') }}
+                                                {{ str_limit($temp_translator_book_promotion[$j]['name'], $limit = 16, $end = '...') }}
                                             </a>
                                             <p class="single-item-price" >
                                                 @if(isset($temp_translator_book_promotion[$j]['sale']))

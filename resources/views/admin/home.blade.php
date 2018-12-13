@@ -129,7 +129,7 @@ foreach ($books_out_stock as $key=>$value){
         </div>
         <!-- /.row -->
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bell fa-fw"></i> Sách bán ra trong {{$date_book==0 ? '' : 'ngày '.$date_book.' '}}tháng {{$month_book}} năm {{$year_book}}
@@ -192,7 +192,7 @@ foreach ($books_out_stock as $key=>$value){
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <i class="fa fa-bell fa-fw"></i> Khách hàng mua nhiều trong tháng {{$month_customer}} năm {{$year_customer}}
@@ -218,9 +218,6 @@ foreach ($books_out_stock as $key=>$value){
                             <tr>
                                 <th>STT</th>
                                 <th>Tên</th>
-                                <th>Địa chỉ</th>
-                                <th>Số ĐT</th>
-                                <th>Email</th>
                                 <th>Tổng SL</th>
                                 <th>Tổng giá</th>
                             </tr>
@@ -230,9 +227,6 @@ foreach ($books_out_stock as $key=>$value){
                                 <tr>
                                     <td>{{$i+1}}</td>
                                     <td>{{$customer[$i]['name']}}</td>
-                                    <td>{{$customer[$i]['address']}}</td>
-                                    <td>{{$customer[$i]['phone']}}</td>
-                                    <td>{{$customer[$i]['email']}}</td>
                                     <td>{{$customer[$i]['qty']}}</td>
                                     <td>{{number_format($customer[$i]['total'])}}</td>
                                 </tr>
@@ -246,7 +240,7 @@ foreach ($books_out_stock as $key=>$value){
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <!-- /.panel -->
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -280,10 +274,10 @@ foreach ($books_out_stock as $key=>$value){
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <i class="fa fa-bar-chart-o fa-fw"></i> Doanh thu theo từng loại sách
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Doanh thu loại sách
                         <div class="pull-right">
                             <div class="btn-group">
                                 <form action="{{url('admin/index')}}" method="get">

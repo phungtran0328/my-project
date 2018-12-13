@@ -87,45 +87,37 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
-
                 <li>
-                    <a><i class="fa fa-edit fa-fw"></i> Quản lý <span class="fa arrow"></span></a>
+                    <a href="{{url('admin/customer')}}"><span class="fa fa-list"></span> Quản lý khách hàng </a>
+                </li>
+                <li>
+                    <a href="{{url('admin/user')}}"><span class="fa fa-list"></span> Quản lý nhân viên </a>
+                </li>
+                <li>
+                    <a href="{{url('admin/role')}}"><span class="fa fa-list"></span> Quản lý quyền </a>
+                </li>
+                <li>
+                    <a><span class="fa fa-list"></span> Quản lý xuất <span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{url('admin/customer')}}">Khách hàng </a>
+                            <a href="{{url('admin/order')}}">Đơn hàng</a>
                         </li>
                         <li>
-                            <a href="{{url('admin/user')}}">Nhân viên </a>
-                        </li>
-                        <li>
-                            <a href="{{url('admin/role')}}">Quyền </a>
-                        </li>
-                        <li>
-                            <a>Quản lý xuất <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="{{url('admin/order')}}">Đơn hàng</a>
-                                </li>
-                                <li>
-                                    <a href="{{url('admin/invoice')}}">Hóa đơn xuất</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
-                        </li>
-                        <li>
-                            <a>Quản lý nhập <span class="fa arrow"></span></a>
-                            <ul class="nav nav-third-level">
-                                <li>
-                                    <a href="{{url('admin/company')}}">Công ty phát hành</a>
-                                </li>
-                                <li>
-                                    <a href="{{url('admin/invoice-in')}}">Hóa đơn nhập</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-third-level -->
+                            <a href="{{url('admin/invoice')}}">Hóa đơn xuất</a>
                         </li>
                     </ul>
-                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <!-- /.nav-third-level -->
+                    <a><span class="fa fa-list"></span> Quản lý nhập <span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{url('admin/company')}}">Công ty phát hành</a>
+                        </li>
+                        <li>
+                            <a href="{{url('admin/invoice-in')}}">Hóa đơn nhập</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{url('admin/backup')}}"><i class="fa fa-files-o fa-fw"></i> Sao lưu dữ liệu</a>
