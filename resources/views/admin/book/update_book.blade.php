@@ -27,13 +27,6 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
         <div class="row">
             <div class="col-md-12">
                 <br>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{url('admin/index')}}">Trang chủ</a></li>
-                        <li class="breadcrumb-item"><a href="{{url('admin/book')}}">Sách</a></li>
-                        <li class="breadcrumb-item active">Cập nhật sách</li>
-                    </ol>
-                </nav>
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h5>Cập nhật sách</h5>
@@ -41,7 +34,7 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#bookAuthorUpdate">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#bookAuthorUpdate">
                                     <span class="glyphicon glyphicon-pencil"></span> Tác giả
                                 </button>
                                 {{--modal update book_author--}}
@@ -95,10 +88,8 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                                             </select>
                                                             <strong style="color: red">{{$errors->first('author')}}</strong>
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <button class="btn btn-primary btn-block">Cập nhật tác giả và dịch giả</button>
-                                                            </div>
+                                                        <div class="form-group">
+                                                            <button class="btn btn-primary">Cập nhật tác giả và dịch giả</button>
                                                         </div>
                                                     </form>
                                                 @endif
@@ -112,7 +103,7 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                 {{--end model update book_author--}}
                             </div>
                             <div class="col-md-2">
-                                <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#bookImageUpdate">
+                                <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#bookImageUpdate">
                                     <span class="glyphicon glyphicon-pencil"></span>  Hình ảnh
                                 </button>
                                 {{--modal update book_image--}}
@@ -145,10 +136,8 @@ $translators=\App\Author::whereNotIn('TG_MA',$results)->get();
                                                         <input required type="file" class="form-control" name="images[]" multiple>
                                                         <strong style="color: red">{{$errors->first('images')}}</strong>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <button class="btn btn-primary btn-block">Cập nhật hình ảnh</button>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <button class="btn btn-primary">Cập nhật hình ảnh</button>
                                                     </div>
                                                 </form>
                                             </div>

@@ -111,13 +111,14 @@ class HomeController extends Controller
         $chart_month = new RevenueChart();
         $chart_month->labels($labels_month);
         $chart_month->title('Biểu đồ doanh thu năm '.$year_revenue , 20, '#333333');
+        $chart_month->barWidth(0.5);
         $chart_month->dataset('Doanh thu','bar',$values_month)->options([
             'color' => '#ff0000',
             'backgroundColor' => '#270075',
         ]);
-        $chart_month->dataset('Vốn','bar',$values_invoice_in)->options([
+        /*$chart_month->dataset('Vốn','bar',$values_invoice_in)->options([
             'backgroundColor' => '#278cc0',
-        ]);
+        ]);*/
 
         $customer = $temp_invoice->getSumCustomer($month_customer, $year_customer);
         $books = $temp_invoice->getSumBook($date_book, $month_book, $year_book);

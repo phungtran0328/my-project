@@ -91,7 +91,7 @@
                                         <td class="text-center">
                                             @can('user.update')
                                                 <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#userUpdate-{{$user->NV_MA}}">
-                                                    <span class="glyphicon glyphicon-pencil"></span> Sửa
+                                                    <span class="glyphicon glyphicon-pencil"></span> Cập nhật quyền
                                                 </button>
                                             @endcan
                                             @can('user.delete')

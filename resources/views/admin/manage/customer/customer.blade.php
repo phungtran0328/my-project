@@ -41,7 +41,6 @@
                                     <th>Địa chỉ</th>
                                     <th style="width: 4%">SĐT</th>
                                     <th>Email</th>
-                                    <th style="width: 6%">Xóa</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,14 +55,14 @@
                                         <td>{{$customer->KH_DIACHI}}</td>
                                         <td>{{$customer->KH_SDT}}</td>
                                         <td>{{$customer->KH_EMAIL}}</td>
-                                        <td class="text-center">
-                                            {{--<a class="btn btn-default" href="">
-                                                <span class="glyphicon glyphicon-pencil"></span></a>--}}
+                                        {{--<td class="text-center">
+                                            --}}{{--<a class="btn btn-default" href="">
+                                                <span class="glyphicon glyphicon-pencil"></span></a>--}}{{--
                                             @can('customer.delete')
                                             <a class="btn btn-danger btn-sm" href="{{url('admin/customer/delete',$customer->KH_MA)}}" onclick="return confirm('Bạn chắc chắn xóa ?')">
                                                 <span class="glyphicon glyphicon-remove"></span></a>
                                                 @endcan
-                                        </td>
+                                        </td>--}}
                                     </tr>
                                 @endforeach
                                 </tbody>

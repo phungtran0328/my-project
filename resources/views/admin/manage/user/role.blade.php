@@ -110,7 +110,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 class="modal-title" id="updateModal">Cập nhật nhân viên sử dụng</h3>
+                        <h3 class="modal-title" id="updateModal">Cập nhật NV sử dụng quyền: "{{$role->Q_TEN}}"</h3>
                     </div>
                     <div class="modal-body">
                         <form action="{{url('admin/role/update/user',$role->Q_MA)}}" method="post" >
